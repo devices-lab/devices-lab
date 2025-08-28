@@ -82,7 +82,7 @@ export const load: LayoutLoad = async (event) => {
 		...(event.data ?? {}),
 		activePath: event.url.pathname,
 		breadcrumbs: createBreadcrumbs(event.url.pathname),
-		isHome: event.url.pathname === '/',
+		isHome: event.url.pathname === Routes.home.href,
 		menuItems,
 		menuOptions,
 	};
