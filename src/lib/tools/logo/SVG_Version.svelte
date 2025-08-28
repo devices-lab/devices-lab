@@ -17,8 +17,8 @@
 	const { uid, projectId, projectVersion, class: className = '' }: Props = $props();
 
 	const H = 194;
-	const fontSizeProject = 94;
-	const fontSizeVersion = 94;
+	const fontSizeProject = 86;
+	const fontSizeVersion = 86;
 	const fontSizeDL = 150;
 
 	const widthDL = $derived(Math.round(H * 1.22));

@@ -20,7 +20,7 @@ export const LOGO_NAME = 'devices-lab';
 export const LOGO_DOMAIN = 'devices-lab.org';
 
 
-export const STROKE = 14;
+export const STROKE = 10;
 export const PAD = 20;
 export const RADIUS = 40;
 export const COLOR = '#000';
