@@ -14,6 +14,8 @@ export const item: ItemType = {
 	name: "clip:bit",
 	teaser: "Enhancing outdoor learning with persistent data logging for the BBC micro:bit.",
 	description: "Enable cross-curricular outdoor learning with the clip:bit. Easy to use persistent data logging for the BBC micro:bit, ideal for field trips and surveys. Supplied fully assembled in a range of colour options.",
+	category: 'devices',
+
 	cover: ImageCover,
 	images: [
 		{ sm: ImageCover, lg: ImageCover },

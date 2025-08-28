@@ -8,6 +8,8 @@ export const item: ItemType = {
 	name: "Test",
 	teaser: "Test project.",
 	description: "Test project.",
+	category: 'research',
+	
 	cover: ImageCover,
 	images: [
 		{ sm: ImageCover, lg: ImageCover },

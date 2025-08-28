@@ -5,6 +5,7 @@ export const load = (async () => {
     return {
 		title: item.name,
 		description: item.description,
+		category: item.category,
 		noHeader: true
 	};
 }) satisfies PageLoad;

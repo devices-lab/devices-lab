@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { LayoutData } from '../../routes/$types';
+	import { page } from '$app/state';
 
 	import Logo from '$lib/navbar/Logo.svelte';
 	import Link from '$lib/navbar/Link.svelte';
@@ -11,10 +12,7 @@
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
 
-	interface Props {
-		data: LayoutData;
-	}
-	const { data }: Props = $props();
+	const { data }: { data: LayoutData } = $props();
 </script>
 
 <!-- Mobile menu -->
@@ -41,12 +39,13 @@
 					</div>
 					<div class="flex h-full justify-center space-x-8">
 						{#each data.menuItems as item}
+							{@const current = data.activePath === item.href || page.data.category === item.category }
 							{#if item.popover && item.popover.items.length > 0}
-								<LinkPop title={item.title} current={data.activePath === item.href}>
+								<LinkPop title={item.title} {current}>
 									<FeaturedList href={item.href} props={item.popover} />
 								</LinkPop>
 							{:else}
-								<Link href={item.href} current={data.activePath === item.href}>{item.title}</Link>
+								<Link href={item.href} {current}>{item.title}</Link>
 							{/if}
 						{/each}
 					</div>

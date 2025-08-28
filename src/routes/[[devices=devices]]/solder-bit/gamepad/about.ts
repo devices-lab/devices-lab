@@ -11,6 +11,8 @@ export const item: ItemType = {
 	name: "solder:bit/gamepad",
 	teaser: "Learn surface mount soldering while building a versatile game controller for the BBC micro:bit.",
 	description: "Learn to solder surface mount components whilst creating a versatile accessory for the BBC micro:bit. Ideal for controlling any interactive device, installation or robot. Supplied in low-cost kit form, partially assembled, or fully manufactured. Choose the level to suit your experience!",
+	category: 'devices',
+	
 	cover: ImageCover,
 	images: [
 		{ sm: ImageCover, lg: ImageCover },

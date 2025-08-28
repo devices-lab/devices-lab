@@ -8,6 +8,8 @@ export const item: ItemType = {
 	name: "micro:bit",
 	teaser: "The BBC micro:bit is an award-winning programmable device that allows students to get hands-on with coding and digital making.",
 	description: "The BBC micro:bit is an award-winning programmable device that allows students to get hands-on with coding and digital making. Use it to inspire your students to recognise the power of technology in the real world.",
+	category: 'devices',
+	
 	cover: ImageCover,
 	images: [
 		{ sm: ImageCover, lg: ImageCover },

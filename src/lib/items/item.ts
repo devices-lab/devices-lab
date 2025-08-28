@@ -9,6 +9,7 @@ export interface ItemType {
 	name: string;
 	teaser: string;
 	description: string;
+	category: string;
 	cover: Picture;
 	images: ItemImage[];
 

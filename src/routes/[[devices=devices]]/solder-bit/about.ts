@@ -8,6 +8,8 @@ export const item: ItemType = {
 	name: "solder:bit",
 	teaser: "A range of devices created to learn soldering.",
 	description: "A range of devices created to learn soldering.",
+	category: 'devices',
+	
 	cover: ImageCover,
 	images: [
 		{

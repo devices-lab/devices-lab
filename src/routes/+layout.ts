@@ -18,18 +18,17 @@ import type { ItemType } from '$lib/items/item';
 // Enable prerendering for static site generation
 export const prerender = true;
 
-interface MenuItem {
-	title: string;
-	href: string;
+interface MenuItem extends Route {
+	category: string;
 	popover?: FeaturedListProps;
 }
 
 const menuItems: MenuItem[] = [
-	{ ...Routes.home },
-	{ ...Routes.devices, popover: { label: "See all devices", items: devicesFeatured } },
-	{ ...Routes.software, popover: { label: "See all software", items: softwareFeatured } },
-	{ ...Routes.media, popover: { label: "See all media", items: mediaFeatured } },
-	{ ...Routes.research, popover: { label: "See all research", items: researchFeatured } }
+	{ ...Routes.home, category: 'home' },
+	{ ...Routes.devices, category: 'devices', popover: { label: "See all devices", items: devicesFeatured } },
+	{ ...Routes.software, category: 'software', popover: { label: "See all software", items: softwareFeatured } },
+	{ ...Routes.media, category: 'media', popover: { label: "See all media", items: mediaFeatured } },
+	{ ...Routes.research, category: 'research', popover: { label: "See all research", items: researchFeatured } }
 ];
 
 const menuOptions: Route[] = [
@@ -96,6 +95,7 @@ const createBreadcrumbs = (pathname: string): BreadcrumbType[] => {
 const equalPaths = (a: string, b: string): boolean => {
 	return a.split('/').filter(Boolean).join('/') === b.split('/').filter(Boolean).join('/');
 };
+
 
 export const load: LayoutLoad = async (event) => {
 	return {
