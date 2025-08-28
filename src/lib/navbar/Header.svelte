@@ -39,7 +39,7 @@
 					</div>
 					<div class="flex h-full justify-center space-x-8">
 						{#each data.menuItems as item}
-							{@const current = data.activePath === item.href || page.data.category === item.category }
+							{@const current = data.route === item.name || page.data.category === item.category }
 							{#if item.popover && item.popover.items.length > 0}
 								<LinkPop title={item.title} {current}>
 									<FeaturedList href={item.href} props={item.popover} />

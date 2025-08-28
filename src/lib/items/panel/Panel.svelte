@@ -20,7 +20,7 @@
 </script>
 
 <section class="relative bg-white sm:px-6 sm:py-24 lg:px-8 dark:bg-gray-900">
-	<div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10">
+	<div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
 		<!-- Image gallery -->
 		<div class="px-4 sm:mt-16 sm:px-0 lg:mt-0">
 			<ImageGrid {images} />

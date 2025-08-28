@@ -15,7 +15,7 @@ export type RouteName = 'home' | 'about' | 'contact' | 'devices' | 'software' | 
 export const Routes: Record<RouteName, Route> = {
 	home: {
 		title: 'Home',
-		name: '',
+		name: '/',
 		href: resolve('')
 	},
 	about: {

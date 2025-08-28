@@ -27,7 +27,7 @@
 				<div class="space-y-6 border-t border-gray-200 px-4 py-6">
 					{#each data.menuItems as item}
 						<div class="flow-root">
-							<Link href={item.href} current={data.activePath === item.href} class="-m-2 block p-2 font-medium text-gray-900 dark:text-gray-200">{item.title}</Link>
+							<Link href={item.href} current={data.route === item.name} class="-m-2 block p-2 font-medium text-gray-900 dark:text-gray-200">{item.title}</Link>
 						</div>
 					{/each}
 				</div>
