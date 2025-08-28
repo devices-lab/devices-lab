@@ -21,7 +21,7 @@
 	const fontSizeDL = 150;
 
 	const widthDL = $derived(Math.round(H * 1.25));
-	const withText = $derived(widthDL + PAD + textWidth(LOGO_NAME, fontSize) + PAD);
+	const withText = $derived(widthDL + PAD + textWidth(LOGO_NAME, fontSize) + PAD + 8);
 	const W = $derived(withText + PAD * 2);
 </script>
 
@@ -29,5 +29,5 @@
 	<Rect width={W} height={H} {...props}/>
 	<Fill width={widthDL - STROKE / 2} height={H - STROKE} corners={{ topLeft: true, topRight: false, bottomLeft: true, bottomRight: false }} />
 	<Logo x={widthDL / 2} y={H / 2} fontSize={fontSizeDL} {...props}/>
-	<Text x={widthDL + PAD} y={H / 2} {fontSize} text={LOGO_NAME} />
+	<Text x={widthDL + PAD + 20} y={H / 2} {fontSize} text={LOGO_NAME} />
 </SVG>

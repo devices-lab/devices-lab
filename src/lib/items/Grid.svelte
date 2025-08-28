@@ -436,7 +436,7 @@
 										</svg>
 									</div>
 								</div>
-								<label for="filter-category-2" class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900">Hats</label>
+								<label for="filter-category-2" class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900">Ready to buy</label>
 							</div>
 							<div class="flex gap-3">
 								<div class="flex h-5 shrink-0 items-center">
@@ -448,7 +448,7 @@
 										</svg>
 									</div>
 								</div>
-								<label for="filter-category-3" class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900">Bundles</label>
+								<label for="filter-category-3" class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900">Available to buy</label>
 							</div>
 							<div class="flex gap-3">
 								<div class="flex h-5 shrink-0 items-center">

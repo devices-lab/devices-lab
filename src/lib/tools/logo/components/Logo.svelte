@@ -13,4 +13,4 @@
 	const { x, y, fontSize, ...restProps }: Props = $props();
 </script>
 
-<Text {x} {y} text={LOGO_ICON} {fontSize} data-synthetic-bold="true" data-bold-strength="3.0" fill={($svgBackground === 'none' ? TEXT : $svgBackground)} text-anchor="middle" {...restProps} />
+<Text x={x + 3} {y} text={LOGO_ICON} {fontSize} data-synthetic-bold="true" data-bold-strength="3.0" fill={$svgBackground === 'none' ? TEXT : $svgBackground} text-anchor="middle" {...restProps} />

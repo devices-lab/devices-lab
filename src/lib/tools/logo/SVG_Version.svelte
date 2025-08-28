@@ -23,13 +23,13 @@
 
 	const widthDL = $derived(Math.round(H * 1.22));
 	const withText = $derived(Math.max(textWidth(projectId, fontSizeProject), textWidth(projectVersion, fontSizeVersion)) + PAD * 2);
-	const W = $derived(STROKE + widthDL + withText + PAD);
+	const W = $derived(STROKE + widthDL + withText + PAD + 8);
 </script>
 
 <SVG {uid} width={W} height={H} class={className}>
 	<Rect width={W} height={H} />
 	<Fill width={widthDL - STROKE / 2} height={H - STROKE} corners={{ topLeft: true, topRight: false, bottomLeft: true, bottomRight: false }} />
 	<Logo x={widthDL / 2} y={H / 2} fontSize={fontSizeDL} />
-	<Text x={widthDL + PAD} y={H / 2 - fontSizeProject / 2 + 4} fontSize={fontSizeProject} text={projectId} />
-	<Text x={widthDL + PAD} y={H / 2 + fontSizeVersion / 2 - 4} fontSize={fontSizeVersion} text={projectVersion} />
+	<Text x={widthDL + PAD + 12} y={H / 2 - fontSizeProject / 2 + 4} fontSize={fontSizeProject} text={projectId} />
+	<Text x={widthDL + PAD + 12} y={H / 2 + fontSizeVersion / 2 - 4} fontSize={fontSizeVersion} text={projectVersion} />
 </SVG>

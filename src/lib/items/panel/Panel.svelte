@@ -7,6 +7,7 @@
 	import Description from '$lib/items/panel/Description.svelte';
 	import Collapse from '$lib/items/panel/Collapse.svelte';
 	import ImageGrid from '$lib/items/panel/ImageGrid.svelte';
+	import SvgVersion from '$lib/tools/logo/SVG_Version.svelte';
 
 	interface Props {
 		logo: string;
@@ -36,7 +37,10 @@
 				<div class="divide-y divide-gray-200 border-t border-gray-200 dark:divide-gray-700 dark:border-gray-700">
 					{@render children?.()}
 					<Collapse label={'Identifier'}>
+						
 						<SvgProject uid={'dl-project'} projectName={logo} class="max-h-15 opacity-80" props={{ class: 'fill-white dark:fill-gray-300' }} />
+
+						<SvgVersion uid={'dl-version-stack'} projectId="0032" projectVersion="v1.2"  class="max-h-15 opacity-80" />
 					</Collapse>
 				</div>
 			</section>

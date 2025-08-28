@@ -12,11 +12,12 @@
 
 	const { uid, class: className = '' }: Props = $props();
 
-	const S = 220;
+	const W = 220;
+	const H = 186;
 	const fontSizeDL = 150;
 </script>
 
-<SVG {uid} width={S} height={S} class={className}>
-	<Rect width={S} height={S} fill={COLOR}/>
-	<Logo x={S / 2} y={S / 2} fontSize={fontSizeDL} />
+<SVG {uid} width={W} height={H} class={className}>
+	<Rect width={W} height={H} fill={COLOR}/>
+	<Logo x={W / 2} y={H / 2} fontSize={fontSizeDL} />
 </SVG>

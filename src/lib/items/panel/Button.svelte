@@ -12,7 +12,7 @@
 		items-center
 		gap-x-2.5
 		rounded-full
-		bg-transparent
+		bg-indigo-200
 		px-4
 		py-2
 		font-semibold

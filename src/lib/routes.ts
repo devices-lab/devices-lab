@@ -36,7 +36,7 @@ export const Routes: Record<RouteName, Route> = {
 		href: resolve('/devices') 
 	},
 	software: {
-		title: 'Software',
+		title: 'Tools',
 		name: '/software',
 		href: resolve('/software')
 	},
