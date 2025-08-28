@@ -10,7 +10,7 @@
 	<enhanced:img src={item.cover} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
 	<div class="mt-4 flex items-center text-base font-medium text-gray-900 dark:text-white {item.group ? 'mb-2' : ''}">
 		{#if item.group}
-			<span class="me-2 inline-block rounded-full bg-gray-200 dark:bg-gray-600 px-2 py-1 text-xs font-semibold text-gray-700 dark:text-white">Group</span>
+			<span class="me-2 inline-block rounded-full bg-gray-200 dark:bg-gray-600 px-2 py-1 text-xs font-semibold text-gray-700 dark:text-white">Family</span>
 		{/if}
 		<h2 class="">{item.name}</h2>
 	</div>
