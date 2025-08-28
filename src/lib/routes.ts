@@ -1,4 +1,5 @@
 import { type Icon, UserRound, Heart, Pickaxe } from '@lucide/svelte';
+import { resolve } from '$app/paths';
 
 
 export interface Route {
@@ -13,41 +14,41 @@ export type RouteName = 'home' | 'about' | 'contact' | 'devices' | 'software' | 
 export const Routes: Record<RouteName, Route> = {
 	home: {
 		title: 'Home',
-		href: '/'
+		href: resolve('/')
 	},
 	about: {
 		title: 'About Us',
-		href: '/about',
+		href: resolve('/about'),
 		icon: UserRound
 	},
 	contact: {
 		title: 'Contact Us',
-		href: '/contact',
+		href: resolve('/contact'),
 		icon: Heart
 	},
 	devices: { 
 		title: 'Devices', 
-		href: '/devices' 
+		href: resolve('/devices') 
 	},
 	software: { 
 		title: 'Software', 
-		href: '/software' 
+		href: resolve('/software') 
 	},
 	research: { 
 		title: 'Research', 
-		href: '/research' 
+		href: resolve('/research') 
 	},
 	media: { 
 		title: 'Media', 
-		href: '/media' 
+		href: resolve('/media') 
 	},
 	tools: { 
 		title: 'Tools', 
-		href: '/tools', 
+		href: resolve('/tools'), 
 		icon: Pickaxe 
 	},
 	shop: { 
 		title: 'Shop', 
-		href: '/shop' 
+		href: resolve('/shop') 
 	}
 };
