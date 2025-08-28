@@ -20,7 +20,9 @@ const config = {
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
 			relative: false
 		},
-		handleHttpError: 'warn'
+		prerender: {
+			handleHttpError: 'warn'
+		},
 	}
 };
 
