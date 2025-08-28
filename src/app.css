@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+@theme {
+    --font-ocr: 'OCR A Extended', 'OCR A Std', 'OCR A', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
+
+    --font-sans: InterVariable, sans-serif;
+    --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+
+
+	--animate-wiggle: wiggle 2s ease-in-out infinite;
+	@keyframes wiggle {
+		0%,
+		100% {
+			transform: rotate(-6deg);
+		}
+		50% {
+			transform: rotate(6deg);
+		}
+	}
+
+}
+
+html, body {
+  height: 100%;
+  min-height: fit-content;
+}
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+	opacity: 0.5;
+}
