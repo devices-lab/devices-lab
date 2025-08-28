@@ -15,7 +15,7 @@ export const item: ItemType = {
 
 	logo: "makedevice",
 	href: `${Routes.software.href}/makedevice`,
-	hrefName: `${Routes.software.href}/makedevice`,
+	hrefName: `${Routes.software.name}/makedevice`,
 
 	tags: ['makedevice'],
 

@@ -18,7 +18,7 @@ export const item: ItemType = {
 
 	logo: "solder-bit",
 	href: `${Routes.devices.href}/solder-bit`,
-	hrefName: `${Routes.devices.href}/solder:bit`,
+	hrefName: `${Routes.devices.name}/solder:bit`,
 
 	tags: ['microbit', 'soldering'],
 	group: true,

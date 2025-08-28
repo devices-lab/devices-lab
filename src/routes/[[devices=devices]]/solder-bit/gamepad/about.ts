@@ -20,7 +20,7 @@ export const item: ItemType = {
 
 	logo: "solder-bit/gamepad",
 	href: `${Routes.devices.href}/solder-bit/gamepad`,
-	hrefName: `${Routes.devices.href}/solder:bit/gamepad`,
+	hrefName: `${Routes.devices.name}/solder:bit/gamepad`,
 
 	tags: ['microbit', 'soldering'],
 

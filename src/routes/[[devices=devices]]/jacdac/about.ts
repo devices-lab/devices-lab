@@ -15,7 +15,7 @@ export const item: ItemType = {
 
 	logo: "jacdac",
 	href: `${Routes.devices.href}/jacdac`,
-	hrefName: `${Routes.devices.href}/jacdac`,
+	hrefName: `${Routes.devices.name}/jacdac`,
 
 	tags: ['jacdac'],
 

@@ -15,7 +15,7 @@ export const item: ItemType = {
 
 	logo: "micro-bit",
 	href: `${Routes.devices.href}/micro-bit`,
-	hrefName: `${Routes.devices.href}/micro:bit`,
+	hrefName: `${Routes.devices.name}/micro:bit`,
 
 	tags: ['microbit'],
 

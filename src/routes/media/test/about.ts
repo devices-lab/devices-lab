@@ -15,7 +15,7 @@ export const item: ItemType = {
 
 	logo: "test",
 	href: `${Routes.media.href}/test`,
-	hrefName: `${Routes.media.href}/test`,
+	hrefName: `${Routes.media.name}/test`,
 
 	tags: ['test'],
 
