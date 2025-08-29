@@ -1,0 +1,9 @@
+<script lang="ts">
+	import type { ClassValue } from 'svelte/elements';
+
+	const { class: className }: { class: ClassValue } = $props();
+</script>
+
+<div class="max-w-fit motion-safe:animate-[wiggle_2s_ease-in-out_infinite] {className}">
+	<span class="inline-flex -rotate-45 items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800 dark:bg-yellow-400/10 dark:text-yellow-500">New!</span>
+</div>

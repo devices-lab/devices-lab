@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Picture } from 'vite-imagetools';
-	import type { ItemImage } from '$lib/_data/item';
+	import type { ItemImage } from '$lib/data/item';
 
 	const { images }: { images: ItemImage[] } = $props();
 </script>

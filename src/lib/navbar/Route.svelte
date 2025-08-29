@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Route } from '$lib/_data/routes';
+	import type { Route } from '$lib/data/routes';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';

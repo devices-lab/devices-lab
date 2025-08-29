@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
-	import { type ItemType, modulesToItems } from '$lib/_data/item';
+	import { type ItemType, modulesToItems } from '$lib/data/item';
 	import ItemGrid from '$lib/items/Grid.svelte';
 
 	// Use vite to import all device files

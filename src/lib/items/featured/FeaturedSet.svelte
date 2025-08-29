@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { type ItemType } from '$lib/_data/item';
+	import { type ItemType } from '$lib/data/item';
 
-	import Item from '$lib/items/featured/Item.svelte';
+	import FeaturedItem from '$lib/items/featured/FeaturedItem.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 
 	import { ChevronRight } from '@lucide/svelte';
-	import type { Route } from '$lib/_data/routes';
+	import type { Route } from '$lib/data/routes';
 
 	const { id, route, items = [] }: { id: string; route: Route; items?: ItemType[] } = $props();
 </script>
@@ -18,7 +18,7 @@
 		<div class="mx-auto flex max-w-3xl justify-start sm:px-6 lg:max-w-7xl lg:px-8">
 			<div class="grid grid-cols-1 gap-10 sm:gap-8 lg:grid-cols-4">
 				{#each items as item}
-					<Item {item} />
+					<FeaturedItem {item} />
 				{/each}
 			</div>
 

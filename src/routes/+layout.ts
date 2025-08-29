@@ -3,12 +3,12 @@
 import type { LayoutLoad } from './$types';
 import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
 
-import { Routes, parseEventRoute } from '$lib/_data/routes';
-import { devicesCatalog } from '$lib/_data/devices';
-import { toolsCatalog } from '$lib/_data/tools';
-import { mediaCatalog } from '$lib/_data/media';
-import { researchCatalog } from '$lib/_data/research';
-import { menu, sideMenu } from '$lib/_data/pages';
+import { Routes, parseEventRoute } from '$lib/data/routes';
+import { devicesCatalog } from '$lib/data/devices';
+import { toolsCatalog } from '$lib/data/tools';
+import { mediaCatalog } from '$lib/data/media';
+import { researchCatalog } from '$lib/data/research';
+import { menu, sideMenu } from '$lib/data/pages';
 
 // Enable prerendering for static site generation
 export const prerender = true;
@@ -31,7 +31,7 @@ const findPathName = (pathName: string): string => {
 		}
 	}
 
-	return '';
+	return pathName;
 };
 
 // Create breadcrumbs based on the current path

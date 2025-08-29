@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import { page } from '$app/state';
-	import { Routes } from '$lib/_data/routes';
+	import { Routes } from '$lib/data/routes';
 </script>
 
 <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">

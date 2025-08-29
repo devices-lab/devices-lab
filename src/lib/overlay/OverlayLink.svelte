@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
-	import { type OverlayType } from '$lib/components/OverlayContainer.svelte';
+	import { type OverlayType } from '$lib/overlay/OverlayContainer.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
 	interface Props {

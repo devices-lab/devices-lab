@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 // Load devices data
-import { devices } from '$lib/_data/devices';
+import { devices } from '$lib/data/devices';
 
 
 export const load = (async () => {

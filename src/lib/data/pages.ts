@@ -1,10 +1,9 @@
 
-import { type Route, Routes } from '$lib/_data/routes';
-import type { ItemType } from '$lib/_data/item';
+import { type Route, Routes } from '$lib/data/routes';
+import type { ItemType } from '$lib/data/item';
 
-import { devicesFeatured } from '$lib/_data/devices';
-import { toolsFeatured } from '$lib/_data/tools';
-
+import { devicesFeatured } from '$lib/data/devices';
+import { toolsFeatured } from '$lib/data/tools';
 
 
 export interface Page {
@@ -31,7 +30,6 @@ export const Pages: Record<string, Page> = {
 		route: Routes.research,
 	}
 };
-
 
 export const menu: Page[] = [
 	Pages.home,

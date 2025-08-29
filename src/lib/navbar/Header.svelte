@@ -8,8 +8,20 @@
 	import FeaturedSet from '$lib/items/featured/FeaturedSet.svelte';
 	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
 
+	import { devMode } from '$lib/utils';
+	import { onMount } from 'svelte';
+
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
+
+
+	onMount(() => {
+		devMode.set(localStorage.getItem('devMode') === 'true');
+		
+		devMode.subscribe((value) => {
+			localStorage.setItem('devMode', String(value));
+		});
+	});
 </script>
 
 <!-- Mobile menu -->
@@ -17,6 +29,14 @@
 
 <!-- NavBar -->
 <header class="relative z-100">
+	{#if $devMode}
+		<div class=" bg-gray-200">
+			<div class=" bg-gray-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
+				<div class="font-semibold">Dev!</div>
+			</div>
+		</div>
+	{/if}
+
 	<nav aria-label="Top" class="bg-white text-gray-700 shadow-xs dark:bg-gray-800 dark:text-gray-300">
 		<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 			<!-- Logo (lg+) -->
@@ -44,7 +64,7 @@
 									{/snippet}
 								</LinkPop>
 							{:else}
-								<Route route={menu.route} current={current} />
+								<Route route={menu.route} {current} />
 							{/if}
 						{/each}
 					</div>

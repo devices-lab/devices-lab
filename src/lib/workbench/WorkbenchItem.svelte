@@ -4,7 +4,7 @@
 	import IconArrow from '$lib/workbench/IconArrow.svelte';
 	import Label from '$lib/workbench/Label.svelte';
 
-	import type { WorkbenchItem } from '$lib/_data/workbench';
+	import type { WorkbenchItem } from '$lib/data/workbench';
 
 	const { item }: { item: WorkbenchItem } = $props();
 </script>

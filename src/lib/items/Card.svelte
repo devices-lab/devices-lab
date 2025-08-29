@@ -1,6 +1,7 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
-	import { type ItemType, getItemPath } from '$lib/_data/item';
+	import Feature from '$lib/items/common/Feature.svelte';
+	import { type ItemType, getItemPath } from '$lib/data/item';
 
 	const { item }: { item: ItemType } = $props();
 </script>
@@ -8,6 +9,7 @@
 <BaseLink
 	href={getItemPath(item)}
 	class="group
+		relative
 		overflow-hidden
 		rounded-lg
 		bg-white
@@ -34,5 +36,9 @@
 
 	{#if item.tags.length}
 		<p class="mt-2 text-sm text-gray-400 italic dark:text-gray-600">tags: {item.tags.join(', ')}</p>
+	{/if}
+
+	{#if item.featured}
+		<Feature class="absolute top-3 left-1 sm:top-4 sm:left-2" />
 	{/if}
 </BaseLink>

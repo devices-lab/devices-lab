@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
-	import { type ItemType, getItemPath } from '$lib/_data/item';
-	import { Star } from '@lucide/svelte';
+	import Feature from '$lib/items/common/Feature.svelte';
+	import { type ItemType, getItemPath } from '$lib/data/item';
 
 	const { item }: { item: ItemType } = $props();
 </script>
@@ -12,7 +12,5 @@
 		<h4 class="text-center text-sm/6 font-semibold text-gray-900 dark:text-gray-300">{item.name}</h4>
 	</BaseLink>
 
-	<div class="absolute top-1 left-1 motion-safe:animate-[wiggle_2s_ease-in-out_infinite] sm:top-2 sm:left-2">
-		<span class="inline-flex -rotate-45 items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-semibold text-yellow-800 dark:bg-yellow-400/10 dark:text-yellow-500">New!</span>
-	</div>
+	<Feature class="absolute top-1 left-1 sm:top-2 sm:left-2" />
 </div>

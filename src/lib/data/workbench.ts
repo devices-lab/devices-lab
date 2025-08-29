@@ -1,4 +1,5 @@
 import { modules } from '$workbench/workbench';
+import { workbenchItems as externalWorkbenchItems } from '$lib/_content/workbench';
 
 export interface WorkbenchItem {
 	href: string;
@@ -9,19 +10,6 @@ export interface WorkbenchItem {
 	external?: boolean;
 }
 
-//==================================================================//
-
-// List of external workbench items to include in the workbench list
-const externalTools: WorkbenchItem[] = [
-	{
-		name: "Image Editor",
-		href: `https://mac-aron.github.io/png-rounded-corners/`,
-		description: "Round the corners of images",
-		label: "design"
-	}
-];
-
-//==================================================================//
 
 // Process a list of workbench items to set the external flag and sort them by name
 function processWorkbenchList(items: WorkbenchItem[], external: boolean): WorkbenchItem[] {
@@ -33,13 +21,12 @@ function processWorkbenchList(items: WorkbenchItem[], external: boolean): Workbe
 
 // Combine internal and external workbench items into a single list
 function modulesToWorkbench(modules: Record<string, { item: WorkbenchItem }>): WorkbenchItem[] {
+	const internalWorkbenchItems = Object.values(modules).map(m => m.item);
 	return [
-		...processWorkbenchList(Object.values(modules).map(m => m.item), false),
-		...processWorkbenchList(externalTools, true)
+		...processWorkbenchList(internalWorkbenchItems, false),
+		...processWorkbenchList(externalWorkbenchItems, true)
 	];
 }
-
-//==================================================================//
 
 // Collect all devices
 export const workbench: WorkbenchItem[] = modulesToWorkbench(modules);

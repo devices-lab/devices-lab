@@ -7,13 +7,9 @@ export interface Route {
 	id: RouteName;
 	title: string;
 	href: string;
-
 	// Optional icon
 	icon?: typeof Icon;
-
 }
-
-
 
 
 export const Routes: Record<RouteName, Route> = {

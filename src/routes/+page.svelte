@@ -1,9 +1,9 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import banner from '$lib/assets/img/InfoLab-min.jpg?enhanced';
-	import { Routes } from '$lib/_data/routes';
+	import { Routes } from '$lib/data/routes';
 
-	import OverlayContainer from '$lib/components/OverlayContainer.svelte';
+	import OverlayContainer from '$lib/overlay/OverlayContainer.svelte';
 </script>
 
 <div class="static">

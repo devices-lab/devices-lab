@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Breadcrumb from '$lib/navbar/Breadcrumb.svelte';
 	import type { ClassValue } from 'svelte/elements';
-	import { Routes } from '$lib/_data/routes';
+	import { Routes } from '$lib/data/routes';
 
 	export interface BreadcrumbType {
 		title: string;

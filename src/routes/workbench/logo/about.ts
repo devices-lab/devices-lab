@@ -1,5 +1,5 @@
-import type { WorkbenchItem } from '$lib/_data/workbench';
-import { Routes } from '$lib/_data/routes';
+import type { WorkbenchItem } from '$lib/data/workbench';
+import { Routes } from '$lib/data/routes';
 //=================================================//
 
 export const item: WorkbenchItem = {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import SvgLogo from '$lib/workbench/logo/SVG_Logo.svelte';
-	import { Routes } from '$lib/_data/routes';
+	import { Routes } from '$lib/data/routes';
 
 	const { height = 'h-10', ...props }: { height?: string; [key: string]: any } = $props();
 </script>

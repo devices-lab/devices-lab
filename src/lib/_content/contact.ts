@@ -1,12 +1,4 @@
-
-
-export interface Contact {
-	address_0: string;
-	address_1: string;
-	address_2: string;
-	address_3: string;
-	email: string;
-}
+import type { Contact } from '$lib/data/contact';
 
 export const contact: Contact = {
 	address_0: 'Lancaster University, InfoLab',
@@ -15,4 +7,3 @@ export const contact: Contact = {
 	address_3: 'United Kingdom',
 	email: 'devices-lab@lancaster.ac.uk'
 }
-

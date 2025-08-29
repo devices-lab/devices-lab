@@ -1,6 +1,6 @@
-import { type ItemType, modulesToItems, modulesToVisibleItems, modulesToFeaturedItems } from "$lib/_data/item";
+import { type ItemType, modulesToItems, modulesToVisibleItems, modulesToFeaturedItems } from "$lib/data/item";
 import { modules } from '$research/research'
-import { Routes } from "$lib/_data/routes";
+import { Routes } from "$lib/data/routes";
 
 // Collect all items
 export const researchCatalog: ItemType[] = modulesToItems(modules);

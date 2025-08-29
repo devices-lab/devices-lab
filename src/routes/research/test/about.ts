@@ -1,4 +1,4 @@
-import type { ItemType } from '$lib/_data/item';
+import type { ItemType } from '$lib/data/item';
 //=================================================//
 
 import ImageCover from "$lib/assets/img/microbit/cover.png?enhanced"

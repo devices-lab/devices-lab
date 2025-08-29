@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 
 	import type { Snippet } from 'svelte';
-	import type { ItemType } from '$lib/_data/item';
+	import type { ItemType } from '$lib/data/item';
 	import SvgProject from '$lib/workbench/logo/SVG_Project.svelte';
 
 	import Title from '$lib/items/page/Title.svelte';
@@ -10,6 +10,7 @@
 	import Collapse from '$lib/items/page/Collapse.svelte';
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import SvgVersion from '$lib/workbench/logo/SVG_Version.svelte';
+	import Feature from '$lib/items/common/Feature.svelte';
 
 	const { children }: { children?: Snippet } = $props();
 
@@ -19,15 +20,15 @@
 
 {#if item}
 	<section class="relative bg-white sm:px-6 sm:py-24 lg:px-8 dark:bg-gray-900">
-		<div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
+		<div class="relative lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
 			<!-- Image gallery -->
 			<div class="px-4 sm:mt-16 sm:px-0 lg:mt-0">
 				<ImageGrid images={item.images} />
 			</div>
 
 			<!-- Item info -->
-			<div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-				<Title title={item.name} />
+			<div class="relative mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+				<Title {item} />
 				<Description description={item.description} />
 
 				<section aria-labelledby="details-heading" class="mt-12">
@@ -36,8 +37,8 @@
 						{@render children?.()}
 						<Collapse label={'Identifier'}>
 							<div class="flex justify-center">
-								<SvgVersion uid={'dl-version-stack'} projectId={item.projectID} projectVersion={item.projectVersion} class="max-h-15 opacity-80 max-w-fit" props={{ class: 'fill-white dark:fill-gray-300' }}/>
-								<SvgProject uid={'dl-project'} projectName={item.projectName} class="max-h-15 opacity-80 max-w-fit" props={{ class: 'fill-white dark:fill-gray-300' }} />
+								<SvgVersion uid={'dl-version-stack'} projectId={item.projectID} projectVersion={item.projectVersion} class="max-h-15 max-w-fit opacity-80" props={{ class: 'fill-white dark:fill-gray-300' }} />
+								<SvgProject uid={'dl-project'} projectName={item.projectName} class="max-h-15 max-w-fit opacity-80" props={{ class: 'fill-white dark:fill-gray-300' }} />
 							</div>
 						</Collapse>
 					</div>

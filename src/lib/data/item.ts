@@ -1,5 +1,5 @@
 import type { Picture } from 'vite-imagetools';
-import type { Route } from '$lib/_data/routes';
+import type { Route } from '$lib/data/routes';
 
 export interface ItemImage {
 	sm: Picture;

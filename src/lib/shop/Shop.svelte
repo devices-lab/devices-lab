@@ -1,6 +1,12 @@
 <script lang="ts">
 	import BaseLink from '$lib/components/BaseLink.svelte';
-	import { DevicesShop as Shop } from '$lib/_data/shop';
+
+	const Shop = {
+		name: 'Devices Lab',
+		description: 'Explore the latest in device technology and research.',
+		image: 'https://www.lancaster.ac.uk/images/people/21023.jpg',
+		href: 'https://www.lancaster.ac.uk/sci-tech/about-us/people/mannu-lambrichts'
+	};
 </script>
 
 <section aria-labelledby="featured-heading" class="group relative my-16 overflow-hidden rounded-lg bg-gray-100 lg:h-56 dark:bg-gray-800">

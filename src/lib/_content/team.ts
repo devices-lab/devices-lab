@@ -1,17 +1,6 @@
-import type { Picture } from 'vite-imagetools';
+import type { Person } from '$lib/data/about';
 
-export type PersonOrder = 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
-
-export interface Person {
-	name: string;
-	role: string;
-	image: Picture | string;
-	imageAdj?: string;
-	order: PersonOrder;
-	href: string;
-}
-
-export const team: Person[] = ([
+export const team: Person[] = [
 	{
 		name: 'Mannu Lambrichts',
 		role: 'Senior Research Associate',
@@ -124,7 +113,4 @@ export const team: Person[] = ([
 		order: 'level2',
 		href: 'https://www.lancaster.ac.uk/scc/about-us/people/andrew-scott'
 	},
-] as Person[]).sort((a, b) => {
-	const levelComparison = a.order.localeCompare(b.order);
-	return levelComparison !== 0 ? levelComparison : a.name.localeCompare(b.name);
-})
+];
