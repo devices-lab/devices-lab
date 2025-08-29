@@ -1,12 +1,10 @@
 import type { PageLoad } from './$types';
 
 // Load media data
-import { media } from './media';
+import { media } from '$lib/_data/media';
 
 export const load = (async () => {
     return {
-		title: 'Media',
-		description: 'Explore our media content.',
 		media
 	};
 }) satisfies PageLoad;

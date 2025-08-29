@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseLink from '$lib/components/BaseLink.svelte';
 	import { type OverlayType } from '$lib/components/OverlayContainer.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
@@ -18,7 +19,7 @@
 	const topPx = $derived(overlay.offsetY + overlay.renderedH * y);
 </script>
 
-<a
+<BaseLink
 	{href}
 	class="
 		absolute
@@ -40,10 +41,8 @@
 		dark:focus-visible:outline-indigo-500
 		{className}
 	"
-	style:left={`${leftPx}px`}
-	style:top={`${topPx}px`}
-	style:transform="translate(-50%, -50%)"
+	style={`left: ${leftPx}px; top: ${topPx}px; transform: translate(-50%, -50%);`}
 	{...restProps}
 >
 	{label}
-</a>
+</BaseLink>

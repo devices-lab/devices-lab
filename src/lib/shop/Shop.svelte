@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseLink from '$lib/components/BaseLink.svelte';
 	import { DevicesShop as Shop } from '$lib/_data/shop';
 </script>
 
@@ -14,6 +15,6 @@
 			<h2 id="featured-heading" class="text-xl font-bold text-white">{Shop.name}</h2>
 			<p class="mt-1 text-sm text-gray-300">{Shop.description}</p>
 		</div>
-		<a href={Shop.href} class="disabled mt-6 flex shrink-0 items-center justify-center rounded-md border border-white/25 px-4 py-3 text-base font-medium text-white hover:bg-white/10 sm:mt-0 sm:ml-8 lg:ml-0 lg:w-full">Open shop</a>
+		<BaseLink href={Shop.href} class="disabled mt-6 flex shrink-0 items-center justify-center rounded-md border border-white/25 px-4 py-3 text-base font-medium text-white hover:bg-white/10 sm:mt-0 sm:ml-8 lg:ml-0 lg:w-full">Open shop</BaseLink>
 	</div>
 </section>

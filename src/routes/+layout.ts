@@ -1,81 +1,35 @@
 
 
 import type { LayoutLoad } from './$types';
-
-import {resolve } from '$app/paths';
-
 import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
-import type { FeaturedListProps } from '$lib/items/FeaturedList.svelte';
 
-import { type Route, Routes } from '$lib/routes';
-
-import { devicesCatalog, devicesFeatured } from '../routes/[[devices=devices]]/devices';
-import { softwareCatalog, softwareFeatured } from '../routes/[[software=software]]/software';
-import { mediaCatalog, mediaFeatured } from '../routes/media/media';
-import { researchCatalog, researchFeatured } from '../routes/research/research';
-import type { ItemType } from '$lib/items/item';
+import { Routes, parseEventRoute } from '$lib/_data/routes';
+import { devicesCatalog } from '$lib/_data/devices';
+import { softwareCatalog } from '$lib/_data/software';
+import { mediaCatalog } from '$lib/_data/media';
+import { researchCatalog } from '$lib/_data/research';
+import { menu, sideMenu } from '$lib/_data/pages';
 
 // Enable prerendering for static site generation
 export const prerender = true;
 
-interface MenuItem extends Route {
-	category: string;
-	popover?: FeaturedListProps;
-}
 
-const menuItems: MenuItem[] = [
-	{ ...Routes.home, category: 'home' },
-	{ ...Routes.devices, category: 'devices', popover: { label: "See all devices", items: devicesFeatured } },
-	{ ...Routes.software, category: 'software', popover: { label: "See all software", items: softwareFeatured } },
-	{ ...Routes.media, category: 'media', popover: { label: "See all media", items: mediaFeatured } },
-	{ ...Routes.research, category: 'research', popover: { label: "See all research", items: researchFeatured } }
-];
-
-const menuOptions: Route[] = [
-	{ ...Routes.tools },
-	{ ...Routes.about },
-	{ ...Routes.contact },
-];
-
-
-const processPathName = (pathName: string, collection: ItemType[]): string | undefined => {
-	for (const item of collection) {
-		if (item.href.endsWith(pathName)) {
-			return item.hrefName;
-		}
-	}
-	return undefined;
-};
-
-const processRouteName = (pathName: string): string | undefined => {
-	for (const routeKey in Routes) {
-		const route = Routes[routeKey as keyof typeof Routes];
-		if (route.href.endsWith(pathName)) {
-			return route.name;
-		}
-	}
-	return undefined;
-};
 
 // If the path matches a device, software, etc, return its full href and name
-const findPathName = (pathName: string): string  => {
-	if (!pathName) return '';
-	let found: string | undefined;
-	
-	found = processPathName(pathName, devicesCatalog);
-	if (found) return found;
+const findPathName = (pathName: string): string => {
+	// Collect all item paths
+	const items = [
+		...devicesCatalog,
+		...softwareCatalog,
+		...mediaCatalog,
+		...researchCatalog
+	];
 
-	found = processPathName(pathName, softwareCatalog);
-	if (found) return found;
-
-	found = processPathName(pathName, mediaCatalog);
-	if (found) return found;
-
-	found = processPathName(pathName, researchCatalog);
-	if (found) return found;
-
-	found = processRouteName(pathName);
-	if (found) return found;
+	for (const item of items) {
+		if (pathName.endsWith(item.path)) {
+			return pathName.replace(item.path, item.pathName);
+		}
+	}
 
 	return '';
 };
@@ -83,33 +37,26 @@ const findPathName = (pathName: string): string  => {
 // Create breadcrumbs based on the current path
 const createBreadcrumbs = (route: string): BreadcrumbType[] => {
 	const name = findPathName(route);
-	const nameParts = name.split('/').filter(Boolean);
-	const pathParts = route.split('/').filter(Boolean);
+	const nameParts = name.split('/').filter(Boolean) || [];
+	const pathParts = route.split('/').filter(Boolean) || [];
 
 	return nameParts.map((part, index) => ({
 		title: part,
-		href: resolve(`/${pathParts.slice(0, index + 1).join('/')}`)
+		href: `/${pathParts.slice(0, index + 1).join('/')}`
 	}));
 };
 
 
-const parseRoute = (route: string | null): string => {
-	if (!route) return '';
-	route = route.replace("[[devices=devices]]", "devices");
-	route = route.replace("[[software=software]]", "software");
-	route = route.replace("[[media=media]]", "media");
-	route = route.replace("[[research=research]]", "research");
-	return route;
-};
+
 
 export const load: LayoutLoad = async (event) => {
-	const route = parseRoute(event.route.id);
+	const route = parseEventRoute(event.route.id);
 	return {
 		...(event.data ?? {}),
-		route,
+		route: Routes.home,
 		breadcrumbs: createBreadcrumbs(route),
-		isHome: route === Routes.home.name,
-		menuItems,
-		menuOptions,
+		isHome: route === Routes.home.href,
+		menu,
+		sideMenu,
 	};
 };

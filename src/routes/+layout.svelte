@@ -19,7 +19,7 @@
 		import('@tailwindplus/elements');
 	});
 
-	const hasBreadcrumbs = $derived(data.breadcrumbs.length > 0);
+	const hasBreadcrumbs = $derived(page.data.breadcrumbs.length > 0);
 </script>
 
 <svelte:head>
@@ -28,17 +28,19 @@
 </svelte:head>
 
 <div class="flex min-h-full flex-col">
-	<Header {data} />
+	<Header />
 
 	<div class="container mx-auto flex grow flex-col px-4">
 		{#if hasBreadcrumbs}
-			<Breadcrumbs breadcrumbs={data.breadcrumbs} class="mt-6" />
+			<Breadcrumbs breadcrumbs={page.data.breadcrumbs} class="mt-6" />
 		{/if}
 
-		{#if !data.isHome && page.data.noHeader !== true && page.status === 200}
+		{#if !data.isHome && page.data.noHeader !== true && page.status === 200 && page.data.title}
 			<div class="mb-6 border-t-0 border-b-2 border-gray-200 py-8 text-center">
 				<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{page.data.title}</h1>
-				<p class="mx-auto mt-4 max-w-3xl text-base text-gray-500 dark:text-gray-400">{page.data.description}</p>
+				{#if page.data.subtitle}
+					<p class="mx-auto mt-4 max-w-3xl text-base text-gray-500 dark:text-gray-400">{page.data.subtitle}</p>
+				{/if}
 			</div>
 		{/if}
 

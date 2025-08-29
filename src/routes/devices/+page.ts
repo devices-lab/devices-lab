@@ -1,12 +1,11 @@
 import type { PageLoad } from './$types';
 
 // Load devices data
-import { devices } from '../[[devices=devices]]/devices';
+import { devices } from '$lib/_data/devices';
+
 
 export const load = (async () => {
-    return {
-		title: 'Our Devices',
-		description: 'Explore the things we create.',
+	return {
 		devices
 	};
 }) satisfies PageLoad;

@@ -1,15 +1,13 @@
 <script lang="ts">
-	import { item } from './about';
-
-	import Panel from '$lib/items/panel/Panel.svelte';
-	import Collapse from '$lib/items/panel/Collapse.svelte';
-	import LinkItem from '$lib/items/panel/LinkItem.svelte';
-	import List from '$lib/items/panel/List.svelte';
+	import ItemPage from '$lib/items/page/Page.svelte';
+	import Collapse from '$lib/items/page/Collapse.svelte';
+	import LinkItem from '$lib/items/page/LinkItem.svelte';
+	import List from '$lib/items/page/List.svelte';
 	
 	import { Scroll } from '@lucide/svelte';
 </script>
 
-<Panel logo={item.logo} name={item.name} description={item.description} images={item.images}>
+<ItemPage>
 	<Collapse label={'Features'}>
 		<List items={['LED displays for daylight readability', 'Up to 12 classification categories', 'Persistent data logging', 'Smart scanning of data collection sheets', 'Intelligent data upload for classes', 'Long life AA battery pack']} />
 	</Collapse>
@@ -26,4 +24,4 @@
 			</LinkItem>
 		</List>
 	</Collapse>
-</Panel>
+</ItemPage>

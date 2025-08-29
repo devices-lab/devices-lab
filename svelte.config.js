@@ -6,6 +6,13 @@ const config = {
 	// Consult https://svelte.dev/docs/kit/integrations for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
+		alias: {
+			$devices: 'src/routes/[[devices=devices]]',
+			$tools: 'src/routes/[[software=software]]',
+			$media: 'src/routes/media',
+			$research: 'src/routes/research',
+			$workbench: 'src/routes/workbench',
+		},
 		adapter: adapter(
 			{
 				pages: 'build',
@@ -16,7 +23,7 @@ const config = {
 			}
 		),
 		paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+			base: process.argv.includes('dev') ? '/test' : process.env.BASE_PATH,
 			relative: false
 		},
 	}

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseLink from '$lib/components/BaseLink.svelte';
 	import { type OverlayType } from '$lib/components/OverlayContainer.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
@@ -20,7 +21,7 @@
 </script>
 
 {#if typeof action === 'string'}
-	<a href={action} class={classList} style:left={`${leftPx}px`} style:top={`${topPx}px`} style:transform="translate(-50%, -50%)" {...restProps}> </a>
+	<BaseLink href={action} class={classList} style={`left: ${leftPx}px; top: ${topPx}px; transform: translate(-50%, -50%);`} {...restProps}> </BaseLink>
 {:else}
 	<button onclick={action} class={classList} style:left={`${leftPx}px`} style:top={`${topPx}px`} style:transform="translate(-50%, -50%)" {...restProps}> </button>
 {/if}

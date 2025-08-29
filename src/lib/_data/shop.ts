@@ -1,5 +1,5 @@
 import type { Picture } from 'vite-imagetools';
-import { Routes } from '$lib/routes';
+import { Routes } from '$lib/_data/routes';
 import ImageShoppingCart from '$lib/assets/img/ShoppingCart.png?enhanced';
 
 

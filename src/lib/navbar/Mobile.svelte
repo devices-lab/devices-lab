@@ -1,12 +1,8 @@
 <script lang="ts">
-	import type { LayoutData } from '../../routes/$types';
-	import Link from '$lib/navbar/Link.svelte';
+	import { page } from '$app/state';
+	import Route from '$lib/navbar/Route.svelte';
 
-	interface Props {
-		data: LayoutData;
-		uid: string;
-	}
-	const { data, uid }: Props = $props();
+	const { uid }: { uid: string } = $props();
 </script>
 
 <el-dialog>
@@ -25,9 +21,9 @@
 				</div>
 
 				<div class="space-y-6 border-t border-gray-200 px-4 py-6">
-					{#each data.menuItems as item}
+					{#each page.data.menu as menu}
 						<div class="flow-root">
-							<Link href={item.href} current={data.route === item.name} class="-m-2 block p-2 font-medium text-gray-900 dark:text-gray-200">{item.title}</Link>
+							<Route route={menu.route} current={page.data.route === menu.route.href} class="-m-2 block p-2 font-medium text-gray-900 dark:text-gray-200" />
 						</div>
 					{/each}
 				</div>

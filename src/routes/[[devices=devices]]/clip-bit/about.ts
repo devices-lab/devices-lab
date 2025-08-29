@@ -1,5 +1,4 @@
-import type { ItemType } from '$lib/items/item';
-import { Routes } from '$lib/routes';
+import type { ItemType } from '$lib/_data/item';
 //=================================================//
 
 import ImageCover from "$lib/assets/img/clipbit/cover.png?enhanced";
@@ -12,9 +11,11 @@ import Image6 from "$lib/assets/img/clipbit/image6.jpeg?enhanced";
 
 export const item: ItemType = {
 	name: "clip:bit",
+	path: "/clip-bit",
+	pathName: "/clip:bit",
+
 	teaser: "Enhancing outdoor learning with persistent data logging for the BBC micro:bit.",
 	description: "Enable cross-curricular outdoor learning with the clip:bit. Easy to use persistent data logging for the BBC micro:bit, ideal for field trips and surveys. Supplied fully assembled in a range of colour options.",
-	category: 'devices',
 
 	cover: ImageCover,
 	images: [
@@ -27,12 +28,13 @@ export const item: ItemType = {
 		{ sm: Image6, lg: Image6 }
 	],
 
-	logo: "clip-bit",
-	href: `${Routes.devices.href}/clip-bit`,
-	hrefName: `${Routes.devices.name}/clip:bit`,
+	projectName: "clip-bit",
+	projectID: "0000",
+	projectVersion: "v1.0",
 
 	tags: ['microbit'],
 
+	family: false,
 	visible: true,
 	featured: true
 };

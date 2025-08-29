@@ -1,30 +1,28 @@
-import type { ItemType } from '$lib/items/item';
-import { Routes } from '$lib/routes';
+import type { ItemType } from '$lib/_data/item';
 //=================================================//
 
 import ImageCover from "$lib/assets/img/solderbit/cover.png?enhanced"
 
 export const item: ItemType = {
 	name: "solder:bit",
+	path: "/solder-bit",
+	pathName: "/solder:bit",
+
 	teaser: "A range of devices created to learn soldering.",
 	description: "A range of devices created to learn soldering.",
-	category: 'devices',
 	
 	cover: ImageCover,
 	images: [
-		{
-			sm: ImageCover,
-			lg: ImageCover
-		}
+		{ sm: ImageCover, lg: ImageCover }
 	],
 
-	logo: "solder-bit",
-	href: `${Routes.devices.href}/solder-bit`,
-	hrefName: `${Routes.devices.name}/solder:bit`,
+	projectName: "solder-bit",
+	projectID: "0000",
+	projectVersion: "v1.0",
 
 	tags: ['microbit', 'soldering'],
-	group: true,
 
+	family: true,
 	visible: true,
 	featured: false
 };

@@ -1,26 +1,28 @@
-import type { ItemType } from '$lib/items/item';
-import { Routes } from '$lib/routes';
+import type { ItemType } from '$lib/_data/item';
 //=================================================//
 
 import ImageCover from "$lib/assets/img/microbit/cover.png?enhanced"
 
 export const item: ItemType = {
 	name: "Test",
+	path: "/test",
+	pathName: "/test",
+
 	teaser: "Test project.",
 	description: "Test project.",
-	category: 'research',
 	
 	cover: ImageCover,
 	images: [
 		{ sm: ImageCover, lg: ImageCover },
 	],
 
-	logo: "test",
-	href: `${Routes.media.href}/test`,
-	hrefName: `${Routes.media.name}/test`,
+	projectName: "test",
+	projectID: "0000",
+	projectVersion: "v1.0",
 
 	tags: ['test'],
 
+	family: false,
 	visible: false,
 	featured: false
 };

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { ItemType } from '$lib/items/item';
+	import BaseLink from '$lib/components/BaseLink.svelte';
+	import type { ItemType } from '$lib/_data/item';
 	import ItemCard from '$lib/items/Card.svelte';
 
-	import { Routes } from '$lib/routes';
+	import { Routes } from '$lib/_data/routes';
 
 	const { items }: { items: ItemType[] } = $props();
 </script>
@@ -377,11 +378,11 @@
 
 				<el-menu anchor="bottom start" popover="auto" class="w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
 					<div class="py-1">
-						<a href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Most Popular</a>
-						<a href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Best Rating</a>
-						<a href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Newest</a>
-						<a href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Price: Low to High</a>
-						<a href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Price: High to Low</a>
+						<BaseLink href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Most Popular</BaseLink>
+						<BaseLink href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Best Rating</BaseLink>
+						<BaseLink href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Newest</BaseLink>
+						<BaseLink href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Price: Low to High</BaseLink>
+						<BaseLink href={Routes.home.href} class="block px-4 py-2 text-sm font-medium text-gray-900 focus:bg-gray-100 focus:outline-hidden">Price: High to Low</BaseLink>
 					</div>
 				</el-menu>
 			</el-dropdown>

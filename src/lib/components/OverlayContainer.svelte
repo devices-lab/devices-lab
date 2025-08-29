@@ -54,7 +54,7 @@
 
 <div class="absolute inset-0 z-10 size-full overflow-hidden" use:resize>
 	{#if ready}
-		<OverlayLink href="/test" label="test" x={0.3} y={0.5} overlay={{ renderedW, renderedH, offsetX, offsetY }} class=""/>
+		<!--<OverlayLink href="/test" label="test" x={0.3} y={0.5} overlay={{ renderedW, renderedH, offsetX, offsetY }} class=""/>-->
 		<OverlayEgg action={() => {alert('Egg clicked')}} x={0.588} y={0.765} overlay={{ renderedW, renderedH, offsetX, offsetY }}/>
 	{/if}
 </div>
