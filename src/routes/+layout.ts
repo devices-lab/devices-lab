@@ -5,7 +5,7 @@ import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
 
 import { Routes, parseEventRoute } from '$lib/_data/routes';
 import { devicesCatalog } from '$lib/_data/devices';
-import { softwareCatalog } from '$lib/_data/software';
+import { toolsCatalog } from '$lib/_data/tools';
 import { mediaCatalog } from '$lib/_data/media';
 import { researchCatalog } from '$lib/_data/research';
 import { menu, sideMenu } from '$lib/_data/pages';
@@ -15,12 +15,12 @@ export const prerender = true;
 
 
 
-// If the path matches a device, software, etc, return its full href and name
+// If the path matches a device, tools, etc, return its full href and name
 const findPathName = (pathName: string): string => {
 	// Collect all item paths
 	const items = [
 		...devicesCatalog,
-		...softwareCatalog,
+		...toolsCatalog,
 		...mediaCatalog,
 		...researchCatalog
 	];

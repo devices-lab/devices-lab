@@ -1,7 +1,7 @@
 import { type Icon, UserRound, Heart, Pickaxe } from '@lucide/svelte';
 
 
-export type RouteName = 'home' | 'about' | 'contact' | 'devices' | 'software' | 'research' | 'media' | 'workbench' | 'shop';
+export type RouteName = 'home' | 'about' | 'contact' | 'devices' | 'tools' | 'research' | 'media' | 'workbench' | 'shop';
 
 export interface Route {
 	id: RouteName;
@@ -39,10 +39,10 @@ export const Routes: Record<RouteName, Route> = {
 		title: 'Devices',
 		href: '/devices',
 	},
-	software: {
-		id: 'software',
+	tools: {
+		id: 'tools',
 		title: 'Tools',
-		href: '/software',
+		href: '/tools',
 	},
 	research: {
 		id: 'research',
@@ -71,7 +71,7 @@ export const Routes: Record<RouteName, Route> = {
 export const parseEventRoute = (route: string | null): string => {
 	if (!route) return '';
 	route = route.replace("[[devices=devices]]", "devices");
-	route = route.replace("[[software=software]]", "software");
+	route = route.replace("[[tools=tools]]", "tools");
 	route = route.replace("[[media=media]]", "media");
 	route = route.replace("[[research=research]]", "research");
 	return route;

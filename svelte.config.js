@@ -8,7 +8,7 @@ const config = {
 	kit: {
 		alias: {
 			$devices: 'src/routes/[[devices=devices]]',
-			$tools: 'src/routes/[[software=software]]',
+			$tools: 'src/routes/[[tools=tools]]',
 			$media: 'src/routes/media',
 			$research: 'src/routes/research',
 			$workbench: 'src/routes/workbench',
