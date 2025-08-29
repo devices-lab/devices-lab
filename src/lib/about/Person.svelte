@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Person } from '$lib/_data/about';
+	import type { Person } from '$lib/data/about';
 
 	const { person }: { person: Person } = $props();
 </script>

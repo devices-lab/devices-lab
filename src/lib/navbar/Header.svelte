@@ -1,25 +1,42 @@
 <script lang="ts">
-	import type { LayoutData } from '../../routes/$types';
 	import { page } from '$app/state';
 
 	import Logo from '$lib/navbar/Logo.svelte';
-	import Link from '$lib/navbar/Link.svelte';
+	import Route from '$lib/navbar/Route.svelte';
 	import LinkPop from '$lib/navbar/LinkPop.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
-	import FeaturedList from '$lib/items/FeaturedList.svelte';
+	import FeaturedSet from '$lib/items/featured/FeaturedSet.svelte';
 	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
+
+	import { devMode } from '$lib/utils';
+	import { onMount } from 'svelte';
 
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
 
-	const { data }: { data: LayoutData } = $props();
+
+	onMount(() => {
+		devMode.set(localStorage.getItem('devMode') === 'true');
+		
+		devMode.subscribe((value) => {
+			localStorage.setItem('devMode', String(value));
+		});
+	});
 </script>
 
 <!-- Mobile menu -->
-<MobileMenu {data} uid={menuID} />
+<MobileMenu uid={menuID} />
 
 <!-- NavBar -->
 <header class="relative z-100">
+	{#if $devMode}
+		<div class=" bg-gray-200">
+			<div class=" bg-gray-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
+				<div class="font-semibold">Dev!</div>
+			</div>
+		</div>
+	{/if}
+
 	<nav aria-label="Top" class="bg-white text-gray-700 shadow-xs dark:bg-gray-800 dark:text-gray-300">
 		<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 			<!-- Logo (lg+) -->
@@ -38,14 +55,16 @@
 						</div>
 					</div>
 					<div class="flex h-full justify-center space-x-8">
-						{#each data.menuItems as item}
-							{@const current = data.route === item.name || page.data.category === item.category }
-							{#if item.popover && item.popover.items.length > 0}
-								<LinkPop title={item.title} {current}>
-									<FeaturedList href={item.href} props={item.popover} />
+						{#each page.data.menu as menu}
+							{@const current = page.data.route.href === menu.route.href}
+							{#if menu.menu && menu.menu.length > 0}
+								<LinkPop title={menu.route.title} {current}>
+									{#snippet content(id: string)}
+										<FeaturedSet {id} route={menu.route} items={menu.menu} />
+									{/snippet}
 								</LinkPop>
 							{:else}
-								<Link href={item.href} {current}>{item.title}</Link>
+								<Route route={menu.route} {current} />
 							{/if}
 						{/each}
 					</div>
@@ -75,14 +94,9 @@
 						</svg>
 					</button>
 					<el-menu anchor="bottom end" popover="auto" class="w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-						{#each data.menuOptions as option}
+						{#each page.data.sideMenu as route}
 							<div class="py-1">
-								<Link href={option.href}>
-									{#if option.icon}
-										<option.icon class="me-3 size-5 fill-current opacity-50" aria-hidden="true" />
-									{/if}
-									{option.title}
-								</Link>
+								<Route {route} />
 							</div>
 						{/each}
 

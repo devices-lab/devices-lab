@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 
-	const { title, children, class: className, current = false }: { title: string; children: Snippet; class?: ClassValue; current?: boolean } = $props();
+	const { title, content, class: className, current = false }: { title: string; content: Snippet<[string]>; class?: ClassValue; current?: boolean } = $props();
 
 	const uid = $props.id();
 	const popoverID = `popover-${uid}`;
@@ -42,9 +42,7 @@
 	</div>
 
 	<!-- Popover content -->
-	<el-popover id={popoverID} anchor="bottom" popover="auto" class="w-full overflow-visible bg-white text-sm text-gray-500 transition transition-discrete [--anchor-gap:1px] backdrop:bg-transparent open:block data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in dark:bg-gray-800">
-		{@render children()}
-	</el-popover>
+	{@render content(popoverID)}
 </div>
 
 
