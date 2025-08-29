@@ -59,6 +59,7 @@ const processRouteName = (pathName: string): string | undefined => {
 
 // If the path matches a device, software, etc, return its full href and name
 const findPathName = (pathName: string): string  => {
+	if (!pathName) return '';
 	let found: string | undefined;
 	
 	found = processPathName(pathName, devicesCatalog);
