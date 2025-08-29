@@ -28,25 +28,25 @@
 				flex
 				flex-none
 				items-center
-				gap-x-2.5
+				gap-x-2
 				self-end
 				rounded-full
-				bg-indigo-200
-				px-4
-				py-2
+				bg-primary-200
+				p-2
+				ps-4
 				font-semibold
-				text-indigo-600
+				text-primary-900
 				transition-all
 				duration-300
-				hover:bg-indigo-600
+				hover:bg-primary-600
 				hover:text-white
 				focus-visible:outline-2
 				focus-visible:outline-offset-2
-				focus-visible:outline-indigo-600
-				dark:text-indigo-400
-				dark:hover:bg-indigo-400
-				dark:hover:text-indigo-900
-				dark:focus-visible:outline-indigo-500"
+				focus-visible:outline-primary-600
+				dark:text-primary-400
+				dark:hover:bg-primary-400
+				dark:hover:text-primary-900
+				dark:focus-visible:outline-primary-500"
 			>
 				See all items
 				<ChevronRight class="size-7 transition-all duration-300 group-hover:translate-x-1" />

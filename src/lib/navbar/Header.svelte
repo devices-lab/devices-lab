@@ -31,7 +31,7 @@
 <header class="relative z-100">
 	{#if $devMode}
 		<div class=" bg-gray-200">
-			<div class=" bg-gray-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
+			<div class=" bg-primary-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
 				<div class="font-semibold">Dev!</div>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 
 			<!-- Mobile menu (lg-) -->
 			<div class="flex flex-1 items-center lg:hidden">
-				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-indigo-500">
+				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
 					<span class="sr-only">Open menu</span>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
 						<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -87,7 +87,7 @@
 			<!-- Options -->
 			<div class="flex flex-1 items-center justify-end">
 				<el-dropdown>
-					<button type="button" class="flex cursor-pointer items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-indigo-500">
+					<button type="button" class="flex cursor-pointer items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
 						<span class="sr-only">Open options</span>
 						<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
 							<path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
