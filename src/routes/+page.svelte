@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import banner from '$lib/assets/img/InfoLab-min.jpg?enhanced';
 	import { Routes } from '$lib/data/routes';
@@ -7,7 +8,7 @@
 </script>
 
 <div class="static">
-	<enhanced:img src={banner} alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-20" />
+	<BaseImg src={banner} alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-20" />
 	<OverlayContainer imgWidth={banner.img.w} imgHeight={banner.img.h} />
 </div>
 

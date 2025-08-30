@@ -1,5 +1,7 @@
 import type { TeamMember } from '$lib/data/about';
 
+import { Github, Globe, Drone } from '@lucide/svelte';
+
 //────────────────────────────────────────────────────────────────//
 
 /**
@@ -20,7 +22,11 @@ export const team: TeamMember[] = [
 		imageAdj: 'object-top',
 		order: '1_senior',
 		href: 'https://www.lancaster.ac.uk/sci-tech/about-us/people/mannu-lambrichts',
-		sites: []
+		sites: [
+			{ href: 'https://www.mannulambrichts.be', title: 'Profile page', icon: Globe },
+			{ href: 'https://github.com/MannuLambrichts', title: 'GitHub', icon: Github },
+			{ href: 'https://www.mannulambrichts.be/portfolio/', title: 'Drone Thingies', icon: Drone }
+		]
 	},
 	{
 		name: 'Steve Hodges',

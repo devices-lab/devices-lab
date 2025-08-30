@@ -9,7 +9,7 @@
 	const { item }: { item: WorkbenchItem } = $props();
 </script>
 
-<BaseLink href={item.href} target={item.external ? '_blank' : '_self'} class="group flex justify-between rounded-full bg-white p-4 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700">
+<BaseLink href={item.href} target={item.external ? '_blank' : '_self'} class="group flex justify-between rounded-full bg-white dark:bg-gray-800 p-4 shadow-sm hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-700">
 	<div class="flex items-center space-x-4">
 		<!-- Label -->
 		<Label label={item.label} />

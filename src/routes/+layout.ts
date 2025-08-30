@@ -10,6 +10,19 @@ import { mediaCatalog } from '$lib/data/media';
 import { researchCatalog } from '$lib/data/research';
 import { MainMenu, SideMenu } from '$lib/data/routes';
 
+//────────────────────────────────────────────────────────────────//
+
+// Featured items
+import { devicesFeatured } from '$lib/data/devices';
+import { toolsFeatured } from '$lib/data/tools';
+
+const featuredItems = {
+	[Routes.devices.id]: devicesFeatured,
+	[Routes.tools.id]: toolsFeatured
+};
+
+//────────────────────────────────────────────────────────────────//
+
 // Enable prerendering for static site generation
 export const prerender = true;
 
@@ -46,13 +59,9 @@ const createBreadcrumbs = (route: string): BreadcrumbType[] => {
 	}));
 };
 
-import { devicesFeatured } from '$lib/data/devices';
-import { toolsFeatured } from '$lib/data/tools';
 
-const featuredItems = {
-	[Routes.devices.id]: devicesFeatured,
-	[Routes.tools.id]: toolsFeatured
-};
+
+
 
 export const load: LayoutLoad = async (event) => {
 	const route = parseEventRoute(event.route.id);

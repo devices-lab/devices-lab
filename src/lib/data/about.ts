@@ -1,13 +1,14 @@
 import type { Picture } from 'vite-imagetools';
+import type { Icon } from '@lucide/svelte';
 import { team as teamData } from '$lib/_content/team';
 
 export type PersonOrder = '0_professor' | '1_senior' | '2_researcher' | '3_phd' | '4_master' | '5_bachelor' | '6_alumni';
 
 
 export interface Link {
-	url: string;
-	name: string;
-	icon: string;
+	href: string;
+	title: string;
+	icon: typeof Icon;
 }
 
 export interface TeamMember {

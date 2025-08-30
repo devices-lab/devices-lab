@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import Feature from '$lib/items/common/Feature.svelte';
 	import { type ItemType, getItemPath } from '$lib/data/item';
@@ -25,7 +26,7 @@
 		dark:inset-ring-white/10
 		dark:hover:bg-gray-700/50"
 >
-	<enhanced:img src={item.cover} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
+	<BaseImg src={item.cover} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
 	<div class="mt-4 flex items-center text-base font-medium text-gray-900 dark:text-white {item.family ? 'mb-2' : ''}">
 		{#if item.family}
 			<span class="me-2 inline-block rounded-full bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-700 dark:bg-gray-600 dark:text-white">Family</span>

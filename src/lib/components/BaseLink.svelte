@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
 
-	const { href, children, class: classList = '', ...restProps }: { href: string; classList?: ClassValue; children?: Snippet; [key: string]: any } = $props();
+	const { href, children, ...restProps }: { href: string; children?: Snippet; [key: string]: any } = $props();
 
 	const resolvedHref = $derived(href.startsWith('/') ? resolve(href) : href);
 </script>
 
-<a href={resolvedHref} class={classList} {...restProps}>
+<a href={resolvedHref} {...restProps}>
 	{@render children?.()}
 </a>
