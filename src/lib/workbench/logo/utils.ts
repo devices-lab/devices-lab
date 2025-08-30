@@ -29,11 +29,14 @@ export const TEXT = '#fff';
 //export const FONT_FAMILY = `'OCR A Extended', 'OCR A Std', 'OCR A', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace`;
 export const FONT_FAMILY = `'OCR A Extended', 'OCR A Std', 'OCR A'`;
 
-export const charWidth = (size: number) => size * 0.62;
-export const charHeight = (size: number) => size * 0.676;
-export const textWidth = (text: string, size: number) => Math.max(charWidth(size) * text.length, size * 1.2);
+export const charWidth = (size: number) => size * 0.607;
+//export const charWidth = (size: number) => size * 0.62;
+export const charHeight = (size: number) => Math.round(size * 0.676);
 
-
+export const textWidth = (text: string, size: number) => {
+	const temp = Math.round(Math.max(charWidth(size) * text.length, size * 1.2));
+	return temp % 2 === 0 ? temp : temp + 1;
+};
 
 export const FLATTEN_TOLERANCE = 0.01;
 // todo remove

@@ -1,5 +1,4 @@
 import type { TeamMember } from '$lib/data/about';
-
 import { Github, Globe, Drone } from '@lucide/svelte';
 
 //────────────────────────────────────────────────────────────────//
