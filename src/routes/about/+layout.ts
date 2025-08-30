@@ -1,11 +1,12 @@
 import type { LayoutLoad } from './$types';
 
 import { Routes } from '$lib/data/routes';
+import { Pages } from '$lib/_content/pages';
 
 export const load = (async () => {
 	return {
 		route: Routes.about,
-		title: 'About Us',
-		subtitle: 'Learn more about our company and values.',
+		title: Pages.about.pageTitle,
+		subtitle: Pages.about.pageSubtitle,
 	};
 }) satisfies LayoutLoad;

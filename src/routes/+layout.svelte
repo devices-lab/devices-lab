@@ -35,7 +35,7 @@
 			<Breadcrumbs breadcrumbs={page.data.breadcrumbs} class="mt-6" />
 		{/if}
 
-		{#if !data.isHome && page.data.noHeader !== true && page.status === 200 && page.data.title}
+		{#if page.data.noHeader !== true && page.status === 200 && page.data.title}
 			<div class="mb-6 border-t-0 border-b-2 border-gray-200 py-8 text-center">
 				<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{page.data.title}</h1>
 				{#if page.data.subtitle}

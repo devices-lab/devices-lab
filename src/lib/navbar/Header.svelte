@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/state';
-
 	import Logo from '$lib/navbar/Logo.svelte';
-	import Route from '$lib/navbar/Route.svelte';
-	import LinkPop from '$lib/navbar/LinkPop.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
-	import FeaturedSet from '$lib/items/featured/FeaturedSet.svelte';
-	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
+	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
+	import MenuSide from '$lib/navbar/menu/MenuSide.svelte';
+
+
 
 	import { devMode } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -14,10 +12,9 @@
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
 
-
 	onMount(() => {
 		devMode.set(localStorage.getItem('devMode') === 'true');
-		
+
 		devMode.subscribe((value) => {
 			localStorage.setItem('devMode', String(value));
 		});
@@ -55,18 +52,7 @@
 						</div>
 					</div>
 					<div class="flex h-full justify-center space-x-8">
-						{#each page.data.menu as menu}
-							{@const current = page.data.route.href === menu.route.href}
-							{#if menu.menu && menu.menu.length > 0}
-								<LinkPop title={menu.route.title} {current}>
-									{#snippet content(id: string)}
-										<FeaturedSet {id} route={menu.route} items={menu.menu} />
-									{/snippet}
-								</LinkPop>
-							{:else}
-								<Route route={menu.route} {current} />
-							{/if}
-						{/each}
+						<MenuMain showFeaturedItems/>
 					</div>
 				</el-popover-group>
 			</div>
@@ -94,15 +80,7 @@
 						</svg>
 					</button>
 					<el-menu anchor="bottom end" popover="auto" class="w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-						{#each page.data.sideMenu as route}
-							<div class="py-1">
-								<Route {route} />
-							</div>
-						{/each}
-
-						<div class="">
-							<ThemeToggle />
-						</div>
+						<MenuSide />
 					</el-menu>
 				</el-dropdown>
 			</div>

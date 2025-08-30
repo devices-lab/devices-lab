@@ -1,11 +1,12 @@
 import type { LayoutLoad } from './$types';
 
 import { Routes } from '$lib/data/routes';
+import { Pages } from '$lib/_content/pages';
 
 export const load = (async () => {
 	return {
 		route: Routes.tools,
-		title: 'Our Tools',
-		subtitle: 'Explore our tools to help you build devices.',
+		title: Pages.tools.pageTitle,
+		subtitle: Pages.tools.pageSubtitle,
 	};
 }) satisfies LayoutLoad;

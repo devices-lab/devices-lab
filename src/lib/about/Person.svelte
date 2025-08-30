@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Person } from '$lib/data/about';
+	import type { TeamMember } from '$lib/data/about';
 
-	const { person }: { person: Person } = $props();
+	const { person }: { person: TeamMember } = $props();
 </script>
 
 {#if typeof person.image === 'string'}

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import Route from '$lib/navbar/Route.svelte';
+	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
 
 	const { uid }: { uid: string } = $props();
 </script>
@@ -20,12 +19,8 @@
 					</button>
 				</div>
 
-				<div class="space-y-6 border-t border-gray-200 px-4 py-6">
-					{#each page.data.menu as menu}
-						<div class="flow-root">
-							<Route route={menu.route} current={page.data.route === menu.route.href} class="-m-2 block p-2 font-medium text-gray-900 dark:text-gray-200" />
-						</div>
-					{/each}
+				<div class="space-y-1 border-t border-gray-200 px-4 py-6">
+					<MenuMain class="-mx-2 block p-2 font-medium text-gray-900 dark:text-gray-200" />
 				</div>
 			</el-dialog-panel>
 		</div>
