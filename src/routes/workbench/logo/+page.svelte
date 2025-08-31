@@ -67,21 +67,21 @@
 </LogoCard>
 
 <LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
-	<SvgVersion uid={'dl-version-stack'} {projectId} {projectVersion} />
+	<SvgVersion uid={'dl-version-stack'} {projectId} {projectVersion} class="md:h-50" />
 </LogoCard>
 
 <LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-	<SvgPill uid={'dl-version-pill'} {projectId} {projectVersion} />
+	<SvgPill uid={'dl-version-pill'} {projectId} {projectVersion} class="md:h-50" />
 </LogoCard>
 
 <LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-	<SvgLogo uid={'dl-name'} />
+	<SvgLogo uid={'dl-name'} class="md:h-50" />
 </LogoCard>
 
 <LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout.">
-	<SvgCircle uid={'dl-circle'} />
+	<SvgCircle uid={'dl-circle'} class="md:h-50" />
 </LogoCard>
 
 <LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout.">
-	<SvgSquare uid={'dl-square'} />
+	<SvgSquare uid={'dl-square'} class="md:h-50" />
 </LogoCard>

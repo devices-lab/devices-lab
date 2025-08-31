@@ -3,7 +3,7 @@
 // @ts-ignore
 import * as ClipperLib from 'clipper-lib';
 
-import { ClippyOffset } from "$lib/workbench/logo/clippy";
+import { ClippyOffset, ClippySubtract } from "$lib/workbench/logo/clippy";
 
 
 import { writable } from 'svelte/store';
@@ -313,8 +313,167 @@ function selectWhite(type: string) {
 	return `${type}[fill="#fff"], ${type}[fill="#ffffff"], ${type}[fill="white"], ${type}[fill="rgb(255,255,255)"]`;
 }
 
+
+function findElements(svgRoot: SVGSVGElement, role: string): string[] | null {
+	// Subjects can be either paths or rectangles
+	const paths = svgRoot.querySelectorAll<SVGPathElement>(`path[data-clippy-role="${role}"]`);
+	const rects = svgRoot.querySelectorAll<SVGRectElement>(`rect[data-clippy-role="${role}"]`);
+	const out = [
+		...Array.from(paths).map(p => p.getAttribute('d') || ''),
+		...Array.from(rects).map(r => rectToPathD(r)),
+	].filter(Boolean);
+
+	if (!out.length) {
+		console.warn(`No ${role} elements found`);
+		return null;
+	}
+	return out;
+}
+
+function findElements2(svgRoot: SVGSVGElement, role: string): SVGPathElement[] | null {
+	// Subjects can be either paths or rectangles
+	const paths = svgRoot.querySelectorAll<SVGPathElement>(`path[data-clippy-role="${role}"]`);
+	const rects = svgRoot.querySelectorAll<SVGRectElement>(`rect[data-clippy-role="${role}"]`);
+	const out = [
+		...Array.from(paths),
+		...Array.from(rects),
+	].filter(Boolean);
+
+	if (!out.length) {
+		console.warn(`No ${role} elements found`);
+		return null;
+	}
+	return out;
+}
+
 // set all not-none and not black colors to white
-export function subtractWhiteFromBlack(svgRoot: SVGSVGElement): SVGElement | null {
+export async function subtractWhiteFromBlack(svgRoot: SVGSVGElement): Promise<SVGSVGElement | null> {
+	const SVG_NS = 'http://www.w3.org/2000/svg';
+
+	// Make sure all elements are either black or white
+	//svgRoot.querySelectorAll<SVGElement>('*:not([fill="none"]):not([fill="black"]):not([fill="#000"]):not([fill="#000000"]):not([fill="rgb(0,0,0)"])').forEach(el => el.setAttribute('fill', '#ffffff'));
+
+	/*svgRoot.querySelectorAll<SVGElement>('*').forEach(el => {
+		const fill = el.getAttribute('fill') || el.style.fill || '';
+		if (fill && fill.toLowerCase() !== 'none' && fill !== '#000' && fill !== '#000000' && fill.toLowerCase() !== 'black' && fill.toLowerCase() !== 'rgb(0,0,0)')
+			el.setAttribute('fill', '#ffffff');
+	});*/
+
+	// Subjects can be either paths or rectangles
+	const subjects = findElements(svgRoot, 'subject');
+	if (!subjects || subjects.length === 0) return null;
+
+	const clips = findElements(svgRoot, 'clip');
+	const adds = findElements2(svgRoot, 'add');
+
+
+
+
+	console.log(subjects);
+	console.log(clips);
+	console.log(adds);
+
+	let d: string | undefined;
+
+	try {
+		d = await ClippySubtract(subjects, clips);
+	} catch (err) {
+		console.warn('Subtraction failed, using original outline', err);
+	}
+
+	if (!d) {
+		console.warn('No path data generated');
+		return null;
+	}
+
+	const newSvg = document.createElementNS(SVG_NS, 'svg');
+	newSvg.setAttribute('viewBox', svgRoot.getAttribute('viewBox') || '0 0 100 100');
+	newSvg.setAttribute('width', svgRoot.getAttribute('width') || '100');
+	newSvg.setAttribute('height', svgRoot.getAttribute('height') || '100');
+	newSvg.setAttribute('class', svgRoot.getAttribute('class') || '');
+
+	const pathEl = document.createElementNS(SVG_NS, 'path');
+	pathEl.setAttribute('d', d);
+	pathEl.setAttribute('fill', '#000');
+	pathEl.setAttribute('fill-rule', 'evenodd');
+
+	newSvg.appendChild(pathEl);
+	// Add 'adds' elements if they exist
+	if (adds && adds.length > 0) {
+		for(const addEl of adds) {
+			newSvg.appendChild(addEl);
+		}
+	}
+
+	
+
+
+
+	//const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+	//pathEl.setAttribute('d', d);
+	return newSvg;
+	//pathEl.setAttribute('fill', fill);
+	//pathEl.setAttribute('data-clippy-role', t.getAttribute('data-clippy-role') || '');
+	//t.replaceWith(pathEl);
+
+	// Find all black base elements
+	/*const baseRect = svgRoot.querySelector<SVGRectElement>(selectBlack('rect'));
+	const basePath = svgRoot.querySelector<SVGPathElement>(selectBlack('path'));
+	const baseCircle = svgRoot.querySelector<SVGCircleElement>(selectBlack('circle'));
+	const baseEllipse = svgRoot.querySelector<SVGEllipseElement>(selectBlack('ellipse'));
+	const baseEl = baseRect || basePath || baseCircle || baseEllipse;
+	if (!baseEl) {
+		console.warn('No black base element found');
+		return null;
+	}
+	
+	// Convert the base element to path data
+	let baseD = '';
+	if (baseRect) baseD = rectToPathD(baseRect);
+	else if (basePath) baseD = basePath.getAttribute('d') || '';
+	else if (baseCircle) baseD = circleOrEllipseToPathD(baseCircle);
+	else if (baseEllipse) baseD = circleOrEllipseToPathD(baseEllipse);
+	if (!baseD) {
+		console.warn('No base path data found');
+		return null;
+	}
+
+	// Find all white cutters
+	const pathCutters = svgRoot.querySelectorAll<SVGPathElement>(selectWhite('path'));
+	const circleCutters = svgRoot.querySelectorAll<SVGCircleElement>(selectWhite('circle'));
+	const ellipseCutters = svgRoot.querySelectorAll<SVGEllipseElement>(selectWhite('ellipse'));
+
+	const cutters = [
+		...Array.from(pathCutters).map(p => p.getAttribute('d') || ''),
+		...Array.from(circleCutters).map(c => circleOrEllipseToPathD(c)),
+		...Array.from(ellipseCutters).map(e => circleOrEllipseToPathD(e)),
+	].filter(Boolean);
+
+	if (!cutters.length) {
+		console.warn('No white cutter paths found');
+		return null;
+	}*/
+
+	// Create the compound path
+	//const compound = document.createElementNS(SVG_NS, 'path');
+	//compound.setAttribute('d', `${subjects.join(' ')} ${clips.join(' ')}`);
+	//compound.setAttribute('fill', '#000');
+	//compound.setAttribute('fill-rule', 'evenodd');
+	//baseEl.parentNode?.insertBefore(compound, baseEl);
+	//baseEl.remove();
+
+	// Remove original cutters
+	//pathCutters.forEach(el => el.remove());
+	//circleCutters.forEach(el => el.remove());
+	//ellipseCutters.forEach(el => el.remove());
+
+	// Make sure the subject is transparent
+	//svgRoot.querySelectorAll('#subject').forEach(el => el.setAttribute('fill', 'none'));
+	//return compound;
+}
+
+// set all not-none and not black colors to white
+export function subtractWhiteFromBlackOld(svgRoot: SVGSVGElement): SVGElement | null {
 	const SVG_NS = 'http://www.w3.org/2000/svg';
 
 	// Make sure all elements are either black or white
@@ -531,11 +690,15 @@ export function parseAndFlattenPath(d: string, tol = FLATTEN_TOLERANCE): Path[] 
 		switch (cmd) {
 			case 'M': case 'm': {
 				const rel = cmd === 'm';
-				cx = (rel ? cx : 0) + read(); cy = (rel ? cy : 0) + read();
-				sx = cx; sy = cy; poly = [{ x: cx, y: cy }]; polys.push(poly);
+				cx = (rel ? cx : 0) + read(); 
+				cy = (rel ? cy : 0) + read();
+				sx = cx; sy = cy; 
+				poly = [{ x: cx, y: cy }]; 
+				polys.push(poly);
 				// Subsequent pairs are implicit LineTos
 				while (i < tokens.length && !isCmd(tokens[i])) {
-					cx = (rel ? cx : 0) + read(); cy = (rel ? cy : 0) + read();
+					cx = (rel ? cx : 0) + read(); 
+					cy = (rel ? cy : 0) + read();
 					poly!.push({ x: cx, y: cy });
 				}
 				break;
@@ -577,7 +740,8 @@ export function parseAndFlattenPath(d: string, tol = FLATTEN_TOLERANCE): Path[] 
 					flattenQuad(p0, p1, p2, tol, out);
 					poly ??= [{ x: cx, y: cy }];
 					out.forEach(p => poly!.push(p));
-					cx = x; cy = y;
+					cx = x; 
+					cy = y;
 				}
 				break;
 			}
@@ -592,7 +756,8 @@ export function parseAndFlattenPath(d: string, tol = FLATTEN_TOLERANCE): Path[] 
 					flattenCubic(p0, p1, p2, p3, tol, out);
 					poly ??= [{ x: cx, y: cy }];
 					out.forEach(p => poly!.push(p));
-					cx = x; cy = y;
+					cx = x; 
+					cy = y;
 				}
 				break;
 			}
@@ -701,6 +866,7 @@ export async function outlineAllText(clone: SVGSVGElement) {
 		const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 		pathEl.setAttribute('d', d);
 		pathEl.setAttribute('fill', fill);
+		pathEl.setAttribute('data-clippy-role', t.getAttribute('data-clippy-role') || '');
 		t.replaceWith(pathEl);
 	}
 	// remove strokes globally

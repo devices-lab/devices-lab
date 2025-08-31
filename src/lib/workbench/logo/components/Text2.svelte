@@ -10,15 +10,17 @@
 		fontSize: number;
 		fill: string;
 		width: number;
+		role: 'subject' | 'clip' | 'add' | 'ignore';
+
 		[key: string]: any;
 	}
 
-	const { x, y, text, fontSize, fill, width, ...props }: Props = $props();
+	const { role, x, y, text, fontSize, fill, width, ...props }: Props = $props();
 
 	const textX = $derived(x - Math.round(width / 2));
 	const textY = $derived(y + Math.round(charHeight(fontSize) / 2));
 </script>
 
-<text x={textX} y={textY} font-size={fontSize} textLength={width} lengthAdjust="spacingAndGlyphs" font-family={FONT_FAMILY} {fill} letter-spacing={1} {...props}>
+<text x={textX} y={textY} font-size={fontSize} textLength={width} lengthAdjust="spacingAndGlyphs" font-family={FONT_FAMILY} {fill} letter-spacing={1} data-clippy-role={role} {...props}>
 	{text}
 </text>

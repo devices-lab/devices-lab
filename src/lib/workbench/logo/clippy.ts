@@ -30,12 +30,15 @@ const polysToPathD = (paths: Clippy.Paths): string => {
  * @returns The offset SVG path data.
  */
 export async function ClippyOffset(d: string, delta: number): Promise<string> {
+	console.log('ClippyOffset input:', d);
 	// Parse and flatten the path
 	let poly: Clippy.Paths | undefined = parseAndFlattenPath(d);
 	if (!poly || !poly.length) {
 		console.error('No valid polygons found');
 		return d;
 	}
+
+	console.log('ClippyOffset polygons:', poly);
 
 	//==== CLIPPER ====//
 
@@ -70,4 +73,77 @@ export async function ClippyOffset(d: string, delta: number): Promise<string> {
 
 	// Convert the polygons back to path data
 	return polysToPathD(poly);
+}
+
+
+export async function ClippySubtract(subjects: string[], clips: string[] | null): Promise<string> {
+
+
+	// Parse and flatten the path
+	let subjectPaths = subjects.map(s => parseAndFlattenPath(s));
+	let clipPaths = clips ? clips.map(c => parseAndFlattenPath(c)) : [];
+	//let addPaths = adds ? adds.map(a => parseAndFlattenPath(a)) : [];
+
+	if (!subjectPaths.length) {
+		console.error('No valid subjects found');
+		return '';
+	}
+
+
+
+	//==== CLIPPER ====//
+
+	// create an instance of the library (usually only do this once in your app)
+	const clipp = await Clippy.loadNativeClipperLibInstanceAsync(Clippy.NativeClipperLibRequestedFormat.WasmWithAsmJsFallback);
+
+	// Intify the polygons
+	subjectPaths = subjectPaths.map(intify);
+	subjectPaths.forEach(p => clipp.cleanPolygons(p));
+
+	clipPaths = clipPaths.map(intify);
+	clipPaths.forEach(p => clipp.cleanPolygons(p));
+
+	//addPaths = addPaths.map(intify);
+	//addPaths.forEach(p => clipp.cleanPolygons(p));
+
+
+
+	let out = clipp.clipToPaths({
+		clipType: Clippy.ClipType.Xor,
+		subjectFillType: Clippy.PolyFillType.EvenOdd,
+		subjectInputs: subjectPaths.map(p => ({ data: p, closed: true })),
+		clipInputs: clipPaths.map(p => ({ data: p }))
+	});
+
+	/*out = clipp.clipToPaths({
+		clipType: Clippy.ClipType.Union,
+		subjectFillType: Clippy.PolyFillType.Positive,
+		subjectInputs: [{ data: out, closed: true }],
+		clipInputs: addPaths.map(p => ({ data: p }))
+	});*/
+
+
+
+
+
+
+
+
+	// Offset the oriented polygons
+	/*poly = clipp.offsetToPaths({
+		offsetInputs: [{ data: poly, joinType: Clippy.JoinType.Round, endType: Clippy.EndType.ClosedPolygon }],
+		delta: Math.round(delta * CLIPPER_SCALE),
+	});
+	if (!poly) {
+		console.error('Clippy offset failed');
+		return '';
+	}*/
+
+	// Clean polygons and deintify
+	out = clipp.cleanPolygons(out, Math.round(CLIPPER_SCALE * CLIPPER_CLEAN));
+	out = clipp.simplifyPolygons(out, Clippy.PolyFillType.EvenOdd);
+	out = deintify(out);
+
+	// Convert the polygons back to path data
+	return polysToPathD(out);
 }

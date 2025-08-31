@@ -68,7 +68,8 @@ export async function exportPng(id: string, filename: string, opts: PngOpts = {}
 	if (background !== 'transparent') {
 		const bg = document.createElementNS(SVG_NS, 'rect');
 		bg.setAttribute('x', '0'); bg.setAttribute('y', '0');
-		bg.setAttribute('width', String(vbW)); bg.setAttribute('height', String(vbH));
+		bg.setAttribute('width', String(vbW)); 
+		bg.setAttribute('height', String(vbH));
 		bg.setAttribute('fill', background);
 		out.appendChild(bg);
 	}
