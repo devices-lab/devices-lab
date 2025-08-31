@@ -78,7 +78,6 @@
 		<ButtonGroup>
 			{@render DownloadButton('SVG', '', () => exportSvg(uid, `${uid}`))}
 			{@render DownloadButton('SVG', 'Font', () => exportSvgFont(uid, `${uid}-font`))}
-			{@render DownloadButton('SVG', 'Flat', () => exportSvgFlat(uid, `${uid}-flat`))}
 			{@render DownloadButton('SVG', 'KiCad', () => exportSvgForKiCad(uid, `${uid}-kicad`))}
 		</ButtonGroup>
 

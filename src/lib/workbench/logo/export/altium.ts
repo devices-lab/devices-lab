@@ -13,7 +13,7 @@ type Path = Pt[];
 
 // todo remove
 const CLIPPER_SCALE = 10000000;
-export const FLATTEN_TOLERANCE = 0.01;
+ const FLATTEN_TOLERANCE = 0.01;
 
 
 
@@ -135,7 +135,7 @@ function deintify2(paths: Path[]): Path[] {
 }
 
 
-export function unionBlack(svg: SVGSVGElement, tol = FLATTEN_TOLERANCE): Path[] {
+function unionBlack(svg: SVGSVGElement, tol = FLATTEN_TOLERANCE): Path[] {
 	const blacks = Array.from(svg.querySelectorAll<SVGSVGElement>(`path${BLACK},rect${BLACK},circle${BLACK},ellipse${BLACK},polygon${BLACK}`));
 	const polys = blacks.map(elToPathD).filter(Boolean).flatMap(d => parseAndFlattenPath(d, tol));
 
@@ -148,7 +148,7 @@ export function unionBlack(svg: SVGSVGElement, tol = FLATTEN_TOLERANCE): Path[] 
 	return deintify2(sol);
 }
 
-export function booleanBlackMinusWhite(svg: SVGSVGElement, tol = FLATTEN_TOLERANCE): Path[] {
+function booleanBlackMinusWhite(svg: SVGSVGElement, tol = FLATTEN_TOLERANCE): Path[] {
 	const blacks = Array.from(svg.querySelectorAll<SVGSVGElement>(`path${BLACK},rect${BLACK},circle${BLACK},ellipse${BLACK},polygon${BLACK}`));
 	const whites = Array.from(svg.querySelectorAll<SVGSVGElement>(`path${WHITE},rect${WHITE},circle${WHITE},ellipse${WHITE},polygon${WHITE}`));
 	if (!blacks.length)
@@ -210,7 +210,7 @@ export function booleanBlackMinusWhite(svg: SVGSVGElement, tol = FLATTEN_TOLERAN
 /* ───────────────────────── Contours ───────────────────────── */
 /* ──────────────────────────────────────────────────────────── */
 
-export function evenOddHoles(rings: Path[]): boolean[] {
+function evenOddHoles(rings: Path[]): boolean[] {
 	const inside = (pt: Pt, poly: Path) => {
 		let inn = false;
 		for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
@@ -231,7 +231,7 @@ export function evenOddHoles(rings: Path[]): boolean[] {
 	});
 }
 
-export function orientCCW(r: Path) { // positive area
+function orientCCW(r: Path) { // positive area
 	let A = 0;
 	for (let i = 0; i < r.length - 1; i++)
 		A += r[i].x * r[i + 1].y - r[i + 1].x * r[i].y;
@@ -240,7 +240,7 @@ export function orientCCW(r: Path) { // positive area
 	return r;
 }
 
-export function orientCW(r: Path) {
+function orientCW(r: Path) {
 	let A = 0;
 	for (let i = 0; i < r.length - 1; i++)
 		A += r[i].x * r[i + 1].y - r[i + 1].x * r[i].y;
@@ -400,7 +400,7 @@ function flattenCubic(p0: Pt, p1: Pt, p2: Pt, p3: Pt, tol: number, out: Path) {
 	flattenCubic(p0123, p123, p23, p3, tol, out);
 }
 
-export function parseAndFlattenPath(d: string, tol = FLATTEN_TOLERANCE): Path[] {
+function parseAndFlattenPath(d: string, tol = FLATTEN_TOLERANCE): Path[] {
 	// Minimal parser for M,L,H,V,C,Q,Z (absolute & relative)
 	const tokens = Array.from(d.matchAll(/[MmLlHhVvCcQqZz]|-?\d*\.?\d+(?:e[-+]?\d+)?/g)).map(m => m[0]);
 	let i = 0, cmd = '', cx = 0, cy = 0, sx = 0, sy = 0;
