@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { STROKE, COLOR, FONT_FAMILY, charHeight, textWidth } from '$lib/workbench/logo/utils';
-
-	import { svgBaselineSupported } from '$lib/workbench/logo/utils';
+	import type { SVG_Role } from "$lib/workbench/logo/utils";
+	import { FONT_FAMILY, charHeight } from '$lib/workbench/logo/utils';
 
 	interface Props {
 		x: number;
@@ -10,7 +9,7 @@
 		fontSize: number;
 		fill: string;
 		width: number;
-		role: 'subject' | 'clip' | 'add' | 'ignore';
+		role: SVG_Role;
 
 		[key: string]: any;
 	}

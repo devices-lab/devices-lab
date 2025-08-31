@@ -1,10 +1,10 @@
 import * as Clippy from "js-angusj-clipper";
 
-import { parseAndFlattenPath } from "$lib/workbench/logo/utils";
-
+import { parseAndFlattenPathClippy } from '$lib/workbench/logo/export/flatten';
 
 const CLIPPER_SCALE = 10000000;
 const CLIPPER_CLEAN = 0.001;
+
 
 
 const intify = (paths: Clippy.Paths): Clippy.Paths => {
@@ -22,6 +22,116 @@ const polysToPathD = (paths: Clippy.Paths): string => {
 };
 
 
+
+function xor(clipp: Clippy.ClipperLibWrapper, paths: Clippy.Paths[], type: Clippy.PolyFillType = Clippy.PolyFillType.EvenOdd): Clippy.Paths {
+	return clipp.clipToPaths({
+		clipType: Clippy.ClipType.Xor,
+		subjectFillType: type,
+		subjectInputs: paths.map(p => ({ data: p, closed: true })),
+	});
+}
+
+function union(clipp: Clippy.ClipperLibWrapper, paths: Clippy.Paths[], type: Clippy.PolyFillType = Clippy.PolyFillType.EvenOdd): Clippy.Paths {
+	return clipp.clipToPaths({
+		clipType: Clippy.ClipType.Union,
+		subjectFillType: type,
+		subjectInputs: paths.map(p => ({ data: p, closed: true })),
+	});
+}
+
+function offset(clipp: Clippy.ClipperLibWrapper, paths: Clippy.Paths, delta: number): Clippy.Paths {
+	return clipp.offsetToPaths({
+		offsetInputs: [{ data: paths, joinType: Clippy.JoinType.Round, endType: Clippy.EndType.ClosedPolygon }],
+		delta: Math.round(delta * CLIPPER_SCALE),
+	}) || [];
+}
+
+
+
+
+/**
+ * Starts the path processing for a given SVG path string.
+ * @param clipp The Clippy library instance.
+ * @param path The SVG path string.
+ * @returns The processed Clippy paths.
+ */
+function startPaths(clipp: Clippy.ClipperLibWrapper, path: string): Clippy.Paths {
+	const paths: Clippy.Paths = parseAndFlattenPathClippy(path);
+	return intify(paths);
+}
+
+/**
+ * Ends the path processing and converts the Clippy paths back to an SVG path string.
+ * @param clipp The Clippy library instance.
+ * @param paths The processed Clippy paths.
+ * @returns The SVG path string.
+ */
+function endPaths(clipp: Clippy.ClipperLibWrapper, paths: Clippy.Paths): string {
+	let out = paths;
+	//out = clipp.simplifyPolygons(paths, Clippy.PolyFillType.EvenOdd);
+	out = clipp.cleanPolygons(out, Math.round(CLIPPER_SCALE * CLIPPER_CLEAN));
+	out = deintify(out);
+	return polysToPathD(out);
+}
+
+
+
+
+function processFramePath(clipp: Clippy.ClipperLibWrapper, frame: PathElement): Clippy.Paths {
+	const strokeWidth = parseFloat(frame.element.getAttribute('stroke-width') || '2');
+
+	const paths = startPaths(clipp, frame.path);
+	const inner = offset(clipp, paths, (-(strokeWidth / 2)));
+	const outer = offset(clipp, paths, ((strokeWidth / 2)));
+
+	// Clip the paths
+	return union(clipp, [inner, outer], Clippy.PolyFillType.EvenOdd);
+}
+
+function processFramePaths(clipp: Clippy.ClipperLibWrapper, frames: PathElement[]): Clippy.Paths {
+	return frames.map(f => processFramePath(clipp, f)).flat();
+}
+
+
+function processPaths(clipp: Clippy.ClipperLibWrapper, paths: PathElement[]): Clippy.Paths {
+	return paths.map(p => startPaths(clipp, p.path)).flat();
+}
+
+
+
+
+export interface PathElement {
+	path: string;
+	element: SVGPathElement | SVGRectElement;
+}
+
+export async function ClippyFlatten(subjects: PathElement[], clips: PathElement[], frames: PathElement[], scale: number = 1): Promise<string> {
+	let paths: Clippy.Paths = [];
+
+	//==== CLIPPER ====//
+
+	// Create an instance of the library (usually only do this once in your app)
+	const clipp: Clippy.ClipperLibWrapper = await Clippy.loadNativeClipperLibInstanceAsync(Clippy.NativeClipperLibRequestedFormat.WasmWithAsmJsFallback);
+
+	// Cut the clips from the subjects
+	const subjectPaths: Clippy.Paths = processPaths(clipp, subjects);
+	const clipPaths: Clippy.Paths = processPaths(clipp, clips);
+	paths = xor(clipp, [subjectPaths, clipPaths]);
+
+	// Add the frames
+	const framePaths: Clippy.Paths = processFramePaths(clipp, frames);
+	paths = union(clipp, [paths, framePaths], Clippy.PolyFillType.Positive);
+
+	// Scale the paths
+	if (scale !== 1) {
+		paths = clipp.scalePaths(paths, scale);
+	}
+
+	// Convert the paths back to string
+	return endPaths(clipp, paths);
+}
+
+
 /**
  * Offsets an SVG path using the Clippy library.
  * @param d The SVG path data to offset.
@@ -29,121 +139,20 @@ const polysToPathD = (paths: Clippy.Paths): string => {
  * @param tolerance The tolerance for flattening the path.
  * @returns The offset SVG path data.
  */
-export async function ClippyOffset(d: string, delta: number): Promise<string> {
-	console.log('ClippyOffset input:', d);
-	// Parse and flatten the path
-	let poly: Clippy.Paths | undefined = parseAndFlattenPath(d);
-	if (!poly || !poly.length) {
-		console.error('No valid polygons found');
-		return d;
-	}
-
-	console.log('ClippyOffset polygons:', poly);
-
+export async function ClippyOffset(subject: string, delta: number): Promise<string> {
 	//==== CLIPPER ====//
 
-	// create an instance of the library (usually only do this once in your app)
-	const clipp = await Clippy.loadNativeClipperLibInstanceAsync(Clippy.NativeClipperLibRequestedFormat.WasmWithAsmJsFallback);
+	// Create an instance of the library (usually only do this once in your app)
+	const clipp: Clippy.ClipperLibWrapper = await Clippy.loadNativeClipperLibInstanceAsync(Clippy.NativeClipperLibRequestedFormat.WasmWithAsmJsFallback);
 
-	// Intify the polygons
-	poly = intify(poly);
-	poly = clipp.cleanPolygons(poly);
-
+	// Parse and flatten the path
+	let paths: Clippy.Paths = startPaths(clipp, subject);
 	// Set the orientation of the polygons (holes)
-	poly = clipp.clipToPaths({
-		clipType: Clippy.ClipType.Xor,
-		subjectFillType: Clippy.PolyFillType.EvenOdd,
-		subjectInputs: [{ data: poly, closed: true }]
-	});
-
+	// paths = xor(clipp, [paths]);
 	// Offset the oriented polygons
-	poly = clipp.offsetToPaths({
-		offsetInputs: [{ data: poly, joinType: Clippy.JoinType.Round, endType: Clippy.EndType.ClosedPolygon }],
-		delta: Math.round(delta * CLIPPER_SCALE),
-	});
-	if (!poly) {
-		console.error('Clippy offset failed');
-		return '';
-	}
+	paths = offset(clipp, paths, delta);
 
-	// Clean polygons and deintify
-	poly = clipp.cleanPolygons(poly, Math.round(CLIPPER_SCALE * CLIPPER_CLEAN));
-	poly = clipp.simplifyPolygons(poly, Clippy.PolyFillType.EvenOdd);
-	poly = deintify(poly);
-
-	// Convert the polygons back to path data
-	return polysToPathD(poly);
+	// Convert the paths back to string
+	return endPaths(clipp, paths);
 }
 
-
-export async function ClippySubtract(subjects: string[], clips: string[] | null): Promise<string> {
-
-
-	// Parse and flatten the path
-	let subjectPaths = subjects.map(s => parseAndFlattenPath(s));
-	let clipPaths = clips ? clips.map(c => parseAndFlattenPath(c)) : [];
-	//let addPaths = adds ? adds.map(a => parseAndFlattenPath(a)) : [];
-
-	if (!subjectPaths.length) {
-		console.error('No valid subjects found');
-		return '';
-	}
-
-
-
-	//==== CLIPPER ====//
-
-	// create an instance of the library (usually only do this once in your app)
-	const clipp = await Clippy.loadNativeClipperLibInstanceAsync(Clippy.NativeClipperLibRequestedFormat.WasmWithAsmJsFallback);
-
-	// Intify the polygons
-	subjectPaths = subjectPaths.map(intify);
-	subjectPaths.forEach(p => clipp.cleanPolygons(p));
-
-	clipPaths = clipPaths.map(intify);
-	clipPaths.forEach(p => clipp.cleanPolygons(p));
-
-	//addPaths = addPaths.map(intify);
-	//addPaths.forEach(p => clipp.cleanPolygons(p));
-
-
-
-	let out = clipp.clipToPaths({
-		clipType: Clippy.ClipType.Xor,
-		subjectFillType: Clippy.PolyFillType.EvenOdd,
-		subjectInputs: subjectPaths.map(p => ({ data: p, closed: true })),
-		clipInputs: clipPaths.map(p => ({ data: p }))
-	});
-
-	/*out = clipp.clipToPaths({
-		clipType: Clippy.ClipType.Union,
-		subjectFillType: Clippy.PolyFillType.Positive,
-		subjectInputs: [{ data: out, closed: true }],
-		clipInputs: addPaths.map(p => ({ data: p }))
-	});*/
-
-
-
-
-
-
-
-
-	// Offset the oriented polygons
-	/*poly = clipp.offsetToPaths({
-		offsetInputs: [{ data: poly, joinType: Clippy.JoinType.Round, endType: Clippy.EndType.ClosedPolygon }],
-		delta: Math.round(delta * CLIPPER_SCALE),
-	});
-	if (!poly) {
-		console.error('Clippy offset failed');
-		return '';
-	}*/
-
-	// Clean polygons and deintify
-	out = clipp.cleanPolygons(out, Math.round(CLIPPER_SCALE * CLIPPER_CLEAN));
-	out = clipp.simplifyPolygons(out, Clippy.PolyFillType.EvenOdd);
-	out = deintify(out);
-
-	// Convert the polygons back to path data
-	return polysToPathD(out);
-}

@@ -1,13 +1,15 @@
 <script lang="ts">
+	import type { SVG_Role } from "$lib/workbench/logo/utils";
+
 	interface Props {
 		x?: number;
 		y?: number;
 		width: number;
 		height: number;
 		radius: number;
-		fill: string;
-		stroke: string;
-		strokeWidth: number;
+		fill?: string;
+		borderColor?: string;
+		borderWidth: number;
 
 		topLeft?: boolean;
 		topRight?: boolean;
@@ -15,19 +17,22 @@
 		bottomRight?: boolean;
 
 		type: 'rect' | 'path';
-		role: 'subject' | 'clip' | 'add' | 'ignore';
+		role: SVG_Role;
 		correctX?: boolean;
 		correctY?: boolean;
 
 		[key: string]: any;
 	}
 
-	const { type, role, x = 0, y = 0, width, height, radius, fill, stroke, strokeWidth, topLeft = false, topRight = false, bottomLeft = false, bottomRight = false, correctX = true, correctY = true, ...restProps }: Props = $props();
+	const { type, role, x = 0, y = 0, width, height, radius, fill = 'none', borderColor = 'none', borderWidth, topLeft = false, topRight = false, bottomLeft = false, bottomRight = false, correctX = true, correctY = true, ...restProps }: Props = $props();
 
-	const actualX = $derived(x + (correctX ? strokeWidth / 2 : 0));
-	const actualY = $derived(y + (correctY ? strokeWidth / 2 : 0));
-	const actualWidth = $derived(width - (correctX ? strokeWidth : 0));
-	const actualHeight = $derived(height - (correctY ? strokeWidth : 0));
+	const actualX = $derived(x + (correctX ? borderWidth / 2 : 0));
+	const actualY = $derived(y + (correctY ? borderWidth / 2 : 0));
+	const actualWidth = $derived(width - (correctX ? borderWidth : 0));
+	const actualHeight = $derived(height - (correctY ? borderWidth : 0));
+
+	const actualFill = $derived(role === 'frame' ? 'none' : fill);
+
 
 	const path = $derived.by(() => {
 		const x0 = actualX;
@@ -42,7 +47,7 @@
 		const rBL = bottomLeft ? r : 0;
 
 		//const arc = (dx: number, dy: number) => `a${r},${r} 0 0 1 ${dx},${dy}`;
-		const arc = (dx: number, dy: number) => `A ${r} ${r} 0 0 1 ${dx} ${dy}`;
+		//const arc = (dx: number, dy: number) => `A ${r} ${r} 0 0 1 ${dx} ${dy}`;
 
 		/*
 		const cmds = [
@@ -94,7 +99,7 @@
 </script>
 
 {#if type === 'path'}
-	<path d={path} {fill} {stroke} stroke-width={strokeWidth} data-clippy-role={role} {...restProps} />
+	<path d={path} fill={actualFill} stroke={borderColor} stroke-width={borderWidth} data-clippy-role={role} {...restProps} />
 {:else}
-	<rect x={actualX} y={actualY} width={actualWidth} height={actualHeight} rx={radius} {fill} {stroke} stroke-width={strokeWidth} data-clippy-role={role} {...restProps} />
+	<rect x={actualX} y={actualY} width={actualWidth} height={actualHeight} rx={radius} fill={actualFill} stroke={borderColor} stroke-width={borderWidth} data-clippy-role={role} {...restProps} />
 {/if}

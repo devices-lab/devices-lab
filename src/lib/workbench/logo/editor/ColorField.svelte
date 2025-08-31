@@ -4,8 +4,8 @@
 
 	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 
-	let value = $derived(color === 'none' ? defaultColor : color);
-	let enabled = $derived(color !== 'none');
+	let value = $state(color === 'none' ? defaultColor : color);
+	let enabled = $state(color !== 'none');
 
 	/*
 	const hexString = $derived(

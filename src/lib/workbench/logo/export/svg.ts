@@ -1,5 +1,6 @@
-import { outlineAllText, downloadSVG, downloadSVGFont } from '$lib/workbench/logo/utils';
-
+import { downloadSVG, downloadSVGFont } from '$lib/workbench/logo/utils';
+import { outlineAllText } from '$lib/workbench/logo/export/text';
+ 
 /**
  * Export the SVG image
  * @param id The ID of the SVG element
@@ -25,7 +26,7 @@ export async function exportSvg(id: string, filename: string) {
  * @returns void
  */
 export async function exportSvgFlat(id: string, filename: string) {
-	generateSvgFlat(id).then((clone) => {
+	generateSvgTextFlat(id).then((clone) => {
 		if (clone) {
 			downloadSVG(clone, filename);
 		} else {
@@ -59,7 +60,7 @@ export async function exportSvgFont(id: string, filename: string) {
  * @param filename The name of the file to save
  * @returns void
  */
-export async function generateSvgFlat(id: string): Promise<SVGSVGElement | undefined> {
+export async function generateSvgTextFlat(id: string): Promise<SVGSVGElement | undefined> {
 	// Get the original SVG element
 	const node = document.getElementById(id) as SVGSVGElement | null;
 	if (!node) {

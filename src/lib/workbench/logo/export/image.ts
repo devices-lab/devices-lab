@@ -1,4 +1,5 @@
-import { outlineAllText, downloadPNG } from '$lib/workbench/logo/utils';
+import { downloadPNG } from '$lib/workbench/logo/utils';
+import { outlineAllText } from '$lib/workbench/logo/export/text';
 
 type PngOpts = {
 	/** Target raster DPI. 600–1200 is typical for silkscreen. Default 1200. */

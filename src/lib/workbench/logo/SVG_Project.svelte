@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { textWidth, LOGO_DOMAIN, GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
-	import { generateSvgFlat } from '$lib/workbench/logo/export/svg';
+	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 
 	import type { ClassValue } from 'svelte/elements';
@@ -14,6 +14,7 @@
 	import Text from '$lib/workbench/logo/components/Text2.svelte';
 
 	import { Loader } from '@lucide/svelte';
+	import { untrack } from 'svelte';
 
 	interface Props {
 		uid: string;
@@ -108,15 +109,30 @@
 	const xBottom = $derived(W * 0.5 + offsetBottomX);
 	const yBottom = $derived(H * 0.75 + offsetBottomY);
 
-	const correct = $derived(borderColor !== 'none');
+	// Recalculate variables in relation to each other
+	const actualWidth = $derived(W - borderWidth);
+	const actualHeight = $derived(H - borderWidth);
+	const actualRadius = $derived(Math.max(0, Math.min(radius, actualHeight / 2)));
+	const actualDividerOffset = $derived(Math.max(-heightTop + actualRadius, Math.min(heightBottom - actualRadius, dividerOffset)));
+	const actualHeightTop = $derived(heightTop + actualDividerOffset + borderWidth / 2);
+	const actualHeightBottom = $derived(heightBottom - actualDividerOffset + borderWidth / 2);
 
-	$effect(() => {
-		radius = Math.max(0, Math.min(radius, (H - (correct ? borderWidth * 2 : 0)) / 2));
-		dividerOffset = Math.max(-heightTop + radius, Math.min(heightBottom - radius, dividerOffset));
-	});
+	// Save and restore the border width when toggling wether the border is enabled
+	let prevBorderWidth = Defaults.borderWidth;
+	function updateBorderColor(color: string | 'none') {
+		untrack(() => {
+			borderColor = color;
+			if (borderColor === 'none') {
+				prevBorderWidth = borderWidth;
+				borderWidth = 0;
+			} else {
+				borderWidth = prevBorderWidth;
+			}
+		});
+	}
 
 	let svg: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
-	let svg2: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
+	let svgKicad: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
 
 	let timeout: number;
 	let timeout2: number;
@@ -148,14 +164,14 @@
 
 			clearTimeout(timeout);
 			timeout = setTimeout(() => {
-				svg = generateSvgFlat(uid);
+				svg = generateSvgTextFlat(uid);
 			}, GENERATOR_DELAY_MS);
 
-			svg2 = new Promise(() => {}); // Keep promise pending
+			svgKicad = new Promise(() => {}); // Keep promise pending
 
 			clearTimeout(timeout2);
 			timeout2 = setTimeout(() => {
-				svg2 = generateSvgForKiCad(uid);
+				svgKicad = generateSvgForKiCad(uid);
 			}, GENERATOR_DELAY_MS);
 		}
 	});
@@ -164,19 +180,21 @@
 		<Text x={STROKE / 2 + PAD} y={STROKE / 2 + Hh / 2} fontSize={headerSize} text={LOGO_DOMAIN} fill={fill} data-synthetic-bold="true" data-bold-strength="1.0"  />
 		<Text x={STROKE / 2 + PAD} y={STROKE / 2 + Hh + Hb / 2} fontSize={bodySize} text={`/${projectName}`} />
 	*/
+
+	const bold = (value: number) => ({'data-synthetic-bold': (value !== 0 ? 'true' : 'false'), 'data-bold-strength': value.toString()});
 </script>
 
 <div class="mb-6 rounded-lg border-2 border-primary-200 bg-white shadow-sm dark:border-primary-700 dark:bg-gray-800">
 	<div class="px-4 py-5 sm:p-6">
 		<div class="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Parameters</div>
 
-		<Collapse label="Common" class="underline underline-offset-2" hidden>
+		<Collapse label="Common" class="underline underline-offset-2">
 			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
 				<NumberInput label="Padding (X)" bind:value={paddingX} default={Defaults.paddingX} min={0} max={500} />
-				<NumberInput label="Radius" bind:value={radius} default={Defaults.radius} max={(H - (correct ? borderWidth * 2 : 0)) / 2} />
-				<NumberInput label="Border width" bind:value={borderWidth} default={Defaults.borderWidth} max={200} />
-				<ColorInput label="Border" bind:value={borderColor} default={Defaults.borderColor} />
-				<NumberInput label="Vertical divider offset" bind:value={dividerOffset} default={Defaults.dividerOffset} min={-heightTop + radius} max={heightBottom - radius} />
+				<NumberInput label="Radius" bind:value={radius} default={Defaults.radius} max={actualHeight / 2} />
+				<NumberInput label="Border width" bind:value={borderWidth} default={Defaults.borderWidth} max={borderColor === 'none' ? 0 : actualHeight} />
+				<ColorInput label="Border" bind:value={() => borderColor, updateBorderColor} default={Defaults.borderColor} />
+				<NumberInput label="Vertical divider offset" bind:value={dividerOffset} default={Defaults.dividerOffset} min={-heightTop + actualRadius} max={heightBottom - actualRadius} />
 			</div>
 		</Collapse>
 
@@ -216,16 +234,16 @@
 
 		<SVG {uid} width={W} height={H} class={className}>
 			<!-- Top section fill -->
-			<Rect type="path" role="subject" width={W} height={heightTop + dividerOffset} {radius} fill={fillTop} stroke={'none'} strokeWidth={borderWidth} topLeft topRight correctX={correct} correctY={false} />
+			<Rect type="path" role="subject" width={W} height={actualHeightTop} radius={actualRadius} fill={fillTop} {borderWidth} topLeft topRight />
 			<!-- Bottom section fill -->
-			<Rect type="path" role="ignore" y={heightTop + dividerOffset} width={W} height={H - (heightTop + dividerOffset)} {radius} fill={fillBottom} stroke={'none'} strokeWidth={borderWidth} bottomLeft bottomRight correctX={correct} correctY={false} />
+			<Rect type="path" role="ignore" y={H - actualHeightBottom} width={W} height={actualHeightBottom} radius={actualRadius} fill={fillBottom} {borderWidth} bottomLeft bottomRight />
 			<!-- Border -->
-			<Rect type="path" role="add" width={W} height={H} {radius} fill={'none'} stroke={borderColor} strokeWidth={borderWidth} topLeft topRight bottomLeft bottomRight />
+			<Rect type="path" role="frame" width={W} height={H} radius={actualRadius} {borderColor} {borderWidth} topLeft topRight bottomLeft bottomRight />
 
 			<!-- Top text -->
-			<Text role="clip" x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={textTop} data-synthetic-bold={boldnessTop !== 0 ? 'true' : 'false'} data-bold-strength={boldnessTop} />
+			<Text role="clip" x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={textTop} {...bold(boldnessTop)} />
 			<!-- Bottom text -->
-			<Text role="subject" x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={textBottom} data-synthetic-bold={boldnessBottom !== 0 ? 'true' : 'false'} data-bold-strength={boldnessBottom} />
+			<Text role="subject" x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={textBottom} {...bold(boldnessBottom)} />
 		</SVG>
 	</div>
 </div>
@@ -248,6 +266,6 @@
 {#if showPreview}
 	<div class="mt-8 gap-x-4 md:flex md:max-h-60">
 		{@render SVGPreview(svg, 'Flat SVG')}
-		{@render SVGPreview(svg2, 'KiCad')}
+		{@render SVGPreview(svgKicad, 'KiCad')}
 	</div>
 {/if}
