@@ -13,7 +13,7 @@
 	const { uid, width, height, children, class: className = '' }: Props = $props();
 </script>
 
-<svg id={uid} class="mx-auto w-full {className}" width={width} height={height} viewBox={`${0} ${0} ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
+<svg id={uid} class="mx-auto size-full {className}" width={width} height={height} viewBox={`${0} ${0} ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
 	<g>
 		{@render children()}
 	</g>

@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { svgBackground, textWidth, STROKE, PAD, TEXT, LOGO_DOMAIN, RADIUS, COLOR } from '$lib/workbench/logo/utils';
+	import { textWidth, LOGO_DOMAIN, GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
+	import { generateSvgFlat } from '$lib/workbench/logo/export/svg';
+
+	import type { ClassValue } from 'svelte/elements';
+
+	import Collapse from '$lib/components/Collapse.svelte';
+	import NumberInput from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
+	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Rect from '$lib/workbench/logo/components/Rect3.svelte';
 	import Text from '$lib/workbench/logo/components/Text2.svelte';
 
-	import Collapse from '$lib/components/Collapse.svelte';
-
-	import type { ClassValue } from 'svelte/elements';
-
-	import Input from '$lib/workbench/logo/editor/NumberInput.svelte';
-	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
-	import NumberInput from '$lib/workbench/logo/editor/NumberInput.svelte';
-	import ColorInput from './editor/ColorInput.svelte';
+	import { Loader } from '@lucide/svelte';
 
 	interface Props {
 		uid: string;
@@ -21,6 +22,8 @@
 	}
 
 	const { uid, projectName, class: className = '', props = {} }: Props = $props();
+
+	let showPreview = $state(false);
 
 	/*
 	const Hh = 120;
@@ -45,45 +48,52 @@
 	*/
 
 	const Defaults = {
+		// Common
 		strokeWidth: 10,
 		radius: 40,
 		widthOffset: 40,
-		backgroundColor: '#ffffff',
-		foregroundColor: '#000000',
 		borderColor: '#000000',
-		textColorTop: '#ffffff',
-		textColorBottom: '#000000',
 		dividerOffset: 0,
+		// Top
 		heightTop: 120,
 		fontSizeTop: 84,
 		offsetTopX: 0,
 		offsetTopY: 0,
+		textTop: '#ffffff',
+		fillTop: '#000000',
+		boldnessTop: 0,
+		// Bottom
 		heightBottom: 120,
 		fontSizeBottom: 84,
 		offsetBottomX: 0,
-		offsetBottomY: 0
+		offsetBottomY: 0,
+		textBottom: '#000000',
+		fillBottom: '#ffffff',
+		boldnessBottom: 0
 	};
 
+	// Common
 	let strokeWidth = $state(Defaults.strokeWidth);
 	let radius = $state(Defaults.radius);
 	let widthOffset = $state(Defaults.widthOffset);
-	let backgroundColor = $state(Defaults.backgroundColor);
-	let foregroundColor = $state(Defaults.foregroundColor);
 	let borderColor = $state(Defaults.borderColor);
-	let textColorTop = $state(Defaults.textColorTop);
-	let textColorBottom = $state(Defaults.textColorBottom);
 	let dividerOffset = $state(Defaults.dividerOffset);
-
+	// Top
 	let heightTop = $state(Defaults.heightTop);
 	let fontSizeTop = $state(Defaults.fontSizeTop);
 	let offsetTopX = $state(Defaults.offsetTopX);
 	let offsetTopY = $state(Defaults.offsetTopY);
-
+	let textTop = $state(Defaults.textTop);
+	let fillTop = $state(Defaults.fillTop);
+	let boldnessTop = $state(Defaults.boldnessTop);
+	// Bottom
 	let heightBottom = $state(Defaults.heightBottom);
 	let fontSizeBottom = $state(Defaults.fontSizeBottom);
 	let offsetBottomX = $state(Defaults.offsetBottomX);
 	let offsetBottomY = $state(Defaults.offsetBottomY);
-
+	let textBottom = $state(Defaults.textBottom);
+	let fillBottom = $state(Defaults.fillBottom);
+	let boldnessBottom = $state(Defaults.boldnessBottom);
 
 	const textWidthTop = $derived(textWidth(LOGO_DOMAIN, fontSizeTop));
 	const textWidthBottom = $derived(textWidth(`/${projectName}`, fontSizeBottom));
@@ -94,11 +104,47 @@
 
 	const xTop = $derived(W / 2 + offsetTopX);
 	const yTop = $derived(heightTop / 2 + offsetTopY);
-	const xBottom = $derived((W) * 0.5 + offsetBottomX);
-	const yBottom = $derived((H) * 0.75 + offsetBottomY);
+	const xBottom = $derived(W * 0.5 + offsetBottomX);
+	const yBottom = $derived(H * 0.75 + offsetBottomY);
 
 	$effect(() => {
 		dividerOffset = Math.max(-heightTop, Math.min(heightBottom, dividerOffset));
+	});
+
+	let svg: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
+
+	let timeout: number;
+
+	$effect(() => {
+		strokeWidth;
+		radius;
+		widthOffset;
+		borderColor;
+		dividerOffset;
+		heightTop;
+		fontSizeTop;
+		offsetTopX;
+		offsetTopY;
+		textTop;
+		fillTop;
+		boldnessTop;
+		heightBottom;
+		fontSizeBottom;
+		offsetBottomX;
+		offsetBottomY;
+		textBottom;
+		fillBottom;
+		boldnessBottom;
+		projectName;
+
+		if (showPreview) {
+			svg = new Promise(() => {}); // Keep promise pending
+
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				svg = generateSvgFlat(uid);
+			}, GENERATOR_DELAY_MS);
+		}
 	});
 
 	/*
@@ -112,12 +158,12 @@
 	<div class="px-4 py-5 sm:p-6">
 		<div class="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Parameters</div>
 
-		<Collapse label="Common" class="underline underline-offset-2">
+		<Collapse label="Common" class="underline underline-offset-2" hidden>
 			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
 				<NumberInput label="Stroke width" bind:value={strokeWidth} default={Defaults.strokeWidth} max={200} />
-				<ColorInput label="Foreground" bind:value={foregroundColor} default={Defaults.foregroundColor} />
+
 				<NumberInput label="Radius" bind:value={radius} default={Defaults.radius} max={H / 2} />
-				<ColorInput label="Background" bind:value={backgroundColor} default={Defaults.backgroundColor} />
+
 				<NumberInput label="Padding (X)" bind:value={widthOffset} default={Defaults.widthOffset} min={0} max={500} />
 				<ColorInput label="Border" bind:value={borderColor} default={Defaults.borderColor} />
 				<NumberInput label="Vertical divider offset" bind:value={dividerOffset} default={Defaults.dividerOffset} min={-heightTop} max={heightBottom} />
@@ -126,21 +172,25 @@
 
 		<Collapse label="Top section" class="underline underline-offset-2" hidden>
 			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
-				<NumberInput label="Height" bind:value={heightTop} default={Defaults.heightTop} min={10} max={500}/>
-				<NumberInput label="Font-size" bind:value={fontSizeTop} default={Defaults.fontSizeTop} min={10} max={500}/>
-				<NumberInput label="Offset (X)" bind:value={offsetTopX} default={Defaults.offsetTopX} min={-100}/>
-				<NumberInput label="Offset (Y)" bind:value={offsetTopY} default={Defaults.offsetTopY} min={-100}/>
-				<ColorInput label="Text color" bind:value={textColorTop} default={Defaults.textColorTop} />
+				<NumberInput label="Height" bind:value={heightTop} default={Defaults.heightTop} min={10} max={500} />
+				<ColorInput label="Fill color" bind:value={fillTop} default={Defaults.fillTop} />
+				<NumberInput label="Font size" bind:value={fontSizeTop} default={Defaults.fontSizeTop} min={10} max={500} />
+				<ColorInput label="Text color" bind:value={textTop} default={Defaults.textTop} />
+				<NumberInput label="Offset (X)" bind:value={offsetTopX} default={Defaults.offsetTopX} min={-100} />
+				<NumberInput label="Offset (Y)" bind:value={offsetTopY} default={Defaults.offsetTopY} min={-100} />
+				<NumberInput label="Boldness" bind:value={boldnessTop} default={Defaults.boldnessTop} min={0} max={20} step={0.01} />
 			</div>
 		</Collapse>
 
 		<Collapse label="Bottom section" class="underline underline-offset-2" hidden>
 			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
-				<NumberInput label="Height" bind:value={heightBottom} default={Defaults.heightBottom} min={10} max={500}/>
-				<NumberInput label="Font-size" bind:value={fontSizeBottom} default={Defaults.fontSizeBottom} min={10} max={500}/>
-				<NumberInput label="Offset (X)" bind:value={offsetBottomX} default={Defaults.offsetBottomX} min={-100}/>
-				<NumberInput label="Offset (Y)" bind:value={offsetBottomY} default={Defaults.offsetBottomY} min={-100}/>
-				<ColorInput label="Text color" bind:value={textColorBottom} default={Defaults.textColorBottom} />
+				<NumberInput label="Height" bind:value={heightBottom} default={Defaults.heightBottom} min={10} max={500} />
+				<ColorInput label="Text color" bind:value={textBottom} default={Defaults.textBottom} />
+				<NumberInput label="Font size" bind:value={fontSizeBottom} default={Defaults.fontSizeBottom} min={10} max={500} />
+				<ColorInput label="Fill color" bind:value={fillBottom} default={Defaults.fillBottom} />
+				<NumberInput label="Offset (X)" bind:value={offsetBottomX} default={Defaults.offsetBottomX} min={-100} />
+				<NumberInput label="Offset (Y)" bind:value={offsetBottomY} default={Defaults.offsetBottomY} min={-100} />
+				<NumberInput label="Boldness" bind:value={boldnessBottom} default={Defaults.boldnessBottom} min={0} max={20} step={0.01} />
 			</div>
 		</Collapse>
 		<!--<InputGroup title="Common" inputs={topInputs} />
@@ -149,14 +199,40 @@
 	</div>
 </div>
 
-<SVG {uid} width={W} height={H} class={className}>
-	<!-- Background -->
-	<Rect type="path" width={W} height={H} {radius} fill={backgroundColor} stroke={"none"} {strokeWidth} topLeft topRight bottomLeft bottomRight id="background" />
-	<!-- Foreground fill -->
-	<Rect type="path" width={W} height={heightTop + dividerOffset} {radius} fill={foregroundColor} stroke={"none"} {strokeWidth} topLeft topRight correctY={false}/>
-	<!-- Border -->
-	<Rect type="path" width={W} height={H} {radius} fill={"none"} stroke={borderColor} {strokeWidth} topLeft topRight bottomLeft bottomRight id="subject" />
+<Checkbox bind:checked={showPreview} class="my-6 rounded-lg bg-gray-100 p-2">
+	<span class="font-medium text-primary-600 dark:text-primary-100">Render SVG?</span>
+</Checkbox>
 
-	<Text x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={textColorTop} data-synthetic-bold="true" data-bold-strength="1.0" {...props} />
-	<Text x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={textColorBottom} />
-</SVG>
+<div class="gap-x-4 md:flex md:max-h-60">
+	<div class="flex flex-col {showPreview ? 'md:w-1/2' : 'md:w-full'}">
+		<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
+
+		<SVG {uid} width={W} height={H} class={className}>
+			<!-- Background 
+			<Rect type="path" width={W} height={H} {radius} fill={backgroundColor} stroke={"none"} {strokeWidth} topLeft topRight bottomLeft bottomRight id="background" />-->
+			<!-- Foreground fill -->
+			<Rect type="path" width={W} height={heightTop + dividerOffset} {radius} fill={fillTop} stroke={'none'} {strokeWidth} topLeft topRight correctY={false} />
+
+			<Rect type="path" y={heightTop + dividerOffset} width={W} height={H - (heightTop + dividerOffset)} {radius} fill={fillBottom} stroke={'none'} {strokeWidth} bottomLeft bottomRight correctY={false} />
+			<!-- Border -->
+			<Rect type="path" width={W} height={H} {radius} fill={'none'} stroke={borderColor} {strokeWidth} topLeft topRight bottomLeft bottomRight id="subject" />
+
+			<Text x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={textTop} data-synthetic-bold={boldnessTop !== 0 ? 'true' : 'false'} data-bold-strength={boldnessTop} {...props} />
+			<Text x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={textBottom} data-synthetic-bold={boldnessBottom !== 0 ? 'true' : 'false'} data-bold-strength={boldnessBottom} />
+		</SVG>
+	</div>
+	{#if showPreview}
+		<div class="flex w-full flex-col md:w-1/2">
+			<h3 class="mt-6 mb-2 font-semibold text-gray-900 md:mt-0 dark:text-gray-100">Rendered:</h3>
+			<div class="flex size-full items-center justify-center">
+				{#await svg}
+					<Loader class="size-10 animate-spin text-blue-500" />
+				{:then value}
+					{@html value?.outerHTML ?? '<p class="text-gray-500 italic">No SVG generated</p>'}
+				{:catch error}
+					<p class="text-red-500 italic">Something went wrong: {error.message}</p>
+				{/await}
+			</div>
+		</div>
+	{/if}
+</div>

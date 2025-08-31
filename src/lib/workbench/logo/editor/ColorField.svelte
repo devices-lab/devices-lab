@@ -2,7 +2,7 @@
 	import BaseInput from '$lib/components/BaseInput.svelte';
 	import Checkbox from './Checkbox.svelte';
 
-	let { color = $bindable(), default: defaultColor }: { color: string, default: string } = $props();
+	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 
 	let value = $derived(color === 'none' ? defaultColor : color);
 	let enabled = $derived(color !== 'none');
@@ -31,5 +31,7 @@
 -->
 
 <div class="flex grow items-center gap-x-2">
-	<Checkbox bind:checked={enabled} label="Enabled?" />
+	<Checkbox bind:checked={enabled}>
+		<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Enabled?</span>
+	</Checkbox>
 </div>

@@ -11,6 +11,8 @@ import { writable } from 'svelte/store';
 export const svgBackground = writable('none');
 export const svgBaselineSupported = writable(false);
 
+// Number of milliseconds to wait before generating the SVG
+export const GENERATOR_DELAY_MS = 1000;
 
 type Pt = { x: number; y: number };
 type Path = Pt[];

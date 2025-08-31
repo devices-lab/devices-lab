@@ -1,12 +1,18 @@
 <script lang="ts">
-	let { checked = $bindable(), label = '' }: { checked: boolean; label?: string } = $props();
+	import type { Snippet } from "svelte";
+	import type { ClassValue } from "svelte/elements";
+
+	let { checked = $bindable(), children, class: className = '' }: { checked: boolean; children?: Snippet; class?: ClassValue } = $props();
+	const uid = $props.id();
 </script>
 
-<div class="group grid size-4 grid-cols-1">
-	<input
-		type="checkbox"
-		bind:checked
-		class="
+<div class="flex items-center gap-2 {className}">
+	<div class="group grid size-4 grid-cols-1 ">
+		<input
+			id={uid}
+			type="checkbox"
+			bind:checked
+			class="
 			col-start-1
 			row-start-1
 			cursor-pointer
@@ -37,15 +43,14 @@
 			dark:disabled:bg-white/10
 			dark:disabled:checked:bg-white/10
 			forced-colors:appearance-auto"
-	/>
-	<svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25 dark:group-has-disabled:stroke-white/25">
-		<path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-checked:opacity-100" />
-		<path d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-indeterminate:opacity-100" />
-	</svg>
-</div>
+		/>
+		<svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25 dark:group-has-disabled:stroke-white/25">
+			<path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-checked:opacity-100" />
+			<path d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-indeterminate:opacity-100" />
+		</svg>
+	</div>
 
-{#if label}
-	<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
-		{label}
-	</span>
-{/if}
+	<label for={uid} class="cursor-pointer">
+		{@render children?.()}
+	</label>
+</div>
