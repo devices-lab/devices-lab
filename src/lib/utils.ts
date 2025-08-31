@@ -20,5 +20,5 @@ export function hexToRgbA(hex: string, alpha: number) {
 		const x = parseInt('0x' + c.join(''));
 		return 'rgba(' + [(x >> 16) & 255, (x >> 8) & 255, x & 255].join(',') + ',' + alpha.toString() + ')';
 	}
-	throw new Error('Bad Hex');
+	return '#ffffff';
 }

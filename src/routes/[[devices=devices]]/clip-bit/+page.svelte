@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ItemPage from '$lib/items/page/Page.svelte';
-	import Collapse from '$lib/items/page/Collapse.svelte';
+	import Collapse from '$lib/components/Collapse.svelte';
 	import LinkItem from '$lib/items/page/LinkItem.svelte';
 	import List from '$lib/items/page/List.svelte';
 	

@@ -4,10 +4,14 @@
 	import Rect from '$lib/workbench/logo/components/Rect3.svelte';
 	import Text from '$lib/workbench/logo/components/Text2.svelte';
 
+	import Collapse from '$lib/components/Collapse.svelte';
+
 	import type { ClassValue } from 'svelte/elements';
 
-	import Input from '$lib/workbench/logo/components/NumberInput.svelte';
-	import InputGroup from '$lib/workbench/logo/components/InputGroup.svelte';
+	import Input from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
+	import NumberInput from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import ColorInput from './editor/ColorInput.svelte';
 
 	interface Props {
 		uid: string;
@@ -44,8 +48,12 @@
 		strokeWidth: 10,
 		radius: 40,
 		widthOffset: 40,
-		backgroundColor: 'red',
-		foregroundColor: 'blue',
+		backgroundColor: '#ffffff',
+		foregroundColor: '#000000',
+		borderColor: '#000000',
+		textColorTop: '#ffffff',
+		textColorBottom: '#000000',
+		dividerOffset: 0,
 		heightTop: 120,
 		fontSizeTop: 84,
 		offsetTopX: 0,
@@ -61,6 +69,10 @@
 	let widthOffset = $state(Defaults.widthOffset);
 	let backgroundColor = $state(Defaults.backgroundColor);
 	let foregroundColor = $state(Defaults.foregroundColor);
+	let borderColor = $state(Defaults.borderColor);
+	let textColorTop = $state(Defaults.textColorTop);
+	let textColorBottom = $state(Defaults.textColorBottom);
+	let dividerOffset = $state(Defaults.dividerOffset);
 
 	let heightTop = $state(Defaults.heightTop);
 	let fontSizeTop = $state(Defaults.fontSizeTop);
@@ -83,76 +95,68 @@
 	const xTop = $derived(W / 2 + offsetTopX);
 	const yTop = $derived(heightTop / 2 + offsetTopY);
 	const xBottom = $derived((W) * 0.5 + offsetBottomX);
-	const yBottom = $derived((H - strokeWidth * 2) * 0.75 + offsetBottomY);
+	const yBottom = $derived((H) * 0.75 + offsetBottomY);
 
-
+	$effect(() => {
+		dividerOffset = Math.max(-heightTop, Math.min(heightBottom, dividerOffset));
+	});
 
 	/*
 		<Text x={STROKE / 2 + PAD} y={STROKE / 2 + Hh / 2} fontSize={headerSize} text={LOGO_DOMAIN} fill={fill} data-synthetic-bold="true" data-bold-strength="1.0"  />
 		<Text x={STROKE / 2 + PAD} y={STROKE / 2 + Hh + Hb / 2} fontSize={bodySize} text={`/${projectName}`} />
 	*/
-
-
-	// tiny helpers
-	const val = <T>(get: () => T, set: (v: T) => void) => ({ get, set });
-	const num = (
-		label: string,
-		value: { get: () => number; set: (v: number) => void },
-		defaultValue: number,
-		opts: { min: number; max: number; step?: number }
-	) => ({ type: 'number' as const, label, value, defaultValue, step: 1, ...opts });
-	const col = (
-		label: string,
-		foreground: { get: () => string; set: (v: string) => void },
-		background: { get: () => string; set: (v: string) => void },
-		defaultForeground: string,
-		defaultBackground: string
-	) => ({ type: 'color' as const, label, foreground, background, defaultForeground, defaultBackground });
-
-	// common ranges to avoid repetition
-	const RANGE = {
-		stroke: { min: 0, max: 100, step: 1 },
-		large:  { min: 0, max: 5000, step: 1 },
-		size:   { min: 10, max: 500, step: 1 },
-		offset: { min: -200, max: 200, step: 1 }
-	} as const;
-
-	// groups
-	const commonInputs = $derived.by(() => [
-		num('Stroke width',			val(() => strokeWidth,		v => (strokeWidth  = v)),		Defaults.strokeWidth, RANGE.stroke),
-		num('Radius',				val(() => radius,			v => (radius       = v)),		Defaults.radius,      { min: 0, max: H / 2, step: 1 }),
-		num('Width (increment)',	val(() => widthOffset,		v => (widthOffset  = v)),		Defaults.widthOffset, RANGE.large),
-		col('Foreground - Background', 				val(() => foregroundColor,	v => (foregroundColor = v)),	val(() => backgroundColor, v => (backgroundColor = v)), 	Defaults.foregroundColor, 	Defaults.backgroundColor)
-	]);
-
-	const topInputs = [
-		num('Height',		val(() => heightTop,   v => (heightTop   = v)), Defaults.heightTop,   RANGE.size),
-		num('Font-size',	val(() => fontSizeTop, v => (fontSizeTop = v)), Defaults.fontSizeTop, RANGE.size),
-		num('Offset X',		val(() => offsetTopX,  v => (offsetTopX  = v)), Defaults.offsetTopX,  RANGE.offset),
-		num('Offset Y',		val(() => offsetTopY,  v => (offsetTopY  = v)), Defaults.offsetTopY,  RANGE.offset)
-	];
-
-	const bottomInputs = [
-		num('Height',		val(() => heightBottom,		v => (heightBottom   = v)), Defaults.heightBottom,   RANGE.size),
-		num('Font-size',	val(() => fontSizeBottom,	v => (fontSizeBottom = v)), Defaults.fontSizeBottom, RANGE.size),
-		num('Offset X',		val(() => offsetBottomX,	v => (offsetBottomX  = v)), Defaults.offsetBottomX,  RANGE.offset),
-		num('Offset Y',		val(() => offsetBottomY,	v => (offsetBottomY  = v)), Defaults.offsetBottomY,  RANGE.offset)
-	];
+	// todo generate unique id for each subject
 </script>
 
 <div class="mb-6 rounded-lg border-2 border-primary-200 bg-white shadow-sm dark:border-primary-700 dark:bg-gray-800">
 	<div class="px-4 py-5 sm:p-6">
 		<div class="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Parameters</div>
-		<InputGroup title="Common" inputs={commonInputs} />
+
+		<Collapse label="Common" class="underline underline-offset-2">
+			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
+				<NumberInput label="Stroke width" bind:value={strokeWidth} default={Defaults.strokeWidth} max={200} />
+				<ColorInput label="Foreground" bind:value={foregroundColor} default={Defaults.foregroundColor} />
+				<NumberInput label="Radius" bind:value={radius} default={Defaults.radius} max={H / 2} />
+				<ColorInput label="Background" bind:value={backgroundColor} default={Defaults.backgroundColor} />
+				<NumberInput label="Padding (X)" bind:value={widthOffset} default={Defaults.widthOffset} min={0} max={500} />
+				<ColorInput label="Border" bind:value={borderColor} default={Defaults.borderColor} />
+				<NumberInput label="Vertical divider offset" bind:value={dividerOffset} default={Defaults.dividerOffset} min={-heightTop} max={heightBottom} />
+			</div>
+		</Collapse>
+
+		<Collapse label="Top section" class="underline underline-offset-2" hidden>
+			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
+				<NumberInput label="Height" bind:value={heightTop} default={Defaults.heightTop} min={10} max={500}/>
+				<NumberInput label="Font-size" bind:value={fontSizeTop} default={Defaults.fontSizeTop} min={10} max={500}/>
+				<NumberInput label="Offset (X)" bind:value={offsetTopX} default={Defaults.offsetTopX} min={-100}/>
+				<NumberInput label="Offset (Y)" bind:value={offsetTopY} default={Defaults.offsetTopY} min={-100}/>
+				<ColorInput label="Text color" bind:value={textColorTop} default={Defaults.textColorTop} />
+			</div>
+		</Collapse>
+
+		<Collapse label="Bottom section" class="underline underline-offset-2" hidden>
+			<div class="grid gap-x-8 gap-y-2 md:grid-cols-2">
+				<NumberInput label="Height" bind:value={heightBottom} default={Defaults.heightBottom} min={10} max={500}/>
+				<NumberInput label="Font-size" bind:value={fontSizeBottom} default={Defaults.fontSizeBottom} min={10} max={500}/>
+				<NumberInput label="Offset (X)" bind:value={offsetBottomX} default={Defaults.offsetBottomX} min={-100}/>
+				<NumberInput label="Offset (Y)" bind:value={offsetBottomY} default={Defaults.offsetBottomY} min={-100}/>
+				<ColorInput label="Text color" bind:value={textColorBottom} default={Defaults.textColorBottom} />
+			</div>
+		</Collapse>
+		<!--<InputGroup title="Common" inputs={topInputs} />
 		<InputGroup title="Top Part" inputs={topInputs} />
-		<InputGroup title="Bottom part" inputs={bottomInputs} />
+		<InputGroup title="Bottom part" inputs={bottomInputs} />-->
 	</div>
 </div>
 
 <SVG {uid} width={W} height={H} class={className}>
-	<Rect type="path" width={W} height={H} {radius} fill={backgroundColor} stroke={foregroundColor} {strokeWidth} topLeft topRight bottomLeft bottomRight id="subject" />
-	<Rect type="path" width={W} height={heightTop} {radius} fill={foregroundColor} stroke={foregroundColor} {strokeWidth} topLeft topRight />
+	<!-- Background -->
+	<Rect type="path" width={W} height={H} {radius} fill={backgroundColor} stroke={"none"} {strokeWidth} topLeft topRight bottomLeft bottomRight id="background" />
+	<!-- Foreground fill -->
+	<Rect type="path" width={W} height={heightTop + dividerOffset} {radius} fill={foregroundColor} stroke={"none"} {strokeWidth} topLeft topRight correctY={false}/>
+	<!-- Border -->
+	<Rect type="path" width={W} height={H} {radius} fill={"none"} stroke={borderColor} {strokeWidth} topLeft topRight bottomLeft bottomRight id="subject" />
 
-	<Text x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={backgroundColor} data-synthetic-bold="true" data-bold-strength="1.0" {...props} />
-	<Text x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={foregroundColor} />
+	<Text x={xTop} y={yTop} fontSize={fontSizeTop} text={LOGO_DOMAIN} width={textWidthTop} fill={textColorTop} data-synthetic-bold="true" data-bold-strength="1.0" {...props} />
+	<Text x={xBottom} y={yBottom} fontSize={fontSizeBottom} text={`/${projectName}`} width={textWidthBottom} fill={textColorBottom} />
 </SVG>

@@ -7,7 +7,7 @@
 
 	import Title from '$lib/items/page/Title.svelte';
 	import Description from '$lib/items/page/Description.svelte';
-	import Collapse from '$lib/items/page/Collapse.svelte';
+	import Collapse from '$lib/components/Collapse.svelte';
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import SvgVersion from '$lib/workbench/logo/SVG_Version.svelte';
 	import Feature from '$lib/items/common/Feature.svelte';

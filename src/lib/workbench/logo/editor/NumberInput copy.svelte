@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { RotateCcw } from '@lucide/svelte';
+	import Reset from './Reset.svelte';
 
 	export interface NumberInput {
 		label: string;
@@ -80,26 +80,6 @@
 			step={input.step}
 		/>
 
-		<button
-			type="button"
-			onclick={() => input.value.set(input.defaultValue)}
-			class="cursor-pointer
-				rounded-md
-				px-3
-				py-1.5
-				text-sm
-				font-medium
-				text-gray-700
-				transition
-				duration-300
-				hover:-rotate-45
-				focus:outline-2
-				focus:outline-none
-				dark:bg-gray-700
-				dark:text-gray-300
-				dark:hover:bg-gray-600"
-		>
-			<RotateCcw />
-		</button>
+		<Reset onclick={() => input.value.set(input.defaultValue)} />
 	</div>
 </div>

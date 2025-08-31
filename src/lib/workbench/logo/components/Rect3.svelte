@@ -15,16 +15,17 @@
 		bottomRight?: boolean;
 
 		type: 'rect' | 'path';
-		correct?: boolean;
+		correctX?: boolean;
+		correctY?: boolean;
 		[key: string]: any;
 	}
 
-	const { type, x = 0, y = 0, width, height, radius, fill, stroke, strokeWidth, topLeft = false, topRight = false, bottomLeft = false, bottomRight = false, correct = true, ...restProps }: Props = $props();
+	const { type, x = 0, y = 0, width, height, radius, fill, stroke, strokeWidth, topLeft = false, topRight = false, bottomLeft = false, bottomRight = false, correctX = true, correctY = true, ...restProps }: Props = $props();
 
-	const actualX = $derived(x + ((correct ? strokeWidth / 2 : 0)));
-	const actualY = $derived(y + ((correct ? strokeWidth / 2 : 0)));
-	const actualWidth = $derived(width - ((correct ? strokeWidth : 0)));
-	const actualHeight = $derived(height - ((correct ? strokeWidth : 0)));
+	const actualX = $derived(x + (correctX ? strokeWidth / 2 : 0));
+	const actualY = $derived(y + (correctY ? strokeWidth / 2 : 0));
+	const actualWidth = $derived(width - (correctX ? strokeWidth : 0));
+	const actualHeight = $derived(height - (correctY ? strokeWidth : 0));
 
 	const path = $derived.by(() => {
 		const x0 = actualX;
