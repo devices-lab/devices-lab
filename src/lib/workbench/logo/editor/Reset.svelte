@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { RotateCcw } from '@lucide/svelte';
 
-	const { onclick }: { onclick: () => void } = $props();
+	const { onclick, class: className = '' }: { onclick: () => void, class?: string } = $props();
 </script>
 
 <button
@@ -9,8 +9,8 @@
 	{onclick}
 	class="cursor-pointer
 		rounded-md
-		px-3
-		py-1.5
+		px-0
+		py-0
 		text-sm
 		font-medium
 		text-gray-700
@@ -21,7 +21,8 @@
 		focus:outline-2
 		focus:outline-none
 		dark:text-gray-300
-		dark:hover:text-gray-500"
+		dark:hover:text-gray-500 
+		{className}"
 >
-	<RotateCcw />
+	<RotateCcw class="size-5" />
 </button>

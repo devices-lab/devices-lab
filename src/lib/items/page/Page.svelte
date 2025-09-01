@@ -33,7 +33,7 @@
 
 				<section aria-labelledby="details-heading" class="mt-12">
 					<h2 id="details-heading" class="sr-only">Additional details</h2>
-					<div class="divide-y divide-gray-200 border-t border-gray-200 dark:divide-gray-700 dark:border-gray-700">
+					<div class="border-t-1 border-gray-200 dark:border-gray-700">
 						{@render children?.()}
 						<Collapse label={'Identifier'}>
 							<div class="flex justify-center">
