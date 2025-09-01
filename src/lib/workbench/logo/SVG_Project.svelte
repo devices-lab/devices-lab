@@ -12,11 +12,14 @@
 	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
+	import Text from '$lib/workbench/logo/components/Text3.svelte';
 	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
+
+	import { textWidth as calculateTextWidth } from '$lib/workbench/logo/utils';
 
 	import Preview from './Preview.svelte';
 
-	import Shape, { type ShapeSettings } from './components/Shape.svelte';
+	import { type ShapeSettings } from './components/Shape.svelte';
 	import { clamp } from '$lib/utils';
 
 	interface Props {
@@ -28,130 +31,170 @@
 
 	const { uid, projectName, class: className = '', props = {} }: Props = $props();
 
-	const Defaults = {
-		heightTop: 120,
-		heightBottom: 120,
-		borderWidth: 10,
-		radius: 40,
+	interface SVG_Data {
+		paddingX: number;
+		border: {
+			radius: number;
+			width: number;
+			color: string;
+		};
+		top: {
+			height: number;
+			fontSize: number;
+			color: string;
+			fill: string;
+			boldness: number;
+			offsetX: number;
+			offsetY: number;
+		};
+		bottom: {
+			height: number;
+			fontSize: number;
+			color: string;
+			fill: string;
+			boldness: number;
+			offsetX: number;
+			offsetY: number;
+		};
+	}
+
+	const Defaults: SVG_Data = {
 		paddingX: 80,
-		borderColor: '#000000',
-		dividerOffset: 0
-	};
 
-	const DefaultsTop: ShapeSettings = {
-		fontSize: 84,
-		color: '#ffffff',
-		fill: '#000000',
-		boldness: 1,
-		rounded: {
-			topLeft: true,
-			topRight: true
+		border: {
+			radius: 40,
+			width: 10,
+			color: '#000000'
+		},
+
+		top: {
+			height: 120,
+			fontSize: 84,
+			color: '#ffffff',
+			fill: '#000000',
+			boldness: 1,
+			offsetX: 0,
+			offsetY: 0
+		},
+
+		bottom: {
+			height: 120,
+			fontSize: 84,
+			color: '#000000',
+			fill: '#e1ff00',
+			boldness: 0,
+			offsetX: 0,
+			offsetY: 0
 		}
 	};
 
-	const DefaultsBottom: ShapeSettings = {
-		fontSize: 84,
-		color: '#000000',
-		fill: '#ffffff',
-		rounded: {
-			bottomLeft: true,
-			bottomRight: true
-		}
-	};
+	let data: SVG_Data = $state({ ...Defaults, ...props });
 
-	// Common
-	let heightTop = $state(Defaults.heightTop);
-	let heightBottom = $state(Defaults.heightBottom);
-	let borderWidth = $state(Defaults.borderWidth);
-	let radius = $state(Defaults.radius);
-	let paddingX = $state(Defaults.paddingX);
-	let borderColor = $state(Defaults.borderColor);
 
-	// Bound
-	let textWidthTop = $state(800);
-	let textWidthBottom = $state(800);
 
-	const origin = $derived({ x: borderWidth / 2, y: borderWidth / 2 });
-	const height = $derived(heightTop + heightBottom);
-	const width = $derived(Math.max(textWidthTop, textWidthBottom) + paddingX);
 
-	// Calculated
-	const hasBorder = $derived(borderColor !== 'none');
+	const textWidthTop = $derived(calculateTextWidth(LOGO_DOMAIN, data.top.fontSize));
+	const textWidthBottom = $derived(calculateTextWidth(`/${projectName}`, data.bottom.fontSize));
+
+	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });
+	const height = $derived(data.top.height + data.bottom.height);
+	const width = $derived(Math.max(textWidthTop, textWidthBottom) + data.paddingX);
+
+	const hasBorder = $derived(data.border.color !== 'none');
+	const maxRadius = $derived(Math.min(height / 2, width / 2 || height, data.top.height, data.bottom.height));
+
+	const topBold = $derived({ 'data-synthetic-bold': data.top.boldness !== 0 ? 'true' : 'false', 'data-bold-strength': data.top.boldness.toString() });
+	const topTextX = $derived(width * 0.5 + data.top.offsetX);
+	const topTextY = $derived(data.top.height * 0.5 + data.top.offsetY);
+
+	const bottomBold = $derived({ 'data-synthetic-bold': data.bottom.boldness !== 0 ? 'true' : 'false', 'data-bold-strength': data.bottom.boldness.toString() });
+	const bottomTextX = $derived(width * 0.5 + data.bottom.offsetX);
+	const bottomTextY = $derived(data.bottom.height * 0.5 + data.bottom.offsetY + data.top.height);
+
+
 
 	// Save and restore the border width when toggling wether the border is enabled
-	let prevBorderWidth = Defaults.borderWidth;
+	let prevBorderWidth = Defaults.border.width;
 	function updateBorderColor(color: string | 'none') {
 		untrack(() => {
 			if (color === 'none') {
-				prevBorderWidth = borderWidth;
-				borderWidth = 0;
-			} else if (borderColor === 'none') {
-				borderWidth = prevBorderWidth;
+				prevBorderWidth = data.border.width;
+				data.border.width = 0;
+			} else if (data.border.color === 'none') {
+				data.border.width = prevBorderWidth;
 			}
-			borderColor = color;
+			data.border.color = color;
 		});
 	}
 
 	let preview: Preview | undefined = $state();
-	let settingsTop: Shape | undefined = $state();
-	let settingsBottom: Shape | undefined = $state();
 
+	// Update the preview whenever the data changes
 	$effect(() => {
-		width;
-		height;
-		borderWidth;
-		radius;
-		paddingX;
-		borderColor;
-		projectName;
-
+		data;
 		updatePreview();
+	});
+
+	// Clamp the border radius to the maximum radius
+	$effect(() => {
+		data.border.radius = clamp(data.border.radius, 0, maxRadius);
 	});
 
 	function updatePreview() {
 		preview?.updatePreview();
 	}
 
-	// prettier-ignore
-	const Params: Record<string, InputType> = $derived({
-		heightTop: 		{ initial: Defaults.heightTop, 		min: 0, 		max: 1000 },
-		heightBottom: 	{ initial: Defaults.heightBottom, 	min: 0, 		max: 1000 },
-		paddingX: 		{ initial: Defaults.paddingX, 		min: 0, 		max: 1000 },
-		radius: 		{ initial: Defaults.radius, 		min: 0, 		max: Math.min(height / 2, (width / 2) || height, heightTop, heightBottom),
-			onchange: () => (radius = clamp(radius, Params.radius.min, Params.radius.max))
-		},
-		borderWidth: 	{ initial: Defaults.borderWidth, 	min: 0, 		max: hasBorder ? height : 0 },
-	});
 
-	$effect(() => {
-		Object.entries(Params).forEach(([key, { onchange }]) => {
-			onchange?.();
-		});
-	});
+
+
 </script>
 
 <Preview {uid} bind:this={preview}>
 	{#snippet config()}
 		<!-- prettier-ignore -->
 		<InputGroup label="Common">
-			<NumberInput label="Height Top" 	bind:value={heightTop}		params={Params.heightTop} />
-			<NumberInput label="Height Bottom" 	bind:value={heightBottom} 	params={Params.heightBottom} />
-			<NumberInput label="Padding (X)" 	bind:value={paddingX} 		params={Params.paddingX} />
-			<NumberInput label="Radius" 		bind:value={radius} 		params={Params.radius} />
-			<NumberInput label="Border width" 	bind:value={borderWidth} 	params={Params.borderWidth} />
-			<ColorInput label="Border color" 	bind:value={() => borderColor, updateBorderColor} initial={Defaults.borderColor} />
+			<NumberInput 	label="Padding (width)" 	bind:value={data.paddingX} 			initial={Defaults.paddingX} 		min={0} max={1000} />
+			<NumberInput 	label="Border Radius" 		bind:value={data.border.radius} 	initial={Defaults.border.radius} 	min={0} max={maxRadius} />
+			<NumberInput 	label="Border width" 		bind:value={data.border.width} 		initial={Defaults.border.width} 	min={0} max={hasBorder ? height : 0} />
+			<ColorInput 	label="Border color" 		bind:value={() => data.border.color, updateBorderColor} initial={Defaults.border.color} />
 		</InputGroup>
 
-		{@render settingsTop?.configView('Top section', false)}
-		{@render settingsBottom?.configView('Bottom section', false)}
+		<!-- prettier-ignore -->
+		<InputGroup label="Top section">
+			<ColorInput 	label="Fill color" 			bind:value={data.top.fill} 			initial={Defaults.top.fill} 		/>
+			<ColorInput 	label="Text color" 			bind:value={data.top.color} 		initial={Defaults.top.color} 		/>
+			<NumberInput 	label="Height Top" 			bind:value={data.top.height}		initial={Defaults.top.height} 		min={0} max={1000} />
+			<NumberInput 	label="Font size" 			bind:value={data.top.fontSize} 		initial={Defaults.top.fontSize} 	min={10} max={500} />
+			<NumberInput 	label="Text Offset (X)" 	bind:value={data.top.offsetX} 		initial={Defaults.top.offsetX} 		min={-100} max={100} />
+			<NumberInput 	label="Text Offset (Y)" 	bind:value={data.top.offsetY} 		initial={Defaults.top.offsetY} 		min={-100} max={100} />
+			<NumberInput 	label="Boldness" 			bind:value={data.top.boldness} 		initial={Defaults.top.boldness} 	min={0} max={20} step={0.01} />
+		</InputGroup>
+
+		<!-- prettier-ignore -->
+		<InputGroup label="Bottom section">
+			<ColorInput 	label="Fill color" 			bind:value={data.bottom.fill} 		initial={Defaults.bottom.fill} 		/>
+			<ColorInput 	label="Text color" 			bind:value={data.bottom.color} 		initial={Defaults.bottom.color} 	/>
+			<NumberInput 	label="Height Bottom" 		bind:value={data.bottom.height} 	initial={Defaults.bottom.height} 	min={0} max={1000} />
+			<NumberInput 	label="Font size" 			bind:value={data.bottom.fontSize} 	initial={Defaults.bottom.fontSize} 	min={10} max={500} />
+			<NumberInput 	label="Text Offset (X)" 	bind:value={data.bottom.offsetX} 	initial={Defaults.bottom.offsetX} 	min={-100} max={100} />
+			<NumberInput 	label="Text Offset (Y)" 	bind:value={data.bottom.offsetY} 	initial={Defaults.bottom.offsetY} 	min={-100} max={100} />
+			<NumberInput 	label="Boldness" 			bind:value={data.bottom.boldness} 	initial={Defaults.bottom.boldness} 	min={0} max={20} step={0.01} />
+		</InputGroup>
 	{/snippet}
 
-	<SVG {uid} width={width + borderWidth} height={height + borderWidth} class={className}>
+	<SVG {uid} width={width + data.border.width} height={height + data.border.width} class={className}>
 		<!-- Top section -->
-		<Shape roleShape={'subject'} roleText={'clip'} {origin} {width} height={heightTop} {radius} dx={0} dy={0} text={LOGO_DOMAIN} settings={DefaultsTop} bind:textWidth={textWidthTop} bind:this={settingsTop} onchange={updatePreview} />
+		<Rect type="path" role="subject" {origin} dx={0} dy={0} {width} height={data.top.height} radius={data.border.radius} fill={data.top.fill} topLeft topRight />
+		<Text role="clip" {origin} dx={topTextX} dy={topTextY} text={LOGO_DOMAIN} fontSize={data.top.fontSize} width={textWidthTop} color={data.top.color} {...topBold} />
+
+		<!--<Shape roleShape={'subject'} roleText={'clip'} {origin} {width} height={data.top.height} radius={data.radius} dx={0} dy={0} text={LOGO_DOMAIN} settings={DefaultsTop} bind:textWidth={textWidthTop} bind:this={settingsTop} onchange={updatePreview} />-->
+
 		<!-- Bottom section -->
-		<Shape roleShape={'ignore'} roleText={'clip'} {origin} {width} height={heightBottom} {radius} dx={0} dy={heightTop} text={`/${projectName}`} settings={DefaultsBottom} bind:textWidth={textWidthBottom} bind:this={settingsBottom} onchange={updatePreview} />
+		<Rect type="path" role="ignore" {origin} dx={0} dy={data.top.height} {width} height={data.bottom.height} radius={data.border.radius} fill={data.bottom.fill} bottomLeft bottomRight />
+		<Text role="clip" {origin} dx={bottomTextX} dy={bottomTextY} text={`/${projectName}`} fontSize={data.bottom.fontSize} width={textWidthBottom} color={data.bottom.color} {...bottomBold} />
+
+		<!--<Shape roleShape={'ignore'} roleText={'clip'} {origin} {width} height={data.bottom.height} radius={data.border.radius} dx={0} dy={data.top.height} text={`/${projectName}`} settings={DefaultsBottom} bind:textWidth={textWidthBottom} bind:this={settingsBottom} onchange={updatePreview} />-->
 		<!-- Border -->
-		<Rect type="path" role="frame" {origin} {width} {height} {radius} {borderColor} {borderWidth} topLeft topRight bottomLeft bottomRight />
+		<Rect type="path" role="frame" {origin} {width} {height} radius={data.border.radius} borderColor={data.border.color} borderWidth={data.border.width} topLeft topRight bottomLeft bottomRight />
 	</SVG>
 </Preview>

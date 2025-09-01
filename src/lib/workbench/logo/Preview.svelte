@@ -57,10 +57,10 @@
 			</div>
 		</div>
 
-		<div class="my-6 flex justify-between rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
-			<button onclick={() => update(0)} type="button" class="rounded-full bg-primary-600 px-3 py-0 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:shadow-none dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500">Generate</button>
+		<div class="mb-6 mt-10 flex justify-between rounded-lg bg-gray-100 p-2 dark:bg-gray-800">
+			<button onclick={() => update(0)} type="button" class="cursor-pointer rounded-full bg-primary-600 px-3 py-0 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:shadow-none dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500">Generate</button>
 
-			<Checkbox bind:checked={autoUpdate} class="rounded-lg p-2">
+			<Checkbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="rounded-lg p-2">
 				<span class="text-sm font-medium text-primary-600 dark:text-primary-100">Auto update?</span>
 			</Checkbox>
 		</div>
@@ -86,7 +86,7 @@
 
 		{#if showPreview}
 			<div class="h-full gap-4">
-				{@render SVGPreview(svgFlat, 'SVG (flat)')}
+				{@render SVGPreview(svgFlat, 'SVG (text --> path)')}
 				{@render SVGPreview(svgKicad, 'SVG (KiCad)')}
 			</div>
 		{/if}

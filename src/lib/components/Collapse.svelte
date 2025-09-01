@@ -16,7 +16,7 @@
 
 <div>
 	<h3>
-		<button type="button" command="--toggle" commandfor={uid} class="group relative flex w-full items-center justify-between py-6 text-left {buttonClass}">
+		<button type="button" command="--toggle" commandfor={uid} class="group relative flex w-full items-center justify-between py-4 my-2 text-left cursor-pointer {buttonClass}">
 			<span class="text-sm font-medium not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400 {className}">{label}</span>
 			<span class="ml-6 flex cursor-pointer items-center">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 text-gray-400 group-hover:text-gray-500 in-aria-expanded:hidden">

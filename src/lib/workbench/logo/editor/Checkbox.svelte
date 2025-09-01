@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import type { ClassValue } from "svelte/elements";
 
-	let { checked = $bindable(), children, class: className = '' }: { checked: boolean; children?: Snippet; class?: ClassValue } = $props();
+	let { checked = $bindable(), children, class: className = '', ...props }: { checked: boolean; children?: Snippet; class?: ClassValue, [key: string]: any } = $props();
 	const uid = $props.id();
 </script>
 
@@ -43,6 +43,7 @@
 				dark:disabled:bg-white/10
 				dark:disabled:checked:bg-white/10
 				forced-colors:appearance-auto"
+				{...props}
 		/>
 		<svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25 dark:group-has-disabled:stroke-white/25">
 			<path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-checked:opacity-100" />

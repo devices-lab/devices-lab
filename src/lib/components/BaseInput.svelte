@@ -12,7 +12,8 @@
 
 <input
 	bind:value
-	class="block
+	name="base-input"
+	class={`block
 		rounded-md
 		bg-white
 		px-3
@@ -22,7 +23,7 @@
 		outline-1
 		-outline-offset-1
 		outline-gray-300
-		not-disabled:cursor-pointer
+		${props.type === 'range' ? 'not-disabled:cursor-pointer' : 'not-disabled:cursor-text'}
 		placeholder:text-gray-400
 		focus:outline-2
 		focus:-outline-offset-2
@@ -40,7 +41,7 @@
 		dark:focus:outline-primary-500
 		dark:disabled:border-gray-700
 		dark:disabled:bg-gray-800/20
-		{className}
-	"
+		${className}
+	`}
 	{...props}
 />
