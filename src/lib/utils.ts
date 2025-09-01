@@ -33,3 +33,5 @@ export function pick<T extends object, K extends readonly (keyof T)[]>(obj: T, k
 	}
 	return out;
 }
+
+export const clamp = (v: number, lo = -Infinity, hi = Infinity) => Math.min(hi, Math.max(lo, v));

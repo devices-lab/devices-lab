@@ -11,7 +11,12 @@
 		onchange?: () => void;
 	}
 
-	let { label, value = $bindable<number>(), params }: { label: string; value: number; params: InputType } = $props();
+	let { label, value = $bindable<number>(), params, onchange }: { label: string; value: number; params: InputType; onchange?: () => void } = $props();
+
+	$effect(() => {
+		value;
+		onchange?.();
+	});
 
 	// Build a small bag of only the props you want to spread
 	type Rangeable = Pick<InputType, 'min' | 'max' | 'step'>;

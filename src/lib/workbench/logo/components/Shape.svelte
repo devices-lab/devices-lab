@@ -1,14 +1,16 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
 	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
 	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
 	import NumberInput, { type InputType } from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import { textWidth as calculateTextWidth, type SVG_Role } from '$lib/workbench/logo/utils';
 
 	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
 	import Text from '$lib/workbench/logo/components/Text3.svelte';
 
-	import { textWidth as calculateTextWidth, type SVG_Role } from '$lib/workbench/logo/utils';
-	import { onMount, type Snippet } from 'svelte';
-	import type { Attachment } from 'svelte/attachments';
+	// Config view for the shape settings
+	export const configView = ConfigView;
 
 	const Defaults = {
 		offsetX: 0,
@@ -16,14 +18,16 @@
 		fontSize: 84,
 		boldness: 1,
 		color: '#000000',
-		fill: '#ffffff',
-		rounded: {
-			topLeft: false,
-			topRight: false,
-			bottomLeft: false,
-			bottomRight: false
-		}
+		fill: '#ffffff'
 	};
+
+	// prettier-ignore
+	const Params: Record<string, InputType> = $derived({
+		offsetX: 		{ initial: Defaults.offsetX, 	min: -100, 	max: 100 },
+		offsetY: 		{ initial: Defaults.offsetY, 	min: -100, 	max: 100 },
+		fontSize: 		{ initial: Defaults.fontSize, 	min: 10, 	max: 500 },
+		boldness: 		{ initial: Defaults.boldness, 	min: 0, 	max: 20, 	step: 0.01 },
+	});
 
 	export interface ShapeSettings {
 		fontSize?: number;
@@ -52,21 +56,21 @@
 		text: string;
 
 		settings: ShapeSettings;
-		config?: Snippet<[string, Boolean?]>;
 		textWidth: number;
+
+		onchange?: () => void;
 	}
 
-	let { roleShape, roleText, origin, dx, dy, width, height, radius, text, settings, config = $bindable(), textWidth = $bindable() }: Props = $props();
-	onMount(() => {
-		config = Settings;
-	});
+	let { roleShape, roleText, origin, dx, dy, width, height, radius, text, settings, textWidth = $bindable(), onchange }: Props = $props();
 
-	let offsetX = $state(0);
-	let offsetY = $state(0);
+
+	let offsetX = $state(Defaults.offsetX);
+	let offsetY = $state(Defaults.offsetY);
 	let fontSize = $state(settings.fontSize ?? Defaults.fontSize);
 	let boldness = $state(settings.boldness ?? Defaults.boldness);
 	let fill = $state(settings.fill ?? Defaults.fill);
 	let color = $state(settings.color ?? Defaults.color);
+
 
 	$effect(() => {
 		textWidth = calculateTextWidth(`/${text}`, fontSize);
@@ -76,16 +80,22 @@
 	const textX = $derived(width * 0.5 + offsetX + dx);
 	const textY = $derived(height * 0.5 + offsetY + dy);
 
-	// prettier-ignore
-	const Params: Record<string, InputType> = $derived({
-		offsetX: 		{ initial: Defaults.offsetX, 	min: -100, 	max: 100 },
-		offsetY: 		{ initial: Defaults.offsetY, 	min: -100, 	max: 100 },
-		fontSize: 		{ initial: Defaults.fontSize, 	min: 10, 	max: 500 },
-		boldness: 		{ initial: Defaults.boldness, 	min: 0, 	max: 20, 	step: 0.01 },
+
+	$effect(() => {
+		offsetX;
+		offsetY;
+		fontSize;
+		boldness;
+		fill;
+		color;
+		textWidth;
+
+		onchange?.();
 	});
+
 </script>
 
-{#snippet Settings(label: string, hidden: Boolean = false)}
+{#snippet ConfigView(label: string, hidden: Boolean = false)}
 	<!-- prettier-ignore -->
 	<InputGroup {label} {hidden}>
 		<NumberInput label="Text Offset (X)" 	bind:value={offsetX} 	params={Params.offsetX} />
