@@ -22,3 +22,14 @@ export function hexToRgbA(hex: string, alpha: number) {
 	}
 	return '#ffffff';
 }
+
+
+export function pick<T extends object, K extends readonly (keyof T)[]>(obj: T, keys: K): Partial<Pick<T, K[number]>> {
+	const out = {} as Partial<Pick<T, K[number]>>;
+	for (const k of keys) {
+		const v = obj[k];
+		if (v !== undefined && v !== null)
+			out[k] = v;
+	}
+	return out;
+}

@@ -1,22 +1,23 @@
 <script lang="ts">
-	import { textWidth, LOGO_DOMAIN, GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
+	
+	import { LOGO_DOMAIN, GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 
+	import { Loader } from '@lucide/svelte';
+	import { untrack, type Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 
-	import Collapse from '$lib/components/Collapse.svelte';
-	import NumberInput from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import NumberInput, { type InputType } from '$lib/workbench/logo/editor/NumberInput.svelte';
 	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
 	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
-	import Text from '$lib/workbench/logo/components/Text2.svelte';
 	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
 
-	import { Loader } from '@lucide/svelte';
-	import { untrack } from 'svelte';
 
+	import Shape, { type ShapeSettings } from './components/Shape.svelte';
+	
 	interface Props {
 		uid: string;
 		projectName: string;
@@ -24,136 +25,52 @@
 		props?: Record<string, any>;
 	}
 
+	const clamp = (v: number, lo = -Infinity, hi = Infinity) => Math.min(hi, Math.max(lo, v));
+
 	const { uid, projectName, class: className = '', props = {} }: Props = $props();
 
-	let showPreview = $state(false);
-
-	/*
-	const Hh = 120;
-	const Hb = 120;
-	const headerSize = 84;
-	const bodySize = 84;
-
-	const headerW = $derived(textWidth(LOGO_DOMAIN, headerSize));
-	const projectW = $derived(textWidth(`/${projectName}`, bodySize));
-	const contentW = $derived(Math.max(headerW, projectW));
-
-	const innerW = $derived(contentW + PAD * 2);
-	const W = $derived(innerW + PAD * 2);
-	const H = $derived(Hh + Hb);
-
-	const fill = $derived($svgBackground === 'none' ? TEXT : $svgBackground);
-
-	const xHeader = $derived((contentW - headerW) / 2 + PAD * 2);
-	const yHeader = $derived(Hh / 2);
-	const xProject = $derived((contentW - projectW) / 2 + PAD * 2);
-	const yProject = $derived(Hh + (Hb - STROKE) / 2);
-	*/
+	let showPreview = $state(true);
 
 	const Defaults = {
-		// Common
-		borderWidth: 30,
+		heightTop: 120,
+		heightBottom: 120,
+		borderWidth: 10,
 		radius: 40,
 		paddingX: 0,
 		borderColor: '#000000',
-		dividerOffset: 0,
-		// Top
-		heightTop: 120,
-		fontSizeTop: 84,
-		offsetTopX: 0,
-		offsetTopY: 0,
-		textTop: '#ffffff',
-		fillTop: '#00ff00',
-		boldnessTop: 1,
-		// Bottom
-		heightBottom: 120,
-		fontSizeBottom: 84,
-		offsetBottomX: 0,
-		offsetBottomY: 0,
-		textBottom: '#000000',
-		fillBottom: '#ff00ff',
-		boldnessBottom: 0
+		dividerOffset: 0
 	};
 
 	// Common
+	let heightTop = $state(Defaults.heightTop);
+	let heightBottom = $state(Defaults.heightBottom);
 	let borderWidth = $state(Defaults.borderWidth);
 	let radius = $state(Defaults.radius);
 	let paddingX = $state(Defaults.paddingX);
 	let borderColor = $state(Defaults.borderColor);
-	let dividerOffset = $state(Defaults.dividerOffset);
-	// Top
-	let heightTop = $state(Defaults.heightTop);
-	let fontSizeTop = $state(Defaults.fontSizeTop);
-	let offsetTopX = $state(Defaults.offsetTopX);
-	let offsetTopY = $state(Defaults.offsetTopY);
-	let textTop = $state(Defaults.textTop);
-	let fillTop = $state(Defaults.fillTop);
-	let boldnessTop = $state(Defaults.boldnessTop);
-	// Bottom
-	let heightBottom = $state(Defaults.heightBottom);
-	let fontSizeBottom = $state(Defaults.fontSizeBottom);
-	let offsetBottomX = $state(Defaults.offsetBottomX);
-	let offsetBottomY = $state(Defaults.offsetBottomY);
-	let textBottom = $state(Defaults.textBottom);
-	let fillBottom = $state(Defaults.fillBottom);
-	let boldnessBottom = $state(Defaults.boldnessBottom);
 
-	const textWidthTop = $derived(textWidth(LOGO_DOMAIN, fontSizeTop));
-	const textWidthBottom = $derived(textWidth(`/${projectName}`, fontSizeBottom));
-	const textWidthMax = $derived(Math.max(textWidthTop, textWidthBottom));
+	// Bound
+	let textWidthTop = $state(0);
+	let textWidthBottom = $state(0);
 
-	const W = $derived(textWidthMax + paddingX);
-	const H = $derived(heightTop + heightBottom);
 	const origin = $derived({ x: borderWidth / 2, y: borderWidth / 2 });
+	const height = $derived(heightTop + heightBottom);
+	const width = $derived(Math.max(textWidthTop, textWidthBottom) + paddingX);
 
-	// Recalculate variables in relation to each other
-	const actualWidth = $derived(W - borderWidth);
-	const actualHeight = $derived(H - borderWidth);
-	const actualRadius = $derived(Math.max(0, Math.min(radius, actualHeight / 2)));
-
-	const actualDividerOffset = $derived(Math.max(-heightTop + actualRadius, Math.min(heightBottom - actualRadius, dividerOffset)));
-	const actualHeightTop = $derived(heightTop + actualDividerOffset - origin.y);
-	const actualHeightBottom = $derived(heightBottom - actualDividerOffset - origin.y);
-
-
-
-	const bold = (value: number) => ({ 'data-synthetic-bold': value !== 0 ? 'true' : 'false', 'data-bold-strength': value.toString() });
-
-	const propsTextTop = $derived({
-		text: LOGO_DOMAIN,
-		// position
-		x: W * 0.5 + offsetTopX,
-		y: H * 0.25 + offsetTopY + origin.y / 2,
-		// font
-		fontSize: fontSizeTop,
-		width: textWidthTop,
-		fill: textTop,
-		...bold(boldnessTop)
-	});
-
-	const propsTextBottom = $derived({
-		text: `/${projectName}`,
-		// position
-		x: W * 0.5 + offsetBottomX,
-		y: H * 0.75 + offsetBottomY - origin.y / 2,
-		// font
-		fontSize: fontSizeBottom,
-		width: textWidthBottom,
-		fill: textBottom,
-		...bold(boldnessBottom)
-	});
+	// Calculated
+	const hasBorder = $derived(borderColor !== 'none');
 
 	// Save and restore the border width when toggling wether the border is enabled
 	let prevBorderWidth = Defaults.borderWidth;
 	function updateBorderColor(color: string | 'none') {
 		untrack(() => {
-			borderColor = color;
-			if (borderColor === 'none') {
+			if (color === 'none') {
 				prevBorderWidth = borderWidth;
 				borderWidth = 0;
-			} else {
+			} else if (borderColor === 'none') {
 				borderWidth = prevBorderWidth;
 			}
+			borderColor = color;
 		});
 	}
 
@@ -163,26 +80,16 @@
 	let timeout: number;
 	let timeout2: number;
 
+
+
 	$effect(() => {
+		width;
+		height;
 		borderWidth;
 		radius;
 		paddingX;
 		borderColor;
-		dividerOffset;
-		heightTop;
-		fontSizeTop;
-		offsetTopX;
-		offsetTopY;
-		textTop;
-		fillTop;
-		boldnessTop;
-		heightBottom;
-		fontSizeBottom;
-		offsetBottomX;
-		offsetBottomY;
-		textBottom;
-		fillBottom;
-		boldnessBottom;
+
 		projectName;
 
 		if (showPreview) {
@@ -201,57 +108,82 @@
 			}, GENERATOR_DELAY_MS);
 		}
 	});
+
+	const DefaultsTop: ShapeSettings = {
+	
+		fontSize: 84,
+		color: '#000000',
+		fill: '#ff00ff',
+		boldness: 1,
+		rounded: {
+			topLeft: true,
+			topRight: true
+		}
+	};
+
+	const DefaultsBottom: ShapeSettings = {
+		fontSize: 84,
+		color: '#000000',
+		fill: '#ffff00',
+		rounded: {
+			bottomLeft: true,
+			bottomRight: true
+		}
+	};
+
+	let settingsTop: Snippet<[string, (Boolean | undefined)?]> | undefined = $state();
+	let settingsBottom: Snippet<[string, (Boolean | undefined)?]> | undefined = $state();
+
+	// prettier-ignore
+	const Params: Record<string, InputType> = $derived({
+		heightTop: 		{ initial: Defaults.heightTop, 		min: 0, 		max: 1000 },
+		heightBottom: 	{ initial: Defaults.heightBottom, 	min: 0, 		max: 1000 },
+		paddingX: 		{ initial: Defaults.paddingX, 		min: 0, 		max: 500 },
+		radius: 		{ initial: Defaults.radius, 		min: 0, 		max: Math.min(height / 2, (width / 2) || height, heightTop, heightBottom),
+			onchange: () => (radius = clamp(radius, Params.radius.min, Params.radius.max))
+		},
+		borderWidth: 	{ initial: Defaults.borderWidth, 	min: 0, 		max: hasBorder ? height : 0 },
+	});
+
+
+	$effect(() => {
+		Object.entries(Params).forEach(([key, { onchange }]) => {
+			onchange?.();
+		});
+	});
+
+
 </script>
 
 <div class="gap-x-8 md:flex">
 	<div class="flex-1/5 rounded-lg border-2 border-primary-500 bg-white p-4 shadow-sm sm:p-6 dark:border-primary-700 dark:bg-gray-800">
 		<div class="mb-4 text-lg font-medium text-gray-900 dark:text-gray-100">Parameters</div>
 
+		<!-- prettier-ignore -->
 		<InputGroup label="Common">
-			<NumberInput label="Padding (X)" bind:value={paddingX} default={Defaults.paddingX} max={500} />
-			<NumberInput label="Radius" bind:value={radius} default={Defaults.radius} max={actualHeight / 2} />
-			<NumberInput label="Border width" bind:value={borderWidth} default={Defaults.borderWidth} max={borderColor === 'none' ? 0 : actualHeight} />
-			<NumberInput label="Vertical divider offset" bind:value={dividerOffset} default={Defaults.dividerOffset} min={-heightTop + actualRadius} max={heightBottom - actualRadius} />
-			<ColorInput label="Border color" bind:value={() => borderColor, updateBorderColor} default={Defaults.borderColor} />
+			<NumberInput label="Height Top" 	bind:value={heightTop}		params={Params.heightTop} />
+			<NumberInput label="Height Bottom" 	bind:value={heightBottom} 	params={Params.heightBottom} />
+			<NumberInput label="Padding (X)" 	bind:value={paddingX} 		params={Params.paddingX} />
+			<NumberInput label="Radius" 		bind:value={radius} 		params={Params.radius} />
+			<NumberInput label="Border width" 	bind:value={borderWidth} 	params={Params.borderWidth} />
+			<ColorInput label="Border color" 	bind:value={() => borderColor, updateBorderColor} initial={Defaults.borderColor} />
 		</InputGroup>
 
-		<InputGroup label="Top section" hidden>
-			<NumberInput label="Height" bind:value={heightTop} default={Defaults.heightTop} min={10} max={500} />
-			<NumberInput label="Font size" bind:value={fontSizeTop} default={Defaults.fontSizeTop} min={10} max={500} />
-			<NumberInput label="Offset (X)" bind:value={offsetTopX} default={Defaults.offsetTopX} min={-100} />
-			<NumberInput label="Offset (Y)" bind:value={offsetTopY} default={Defaults.offsetTopY} min={-100} />
-			<NumberInput label="Boldness" bind:value={boldnessTop} default={Defaults.boldnessTop} max={20} step={0.01} />
-			<ColorInput label="Fill color" bind:value={fillTop} default={Defaults.fillTop} />
-			<ColorInput label="Text color" bind:value={textTop} default={Defaults.textTop} />
-		</InputGroup>
-
-		<InputGroup label="Bottom section" hidden>
-			<NumberInput label="Height" bind:value={heightBottom} default={Defaults.heightBottom} min={10} max={500} />
-			<NumberInput label="Font size" bind:value={fontSizeBottom} default={Defaults.fontSizeBottom} min={10} max={500} />
-			<NumberInput label="Offset (X)" bind:value={offsetBottomX} default={Defaults.offsetBottomX} min={-100} />
-			<NumberInput label="Offset (Y)" bind:value={offsetBottomY} default={Defaults.offsetBottomY} min={-100} />
-			<NumberInput label="Boldness" bind:value={boldnessBottom} default={Defaults.boldnessBottom} min={0} max={20} step={0.01} />
-			<ColorInput label="Fill color" bind:value={fillBottom} default={Defaults.fillBottom} />
-			<ColorInput label="Text color" bind:value={textBottom} default={Defaults.textBottom} />
-		</InputGroup>
+		{@render settingsTop?.('Top section', false)}
+		{@render settingsBottom?.('Bottom section', false)}
 	</div>
 
 	<div class="flex-1">
 		<div class="flex gap-x-4">
 			<div class="flex flex-col md:w-full">
 				<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
-				<SVG {uid} width={W} height={H} class={className}>
-					<!-- Top section fill -->
-					<Rect type="path" role="subject" {origin} width={actualWidth} height={actualHeightTop} radius={actualRadius} fill={fillTop} {borderWidth} topLeft topRight />
-					<!-- Bottom section fill -->
-					<Rect type="path" role="ignore" {origin} width={actualWidth} height={actualHeightBottom} radius={actualRadius} fill={fillBottom} dy={actualHeightTop} bottomLeft bottomRight />
+				<SVG {uid} width={width + borderWidth} height={height + borderWidth} class={className}>
+					<!-- Top section -->
+					<Shape roleShape={'subject'} roleText={'clip'} {origin} {width} height={heightTop} {radius} dx={0} dy={0} text={LOGO_DOMAIN} settings={DefaultsTop} bind:config={settingsTop} bind:textWidth={textWidthTop} />
+					<!-- Bottom section -->
+					<Shape roleShape={'ignore'} roleText={'clip'} {origin} {width} height={heightBottom} {radius} dx={0} dy={heightTop} text={`/${projectName}`} settings={DefaultsBottom} bind:config={settingsBottom} bind:textWidth={textWidthBottom} />
 					<!-- Border -->
-					<Rect type="path" role="frame" {origin} width={actualWidth} height={actualHeight} radius={actualRadius} {borderColor} {borderWidth} topLeft topRight bottomLeft bottomRight />
-
-					<!-- Top text -->
-					<Text role="clip" {...propsTextTop} />
-					<!-- Bottom text -->
-					<Text role="subject" {...propsTextBottom} />
+					<Rect type="path" role="frame" {origin} {width} {height} {radius} {borderColor} {borderWidth} topLeft topRight bottomLeft bottomRight />
 				</SVG>
 			</div>
 		</div>
