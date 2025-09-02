@@ -29,7 +29,7 @@
 		version: number;
 		uid: string;
 		// dimensions
-		dw: number;
+		dWidth: number;
 		// top section
 		top: Section;
 		// bottom section
@@ -43,20 +43,19 @@
 	interface Props {
 		uid: string;
 		projectName: string;
-		class?: ClassValue;
-		props?: Record<string, any>;
+		editable?: boolean;
 	}
 
-	const { uid, projectName, class: className = '', props = {} }: Props = $props();
+	const { uid, editable = false, projectName }: Props = $props();
 
 	const topText = $derived(LOGO_DOMAIN);
 	const bottomText = $derived(`/${projectName}`);
 
 	const Defaults: Data = {
-		version: 2, // increment whenever the data structure changes
+		version: 3, // increment whenever the data structure changes
 		uid: uid,
 		// dimensions
-		dw: 20,
+		dWidth: 70,
 		// top section
 		top: {
 			height: 120,
@@ -96,15 +95,15 @@
 	let preview: Preview | undefined = $state();
 	let loadedData: Data | undefined = $state();
 
-	const defaultData: Data = $state({ ...Defaults, ...props });
-	const data: Data = $derived(loadedData && loadedData.version >= Defaults.version ? loadedData : defaultData);
+	const dataStore: Data = $state({ ...Defaults });
+	const data: Data = $derived(loadedData && loadedData.version >= Defaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });
 	const height = $derived(data.top.height + data.bottom.height);
 
 	const minWidth = $derived(Math.max(calculateTextWidth(topText, data.top.fontSize), calculateTextWidth(bottomText, data.bottom.fontSize)));
-	const width = $derived(data.dw + minWidth);
+	const width = $derived(data.dWidth + minWidth);
 
 	const topBold = $derived({ 'data-synthetic-bold': data.top.boldness !== 0 ? 'true' : 'false', 'data-bold-strength': data.top.boldness.toString() });
 	const topTextX = $derived(width * 0.5 + data.top.offsetX);
@@ -153,98 +152,57 @@
 	};
 </script>
 
-<Preview {uid} bind:this={preview} {dataString} bind:data={loadedData} {onreset}>
-	{#snippet config()}
-		<!-- prettier-ignore -->
-		<InputGroup label="Dimensions">
-			<NumberInput 	label="Height Top" 								bind:value={data.top.height}		initial={Defaults.top.height} 		min={10} max={500} />
-			<NumberInput 	label={{label: "Width", pre: Triangle}}		bind:value={data.dw} 				initial={Defaults.dw} 				min={0} max={500} />
-			<NumberInput 	label="Height Bottom" 							bind:value={data.bottom.height} 	initial={Defaults.bottom.height} 	min={10} max={500} />
-		</InputGroup>
-
-		<!-- prettier-ignore -->
-		<InputGroup label="Text Top Section">
-			<NumberInput 	label={{label: "X", pre: Triangle}} 			bind:value={data.top.offsetX} 		initial={Defaults.top.offsetX} 		min={-100} max={100} />
-			<NumberInput 	label={{label: "Y", pre: Triangle}} 			bind:value={data.top.offsetY} 		initial={Defaults.top.offsetY} 		min={-100} max={100} />
-			<NumberInput 	label="Font size" 								bind:value={data.top.fontSize} 		initial={Defaults.top.fontSize} 	min={10} max={500} />
-			<NumberInput 	label="Boldness" 								bind:value={data.top.boldness} 		initial={Defaults.top.boldness} 	min={0} max={20} step={0.01} />
-			<ColorInput 	label="Fill color" 								bind:value={data.top.fill} 			initial={Defaults.top.fill} 		/>
-			<ColorInput 	label="Text color" 								bind:value={data.top.color} 		initial={Defaults.top.color} 		/>
-		</InputGroup>
-
-		<!-- prettier-ignore -->
-		<InputGroup label="Text Bottom Section">
-			<NumberInput 	label={{label: "X", pre: Triangle}} 			bind:value={data.bottom.offsetX} 	initial={Defaults.bottom.offsetX} 	min={-100} max={100} />
-			<NumberInput 	label={{label: "Y", pre: Triangle}} 			bind:value={data.bottom.offsetY} 	initial={Defaults.bottom.offsetY} 	min={-100} max={100} />
-			<NumberInput 	label="Font size" 								bind:value={data.bottom.fontSize} 	initial={Defaults.bottom.fontSize} 	min={10} max={500} />
-			<NumberInput 	label="Boldness" 								bind:value={data.bottom.boldness} 	initial={Defaults.bottom.boldness} 	min={0} max={20} step={0.01} />
-			<ColorInput 	label="Fill color" 								bind:value={data.bottom.fill} 		initial={Defaults.bottom.fill} 		/>
-			<ColorInput 	label="Text color" 								bind:value={data.bottom.color} 		initial={Defaults.bottom.color} 	/>
-		</InputGroup>
-
-		<!-- Border configuration -->
-		<BorderConfig bind:border={data.border} defaults={Defaults.border} heightTop={data.top.height} heightBottom={data.bottom.height} widthLeft={width / 2} widthRight={width / 2} />
-	{/snippet}
-
-	<SVG {uid} width={width + data.border.width} height={height + data.border.width} class={className}>
+{#snippet SnippetSVG()}
+	<SVG {uid} width={width + data.border.width} height={height + data.border.width} >
 		<!-- Top section -->
-		<!-- prettier-ignore -->
-		<Rect role="subject" 
-			{origin} 
-			dx={0} 
-			dy={0} 
-			width={width} 
-			height={data.top.height}
-			fill={data.top.fill} 
-			border={borderTop}
-		/>
-		<!-- prettier-ignore -->
-		<Text 
-			role="clip" 
-			{origin} 
-			dx={topTextX} 
-			dy={topTextY} 
-			text={topText} 
-			fontSize={data.top.fontSize} 
-			color={data.top.color} 
-			{...topBold} 
-		/>
+		<Rect role="subject" {origin} dx={0} dy={0} {width} height={data.top.height} fill={data.top.fill} border={borderTop} />
+		<Text role="clip" {origin} dx={topTextX} dy={topTextY} text={topText} fontSize={data.top.fontSize} color={data.top.color} {...topBold} />
 
 		<!-- Bottom section -->
-		<!-- prettier-ignore -->
-		<Rect role="ignore" 
-			{origin} 
-			dx={0} 
-			dy={data.top.height} 
-			width={width} 
-			height={data.bottom.height}
-			fill={data.bottom.fill} 
-			border={borderBottom}
-		/>
-		<!-- prettier-ignore -->
-		<Text 
-			role="clip" 
-			{origin} 
-			dx={bottomTextX} 
-			dy={bottomTextY} 
-			text={bottomText} 
-			fontSize={data.bottom.fontSize} 
-			color={data.bottom.color} 
-			{...bottomBold} 
-		/>
+		<Rect role="ignore" {origin} dx={0} dy={data.top.height} {width} height={data.bottom.height} fill={data.bottom.fill} border={borderBottom} />
+		<Text role="clip" {origin} dx={bottomTextX} dy={bottomTextY} text={bottomText} fontSize={data.bottom.fontSize} color={data.bottom.color} {...bottomBold} />
 
 		<!-- Border -->
-		<!-- prettier-ignore -->
-		<Rect 
-			role="frame" 
-			{origin} 
-			width={width} 
-			height={height}
-			border={{
-				...borderData,
-				color: data.border.color,
-				width: data.border.width,
-			}} 
-		/>
+		<Rect role="frame" {origin} {width} {height} border={{ ...borderData, color: data.border.color, width: data.border.width }} />
 	</SVG>
-</Preview>
+{/snippet}
+
+{#if editable}
+	<Preview {uid} bind:this={preview} {dataString} bind:data={loadedData} {onreset}>
+		{#snippet config()}
+			<!-- prettier-ignore -->
+			<InputGroup label="Dimensions">
+			<NumberInput 	label="Height Top" 							bind:value={data.top.height}		initial={Defaults.top.height} 		min={10} max={500} />
+			<NumberInput 	label={{label: "Width", pre: Triangle}}		bind:value={data.dWidth} 				initial={Defaults.dWidth} 				min={0} max={500} />
+			<NumberInput 	label="Height Bottom" 						bind:value={data.bottom.height} 	initial={Defaults.bottom.height} 	min={10} max={500} />
+		</InputGroup>
+
+			<!-- prettier-ignore -->
+			<InputGroup label="Text Top Section">
+			<NumberInput 	label={{label: "X", pre: Triangle}} 		bind:value={data.top.offsetX} 		initial={Defaults.top.offsetX} 		min={-100} max={100} />
+			<NumberInput 	label={{label: "Y", pre: Triangle}} 		bind:value={data.top.offsetY} 		initial={Defaults.top.offsetY} 		min={-100} max={100} />
+			<NumberInput 	label="Font size" 							bind:value={data.top.fontSize} 		initial={Defaults.top.fontSize} 	min={10} max={500} />
+			<NumberInput 	label="Boldness" 							bind:value={data.top.boldness} 		initial={Defaults.top.boldness} 	min={0} max={20} step={0.01} />
+			<ColorInput 	label="Fill color" 							bind:value={data.top.fill} 			initial={Defaults.top.fill} 		/>
+			<ColorInput 	label="Text color" 							bind:value={data.top.color} 		initial={Defaults.top.color} 		/>
+		</InputGroup>
+
+			<!-- prettier-ignore -->
+			<InputGroup label="Text Bottom Section">
+			<NumberInput 	label={{label: "X", pre: Triangle}} 		bind:value={data.bottom.offsetX} 	initial={Defaults.bottom.offsetX} 	min={-100} max={100} />
+			<NumberInput 	label={{label: "Y", pre: Triangle}} 		bind:value={data.bottom.offsetY} 	initial={Defaults.bottom.offsetY} 	min={-100} max={100} />
+			<NumberInput 	label="Font size" 							bind:value={data.bottom.fontSize} 	initial={Defaults.bottom.fontSize} 	min={10} max={500} />
+			<NumberInput 	label="Boldness" 							bind:value={data.bottom.boldness} 	initial={Defaults.bottom.boldness} 	min={0} max={20} step={0.01} />
+			<ColorInput 	label="Fill color" 							bind:value={data.bottom.fill} 		initial={Defaults.bottom.fill} 		/>
+			<ColorInput 	label="Text color" 							bind:value={data.bottom.color} 		initial={Defaults.bottom.color} 	/>
+		</InputGroup>
+
+			<!-- Border configuration -->
+			<BorderConfig bind:border={data.border} defaults={Defaults.border} heightTop={data.top.height} heightBottom={data.bottom.height} widthLeft={width / 2} widthRight={width / 2} />
+		{/snippet}
+
+		{@render SnippetSVG()}
+	</Preview>
+{:else}
+	{@render SnippetSVG()}
+{/if}

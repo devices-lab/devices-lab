@@ -1,5 +1,4 @@
 <script lang="ts">
-	import SvgLogo from '$lib/workbench/logo/SVG_Logo.svelte';
 	import SvgProject from '$lib/workbench/logo/SVG_Project.svelte';
 	import SvgIcon from '$lib/workbench/logo/SVG_Icon.svelte';
 	import SvgVersion from '$lib/workbench/logo/SVG_Version.svelte';
@@ -24,10 +23,9 @@
 	type Category = 'project' | 'versionStack' | 'versionPill' | 'logo' | 'icon';
 
 	let selectedCategory = $state<Category>('project');
-
 </script>
 
-<div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow-sm dark:divide-white/10 dark:bg-gray-700 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+<div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-zinc-100 shadow-sm dark:divide-white/10 dark:bg-zinc-700 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
 	<div class="flex flex-col gap-3 px-4 py-5 sm:p-6 md:flex-row">
 		<div class="grow">
 			<label for="project-name" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Project Name</label>
@@ -50,6 +48,7 @@
 				<input id="project-version" type="text" name="project-version" placeholder="v1.2" bind:value={projectVersion} class="block w-full rounded-md bg-white px-3 py-1.5 font-ocr text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-primary-500" />
 			</div>
 		</div>
+		<!--
 		<div class="">
 			<label for="project-background" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Background?</label>
 			<div class="mt-2 flex flex-row">
@@ -65,7 +64,7 @@
 
 				<input disabled={!backgroundEnabled} id="project-background" type="color" name="project-background" bind:value={backgroundColor} title="Choose your color" placeholder="#ffffff" class="block h-9 w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 not-disabled:cursor-pointer placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600 disabled:border-gray-50 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-primary-500 dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20" />
 			</div>
-		</div>
+		</div>-->
 	</div>
 </div>
 
@@ -128,7 +127,7 @@
 <div class="relative">
 	{#if selectedCategory === 'project'}
 		<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
-			<SvgProject uid={'dl-project'} {projectName} />
+			<SvgProject uid={'dl-project'} {projectName} editable />
 		</LogoCard>
 	{:else if selectedCategory === 'versionStack'}
 		<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
@@ -136,15 +135,15 @@
 		</LogoCard>
 	{:else if selectedCategory === 'versionPill'}
 		<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-			<SvgPill uid={'dl-version-pill'} {projectId} {projectVersion} />
+			<SvgPill uid={'dl-version-pill'} text={`${projectId}-${projectVersion}`} editable/>
 		</LogoCard>
 	{:else if selectedCategory === 'logo'}
 		<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-			<SvgLogo uid={'dl-name'} />
+			<SvgPill uid={'dl-name'} editable/>
 		</LogoCard>
 	{:else if selectedCategory === 'icon'}
 		<LogoCard uid={'dl-icon'} title="Icon" subtitle="A generic icon design element that can be applied in various contexts.">
-			<SvgIcon uid={'dl-icon'} />
+			<SvgIcon uid={'dl-icon'} editable/>
 		</LogoCard>
 	{/if}
 

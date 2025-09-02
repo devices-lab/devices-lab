@@ -29,5 +29,5 @@
 			{/if}
 		{/if}
 	</span>
-	<span class="font-normal text-gray-500 italic dark:text-gray-400"> (default: {initial})</span>
+	<span class="font-normal text-gray-500 italic dark:text-gray-400"> (reset: {initial})</span>
 </span>

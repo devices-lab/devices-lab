@@ -17,7 +17,7 @@
 		transition
 		duration-300
 		hover:-rotate-45
-		hover:text-gray-600
+		hover:text-red-600
 		focus:outline-2
 		focus:outline-none
 		dark:text-gray-300

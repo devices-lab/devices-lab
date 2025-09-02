@@ -76,7 +76,7 @@
 		if (savedData) {
 			data = JSON.parse(savedData);
 			if (user) {
-				notification?.show('success', 'Successfully loaded!');
+				notification?.show('success', 'Successfully reloaded!');
 			}
 		}
 	}
@@ -138,13 +138,13 @@
 			{@render config()}
 		</div>
 
-		<div class="mx-0 shrink border-s-1 border-gray-200"></div>
+		<div class="mx-0 shrink border-s-1 border-gray-200 dark:border-white/10"></div>
 
 		<div class="flex flex-col gap-y-6 p-6 lg:w-1/2">
 			<div class="flex gap-x-4">
 				<div class="flex flex-col md:w-full">
 					<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
-					<div class="md:h-70">
+					<div class="md:max-h-70 md:min-h-40">
 						{@render children()}
 					</div>
 				</div>
@@ -185,7 +185,7 @@
 		</div>
 	</div>
 {:else}
-	<div class="m-4 md:h-50">
+	<div class="m-4 *:max-h-50">
 		{@render children()}
 	</div>
 {/if}

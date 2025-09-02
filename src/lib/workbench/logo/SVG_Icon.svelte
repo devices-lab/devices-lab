@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { clamp } from '$lib/utils';
-
-	import { untrack } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 	import { Circle, Triangle } from '@lucide/svelte';
 
@@ -39,11 +36,10 @@
 
 	interface Props {
 		uid: string;
-		class?: ClassValue;
-		props?: Record<string, any>;
+		editable?: boolean;
 	}
 
-	const { uid, class: className = '', props = {} }: Props = $props();
+	const { uid, editable = false }: Props = $props();
 
 	const Defaults: Data = {
 		version: 1, // increment whenever the data structure changes
@@ -78,7 +74,7 @@
 	let preview: Preview | undefined = $state();
 	let loadedData: Data | undefined = $state();
 
-	const defaultData: Data = $state({ ...Defaults, ...props });
+	const defaultData: Data = $state({ ...Defaults });
 	const data: Data = $derived(loadedData && loadedData.version >= Defaults.version ? loadedData : defaultData);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
@@ -131,17 +127,28 @@
 	};
 </script>
 
-<Preview {uid} bind:this={preview} {dataString} bind:data={loadedData} {onreset}>
-	{#snippet config()}
-		<!-- prettier-ignore -->
-		<InputGroup label="Common">
+{#snippet SnippetSVG()}
+	<SVG {uid} width={data.width + data.border.width} height={data.height + data.border.width}>
+		<Rect role="subject" {origin} width={data.width} height={data.height} fill={data.fill} border={borderData} />
+		<Text role="clip" {origin} dx={textX} dy={textY} text={data.text} fontSize={data.fontSize} color={data.color} {...bold} />
+
+		<!-- Border -->
+		<Rect role="frame" {origin} width={data.width} height={data.height} border={{ ...borderData, color: data.border.color, width: data.border.width }} />
+	</SVG>
+{/snippet}
+
+{#if editable}
+	<Preview {uid} bind:this={preview} {dataString} bind:data={loadedData} {onreset}>
+		{#snippet config()}
+			<!-- prettier-ignore -->
+			<InputGroup label="Common">
 			<NumberInput 	label="Width" 									bind:value={data.width}				initial={Defaults.width} 			min={10} max={500} />
 			<NumberInput 	label="Height" 									bind:value={data.height}			initial={Defaults.height} 			min={10} max={500} />
 			<ColorInput 	label="Fill" 									bind:value={data.fill} 				initial={Defaults.fill} 			/>
 		</InputGroup>
 
-		<!-- prettier-ignore -->
-		<InputGroup label="Text">
+			<!-- prettier-ignore -->
+			<InputGroup label="Text">
 			<NumberInput 	label={{label: "X", pre: Triangle}} 			bind:value={data.offsetX} 			initial={Defaults.offsetX} 			min={-100} max={100} />
 			<NumberInput 	label={{label: "Y", pre: Triangle}} 			bind:value={data.offsetY} 			initial={Defaults.offsetY} 			min={-100} max={100} />
 			<NumberInput 	label="Font size" 								bind:value={data.fontSize} 			initial={Defaults.fontSize} 		min={10} max={250} />
@@ -149,47 +156,14 @@
 			<ColorInput 	label="Color" 									bind:value={data.color} 			initial={Defaults.color} 			/>
 		</InputGroup>
 
-		<!-- Border configuration -->
-		<BorderConfig bind:border={data.border} defaults={Defaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />
+			<!-- Border configuration -->
+			<BorderConfig bind:border={data.border} defaults={Defaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />
 
+			<BaseButton onclick={makeCircle} theme="link-secondary" class="me-auto flex items-center text-sm underline"><Circle class="mr-1 size-4" /> Make circle</BaseButton>
+		{/snippet}
 
-		<BaseButton onclick={makeCircle} theme="link-secondary" class="me-auto flex items-center text-sm underline"><Circle class="mr-1 size-4" /> Make circle</BaseButton>
-	{/snippet}
-
-	<SVG {uid} width={data.width + data.border.width} height={data.height + data.border.width} class={className}>
-		<!-- prettier-ignore -->
-		<Rect 
-			role="subject" 
-			{origin}
-			width={data.width} 
-			height={data.height} 
-			fill={data.fill} 
-			border={borderData} 
-		/>
-		<!-- prettier-ignore -->
-		<Text 
-			role="clip" 
-			{origin} 
-			dx={textX} 
-			dy={textY} 
-			text={data.text} 
-			fontSize={data.fontSize} 
-			color={data.color} 
-			{...bold} 
-		/>
-
-		<!-- Border -->
-		<!-- prettier-ignore -->
-		<Rect 
-			role="frame" 
-			{origin} 
-			width={data.width} 
-			height={data.height}
-			border={{
-				...borderData,
-				color: data.border.color,
-				width: data.border.width,
-			}} 
-		/>
-	</SVG>
-</Preview>
+		{@render SnippetSVG()}
+	</Preview>
+{:else}
+	{@render SnippetSVG()}
+{/if}
