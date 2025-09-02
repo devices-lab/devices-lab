@@ -36,10 +36,11 @@
 
 	interface Props {
 		uid: string;
+		text: string;
 		editable?: boolean;
 	}
 
-	const { uid, editable = false }: Props = $props();
+	const { uid, text, editable = false }: Props = $props();
 
 	const Defaults: Data = {
 		version: 1, // increment whenever the data structure changes
@@ -94,7 +95,7 @@
 			br: data.border.dr.br,
 			bl: data.border.dr.bl
 		}
-	});
+	} satisfies BorderData);
 
 	// Update the preview whenever the data changes
 	$effect(() => {
@@ -142,19 +143,19 @@
 		{#snippet config()}
 			<!-- prettier-ignore -->
 			<InputGroup label="Common">
-			<NumberInput 	label="Width" 									bind:value={data.width}				initial={Defaults.width} 			min={10} max={500} />
-			<NumberInput 	label="Height" 									bind:value={data.height}			initial={Defaults.height} 			min={10} max={500} />
-			<ColorInput 	label="Fill" 									bind:value={data.fill} 				initial={Defaults.fill} 			/>
-		</InputGroup>
+				<NumberInput 	label="Width" 									bind:value={data.width}				initial={Defaults.width} 			min={10} max={500} />
+				<NumberInput 	label="Height" 									bind:value={data.height}			initial={Defaults.height} 			min={10} max={500} />
+				<ColorInput 	label="Fill" 									bind:value={data.fill} 				initial={Defaults.fill} 			/>
+			</InputGroup>
 
-			<!-- prettier-ignore -->
-			<InputGroup label="Text">
-			<NumberInput 	label={{label: "X", pre: Triangle}} 			bind:value={data.offsetX} 			initial={Defaults.offsetX} 			min={-100} max={100} />
-			<NumberInput 	label={{label: "Y", pre: Triangle}} 			bind:value={data.offsetY} 			initial={Defaults.offsetY} 			min={-100} max={100} />
-			<NumberInput 	label="Font size" 								bind:value={data.fontSize} 			initial={Defaults.fontSize} 		min={10} max={250} />
-			<NumberInput 	label="Boldness" 								bind:value={data.boldness} 			initial={Defaults.boldness} 		min={0} max={20} step={0.01} />
-			<ColorInput 	label="Color" 									bind:value={data.color} 			initial={Defaults.color} 			/>
-		</InputGroup>
+				<!-- prettier-ignore -->
+				<InputGroup label="Text">
+				<NumberInput 	label={{label: "X", pre: Triangle}} 			bind:value={data.offsetX} 			initial={Defaults.offsetX} 			min={-100} max={100} />
+				<NumberInput 	label={{label: "Y", pre: Triangle}} 			bind:value={data.offsetY} 			initial={Defaults.offsetY} 			min={-100} max={100} />
+				<NumberInput 	label="Font size" 								bind:value={data.fontSize} 			initial={Defaults.fontSize} 		min={10} max={250} />
+				<NumberInput 	label="Boldness" 								bind:value={data.boldness} 			initial={Defaults.boldness} 		min={0} max={20} step={0.01} />
+				<ColorInput 	label="Color" 									bind:value={data.color} 			initial={Defaults.color} 			/>
+			</InputGroup>
 
 			<!-- Border configuration -->
 			<BorderConfig bind:border={data.border} defaults={Defaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />

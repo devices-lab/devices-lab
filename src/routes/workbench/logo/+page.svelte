@@ -5,7 +5,7 @@
 	import SvgPill from '$lib/workbench/logo/SVG_Pill.svelte';
 
 	import LogoCard from '$lib/workbench/logo/LogoCard.svelte';
-	import { svgBackground } from '$lib/workbench/logo/utils';
+	import { IconProps, LogoProps, ProjectProps, svgBackground, VersionProps, VersionPropsPill } from '$lib/workbench/logo/utils';
 	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
 
 	import { devMode, devModeLocal } from '$lib/utils';
@@ -127,23 +127,23 @@
 <div class="relative">
 	{#if selectedCategory === 'project'}
 		<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
-			<SvgProject uid={'dl-project'} {projectName} editable />
+			<SvgProject uid={'dl-project'} {...ProjectProps(projectName)} editable />
 		</LogoCard>
 	{:else if selectedCategory === 'versionStack'}
 		<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
-			<SvgVersion uid={'dl-version-stack'} {projectId} {projectVersion} />
+			<SvgVersion uid={'dl-version-stack'} {...VersionProps(projectId, projectVersion)} editable/>
 		</LogoCard>
 	{:else if selectedCategory === 'versionPill'}
 		<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-			<SvgPill uid={'dl-version-pill'} text={`${projectId}-${projectVersion}`} editable/>
+			<SvgPill uid={'dl-version-pill'} {...VersionPropsPill(projectId, projectVersion)} editable/>
 		</LogoCard>
 	{:else if selectedCategory === 'logo'}
 		<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-			<SvgPill uid={'dl-name'} editable/>
+			<SvgPill uid={'dl-name'} {...LogoProps()} editable/>
 		</LogoCard>
 	{:else if selectedCategory === 'icon'}
 		<LogoCard uid={'dl-icon'} title="Icon" subtitle="A generic icon design element that can be applied in various contexts.">
-			<SvgIcon uid={'dl-icon'} editable/>
+			<SvgIcon uid={'dl-icon'} {...IconProps()} editable/>
 		</LogoCard>
 	{/if}
 

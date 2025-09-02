@@ -18,6 +18,28 @@ export const LOGO_ICON = "DL";
 export const LOGO_NAME = 'devices-lab';
 export const LOGO_DOMAIN = 'devices-lab.org';
 
+export const VersionProps = (id: string, version: string) => ({
+	textLeft: LOGO_ICON,
+	textRightTop: `${id}`,
+	textRightBottom: `${version}`,
+});
+export const VersionPropsPill = (id: string, version: string) => ({
+	textLeft: LOGO_ICON,
+	textRight: `${id}-${version}`,
+});
+export const LogoProps = () => ({
+	textLeft: LOGO_ICON,
+	textRight: LOGO_NAME
+});
+export const ProjectProps = (name: string) => ({
+	textTop: LOGO_DOMAIN,
+	textBottom: `/${name}`
+});
+export const IconProps = () => ({
+	text: LOGO_ICON
+});
+
+
 
 export const STROKE = 10;
 export const PAD = 20;

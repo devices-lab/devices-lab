@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { LOGO_DOMAIN, LOGO_ICON, LOGO_NAME, calculateTextWidth } from '$lib/workbench/logo/utils';
+	import { LOGO_ICON, calculateTextWidth } from '$lib/workbench/logo/utils';
 
-	import type { ClassValue } from 'svelte/elements';
 	import { Triangle } from '@lucide/svelte';
 
 	import NumberInput from '$lib/workbench/logo/editor/NumberInput.svelte';
@@ -42,14 +41,12 @@
 
 	interface Props {
 		uid: string;
-		text?: string;
+		textLeft: string;
+		textRight: string;
 		editable?: boolean;
 	}
 
-	const { uid, text = LOGO_NAME, editable = false }: Props = $props();
-
-	const leftText = $derived(LOGO_ICON);
-	const rightText = $derived(text);
+	const { uid, textLeft, textRight, editable = false }: Props = $props();
 
 	const Defaults: Data = {
 		version: 3, // increment whenever the data structure changes
@@ -101,8 +98,8 @@
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });
 
-	const widthLeft = $derived(data.left.dWidth + calculateTextWidth(leftText, data.left.fontSize));
-	const widthRight = $derived(data.right.dWidth + calculateTextWidth(rightText, data.right.fontSize));
+	const widthLeft = $derived(data.left.dWidth + calculateTextWidth(textLeft, data.left.fontSize));
+	const widthRight = $derived(data.right.dWidth + calculateTextWidth(textRight, data.right.fontSize));
 
 	const width = $derived(widthLeft + widthRight);
 
@@ -124,15 +121,15 @@
 			br: data.border.dr.br,
 			bl: data.border.dr.bl
 		}
-	});
-	const borderleft = $derived({
+	} satisfies BorderData);
+	const borderLeft = $derived({
 		...borderData,
 		dr: { ...borderData.dr, useTR: false, useBR: false }
-	});
-	const borderright = $derived({
+	} satisfies BorderData);
+	const borderRight = $derived({
 		...borderData,
 		dr: { ...borderData.dr, useTL: false, useBL: false }
-	});
+	} satisfies BorderData);
 
 	// Update the preview whenever the data changes
 	$effect(() => {
@@ -156,12 +153,12 @@
 {#snippet SnippetSVG()}
 	<SVG {uid} width={width + data.border.width} height={data.height + data.border.width}>
 		<!-- left section -->
-		<Rect role="subject" {origin} dx={0} dy={0} width={widthLeft} height={data.height} fill={data.left.fill} border={borderleft} />
-		<Text role="clip" {origin} dx={leftTextX} dy={leftTextY} text={leftText} fontSize={data.left.fontSize} color={data.left.color} {...leftBold} />
+		<Rect role="subject" {origin} dx={0} dy={0} width={widthLeft} height={data.height} fill={data.left.fill} border={borderLeft} />
+		<Text role="clip" {origin} dx={leftTextX} dy={leftTextY} text={textLeft} fontSize={data.left.fontSize} color={data.left.color} {...leftBold} />
 
 		<!-- right section -->
-		<Rect role="ignore" {origin} dx={widthLeft} dy={0} width={widthRight} height={data.height} fill={data.right.fill} border={borderright} />
-		<Text role="clip" {origin} dx={rightTextX} dy={rightTextY} text={rightText} fontSize={data.right.fontSize} color={data.right.color} {...rightBold} />
+		<Rect role="ignore" {origin} dx={widthLeft} dy={0} width={widthRight} height={data.height} fill={data.right.fill} border={borderRight} />
+		<Text role="clip" {origin} dx={rightTextX} dy={rightTextY} text={textRight} fontSize={data.right.fontSize} color={data.right.color} {...rightBold} />
 
 		<!-- Border -->
 		<Rect role="frame" {origin} {width} height={data.height} border={{ ...borderData, color: data.border.color, width: data.border.width }} />
@@ -173,31 +170,29 @@
 		{#snippet config()}
 			<!-- prettier-ignore -->
 			<InputGroup label="Dimensions">
-				<NumberInput 	label={{label: "Width Left", pre: Triangle}} 							
-																			bind:value={data.left.dWidth}		initial={Defaults.left.dWidth} 		min={0} max={200} />
-				<NumberInput 	label={{label: "Width Right", pre: Triangle}} 						
-																			bind:value={data.right.dWidth} 		initial={Defaults.right.dWidth} 	min={0} max={500} />
 				<NumberInput 	label="Height"								bind:value={data.height} 			initial={Defaults.height} 			min={10} max={1000} />
 			</InputGroup>
 
 			<!-- prettier-ignore -->
-			<InputGroup label="Text left Section">
+			<InputGroup label="Left section">
 				<NumberInput 	label={{label: "X", pre: Triangle}} 		bind:value={data.left.offsetX} 		initial={Defaults.left.offsetX} 	min={-100} max={100} />
 				<NumberInput 	label={{label: "Y", pre: Triangle}} 		bind:value={data.left.offsetY} 		initial={Defaults.left.offsetY} 	min={-100} max={100} />
 				<NumberInput 	label="Font size" 							bind:value={data.left.fontSize} 	initial={Defaults.left.fontSize} 	min={10} max={500} />
 				<NumberInput 	label="Boldness" 							bind:value={data.left.boldness} 	initial={Defaults.left.boldness} 	min={0} max={20} step={0.01} />
 				<ColorInput 	label="Fill color" 							bind:value={data.left.fill} 		initial={Defaults.left.fill} 		/>
 				<ColorInput 	label="Text color" 							bind:value={data.left.color} 		initial={Defaults.left.color} 		/>
+				<NumberInput 	label={{label: "Width", pre: Triangle}} 	bind:value={data.left.dWidth}		initial={Defaults.left.dWidth} 		min={0} max={200} />
 			</InputGroup>
 
 			<!-- prettier-ignore -->
-			<InputGroup label="Text right Section">
+			<InputGroup label="Right section">
 				<NumberInput 	label={{label: "X", pre: Triangle}} 		bind:value={data.right.offsetX} 	initial={Defaults.right.offsetX} 	min={-100} max={100} />
 				<NumberInput 	label={{label: "Y", pre: Triangle}} 		bind:value={data.right.offsetY} 	initial={Defaults.right.offsetY} 	min={-100} max={100} />
 				<NumberInput 	label="Font size" 							bind:value={data.right.fontSize} 	initial={Defaults.right.fontSize} 	min={10} max={500} />
 				<NumberInput 	label="Boldness" 							bind:value={data.right.boldness} 	initial={Defaults.right.boldness} 	min={0} max={20} step={0.01} />
 				<ColorInput 	label="Fill color" 							bind:value={data.right.fill} 		initial={Defaults.right.fill} 		/>
 				<ColorInput 	label="Text color" 							bind:value={data.right.color} 		initial={Defaults.right.color} 		/>
+				<NumberInput 	label={{label: "Width", pre: Triangle}} 	bind:value={data.right.dWidth} 		initial={Defaults.right.dWidth} 	min={0} max={500} />
 			</InputGroup>
 
 			<!-- Border configuration -->
