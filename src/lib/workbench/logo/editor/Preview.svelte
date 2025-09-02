@@ -102,7 +102,7 @@
 <Notification bind:this={notification} />
 
 <div class="gap-x-8 md:flex">
-	<div class="w-1/2 flex flex-col gap-y-4 rounded-lg bg-white dark:bg-gray-800">
+	<div class="w-1/2 flex flex-col gap-y-6">
 		<div class="flex flex-col gap-y-2">
 			<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 				Parameters
@@ -139,7 +139,7 @@
 			</div>
 		</div>
 
-		<div class="mt-15 mb-6 flex flex-col justify-center rounded-lg  dark:bg-gray-700">
+		<div class="mt-15 mb-6 flex flex-col justify-center rounded-lg ">
 			<BaseButton onclick={() => update(0)} type="button">Generate</BaseButton>
 			<Checkbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="rounded-lg p-2">
 				<span class="text-sm font-medium text-primary-600 dark:text-primary-100">Auto generate?</span>

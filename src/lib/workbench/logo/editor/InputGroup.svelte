@@ -6,14 +6,15 @@
 	const { label: labelText, children, class: className = '', ...props }: { label: string; children: Snippet; class?: string; [key: string]: any } = $props();
 </script>
 
-<Collapse class="bg-gray-50 rounded-lg p-4 shadow-sm {className}" buttonClass="" {...props}>
+<Collapse class="rounded-lg {className}" buttonClass="" {...props}>
 	{#snippet label()}
-		<span class="text-sm font-semibold not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400">
+		<span class="w-full flex items-center font-semibold not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400 border-b-0 border-gray-200 dark:border-gray-700">
 			{labelText}
+			<ChevronDown class="ml-2 size-4 not-in-aria-expanded:-rotate-180 transition duration-300" />
 		</span>
 
 	{/snippet}
-	<div class="grid grid-cols-2 gap-x-6 gap-y-2 mt-4">
+	<div class="grid grid-cols-2 gap-x-6 gap-y-2 mt-4 px-4">
 		{@render children?.()}
 	</div>
 </Collapse>

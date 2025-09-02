@@ -13,11 +13,11 @@
 		py-0
 		text-sm
 		font-medium
-		text-gray-700
+		text-gray-400
 		transition
 		duration-300
 		hover:-rotate-45
-		hover:text-gray-400
+		hover:text-gray-600
 		focus:outline-2
 		focus:outline-none
 		dark:text-gray-300

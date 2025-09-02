@@ -32,7 +32,7 @@ export const charWidth = (size: number) => size * 0.607;
 //export const charWidth = (size: number) => size * 0.62;
 export const charHeight = (size: number) => Math.round(size * 0.676);
 
-export const textWidth = (text: string, size: number) => {
+export const calculateTextWidth = (text: string, size: number) => {
 	const temp = Math.round(Math.max(charWidth(size) * text.length, size * 1.2));
 	return temp % 2 === 0 ? temp : temp + 1;
 };

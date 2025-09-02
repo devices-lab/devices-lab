@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { textWidth, STROKE, PAD, RADIUS, LOGO_NAME, svgBackground } from '$lib/workbench/logo/utils';
+	import { calculateTextWidth, STROKE, PAD, RADIUS, LOGO_NAME, svgBackground } from '$lib/workbench/logo/utils';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Fill from '$lib/workbench/logo/components/Fill.svelte';
 	import Logo from '$lib/workbench/logo/components/Logo.svelte';
@@ -21,7 +21,7 @@
 	const fontSizeDL = 150;
 
 	const widthDL = $derived(Math.round(H * 1.25));
-	const withText = $derived(widthDL + PAD + textWidth(LOGO_NAME, fontSize) + PAD + 8);
+	const withText = $derived(widthDL + PAD + calculateTextWidth(LOGO_NAME, fontSize) + PAD + 8);
 	const W = $derived(withText + PAD * 2);
 </script>
 

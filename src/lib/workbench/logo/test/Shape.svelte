@@ -4,7 +4,7 @@
 	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
 	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
 	import NumberInput, { type InputType } from '$lib/workbench/logo/editor/NumberInput.svelte';
-	import { textWidth as calculateTextWidth, type SVG_Role } from '$lib/workbench/logo/utils';
+	import { calculateTextWidth, type SVG_Role } from '$lib/workbench/logo/utils';
 
 	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
 	import Text from '$lib/workbench/logo/components/Text3.svelte';
