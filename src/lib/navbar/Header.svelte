@@ -6,7 +6,7 @@
 
 
 
-	import { devMode } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	const uid = $props.id();
@@ -14,9 +14,13 @@
 
 	onMount(() => {
 		devMode.set(localStorage.getItem('devMode') === 'true');
+		devModeLocal.set(localStorage.getItem('devModeLocal') === 'true');
 
 		devMode.subscribe((value) => {
 			localStorage.setItem('devMode', String(value));
+		});
+		devModeLocal.subscribe((value) => {
+			localStorage.setItem('devModeLocal', String(value));
 		});
 	});
 </script>

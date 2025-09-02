@@ -36,8 +36,8 @@
 					<h2 id="details-heading" class="sr-only">Additional details</h2>
 					<div class="border-t-1 border-gray-200 dark:border-gray-700">
 						{@render children?.()}
-						<Collapse label={'Identifier'}>
-							<div class="flex justify-center">
+						<Collapse label={'Identifiers'}>
+							<div class="flex justify-center gap-3">
 								<div class="max-w-fit fill-white opacity-80 *:max-h-15 dark:fill-gray-300">
 									<SVG_StackPill uid={'dl-version-stack'} {...VersionProps(item.projectID, item.projectVersion)} />
 								</div>

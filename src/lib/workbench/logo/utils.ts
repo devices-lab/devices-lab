@@ -3,16 +3,10 @@
 import { type PathElement, ClippyFlatten } from "$lib/workbench/logo/export/clippy";
 
 
-import { writable } from 'svelte/store';
-
-export const svgBackground = writable('none');
-export const svgBaselineSupported = writable(false);
-
 // Number of milliseconds to wait before generating the SVG
 export const GENERATOR_DELAY_MS = 1000;
 
 export type SVG_Role = 'subject' | 'clip' | 'frame' | 'ignore';
-
 
 export const DATA_VERSION = 6;
 
@@ -20,23 +14,32 @@ export const LOGO_ICON = "DL";
 export const LOGO_NAME = 'devices-lab';
 export const LOGO_DOMAIN = 'devices-lab.org';
 
+// Props for creating a DevicesLab version stack
 export const VersionProps = (id: string, version: string) => ({
 	textLeft: LOGO_ICON,
 	textRightTop: `${id}`,
 	textRightBottom: `${version}`,
 });
+
+// Props for creating a DevicesLab version pill
 export const VersionPropsPill = (id: string, version: string) => ({
 	textLeft: LOGO_ICON,
 	textRight: `${id}-${version}`,
 });
+
+// Props for creating a DevicesLab logo
 export const LogoProps = () => ({
 	textLeft: LOGO_ICON,
 	textRight: LOGO_NAME
 });
+
+// Props for creating a DevicesLab project
 export const ProjectProps = (name: string) => ({
 	textTop: LOGO_DOMAIN,
 	textBottom: `/${name}`
 });
+
+// Props for creating a DevicesLab icon
 export const IconProps = () => ({
 	text: LOGO_ICON
 });
@@ -69,6 +72,7 @@ export const FLATTEN_TOLERANCE = 0.01;
 /* ───────────────────────── Paths ───────────────────────── */
 /* ───────────────────────────────────────────────────────── */
 
+/*
 function rectToPathD(rect: SVGRectElement): string {
 	const x = parseFloat(rect.getAttribute('x') || '0');
 	const y = parseFloat(rect.getAttribute('y') || '0');
@@ -122,7 +126,7 @@ function circleOrEllipseToPathD(el: SVGCircleElement | SVGEllipseElement): strin
 		`Z`
 	].join(' ');
 }
-
+*/
 
 /* ────────────────────────────────────────────────────────────── */
 /* ───────────────────────── Operations ───────────────────────── */
@@ -135,12 +139,12 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 function findElements(svgRoot: SVGSVGElement, role: string): PathElement[] {
 	// Subjects can be either paths or rectangles
 	const paths = svgRoot.querySelectorAll<SVGPathElement>(`path[data-clippy-role="${role}"]`);
-	const rects = svgRoot.querySelectorAll<SVGRectElement>(`rect[data-clippy-role="${role}"]`);
-	const circles = svgRoot.querySelectorAll<SVGCircleElement>(`circle[data-clippy-role="${role}"]`);
+	//const rects = svgRoot.querySelectorAll<SVGRectElement>(`rect[data-clippy-role="${role}"]`);
+	//const circles = svgRoot.querySelectorAll<SVGCircleElement>(`circle[data-clippy-role="${role}"]`);
 	const out = [
 		...Array.from(paths).map(p => ({ element: p, path: p.getAttribute('d') || '' })),
-		...Array.from(rects).map(r => ({ element: r, path: rectToPathD(r) })),
-		...Array.from(circles).map(c => ({ element: c, path: circleOrEllipseToPathD(c) })),
+		//...Array.from(rects).map(r => ({ element: r, path: rectToPathD(r) })),
+		//...Array.from(circles).map(c => ({ element: c, path: circleOrEllipseToPathD(c) })),
 	].filter(Boolean);
 
 	if (!out.length) {

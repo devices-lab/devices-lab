@@ -8,8 +8,12 @@ export function sleep(ms: number) {
 
 
 export const devMode = writable(false);
-export const devModeLocal = writable(true);
+export const devModeLocal = writable(false);
 
+devMode.subscribe((v) => {
+	console.log('devModeLocal:', v);
+	devModeLocal.set(false);
+});
 
 export function hexToRgbA(hex: string, alpha: number) {
 	let c: string[];
