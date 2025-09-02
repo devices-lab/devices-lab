@@ -12,6 +12,7 @@
 	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
 	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { StackPillDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type StackPillData } from '$lib/workbench/logo/defaults';
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	//======================================================================================//
 
@@ -31,7 +32,7 @@
 	let loadedData: StackPillData | undefined = $state();
 
 	const dataStore: StackPillData = $state({ ...StackPillDefaults, uid });
-	const data: StackPillData = $derived(loadedData && loadedData.version >= StackPillDefaults.version ? loadedData : dataStore);
+	const data: StackPillData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= StackPillDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });

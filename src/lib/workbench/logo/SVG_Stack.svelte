@@ -12,6 +12,7 @@
 	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
 	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { StackDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type StackData } from '$lib/workbench/logo/defaults';
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	//======================================================================================//
 
@@ -30,16 +31,16 @@
 	let loadedData: StackData | undefined = $state();
 
 	const dataStore: StackData = $state({ ...StackDefaults, uid });
-	const data: StackData = $derived(loadedData && loadedData.version >= StackDefaults.version ? loadedData : dataStore);
+	const data: StackData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= StackDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });
-	
+
 	// dimensions
 	const minWidth = $derived(Math.max(calculateTextWidth(textTop, data.top.fontSize), calculateTextWidth(textBottom, data.bottom.fontSize)));
 	const width = $derived(data.dWidth + minWidth);
 	const height = $derived(data.top.height + data.bottom.height);
-		
+
 	// text properties
 	const topTextProps = $derived(makeTextProps(data.top, width * 0.5, data.top.height * 0.5));
 	const bottomTextProps = $derived(makeTextProps(data.bottom, width * 0.5, data.bottom.height * 0.5 + data.top.height));

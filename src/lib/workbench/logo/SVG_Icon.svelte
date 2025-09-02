@@ -11,6 +11,7 @@
 	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
 	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { IconDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type IconData } from '$lib/workbench/logo/defaults';
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	//======================================================================================//
 
@@ -28,7 +29,7 @@
 	let loadedData: IconData | undefined = $state();
 
 	const defaultData: IconData = $state({ ...IconDefaults, uid });
-	const data: IconData = $derived(loadedData && loadedData.version >= IconDefaults.version ? loadedData : defaultData);
+	const data: IconData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= IconDefaults.version ? loadedData : defaultData);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });

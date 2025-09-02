@@ -12,6 +12,7 @@
 	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
 	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { PillDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type PillData } from '$lib/workbench/logo/defaults';
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	//======================================================================================//
 
@@ -30,7 +31,7 @@
 	let loadedData: PillData | undefined = $state();
 
 	const dataStore: PillData = $state({ ...PillDefaults, uid });
-	const data: PillData = $derived(loadedData && loadedData.version >= PillDefaults.version ? loadedData : dataStore);
+	const data: PillData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= PillDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });

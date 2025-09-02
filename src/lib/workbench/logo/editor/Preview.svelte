@@ -2,10 +2,9 @@
 	import { onDestroy, onMount, type Snippet } from 'svelte';
 	import { Download, Loader, RefreshCcw, Save, X } from '@lucide/svelte';
 
-	import { GENERATOR_DELAY_MS } from '../utils';
-	import { generateSvgTextFlat } from '../export/svg';
-	import { generateSvgForKiCad } from '../export/kicad';
-
+	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
+	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
+	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { devMode, devModeLocal } from '$lib/utils';
 
 	import BaseButton from '$lib/components/BaseButton.svelte';
@@ -65,9 +64,11 @@
 	}
 
 	export function save(user: boolean = true) {
-		localStorage.setItem(`logo-save-${uid}`, dataString);
-		if (user) {
-			notification?.show('success', 'Successfully saved!');
+		if ($devMode && $devModeLocal) {
+			localStorage.setItem(`logo-save-${uid}`, dataString);
+			if (user) {
+				notification?.show('success', 'Successfully saved!');
+			}
 		}
 	}
 

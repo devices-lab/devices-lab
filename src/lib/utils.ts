@@ -10,8 +10,7 @@ export function sleep(ms: number) {
 export const devMode = writable(false);
 export const devModeLocal = writable(false);
 
-devMode.subscribe((v) => {
-	console.log('devModeLocal:', v);
+devMode.subscribe(() => {
 	devModeLocal.set(false);
 });
 
