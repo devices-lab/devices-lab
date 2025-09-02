@@ -9,6 +9,7 @@
 	import ButtonGroup from './ButtonGroup.svelte';
 
 	import { Download, Loader } from '@lucide/svelte';
+	import Checkbox from './editor/Checkbox.svelte';
 	//import { sleep } from '$lib/utils';
 
 	interface Props {
@@ -16,10 +17,9 @@
 		uid: string;
 		title: string;
 		subtitle: string;
-		selected?: boolean;
 	}
 
-	const { children, uid, title, subtitle, selected = true }: Props = $props();
+	let { children, uid, title, subtitle}: Props = $props();
 
 	let clickCounter = 0;
 	async function handleClick(event: Event, onclick: () => Promise<void>) {
@@ -52,40 +52,38 @@
 	</Button>
 {/snippet}
 
-<div class="{selected ? 'block' : 'hidden'}">
-	<div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10 relative">
-		<div class="relative px-4 py-5 sm:px-6">
-			<div class="-mt-4 -ml-4 flex flex-wrap items-center justify-between xl:flex-nowrap">
-				<div class="mt-4 ml-4">
-					<h2 class="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h2>
-					<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
-				</div>
-			</div>
-			<div role="status" class="absolute end-4 top-4 hidden" id={`loading-indicator-${uid}`}>
-				<Loader class="size-10 animate-spin text-blue-500" />
+<div class="relative my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+	<div class="relative px-4 py-5 sm:px-6">
+		<div class="-mt-4 -ml-4 flex flex-wrap items-center justify-between xl:flex-nowrap">
+			<div class="mt-4 ml-4">
+				<h2 class="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h2>
+				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
 			</div>
 		</div>
-
-		<div>
-			{@render children()}
+		<div role="status" class="absolute end-4 top-4 hidden" id={`loading-indicator-${uid}`}>
+			<Loader class="size-10 animate-spin text-blue-500" />
 		</div>
+	</div>
 
-		<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
-			<ButtonGroup>
-				{@render DownloadButton('PNG', '', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'transparent', monochrome: false, invert: false, threshold: 200 }))}
-				{@render DownloadButton('PNG', 'BW', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'white', monochrome: true, invert: false, threshold: 200 }))}
-			</ButtonGroup>
+	<div>
+		{@render children()}
+	</div>
 
-			<ButtonGroup>
-				{@render DownloadButton('SVG', '', () => exportSvg(uid, `${uid}`))}
-				{@render DownloadButton('SVG', 'Font', () => exportSvgFont(uid, `${uid}-font`))}
-				{@render DownloadButton('SVG', 'KiCad', () => exportSvgForKiCad(uid, `${uid}-kicad`))}
-			</ButtonGroup>
+	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
+		<ButtonGroup>
+			{@render DownloadButton('PNG', '', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'transparent', monochrome: false, invert: false, threshold: 200 }))}
+			{@render DownloadButton('PNG', 'BW', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'white', monochrome: true, invert: false, threshold: 200 }))}
+		</ButtonGroup>
 
-			<ButtonGroup>
-				{@render DownloadButton('DFX', 'Altium', () => exportDxfForAltium(uid, `${uid}-altium`))}
-				<!--{@render DownloadButton('Test', '', async () => {await sleep(2000)})}-->
-			</ButtonGroup>
-		</div>
+		<ButtonGroup>
+			{@render DownloadButton('SVG', '', () => exportSvg(uid, `${uid}`))}
+			{@render DownloadButton('SVG', 'Font', () => exportSvgFont(uid, `${uid}-font`))}
+			{@render DownloadButton('SVG', 'KiCad', () => exportSvgForKiCad(uid, `${uid}-kicad`))}
+		</ButtonGroup>
+
+		<ButtonGroup>
+			{@render DownloadButton('DFX', 'Altium', () => exportDxfForAltium(uid, `${uid}-altium`))}
+			<!--{@render DownloadButton('Test', '', async () => {await sleep(2000)})}-->
+		</ButtonGroup>
 	</div>
 </div>

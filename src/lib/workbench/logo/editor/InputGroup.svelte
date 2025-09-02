@@ -14,7 +14,7 @@
 		</span>
 
 	{/snippet}
-	<div class="grid grid-cols-2 gap-x-6 gap-y-2 mt-4 ps-4">
+	<div class="grid grid-cols-2 gap-x-6 gap-y-3 mt-4 ps-4">
 		{@render children?.()}
 	</div>
 </Collapse>

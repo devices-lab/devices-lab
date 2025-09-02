@@ -8,6 +8,9 @@
 
 	import LogoCard from '$lib/workbench/logo/LogoCard.svelte';
 	import { svgBackground } from '$lib/workbench/logo/utils';
+	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
+
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	let projectName = $state('my-project');
 	let projectId = $state('0037');
@@ -31,14 +34,6 @@
 		circle: undefined,
 		square: undefined
 	});
-
-
-
-	function updateCategory(category: Category) {
-		//generators[selectedCategory]?.save();
-		selectedCategory = category;
-		//generators[selectedCategory]?.load();
-	}
 </script>
 
 <div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow-sm dark:divide-white/10 dark:bg-gray-700 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
@@ -84,7 +79,7 @@
 </div>
 
 {#snippet CategoryButton(label: string, category: Category)}
-	<button type="button" class="grow border-b-2 cursor-pointer {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => updateCategory(category)}>
+	<button type="button" class="grow cursor-pointer border-b-2 {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
 		{label}
 	</button>
 {/snippet}
@@ -115,7 +110,6 @@
 	</div>
 </div>
 
-
 <!--
 <LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes." selected={selectedCategory === 'project'}>
 	<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName}/>
@@ -141,29 +135,38 @@
 	<SvgSquare bind:this={generators.square} uid={'dl-square'}  />
 </LogoCard>
 -->
+<div class="relative">
+	{#if selectedCategory === 'project'}
+		<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
+			<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName} />
+		</LogoCard>
+	{:else if selectedCategory === 'versionStack'}
+		<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
+			<SvgVersion bind:this={generators.versionStack} uid={'dl-version-stack'} {projectId} {projectVersion} />
+		</LogoCard>
+	{:else if selectedCategory === 'versionPill'}
+		<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
+			<SvgPill bind:this={generators.versionPill} uid={'dl-version-pill'} {projectId} {projectVersion} />
+		</LogoCard>
+	{:else if selectedCategory === 'logo'}
+		<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
+			<SvgLogo bind:this={generators.logo} uid={'dl-name'} />
+		</LogoCard>
+	{:else if selectedCategory === 'circle'}
+		<LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout.">
+			<SvgCircle bind:this={generators.circle} uid={'dl-circle'} />
+		</LogoCard>
+	{:else if selectedCategory === 'square'}
+		<LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout.">
+			<SvgSquare bind:this={generators.square} uid={'dl-square'} />
+		</LogoCard>
+	{/if}
 
-{#if selectedCategory === 'project'}
-	<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
-		<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName} />
-	</LogoCard>
-{:else if selectedCategory === 'versionStack'}
-	<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
-		<SvgVersion bind:this={generators.versionStack} uid={'dl-version-stack'} {projectId} {projectVersion} class="md:h-50" />
-	</LogoCard>
-{:else if selectedCategory === 'versionPill'}
-	<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-		<SvgPill bind:this={generators.versionPill} uid={'dl-version-pill'} {projectId} {projectVersion} class="md:h-50" />
-	</LogoCard>
-{:else if selectedCategory === 'logo'}
-	<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-		<SvgLogo bind:this={generators.logo} uid={'dl-name'} class="md:h-50" />
-	</LogoCard>
-{:else if selectedCategory === 'circle'}
-	<LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout.">
-		<SvgCircle bind:this={generators.circle} uid={'dl-circle'} class="md:h-50" />
-	</LogoCard>
-{:else if selectedCategory === 'square'}
-	<LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout.">
-		<SvgSquare bind:this={generators.square} uid={'dl-square'} class="md:h-50" />
-	</LogoCard>
-{/if}
+	{#if $devMode}
+		<div class="absolute top-0 right-0 z-10 translate-y-[80%] overflow-hidden">
+			<Checkbox bind:checked={$devModeLocal} class="rounded-lg p-2">
+				<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
+			</Checkbox>
+		</div>
+	{/if}
+</div>

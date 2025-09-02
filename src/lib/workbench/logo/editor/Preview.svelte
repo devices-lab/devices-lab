@@ -6,7 +6,7 @@
 	import { generateSvgTextFlat } from '../export/svg';
 	import { generateSvgForKiCad } from '../export/kicad';
 
-	import { devMode } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	import BaseButton from '$lib/components/BaseButton.svelte';
 	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
@@ -25,7 +25,6 @@
 	//======================================================================================//
 
 	let notification: Notification | undefined = $state();
-	let localDev: boolean = $state(true);
 
 	//======================================================================================//
 
@@ -94,13 +93,9 @@
 
 <Notification bind:this={notification} />
 
-<div class="absolute top-0 right-0 z-10 overflow-hidden">
-	<Checkbox bind:checked={localDev} onchange={() => updatePreview()} class="rounded-lg p-2">
-		<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
-	</Checkbox>
-</div>
 
-{#if $devMode && localDev}
+
+{#if $devMode && $devModeLocal}
 	<div class="lg:flex">
 		<div class="flex flex-col gap-y-6 p-6 lg:w-1/2">
 			<div class="flex flex-col gap-y-2">
@@ -137,13 +132,13 @@
 			<div class="flex gap-x-4">
 				<div class="flex flex-col md:w-full">
 					<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
-					
+					<div class="md:h-70">
 						{@render children()}
-				
+					</div>
 				</div>
 			</div>
 
-			<div class="mt-15 mb-6 flex flex-col justify-center rounded-lg">
+			<div class="my-3 flex flex-col justify-center rounded-lg">
 				<BaseButton onclick={() => update(0)} type="button">Generate</BaseButton>
 				<Checkbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="rounded-lg p-2">
 					<span class="text-sm font-medium text-primary-600 dark:text-primary-100">Auto generate?</span>
