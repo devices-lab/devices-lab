@@ -40,7 +40,7 @@
 
 </script>
 
-<BaseInput type="color" name="colorField" bind:value={getColor, setColor} class="h-[36px] w-1/3 appearance-none" disabled={!enabled} />
+<BaseInput type="color" name="colorField" bind:value={getColor, setColor} class="h-[30px] w-1/3 appearance-none" disabled={!enabled} />
 
 <!--
 <div class="flex grow items-center gap-x-2">
