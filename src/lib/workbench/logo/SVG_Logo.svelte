@@ -23,6 +23,15 @@
 	const widthDL = $derived(Math.round(H * 1.25));
 	const withText = $derived(widthDL + PAD + calculateTextWidth(LOGO_NAME, fontSize) + PAD + 8);
 	const W = $derived(withText + PAD * 2);
+
+	//======================================================================================//
+
+	export const save = () => {
+		//preview?.save();
+	};
+	export const load = () => {
+		//preview?.load();
+	};
 </script>
 
 <SVG {uid} width={W} height={H} class={className}>

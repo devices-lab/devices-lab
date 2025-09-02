@@ -19,9 +19,26 @@
 		svgBackground.set(backgroundEnabled ? backgroundColor : 'none');
 	});
 
-	type Category = 'project' | 'version-stack' | 'version-pill' | 'logo' | 'circle' | 'square';
+	type Category = 'project' | 'versionStack' | 'versionPill' | 'logo' | 'circle' | 'square';
 
 	let selectedCategory = $state<Category>('project');
+
+	let generators: Record<Category, { save: () => void; load: () => void } | undefined> = $state({
+		project: undefined,
+		versionStack: undefined,
+		versionPill: undefined,
+		logo: undefined,
+		circle: undefined,
+		square: undefined
+	});
+
+
+
+	function updateCategory(category: Category) {
+		//generators[selectedCategory]?.save();
+		selectedCategory = category;
+		//generators[selectedCategory]?.load();
+	}
 </script>
 
 <div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow-sm dark:divide-white/10 dark:bg-gray-700 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
@@ -67,14 +84,13 @@
 </div>
 
 {#snippet CategoryButton(label: string, category: Category)}
-	<button type="button" class="grow border-b-2 {selectedCategory === category ? 'border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
+	<button type="button" class="grow border-b-2 cursor-pointer {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => updateCategory(category)}>
 		{label}
 	</button>
 {/snippet}
 
 <div>
-	<div class="grid grid-cols-1 sm:hidden">
-		<!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+	<!--<div class="grid grid-cols-1 sm:hidden">
 		<select aria-label="Select a tab" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-gray-100 dark:outline-white/10 dark:*:bg-gray-800 dark:focus:outline-indigo-500">
 			<option>My Account</option>
 			<option>Company</option>
@@ -84,13 +100,13 @@
 		<svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 dark:fill-gray-400">
 			<path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
 		</svg>
-	</div>
-	<div class="hidden sm:block">
+	</div>-->
+	<div class=" sm:block">
 		<div class="border-b border-gray-200 dark:border-white/10">
 			<nav aria-label="Tabs" class="-mb-px flex">
 				{@render CategoryButton('Project', 'project')}
-				{@render CategoryButton('Version Stack', 'version-stack')}
-				{@render CategoryButton('Version Pill', 'version-pill')}
+				{@render CategoryButton('Version Stack', 'versionStack')}
+				{@render CategoryButton('Version Pill', 'versionPill')}
 				{@render CategoryButton('Logo', 'logo')}
 				{@render CategoryButton('Circle', 'circle')}
 				{@render CategoryButton('Square', 'square')}
@@ -99,28 +115,55 @@
 	</div>
 </div>
 
+
+<!--
+<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes." selected={selectedCategory === 'project'}>
+	<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName}/>
+</LogoCard>
+
+<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format." selected={selectedCategory === 'versionStack'}>
+	<SvgVersion bind:this={generators.versionStack} uid={'dl-version-stack'} {projectId} {projectVersion} class="md:h-50" />
+</LogoCard>
+
+<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format." selected={selectedCategory === 'versionPill'}>
+	<SvgPill bind:this={generators.versionPill} uid={'dl-version-pill'} {projectId} {projectVersion} class="md:h-50" />
+</LogoCard>
+
+<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab." selected={selectedCategory === 'logo'}>
+	<SvgLogo bind:this={generators.logo} uid={'dl-name'} />
+</LogoCard>
+
+<LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout." selected={selectedCategory === 'circle'}>
+	<SvgCircle bind:this={generators.circle} uid={'dl-circle'} />
+</LogoCard>
+
+<LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout." selected={selectedCategory === 'square'}>
+	<SvgSquare bind:this={generators.square} uid={'dl-square'}  />
+</LogoCard>
+-->
+
 {#if selectedCategory === 'project'}
 	<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
-		<SvgProject uid={'dl-project'} {projectName} />
+		<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName} />
 	</LogoCard>
-{:else if selectedCategory === 'version-stack'}
+{:else if selectedCategory === 'versionStack'}
 	<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
-		<SvgVersion uid={'dl-version-stack'} {projectId} {projectVersion} class="md:h-50" />
+		<SvgVersion bind:this={generators.versionStack} uid={'dl-version-stack'} {projectId} {projectVersion} class="md:h-50" />
 	</LogoCard>
-{:else if selectedCategory === 'version-pill'}
+{:else if selectedCategory === 'versionPill'}
 	<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-		<SvgPill uid={'dl-version-pill'} {projectId} {projectVersion} class="md:h-50" />
+		<SvgPill bind:this={generators.versionPill} uid={'dl-version-pill'} {projectId} {projectVersion} class="md:h-50" />
 	</LogoCard>
 {:else if selectedCategory === 'logo'}
 	<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-		<SvgLogo uid={'dl-name'} class="md:h-50" />
+		<SvgLogo bind:this={generators.logo} uid={'dl-name'} class="md:h-50" />
 	</LogoCard>
 {:else if selectedCategory === 'circle'}
 	<LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout.">
-		<SvgCircle uid={'dl-circle'} class="md:h-50" />
+		<SvgCircle bind:this={generators.circle} uid={'dl-circle'} class="md:h-50" />
 	</LogoCard>
 {:else if selectedCategory === 'square'}
 	<LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout.">
-		<SvgSquare uid={'dl-square'} class="md:h-50" />
+		<SvgSquare bind:this={generators.square} uid={'dl-square'} class="md:h-50" />
 	</LogoCard>
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
-	import { Download, Loader, Save, Upload } from '@lucide/svelte';
+	import { onDestroy, onMount, type Snippet } from 'svelte';
+	import { Download, Loader, Save, TestTube, Upload } from '@lucide/svelte';
 
 	import { GENERATOR_DELAY_MS } from '../utils';
 	import { generateSvgTextFlat } from '../export/svg';
@@ -12,36 +12,12 @@
 	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 
-	type Border = {
-		radius: number;
-		width: number;
-		color: string;
-	};
-
-	type Section = {
-		height: number;
-		fontSize: number;
-		color: string;
-		fill: string;
-		boldness: number;
-		offsetX: number;
-		offsetY: number;
-	};
-
-	export interface SVG_Data {
-		uid: string;
-		paddingX: number;
-		border: Border;
-		top: Section;
-		bottom: Section;
-	}
-
 	interface Props {
 		uid: string;
 		children: Snippet;
 		config: Snippet;
 		dataString: string;
-		data: SVG_Data | undefined;
+		data: Record<string, any> | undefined;
 	}
 
 	let { uid, children, config, dataString, data = $bindable() }: Props = $props();
@@ -49,6 +25,7 @@
 	//======================================================================================//
 
 	let notification: Notification | undefined = $state();
+	let localDev: boolean = $state(true);
 
 	//======================================================================================//
 
@@ -87,25 +64,45 @@
 		notification?.show('success', 'Download ready!');
 	}
 
-	function save() {
-		localStorage.setItem(`logo-${uid}`, dataString);
-		notification?.show('success', 'Successfully saved!');
-	}
-
-	function load() {
-		const savedData = localStorage.getItem(`logo-${uid}`);
-		if (savedData) {
-			data = JSON.parse(savedData);
-			notification?.show('success', 'Successfully loaded!');
+	export function save(user: boolean = true) {
+		localStorage.setItem(`logo-${user ? 'user' : 'auto'}-${uid}`, dataString);
+		if (user) {
+			notification?.show('success', 'Successfully saved!');
 		}
 	}
+
+	export function load(user: boolean = true) {
+		const savedData = localStorage.getItem(`logo-${user ? 'user' : 'auto'}-${uid}`);
+		if (savedData) {
+			data = JSON.parse(savedData);
+			if (user) {
+				notification?.show('success', 'Successfully loaded!');
+			}
+		}
+	}
+
+	// Load data on component mount
+	onMount(() => {
+		load(false);
+
+		// Auto-save on component destroy
+		onDestroy(() => {
+			save(false);
+		});
+	});
 </script>
 
 <Notification bind:this={notification} />
 
-{#if $devMode}
-	<div class="gap-x-8 md:flex">
-		<div class="flex w-1/2 flex-col gap-y-6">
+<div class="absolute top-0 right-0 z-10 overflow-hidden">
+	<Checkbox bind:checked={localDev} onchange={() => updatePreview()} class="rounded-lg p-2">
+		<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
+	</Checkbox>
+</div>
+
+{#if $devMode && localDev}
+	<div class="lg:flex">
+		<div class="flex flex-col gap-y-6 p-6 lg:w-1/2">
 			<div class="flex flex-col gap-y-2">
 				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 					Parameters
@@ -134,11 +131,15 @@
 			{@render config()}
 		</div>
 
-		<div class="w-1/2">
+		<div class="mx-0 shrink border-s-1 border-gray-200"></div>
+
+		<div class="flex flex-col gap-y-6 p-6 lg:w-1/2">
 			<div class="flex gap-x-4">
 				<div class="flex flex-col md:w-full">
 					<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
-					{@render children()}
+					
+						{@render children()}
+				
 				</div>
 			</div>
 
@@ -159,7 +160,7 @@
 							{#if value}
 								{@html value.outerHTML}
 							{:else}
-								<p class="text-sm text-gray-500 italic">No SVG generated</p>
+								<p class="my-10 text-sm text-gray-500 italic">No SVG generated</p>
 							{/if}
 						{:catch error}
 							<p class="text-red-500 italic">Something went wrong: {error.message}</p>
@@ -177,7 +178,7 @@
 		</div>
 	</div>
 {:else}
-	<div class="md:h-50">
+	<div class="m-4 md:h-50">
 		{@render children()}
 	</div>
 {/if}

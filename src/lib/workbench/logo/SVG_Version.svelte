@@ -25,6 +25,15 @@
 	const widthDL = $derived(Math.round(H * 1.22));
 	const withText = $derived(Math.max(calculateTextWidth(projectId, fontSizeProject), calculateTextWidth(projectVersion, fontSizeVersion)) + PAD * 2);
 	const W = $derived(STROKE + widthDL + withText + PAD + 8);
+
+	//======================================================================================//
+
+	export const save = () => {
+		//preview?.save();
+	};
+	export const load = () => {
+		//preview?.load();
+	};
 </script>
 
 <SVG {uid} width={W} height={H} class={className}>

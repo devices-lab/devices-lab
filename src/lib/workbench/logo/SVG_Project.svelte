@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { LOGO_DOMAIN } from '$lib/workbench/logo/utils';
+	import { LOGO_DOMAIN, calculateTextWidth } from '$lib/workbench/logo/utils';
+	import { clamp } from '$lib/utils';
 	
 	import { untrack } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
@@ -10,12 +11,37 @@
 	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
 	import Text from '$lib/workbench/logo/components/Text3.svelte';
 	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
-	import Preview, { type SVG_Data } from '$lib/workbench/logo/editor/Preview.svelte';
-
-	import { calculateTextWidth } from '$lib/workbench/logo/utils';
-	import { clamp } from '$lib/utils';
-
+	import Preview from '$lib/workbench/logo/editor/Preview.svelte';
 	
+	//======================================================================================//
+
+	type Border = {
+		radius: number;
+		width: number;
+		color: string;
+	};
+
+	type Section = {
+		text: string;
+		height: number;
+		fontSize: number;
+		color: string;
+		fill: string;
+		boldness: number;
+		offsetX: number;
+		offsetY: number;
+	};
+
+	type Data = {
+		uid: string;
+		paddingX: number;
+		border: Border;
+		top: Section;
+		bottom: Section;
+	}
+
+	//======================================================================================//
+
 	interface Props {
 		uid: string;
 		projectName: string;
@@ -25,9 +51,7 @@
 
 	const { uid, projectName, class: className = '', props = {} }: Props = $props();
 
-
-
-	const Defaults: SVG_Data = {
+	const Defaults: Data = {
 		uid: uid,
 		paddingX: 80,
 		border: {
@@ -36,6 +60,7 @@
 			color: '#000000'
 		},
 		top: {
+			text: LOGO_DOMAIN,
 			height: 120,
 			fontSize: 84,
 			color: '#ffffff',
@@ -45,6 +70,7 @@
 			offsetY: -5
 		},
 		bottom: {
+			text: `/${projectName}`,
 			height: 120,
 			fontSize: 84,
 			color: '#000000',
@@ -55,16 +81,17 @@
 		}
 	};
 
+	//======================================================================================//
 
-	const defaultData: SVG_Data = $state({ ...Defaults, ...props });
-	let loadedData: SVG_Data | undefined = $state();
+	let preview: Preview | undefined = $state();
+	let loadedData: Data | undefined = $state();
 
-	//const data: SVG_Data = $state({ ...Defaults, ...props });
-	const data: SVG_Data = $derived(loadedData ?? defaultData);
+	const defaultData: Data = $state({ ...Defaults, ...props });
+	const data: Data = $derived(loadedData ?? defaultData);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
-	const textWidthTop = $derived(calculateTextWidth(LOGO_DOMAIN, data.top.fontSize));
-	const textWidthBottom = $derived(calculateTextWidth(`/${projectName}`, data.bottom.fontSize));
+	const textWidthTop = $derived(calculateTextWidth(data.top.text, data.top.fontSize));
+	const textWidthBottom = $derived(calculateTextWidth(data.bottom.text, data.bottom.fontSize));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });
 	const height = $derived(data.top.height + data.bottom.height);
@@ -95,8 +122,6 @@
 		});
 	}
 
-	let preview: Preview | undefined = $state();
-
 	// Clamp the border radius to the maximum radius
 	$effect(() => {
 		data.border.radius = clamp(data.border.radius, 0, maxRadius);
@@ -107,6 +132,15 @@
 		dataString;
 		preview?.updatePreview();
 	});
+
+	//======================================================================================//
+
+	export const save = () => {
+		preview?.save();
+	};
+	export const load = () => {
+		preview?.load();
+	};
 </script>
 
 <Preview {uid} bind:this={preview} dataString={dataString} bind:data={loadedData}>
@@ -145,10 +179,10 @@
 	<SVG {uid} width={width + data.border.width} height={height + data.border.width} class={className}>
 		<!-- Top section -->
 		<Rect type="path" role="subject" {origin} dx={0} dy={0} {width} height={data.top.height} radius={data.border.radius} fill={data.top.fill} topLeft topRight />
-		<Text role="clip" {origin} dx={topTextX} dy={topTextY} text={LOGO_DOMAIN} fontSize={data.top.fontSize} width={textWidthTop} color={data.top.color} {...topBold} />
+		<Text role="clip" {origin} dx={topTextX} dy={topTextY} text={data.top.text} fontSize={data.top.fontSize} width={textWidthTop} color={data.top.color} {...topBold} />
 		<!-- Bottom section -->
 		<Rect type="path" role="ignore" {origin} dx={0} dy={data.top.height} {width} height={data.bottom.height} radius={data.border.radius} fill={data.bottom.fill} bottomLeft bottomRight />
-		<Text role="clip" {origin} dx={bottomTextX} dy={bottomTextY} text={`/${projectName}`} fontSize={data.bottom.fontSize} width={textWidthBottom} color={data.bottom.color} {...bottomBold} />
+		<Text role="clip" {origin} dx={bottomTextX} dy={bottomTextY} text={data.bottom.text} fontSize={data.bottom.fontSize} width={textWidthBottom} color={data.bottom.color} {...bottomBold} />
 		<!-- Border -->
 		<Rect type="path" role="frame" {origin} {width} {height} radius={data.border.radius} borderColor={data.border.color} borderWidth={data.border.width} topLeft topRight bottomLeft bottomRight />
 	</SVG>
