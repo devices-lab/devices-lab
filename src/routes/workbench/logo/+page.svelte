@@ -1,8 +1,7 @@
 <script lang="ts">
 	import SvgLogo from '$lib/workbench/logo/SVG_Logo.svelte';
 	import SvgProject from '$lib/workbench/logo/SVG_Project.svelte';
-	import SvgCircle from '$lib/workbench/logo/SVG_Circle.svelte';
-	import SvgSquare from '$lib/workbench/logo/SVG_Square.svelte';
+	import SvgIcon from '$lib/workbench/logo/SVG_Icon.svelte';
 	import SvgVersion from '$lib/workbench/logo/SVG_Version.svelte';
 	import SvgPill from '$lib/workbench/logo/SVG_Pill.svelte';
 
@@ -22,18 +21,10 @@
 		svgBackground.set(backgroundEnabled ? backgroundColor : 'none');
 	});
 
-	type Category = 'project' | 'versionStack' | 'versionPill' | 'logo' | 'circle' | 'square';
+	type Category = 'project' | 'versionStack' | 'versionPill' | 'logo' | 'icon';
 
 	let selectedCategory = $state<Category>('project');
 
-	let generators: Record<Category, { save: () => void; load: () => void } | undefined> = $state({
-		project: undefined,
-		versionStack: undefined,
-		versionPill: undefined,
-		logo: undefined,
-		circle: undefined,
-		square: undefined
-	});
 </script>
 
 <div class="my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-100 shadow-sm dark:divide-white/10 dark:bg-gray-700 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
@@ -103,8 +94,7 @@
 				{@render CategoryButton('Version Stack', 'versionStack')}
 				{@render CategoryButton('Version Pill', 'versionPill')}
 				{@render CategoryButton('Logo', 'logo')}
-				{@render CategoryButton('Circle', 'circle')}
-				{@render CategoryButton('Square', 'square')}
+				{@render CategoryButton('Icon', 'icon')}
 			</nav>
 		</div>
 	</div>
@@ -138,27 +128,23 @@
 <div class="relative">
 	{#if selectedCategory === 'project'}
 		<LogoCard uid={'dl-project'} title="Project" subtitle="Represents the overall project identity and its key attributes.">
-			<SvgProject bind:this={generators.project} uid={'dl-project'} {projectName} />
+			<SvgProject uid={'dl-project'} {projectName} />
 		</LogoCard>
 	{:else if selectedCategory === 'versionStack'}
 		<LogoCard uid={'dl-version-stack'} title="Version Stack" subtitle="Represents the project version in a stacked layout format.">
-			<SvgVersion bind:this={generators.versionStack} uid={'dl-version-stack'} {projectId} {projectVersion} />
+			<SvgVersion uid={'dl-version-stack'} {projectId} {projectVersion} />
 		</LogoCard>
 	{:else if selectedCategory === 'versionPill'}
 		<LogoCard uid={'dl-version-pill'} title="Version Pill" subtitle="Represents the project version in a pill-shaped layout format.">
-			<SvgPill bind:this={generators.versionPill} uid={'dl-version-pill'} {projectId} {projectVersion} />
+			<SvgPill uid={'dl-version-pill'} {projectId} {projectVersion} />
 		</LogoCard>
 	{:else if selectedCategory === 'logo'}
 		<LogoCard uid={'dl-name'} title="Logo" subtitle="Illustrates the main logo used to represent Devices Lab.">
-			<SvgLogo bind:this={generators.logo} uid={'dl-name'} />
+			<SvgLogo uid={'dl-name'} />
 		</LogoCard>
-	{:else if selectedCategory === 'circle'}
-		<LogoCard uid={'dl-circle'} title="Circle" subtitle="A circular-shaped design element that can be applied in branding or layout.">
-			<SvgCircle bind:this={generators.circle} uid={'dl-circle'} />
-		</LogoCard>
-	{:else if selectedCategory === 'square'}
-		<LogoCard uid={'dl-square'} title="Square" subtitle="A square-shaped design element that can be applied in branding or layout.">
-			<SvgSquare bind:this={generators.square} uid={'dl-square'} />
+	{:else if selectedCategory === 'icon'}
+		<LogoCard uid={'dl-icon'} title="Icon" subtitle="A generic icon design element that can be applied in various contexts.">
+			<SvgIcon uid={'dl-icon'} />
 		</LogoCard>
 	{/if}
 

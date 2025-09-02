@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy, onMount, type Snippet } from 'svelte';
-	import { Download, Loader, Save, TestTube, Upload } from '@lucide/svelte';
+	import { Download, Loader, RefreshCcw, Save, X } from '@lucide/svelte';
 
 	import { GENERATOR_DELAY_MS } from '../utils';
 	import { generateSvgTextFlat } from '../export/svg';
@@ -18,9 +18,10 @@
 		config: Snippet;
 		dataString: string;
 		data: Record<string, any> | undefined;
+		onreset: () => void;
 	}
 
-	let { uid, children, config, dataString, data = $bindable() }: Props = $props();
+	let { uid, children, config, dataString, data = $bindable(), onreset }: Props = $props();
 
 	//======================================================================================//
 
@@ -64,20 +65,27 @@
 	}
 
 	export function save(user: boolean = true) {
-		localStorage.setItem(`logo-${user ? 'user' : 'auto'}-${uid}`, dataString);
+		localStorage.setItem(`logo-save-${uid}`, dataString);
 		if (user) {
 			notification?.show('success', 'Successfully saved!');
 		}
 	}
 
 	export function load(user: boolean = true) {
-		const savedData = localStorage.getItem(`logo-${user ? 'user' : 'auto'}-${uid}`);
+		const savedData = localStorage.getItem(`logo-save-${uid}`);
 		if (savedData) {
 			data = JSON.parse(savedData);
 			if (user) {
 				notification?.show('success', 'Successfully loaded!');
 			}
 		}
+	}
+
+	export function reset() {
+		//localStorage.removeItem(`logo-user-${uid}`);
+		localStorage.removeItem(`logo-save-${uid}`);
+		onreset();
+		notification?.show('success', 'Successfully reset!');
 	}
 
 	// Load data on component mount
@@ -111,12 +119,16 @@
 					<span class="text-sm">Local storage:</span>
 
 					<div class="flex gap-x-2">
+						<BaseButton theme="link-secondary" onclick={reset} class="flex items-center py-1 text-sm">
+							<X class="mr-2 size-4 text-red-500" />
+							Reset
+						</BaseButton>
 						<BaseButton theme="link-secondary" onclick={load} class="flex items-center py-1 text-sm">
-							<Upload class="mr-2 size-4" />
-							Load
+							<RefreshCcw class="mr-2 size-4 text-amber-500" />
+							Reload
 						</BaseButton>
 						<BaseButton theme="link-secondary" onclick={save} class="flex items-center py-1 text-sm">
-							<Save class="mr-2 size-4" />
+							<Save class="mr-2 size-4 text-green-600" />
 							Save
 						</BaseButton>
 					</div>

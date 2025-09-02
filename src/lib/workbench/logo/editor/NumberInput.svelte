@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Reset from '$lib/workbench/logo/editor/Reset.svelte';
 	import BaseInput from '$lib/components/BaseInput.svelte';
-	import InputLabel from '$lib/workbench/logo/editor/InputLabel.svelte';
+	import InputLabel, { type Label } from '$lib/workbench/logo/editor/InputLabel.svelte';
 
 
-	let { label, value = $bindable<number>(), initial, min, max, step }: { label: string; value: number; initial: number; min?: number; max?: number; step?: number } = $props();
+	let { label, value = $bindable<number>(), initial, min, max, step }: { label: Label; value: number; initial: number; min?: number; max?: number; step?: number } = $props();
 
 </script>
 
