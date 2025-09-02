@@ -2,7 +2,7 @@
 	import { STROKE, COLOR } from '$lib/workbench/logo/utils';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Logo from '$lib/workbench/logo/components/Logo.svelte';
-	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import Rect from '$lib/workbench/logo/test/Rect.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
     interface Props {

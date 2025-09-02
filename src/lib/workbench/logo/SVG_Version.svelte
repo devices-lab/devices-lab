@@ -3,8 +3,8 @@
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Fill from '$lib/workbench/logo/components/Fill.svelte';
 	import Logo from '$lib/workbench/logo/components/Logo.svelte';
-	import Text from '$lib/workbench/logo/components/Text.svelte';
-	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import Text from '$lib/workbench/logo/test/Text.svelte';
+	import Rect from '$lib/workbench/logo/test/Rect.svelte';
 	import type { ClassValue } from 'svelte/elements';
 
 	interface Props {

@@ -4,8 +4,7 @@
 
 	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 
-	let value = $state(color === 'none' ? defaultColor : color);
-	let enabled = $state(color !== 'none');
+	let enabled = $derived(color !== 'none');
 
 	/*
 	const hexString = $derived(
@@ -16,12 +15,32 @@
 	const hexColor = $derived(hasAlpha ? (color + hexString) : 'none');
 	*/
 
-	$effect(() => {
-		color = enabled ? value : 'none';
-	});
+
+	let tempColor = defaultColor;
+
+	const getColor = () => {
+		return (color === 'none' ? tempColor : color);
+	};
+	const setColor = (newColor: string) => {
+		color = newColor;
+	};
+
+	const getEnable = () => {
+		return enabled;
+	};
+	const setEnable = (newEnabled: boolean) => {
+		enabled = newEnabled;
+		if (enabled) {
+			color = tempColor;
+		} else {
+			tempColor = color;
+			color = 'none';
+		}
+	};
+
 </script>
 
-<BaseInput type="color" name="colorField" bind:value class="h-[36px] w-1/3 appearance-none" disabled={!enabled} />
+<BaseInput type="color" name="colorField" bind:value={getColor, setColor} class="h-[36px] w-1/3 appearance-none" disabled={!enabled} />
 
 <!--
 <div class="flex grow items-center gap-x-2">
@@ -31,7 +50,7 @@
 -->
 
 <div class="flex grow items-center gap-x-2">
-	<Checkbox bind:checked={enabled}>
+	<Checkbox bind:checked={getEnable, setEnable}>
 		<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Enabled?</span>
 	</Checkbox>
 </div>

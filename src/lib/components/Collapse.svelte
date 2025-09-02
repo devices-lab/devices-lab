@@ -3,21 +3,25 @@
 	import type { ClassValue } from 'svelte/elements';
 
 	export interface CollapseItem {
-		label: string;
+		label: string | Snippet;
 		children: Snippet;
 		class?: ClassValue;
 		buttonClass?: ClassValue;
 		[key: string]: any;
 	}
 
-	const { label, children, class: className = '', buttonClass = '', ...restProps }: CollapseItem = $props();
+	const { label, children, class: className = '', buttonClass = 'my-2 py-4', ...restProps }: CollapseItem = $props();
 	const uid = $props.id();
 </script>
 
-<div>
+<div class={className}>
 	<h3>
-		<button type="button" command="--toggle" commandfor={uid} class="group relative flex w-full items-center justify-between py-4 my-2 text-left cursor-pointer {buttonClass}">
-			<span class="text-sm font-medium not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400 {className}">{label}</span>
+		<button type="button" command="--toggle" commandfor={uid} class="group relative flex w-full cursor-pointer items-center justify-between text-left {buttonClass}">
+			{#if typeof label === 'string'}
+				<span class="text-sm font-medium not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400">{label}</span>
+			{:else}
+				{@render label()}
+			{/if}
 			<span class="ml-6 flex cursor-pointer items-center">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 text-gray-400 group-hover:text-gray-500 in-aria-expanded:hidden">
 					<path d="M12 4.5v15m7.5-7.5h-15" stroke-linecap="round" stroke-linejoin="round" />

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { svgBackground, TEXT, LOGO_ICON } from '$lib/workbench/logo/utils';
 
-	import Text from '$lib/workbench/logo/components/Text.svelte';
+	import Text from '$lib/workbench/logo/test/Text.svelte';
 
 	export interface Props {
 		x: number;
