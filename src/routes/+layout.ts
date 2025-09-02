@@ -8,7 +8,20 @@ import { devicesCatalog } from '$lib/data/devices';
 import { toolsCatalog } from '$lib/data/tools';
 import { mediaCatalog } from '$lib/data/media';
 import { researchCatalog } from '$lib/data/research';
-import { menu, sideMenu } from '$lib/data/pages';
+import { MainMenu, SideMenu } from '$lib/data/routes';
+
+//────────────────────────────────────────────────────────────────//
+
+// Featured items
+import { devicesFeatured } from '$lib/data/devices';
+import { toolsFeatured } from '$lib/data/tools';
+
+const featuredItems = {
+	[Routes.devices.id]: devicesFeatured,
+	[Routes.tools.id]: toolsFeatured
+};
+
+//────────────────────────────────────────────────────────────────//
 
 // Enable prerendering for static site generation
 export const prerender = true;
@@ -49,14 +62,16 @@ const createBreadcrumbs = (route: string): BreadcrumbType[] => {
 
 
 
+
 export const load: LayoutLoad = async (event) => {
 	const route = parseEventRoute(event.route.id);
+	const breadcrumbs = createBreadcrumbs(route);
 	return {
 		...(event.data ?? {}),
-		route: Routes.home,
-		breadcrumbs: createBreadcrumbs(route),
-		isHome: route === Routes.home.href,
-		menu,
-		sideMenu,
+		route: Routes.home, // will be overwritten in each page
+		breadcrumbs,
+		MainMenu,
+		SideMenu,
+		featuredItems
 	};
 };

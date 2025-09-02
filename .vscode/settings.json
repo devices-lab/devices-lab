@@ -8,5 +8,5 @@
 	"editor.suggest.insertMode": "insert",
 	"editor.autoClosingBrackets": "languageDefined",
 	"editor.autoClosingComments": "never",
-	"workbench.tree.indent": 20
+	"workbench.tree.indent": 20,
 }

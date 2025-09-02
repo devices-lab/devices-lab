@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 
 	const Shop = {
@@ -11,7 +12,7 @@
 
 <section aria-labelledby="featured-heading" class="group relative my-16 overflow-hidden rounded-lg bg-gray-100 lg:h-56 dark:bg-gray-800">
 	<div class="absolute inset-0 transition-all duration-300 group-hover:translate-x-6">
-		<enhanced:img src={Shop.image} alt="shop illustration" class="size-full object-contain" />
+		<BaseImg src={Shop.image} alt="shop illustration" class="size-full object-contain" />
 	</div>
 	<div aria-hidden="true" class="relative h-96 w-full lg:hidden"></div>
 	<div aria-hidden="true" class="relative h-32 w-full lg:hidden"></div>

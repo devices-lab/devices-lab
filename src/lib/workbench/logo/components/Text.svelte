@@ -1,19 +1,40 @@
 <script lang="ts">
-	import { STROKE, COLOR, FONT_FAMILY, charHeight } from '$lib/workbench/logo/utils';
-
-	import { svgBaselineSupported } from '$lib/workbench/logo/utils';
+	import type { SVG_Role } from '$lib/workbench/logo/utils';
+	import { FONT_FAMILY, calculateTextWidth, charHeight } from '$lib/workbench/logo/utils';
 
 	interface Props {
-		x: number;
-		y: number;
+		role: SVG_Role;
+		// positioning
+		origin: { x: number; y: number };
+		dx?: number;
+		dy?: number;
+		// text
 		text: string;
 		fontSize: number;
-		[key: string]: any;
+		color: string;
+		// other
+		props?: Record<string, any>;
 	}
 
-	const { x, y, text, fontSize, ...props }: Props = $props();
+	const { role, origin, dx = 0, dy = 0, text, fontSize, color, ...props }: Props = $props();
+
+	const textLength = $derived(calculateTextWidth(text, fontSize));
+	const textX = $derived(dx - Math.round(textLength / 2));
+	const textY = $derived(dy + Math.round(charHeight(fontSize) / 2));
 </script>
 
-<text {x} y={y + ($svgBaselineSupported ? 0 : charHeight(fontSize) / 2)} font-size={fontSize} font-family={FONT_FAMILY} fill={COLOR} dominant-baseline={$svgBaselineSupported ? 'central' : 'none'} letter-spacing={1} {...props}>
+<!-- prettier-ignore -->
+<text 
+	x={textX + origin.x} 
+	y={textY + origin.y} 
+	font-size={fontSize} 
+	textLength={textLength} 
+	lengthAdjust="spacingAndGlyphs" 
+	font-family={FONT_FAMILY} 
+	fill={color} 
+	letter-spacing={1} 
+	data-clippy-role={role} 
+	{...props}
+>
 	{text}
 </text>

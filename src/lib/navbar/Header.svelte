@@ -1,25 +1,26 @@
 <script lang="ts">
-	import { page } from '$app/state';
-
 	import Logo from '$lib/navbar/Logo.svelte';
-	import Route from '$lib/navbar/Route.svelte';
-	import LinkPop from '$lib/navbar/LinkPop.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
-	import FeaturedSet from '$lib/items/featured/FeaturedSet.svelte';
-	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
+	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
+	import MenuSide from '$lib/navbar/menu/MenuSide.svelte';
 
-	import { devMode } from '$lib/utils';
+
+
+	import { devMode, devModeLocal } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
 
-
 	onMount(() => {
 		devMode.set(localStorage.getItem('devMode') === 'true');
-		
+		devModeLocal.set(localStorage.getItem('devModeLocal') === 'true');
+
 		devMode.subscribe((value) => {
 			localStorage.setItem('devMode', String(value));
+		});
+		devModeLocal.subscribe((value) => {
+			localStorage.setItem('devModeLocal', String(value));
 		});
 	});
 </script>
@@ -31,7 +32,7 @@
 <header class="relative z-100">
 	{#if $devMode}
 		<div class=" bg-gray-200">
-			<div class=" bg-gray-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
+			<div class=" bg-primary-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
 				<div class="font-semibold">Dev!</div>
 			</div>
 		</div>
@@ -55,25 +56,14 @@
 						</div>
 					</div>
 					<div class="flex h-full justify-center space-x-8">
-						{#each page.data.menu as menu}
-							{@const current = page.data.route.href === menu.route.href}
-							{#if menu.menu && menu.menu.length > 0}
-								<LinkPop title={menu.route.title} {current}>
-									{#snippet content(id: string)}
-										<FeaturedSet {id} route={menu.route} items={menu.menu} />
-									{/snippet}
-								</LinkPop>
-							{:else}
-								<Route route={menu.route} {current} />
-							{/if}
-						{/each}
+						<MenuMain showFeaturedItems/>
 					</div>
 				</el-popover-group>
 			</div>
 
 			<!-- Mobile menu (lg-) -->
 			<div class="flex flex-1 items-center lg:hidden">
-				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-indigo-500">
+				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
 					<span class="sr-only">Open menu</span>
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
 						<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -87,22 +77,14 @@
 			<!-- Options -->
 			<div class="flex flex-1 items-center justify-end">
 				<el-dropdown>
-					<button type="button" class="flex cursor-pointer items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-indigo-500">
+					<button type="button" class="flex cursor-pointer items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
 						<span class="sr-only">Open options</span>
 						<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
 							<path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
 						</svg>
 					</button>
 					<el-menu anchor="bottom end" popover="auto" class="w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-						{#each page.data.sideMenu as route}
-							<div class="py-1">
-								<Route {route} />
-							</div>
-						{/each}
-
-						<div class="">
-							<ThemeToggle />
-						</div>
+						<MenuSide />
 					</el-menu>
 				</el-dropdown>
 			</div>
