@@ -1,4 +1,4 @@
-import { ClippyOffset } from '$lib/workbench/logo/clippy';
+import { ClippyOffset } from '$lib/workbench/logo/export/clippy';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore

@@ -16,7 +16,7 @@
 		props?: Record<string, any>;
 	}
 
-	const { role, origin, dx = 0, dy = 0, text, fontSize, color, props }: Props = $props();
+	const { role, origin, dx = 0, dy = 0, text, fontSize, color, ...props }: Props = $props();
 
 	const textLength = $derived(calculateTextWidth(text, fontSize));
 	const textX = $derived(dx - Math.round(textLength / 2));

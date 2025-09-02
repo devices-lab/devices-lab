@@ -3,14 +3,15 @@
 
 	import type { Snippet } from 'svelte';
 	import type { ItemType } from '$lib/data/item';
-	import SvgProject from '$lib/workbench/logo/SVG_Project.svelte';
+	import SVG_Stack from '$lib/workbench/logo/SVG_Stack.svelte';
+	import SVG_StackPill from '$lib/workbench/logo/SVG_StackPill.svelte';
 
 	import Title from '$lib/items/page/Title.svelte';
 	import Description from '$lib/items/page/Description.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
-	import SvgVersion from '$lib/workbench/logo/SVG_Version.svelte';
-	import Feature from '$lib/items/common/Feature.svelte';
+	
+	import { ProjectProps, VersionProps } from '$lib/workbench/logo/utils';
 
 	const { children }: { children?: Snippet } = $props();
 
@@ -37,8 +38,12 @@
 						{@render children?.()}
 						<Collapse label={'Identifier'}>
 							<div class="flex justify-center">
-								<SvgVersion uid={'dl-version-stack'} projectId={item.projectID} projectVersion={item.projectVersion} class="max-h-15 max-w-fit opacity-80" props={{ class: 'fill-white dark:fill-gray-300' }} />
-								<SvgProject uid={'dl-project'} projectName={item.projectName} class="max-h-15 max-w-fit opacity-80" props={{ class: 'fill-white dark:fill-gray-300' }} />
+								<div class="max-w-fit fill-white opacity-80 *:max-h-15 dark:fill-gray-300">
+									<SVG_StackPill uid={'dl-version-stack'} {...VersionProps(item.projectID, item.projectVersion)} />
+								</div>
+								<div class="max-w-fit fill-white opacity-80 *:max-h-15 dark:fill-gray-300">
+									<SVG_Stack uid={'dl-project'} {...ProjectProps(item.projectName)} />
+								</div>
 							</div>
 						</Collapse>
 					</div>

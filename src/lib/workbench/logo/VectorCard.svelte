@@ -3,14 +3,13 @@
 	import { exportPng } from '$lib/workbench/logo/export/image';
 	import { exportSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { exportDxfForAltium } from '$lib/workbench/logo/export/altium';
-	import { exportSvg, exportSvgFlat, exportSvgFont } from '$lib/workbench/logo/export/svg';
+	import { exportSvg, exportSvgFont } from '$lib/workbench/logo/export/svg';
 
-	import Button from './Button.svelte';
-	import ButtonGroup from './ButtonGroup.svelte';
+	import Button from '$lib/workbench/logo/editor/Button.svelte';
+	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
 
 	import { Download, Loader } from '@lucide/svelte';
-	import Checkbox from './editor/Checkbox.svelte';
-	//import { sleep } from '$lib/utils';
+
 
 	interface Props {
 		children: Snippet;

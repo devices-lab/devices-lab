@@ -1,11 +1,27 @@
 <script lang="ts">
 	import { Triangle, SquareArrowUpLeft, SquareArrowUpRight, SquareArrowDownLeft, SquareArrowDownRight } from '@lucide/svelte';
-	import ColorInput from './ColorInput.svelte';
-	import InputGroup from './InputGroup.svelte';
-	import NumberInput from './NumberInput.svelte';
-	import type { BorderData } from '../components/Rect4.svelte';
+	import ColorInput from '../inputs/ColorInput.svelte';
+	import InputGroup from '../inputs/InputGroup.svelte';
+	import NumberInput from '../inputs/NumberInput.svelte';
 	import { untrack } from 'svelte';
 	import { clamp } from '$lib/utils';
+
+
+	export type BorderCorner = {
+		dRadius: number;
+		use: boolean;
+	};
+
+	export type BorderData = {
+		color: string;
+		width: number;
+		radius: number;
+
+		topL: BorderCorner;
+		topR: BorderCorner;
+		bottomL: BorderCorner;
+		bottomR: BorderCorner;
+	};
 
 	type Props = {
 		border: BorderData;
@@ -42,24 +58,27 @@
 	// Clamp the border radius to the maximum radius
 	$effect(() => {
 		border.radius = clamp(border.radius, 0, maxRadius);
-		border.dr.tl = clamp(border.dr.tl, -border.radius, maxRadiusTopLeft - border.radius);
-		border.dr.tr = clamp(border.dr.tr, -border.radius, maxRadiusTopRight - border.radius);
-		border.dr.bl = clamp(border.dr.bl, -border.radius, maxRadiusBottomLeft - border.radius);
-		border.dr.br = clamp(border.dr.br, -border.radius, maxRadiusBottomRight - border.radius);
+		border.topL.dRadius = clamp(border.topL.dRadius, -border.radius, maxRadiusTopLeft - border.radius);
+		border.topR.dRadius = clamp(border.topR.dRadius, -border.radius, maxRadiusTopRight - border.radius);
+		border.bottomL.dRadius = clamp(border.bottomL.dRadius, -border.radius, maxRadiusBottomLeft - border.radius);
+		border.bottomR.dRadius = clamp(border.bottomR.dRadius, -border.radius, maxRadiusBottomRight - border.radius);
 	});
 </script>
 
 <!-- prettier-ignore -->
 <InputGroup label="Border">
-	<NumberInput 	label="Width" 									bind:value={border.width} 		initial={defaults.width} 	min={0} 				max={maxBorderWidth} />
-	<NumberInput 	label="Radius" 									bind:value={border.radius} 		initial={defaults.radius} 	min={0} 				max={maxRadius} />
+	<NumberInput 	label="Width" 
+		bind:value={border.width} 				initial={defaults.width} 	min={0} 				max={maxBorderWidth} />
+	<NumberInput 	label="Radius"
+		bind:value={border.radius} 				initial={defaults.radius} 	min={0} 				max={maxRadius} />
 	<NumberInput 	label={{label: "Radius", pre: Triangle, post: SquareArrowUpLeft, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
-																	bind:value={border.dr.tl} 		initial={defaults.dr.tl} 	min={-border.radius} 	max={maxRadiusTopLeft - border.radius} />
+		bind:value={border.topL.dRadius} 		initial={defaults.topL.dRadius} 	min={-border.radius} 	max={maxRadiusTopLeft - border.radius} />
 	<NumberInput 	label={{label: "Radius", pre: Triangle, post: SquareArrowUpRight, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
-																	bind:value={border.dr.tr} 		initial={defaults.dr.tr} 	min={-border.radius} 	max={maxRadiusTopRight - border.radius} />
+		bind:value={border.topR.dRadius} 		initial={defaults.topR.dRadius} 	min={-border.radius} 	max={maxRadiusTopRight - border.radius} />
 	<NumberInput 	label={{label: "Radius", pre: Triangle, post: SquareArrowDownLeft, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
-																	bind:value={border.dr.bl} 		initial={defaults.dr.bl} 	min={-border.radius} 	max={maxRadiusBottomLeft - border.radius} />
+		bind:value={border.bottomL.dRadius} 	initial={defaults.bottomL.dRadius} 	min={-border.radius} 	max={maxRadiusBottomLeft - border.radius} />
 	<NumberInput 	label={{label: "Radius", pre: Triangle, post: SquareArrowDownRight, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
-																	bind:value={border.dr.br} 		initial={defaults.dr.br} 	min={-border.radius} 	max={maxRadiusBottomRight - border.radius} />
-	<ColorInput 	label="Color" 									bind:value={() => border.color, updateBorderColor} initial={defaults.color} />
+		bind:value={border.bottomR.dRadius} 	initial={defaults.bottomR.dRadius} 	min={-border.radius} 	max={maxRadiusBottomRight - border.radius} />
+	<ColorInput 	label="Color"
+		bind:value={() => border.color, updateBorderColor} initial={defaults.color} />
 </InputGroup>

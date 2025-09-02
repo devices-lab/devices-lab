@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
-	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
-	import NumberInput, { type InputType } from '$lib/workbench/logo/editor/NumberInput.svelte';
+	import ColorInput from '$lib/workbench/logo/inputs/ColorInput.svelte';
+	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
+	import NumberInput, { type InputType } from '$lib/workbench/logo/inputs/NumberInput.svelte';
 	import { calculateTextWidth, type SVG_Role } from '$lib/workbench/logo/utils';
 
-	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
-	import Text from '$lib/workbench/logo/components/Text3.svelte';
+	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import Text from '$lib/workbench/logo/components/Text.svelte';
 
 	// Config view for the shape settings
 	export const configView = ConfigView;

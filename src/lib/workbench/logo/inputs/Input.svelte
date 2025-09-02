@@ -1,7 +1,7 @@
 <script lang="ts">
-	import InputLabel, { type Label } from '$lib/workbench/logo/editor/InputLabel.svelte';
+	import InputLabel, { type Label } from '$lib/workbench/logo/inputs/InputLabel.svelte';
 	import type { Snippet } from 'svelte';
-	import Reset from './Reset.svelte';
+	import Reset from '$lib/workbench/logo/editor/Reset.svelte';
 
 	let { label, initial, children, onreset }: { label: Label; initial: number | string; children: Snippet; onreset?: () => void } = $props();
 </script>

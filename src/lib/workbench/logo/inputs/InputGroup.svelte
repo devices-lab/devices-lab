@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Collapse from '$lib/components/Collapse.svelte';
-	import { ChevronDown, ChevronUp } from '@lucide/svelte';
+	import { ChevronDown } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 
 	const { label: labelText, children, class: className = '', ...restProps }: { label: string; children: Snippet; class?: string; [key: string]: any } = $props();

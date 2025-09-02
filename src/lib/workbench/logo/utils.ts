@@ -1,6 +1,6 @@
 
 
-import { type PathElement, ClippyFlatten } from "$lib/workbench/logo/clippy";
+import { type PathElement, ClippyFlatten } from "$lib/workbench/logo/export/clippy";
 
 
 import { writable } from 'svelte/store';
@@ -13,6 +13,8 @@ export const GENERATOR_DELAY_MS = 1000;
 
 export type SVG_Role = 'subject' | 'clip' | 'frame' | 'ignore';
 
+
+export const DATA_VERSION = 6;
 
 export const LOGO_ICON = "DL";
 export const LOGO_NAME = 'devices-lab';
@@ -41,11 +43,6 @@ export const IconProps = () => ({
 
 
 
-export const STROKE = 10;
-export const PAD = 20;
-export const RADIUS = 40;
-export const COLOR = '#000';
-export const TEXT = '#fff';
 //export const BACKGROUND = 'none';
 //export const FONT_FAMILY = `'OCR A Extended', 'OCR A Std', 'OCR A', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace`;
 export const FONT_FAMILY = `'OCR A Extended', 'OCR A Std', 'OCR A'`;
@@ -352,3 +349,25 @@ export async function downloadPNG(canvas: HTMLCanvasElement, filename: string) {
 		save(b);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

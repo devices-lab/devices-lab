@@ -1,7 +1,7 @@
 <script lang="ts">
-	import ColorField from '$lib/workbench/logo/editor/ColorField.svelte';
-	import Input from '$lib/workbench/logo/editor/Input.svelte';
-	import type { Label } from '$lib/workbench/logo/editor/InputLabel.svelte';
+	import ColorField from '$lib/workbench/logo/inputs/ColorField.svelte';
+	import Input from '$lib/workbench/logo/inputs/Input.svelte';
+	import type { Label } from '$lib/workbench/logo/inputs/InputLabel.svelte';
 
 	let { label, value = $bindable(), initial }: { label: Label; value: string; initial: string } = $props();
 </script>

@@ -7,12 +7,12 @@
 	import { untrack, type Component, type Snippet } from 'svelte';
 	import type { ClassValue } from 'svelte/elements';
 
-	import NumberInput, { type InputType } from '$lib/workbench/logo/editor/NumberInput.svelte';
-	import ColorInput from '$lib/workbench/logo/editor/ColorInput.svelte';
-	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
+	import NumberInput, { type InputType } from '$lib/workbench/logo/inputs/NumberInput.svelte';
+	import ColorInput from '$lib/workbench/logo/inputs/ColorInput.svelte';
+	import Checkbox from '$lib/workbench/logo/inputs/Checkbox.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
-	import Rect from '$lib/workbench/logo/components/Rect4.svelte';
-	import InputGroup from '$lib/workbench/logo/editor/InputGroup.svelte';
+	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
 
 	import Preview from './Preview.svelte';
 

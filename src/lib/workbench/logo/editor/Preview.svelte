@@ -9,7 +9,7 @@
 	import { devMode, devModeLocal } from '$lib/utils';
 
 	import BaseButton from '$lib/components/BaseButton.svelte';
-	import Checkbox from '$lib/workbench/logo/editor/Checkbox.svelte';
+	import Checkbox from '$lib/workbench/logo/inputs/Checkbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 
 	interface Props {
@@ -101,8 +101,6 @@
 
 <Notification bind:this={notification} />
 
-
-
 {#if $devMode && $devModeLocal}
 	<div class="lg:flex">
 		<div class="flex flex-col gap-y-6 p-6 lg:w-1/2">
@@ -160,7 +158,7 @@
 			{#snippet SVGPreview(svg: Promise<SVGSVGElement | undefined>, title: string)}
 				<div class="mt-8 flex min-h-30 flex-col">
 					<h3 class="mt-6 mb-2 font-semibold text-gray-900 md:mt-0 dark:text-gray-100">{title}:</h3>
-					<div class="justify-middle flex size-full items-center justify-center">
+					<div class="justify-middle flex size-full items-center justify-center *:max-h-70">
 						{#await svg}
 							<Loader class="size-10 animate-spin text-blue-500" />
 						{:then value}

@@ -1,24 +1,6 @@
 <script lang="ts">
 	import type { SVG_Role } from '$lib/workbench/logo/utils';
-
-
-
-	export type BorderData = {
-		color: string;
-		width: number;
-		radius: number;
-		dr: {
-			tl: number;
-			tr: number;
-			br: number;
-			bl: number;
-
-			useTL?: boolean;
-			useTR?: boolean;
-			useBR?: boolean;
-			useBL?: boolean;
-		};
-	};
+	import type { BorderData } from '$lib/workbench/logo/editor/BorderConfig.svelte';
 
 	interface Props {
 		role: SVG_Role;
@@ -36,7 +18,7 @@
 		props?: Record<string, any>;
 	}
 
-	const { role, origin, dx = 0, dy = 0, width, height, fill = 'none', border, props }: Props = $props();
+	const { role, origin, dx = 0, dy = 0, width, height, fill = 'none', border, ...props }: Props = $props();
 
 	const actualOrigin: { x: number; y: number } = $derived({ x: origin.x + dx, y: origin.y + dy });
 	const actualFill: string = $derived(role === 'frame' ? 'none' : fill);
@@ -117,10 +99,10 @@
 		const xw = x0 + width;
 		const yh = y0 + height;
 
-		const rTL = (border && border.dr.useTL !== false) ? border.radius + border.dr.tl : 0;
-		const rTR = (border && border.dr.useTR !== false) ? border.radius + border.dr.tr : 0;
-		const rBR = (border && border.dr.useBR !== false) ? border.radius + border.dr.br : 0;
-		const rBL = (border && border.dr.useBL !== false) ? border.radius + border.dr.bl : 0;
+		const rTL = (border && border.topL.use) ? border.radius + border.topL.dRadius : 0;
+		const rTR = (border && border.topR.use) ? border.radius + border.topR.dRadius : 0;
+		const rBR = (border && border.bottomR.use) ? border.radius + border.bottomR.dRadius : 0;
+		const rBL = (border && border.bottomL.use) ? border.radius + border.bottomL.dRadius : 0;
 
 		const KAPPA = 0.5522847498307936;
 
