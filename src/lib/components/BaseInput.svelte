@@ -8,7 +8,6 @@
 	}
 
 	let { value = $bindable(), class: className = '', ...props }: Props = $props();
-
 </script>
 
 <input
@@ -24,7 +23,7 @@
 		outline-1
 		-outline-offset-1
 		outline-gray-300
-		${props.type === 'range' ? 'not-disabled:cursor-pointer' : 'not-disabled:cursor-initial'}
+		${props.type === 'range' ? 'not-disabled:cursor-pointer ' : 'not-disabled:cursor-initial'}
 		placeholder:text-gray-400
 		focus:outline-2
 		focus:-outline-offset-2
@@ -32,8 +31,8 @@
 		disabled:border-gray-50
 		disabled:bg-gray-50
 		disabled:text-gray-500
-		disabled:shadow-none
 		disabled:opacity-45
+		disabled:shadow-none
 		sm:text-sm/6
 		dark:bg-white/5
 		dark:text-white
@@ -46,3 +45,4 @@
 	`}
 	{...props}
 />
+
