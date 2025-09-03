@@ -39,6 +39,9 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@citation-js/core": "^0.7.18",
+		"@citation-js/plugin-csl": "^0.7.18",
+		"@citation-js/plugin-doi": "^0.7.18",
 		"@lucide/svelte": "^0.542.0",
 		"@popperjs/core": "^2.11.8",
 		"@tailwindplus/elements": "^1.0.9",

@@ -6,8 +6,6 @@ import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
 import { Routes, parseEventRoute } from '$lib/data/routes';
 import { devicesCatalog } from '$lib/data/devices';
 import { toolsCatalog } from '$lib/data/tools';
-import { mediaCatalog } from '$lib/data/media';
-import { researchCatalog } from '$lib/data/research';
 import { MainMenu, SideMenu } from '$lib/data/routes';
 
 //────────────────────────────────────────────────────────────────//
@@ -34,8 +32,6 @@ const findPathName = (pathName: string): string => {
 	const items = [
 		...devicesCatalog,
 		...toolsCatalog,
-		...mediaCatalog,
-		...researchCatalog
 	];
 
 	for (const item of items) {
