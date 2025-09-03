@@ -1,20 +1,20 @@
 <script lang="ts">
-	import Collapse from '$lib/components/Collapse.svelte';
 	import { ChevronDown } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 
-	const { label: labelText, children, class: className = '', ...restProps }: { label: string; children: Snippet; class?: string; [key: string]: any } = $props();
+	const { label: labelText, children }: { label: string; children: Snippet } = $props();
+	const uid = $props.id();
 </script>
 
-<Collapse class="rounded-lg {className}" buttonClass="" {...restProps}>
-	{#snippet label()}
-		<span class="w-full flex items-center font-semibold not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400 border-b-0 border-gray-200 dark:border-gray-700">
+<div class="rounded-lg px-0">
+	<button type="button" command="--toggle" commandfor={uid} class="group relative mb-2 flex cursor-pointer items-center justify-between text-left">
+		<span class="flex w-full items-center border-b-0 border-gray-200 font-semibold not-in-aria-expanded:text-gray-900 in-aria-expanded:text-primary-600 dark:border-gray-700 dark:not-in-aria-expanded:text-gray-300 dark:in-aria-expanded:text-primary-400">
 			{labelText}
-			<ChevronDown class="ml-2 size-4 not-in-aria-expanded:-rotate-180 transition duration-300" />
+			<ChevronDown class="ml-2 size-4 transition duration-300 not-in-aria-expanded:-rotate-180" />
 		</span>
+	</button>
 
-	{/snippet}
-	<div class="grid grid-cols-2 gap-4 mt-4">
-		{@render children?.()}
-	</div>
-</Collapse>
+	<el-disclosure id={uid}>
+		{@render children()}
+	</el-disclosure>
+</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseInput from '$lib/components/BaseInput.svelte';
-	import Checkbox from '$lib/workbench/logo/inputs/Checkbox.svelte';
+	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
 
 	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 
@@ -29,10 +29,10 @@
 
 </script>
 
-<BaseInput type="color" name="colorField" bind:value={getColor, setColor} class="h-[30px] w-1/3 appearance-none" disabled={!enabled} />
+<BaseInput type="color" name="colorField" bind:value={getColor, setColor} class="h-[30px] min-w-1/3 appearance-none py-1.5 px-3" disabled={!enabled} />
 
 <div class="flex grow items-center gap-x-2">
-	<Checkbox bind:checked={getEnable, setEnable}>
+	<BaseCheckbox bind:checked={getEnable, setEnable}>
 		<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Enabled?</span>
-	</Checkbox>
+	</BaseCheckbox>
 </div>

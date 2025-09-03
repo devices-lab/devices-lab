@@ -7,6 +7,9 @@
 
 	import Button from '$lib/workbench/logo/editor/Button.svelte';
 	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
+	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
+
+	import { devMode, devModeLocal } from '$lib/utils';
 
 	import { Download, Loader } from '@lucide/svelte';
 
@@ -51,13 +54,21 @@
 	</Button>
 {/snippet}
 
-<div class="relative my-8 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+<div class="relative my-8 divide-y divide-gray-200 rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
 	<div class="relative px-4 py-5 sm:px-6">
 		<div class="-mt-4 -ml-4 flex flex-wrap items-center justify-between xl:flex-nowrap">
 			<div class="mt-4 ml-4">
 				<h2 class="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h2>
 				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
 			</div>
+
+			{#if $devMode}
+				<div class="m-4 sm:m-0">
+					<BaseCheckbox bind:checked={$devModeLocal}>
+						<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
+					</BaseCheckbox>
+				</div>
+			{/if}
 		</div>
 		<div role="status" class="absolute end-4 top-4 hidden" id={`loading-indicator-${uid}`}>
 			<Loader class="size-10 animate-spin text-blue-500" />
@@ -68,7 +79,7 @@
 		{@render children()}
 	</div>
 
-	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
+	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6 bg-gray-100">
 		<ButtonGroup>
 			{@render DownloadButton('PNG', '', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'transparent', monochrome: false, invert: false, threshold: 200 }))}
 			{@render DownloadButton('PNG', 'BW', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'white', monochrome: true, invert: false, threshold: 200 }))}

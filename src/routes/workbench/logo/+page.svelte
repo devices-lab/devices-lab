@@ -6,9 +6,8 @@
 
 	import VectorCard from '$lib/workbench/logo/VectorCard.svelte';
 	import { IconProps, LogoProps, ProjectProps, VersionProps, VersionPropsPill } from '$lib/workbench/logo/utils';
-	import Checkbox from '$lib/workbench/logo/inputs/Checkbox.svelte';
-
-	import { devMode, devModeLocal } from '$lib/utils';
+	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
+	import BaseInput from '$lib/components/BaseInput.svelte';
 
 	let projectName = $state('my-project');
 	let projectId = $state('0037');
@@ -46,34 +45,19 @@
 </div>
 
 {#snippet CategoryButton(label: string, category: Category)}
-	<button type="button" class="grow cursor-pointer border-b-2 {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
+	<button type="button" class="flex-1 grow cursor-pointer border-b-2 px-2 {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
 		{label}
 	</button>
 {/snippet}
 
-<div>
-	<!--<div class="grid grid-cols-1 sm:hidden">
-		<select aria-label="Select a tab" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-white/5 dark:text-gray-100 dark:outline-white/10 dark:*:bg-gray-800 dark:focus:outline-indigo-500">
-			<option>My Account</option>
-			<option>Company</option>
-			<option selected>Team Members</option>
-			<option>Billing</option>
-		</select>
-		<svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500 dark:fill-gray-400">
-			<path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
-		</svg>
-	</div>-->
-	<div class=" sm:block">
-		<div class="border-b border-gray-200 dark:border-white/10">
-			<nav aria-label="Tabs" class="-mb-px flex">
-				{@render CategoryButton('Project', 'project')}
-				{@render CategoryButton('Version Stack', 'versionStack')}
-				{@render CategoryButton('Version Pill', 'versionPill')}
-				{@render CategoryButton('Logo', 'logo')}
-				{@render CategoryButton('Icon', 'icon')}
-			</nav>
-		</div>
-	</div>
+<div class="border-b border-gray-200 dark:border-white/10">
+	<nav aria-label="Tabs" class="-mb-px flex flex-col sm:flex-row">
+		{@render CategoryButton('Project', 'project')}
+		{@render CategoryButton('Version Stack', 'versionStack')}
+		{@render CategoryButton('Version Pill', 'versionPill')}
+		{@render CategoryButton('Logo', 'logo')}
+		{@render CategoryButton('Icon', 'icon')}
+	</nav>
 </div>
 
 <div class="relative">
@@ -97,13 +81,5 @@
 		<VectorCard uid={'dl-icon'} title="Icon" subtitle="A generic icon design element that can be applied in various contexts.">
 			<SVG_Icon uid={'dl-icon'} {...IconProps()} editable />
 		</VectorCard>
-	{/if}
-
-	{#if $devMode}
-		<div class="absolute top-0 right-0 z-10 translate-y-[80%] overflow-hidden">
-			<Checkbox bind:checked={$devModeLocal} class="rounded-lg p-2">
-				<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
-			</Checkbox>
-		</div>
 	{/if}
 </div>
