@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
 	import type { Research } from '$lib/data/research';
@@ -6,10 +7,10 @@
 	const { item }: { item: Research } = $props();
 </script>
 
-<div class="dark:bg-greay-800 items-start rounded-lg flex w-full bg-white shadow-sm dark:shadow-none">
-	<BaseImg src={item.teaser} alt="" class="max-w-60 max-h-60 my-4 flex-none rounded-lg dark:outline dark:-outline-offset-1 dark:outline-white/10" />
+<BaseCard class="items-start flex">
+	<BaseImg src={item.teaser} alt="" class="max-w-60 max-h-60 my-auto flex-none rounded-lg dark:outline dark:-outline-offset-1 dark:outline-white/10" />
 
-	<div class="flex flex-1 flex-col p-4">
+	<div class="flex flex-1 flex-col ps-4">
 		<div class="flex flex-1 gap-x-4">
 			<div class="min-w-0 flex-auto">
 				<p class="text-sm/5 font-semibold text-gray-900 dark:text-white">
@@ -40,4 +41,4 @@
 			{/each}
 		</div>
 	</div>
-</div>
+</BaseCard>

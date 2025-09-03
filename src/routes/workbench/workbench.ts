@@ -1,7 +1,7 @@
-import { type WorkbenchItem } from "$lib/data/workbench";
+import { type ExternalWorkbenchItem } from "$lib/data/workbench";
 
 // Use vite to import all device files
-export const modules = import.meta.glob("./*/**/about.ts", { eager: true }) as Record<string, { item: WorkbenchItem }>;
+export const modules = import.meta.glob("./*/**/about.ts", { eager: true }) as Record<string, { item: ExternalWorkbenchItem }>;
 
 
 

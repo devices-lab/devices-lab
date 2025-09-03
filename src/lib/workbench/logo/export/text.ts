@@ -6,14 +6,27 @@ import ocrAUrl from '$lib/assets/OCRAEXT.TTF';
 import * as opentype from 'opentype.js';
 
 
+let cachedFont: opentype.Font | null = null;
+async function loadFont(): Promise<opentype.Font | null> {
+	if (cachedFont) return cachedFont;
+	try {
+		const res = await fetch(ocrAUrl);
+		const buf = await res.arrayBuffer();
+		cachedFont = opentype.parse(buf);
+		return cachedFont;
+	} catch (e) {
+		console.error('Failed to load font for outlining', e);
+		return null;
+	}
+};
+
 // Convert all <text> to filled <path> (with optional dilation)
 // Width fitting via `textWidth` (also accepts `text-width` and SVG's `textLength`)
-// No CSS/SVG transforms are used for the width fit; coordinates are rewritten in the path data.
-export async function outlineAllText(clone: SVGSVGElement) {
+export async function outlineAllText(svgRoot: SVGSVGElement) {
 	const font = await loadFont();
 	if (!font) return;
 
-	const texts = Array.from(clone.querySelectorAll('text')) as SVGTextElement[];
+	const texts = Array.from(svgRoot.querySelectorAll('text')) as SVGTextElement[];
 	for (const t of texts) {
 		const content = t.textContent || '';
 		if (!content.trim()) {
@@ -108,11 +121,6 @@ export async function outlineAllText(clone: SVGSVGElement) {
 		pathEl.setAttribute('d', d);
 		pathEl.setAttribute('fill', fill);
 		pathEl.setAttribute('data-clippy-role', t.getAttribute('data-clippy-role') || '');
-
-		// Note: we do not add any transform/translate to implement width fitting.
-		// If the original <text> had a transform, copy it only if you explicitly want to preserve it:
-		// const existing = t.getAttribute('transform');
-		// if (existing) pathEl.setAttribute('transform', existing);
 
 		t.replaceWith(pathEl);
 	}
@@ -230,19 +238,7 @@ export async function outlineAllText2(clone: SVGSVGElement) {
 
 
 
-let cachedFont: opentype.Font | null = null;
-async function loadFont(): Promise<opentype.Font | null> {
-	if (cachedFont) return cachedFont;
-	try {
-		const res = await fetch(ocrAUrl);
-		const buf = await res.arrayBuffer();
-		cachedFont = opentype.parse(buf);
-		return cachedFont;
-	} catch (e) {
-		console.error('Failed to load font for outlining', e);
-		return null;
-	}
-};
+
 
 function baselineOffset(font: opentype.Font, size: number, dominant: string) {
 	const asc = (font as opentype.Font).ascender || font.unitsPerEm * 0.8;

@@ -1,9 +1,9 @@
 import type { InternalWorkbenchItem } from '$lib/data/workbench';
-import { Feather } from '@lucide/svelte';
+import { ScrollText } from '@lucide/svelte';
 //=================================================//
 
 export const item: InternalWorkbenchItem = {
-	title: 'Logo Generator',
-	subtitle: 'Generate DevicesLab logos for various use cases',
-	icon: Feather
+	title: 'BibTeX Formatter',
+	subtitle: 'Format BibTeX entries for entering them on this website',
+	icon: ScrollText,
 };

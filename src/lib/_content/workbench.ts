@@ -1,4 +1,5 @@
-import type { WorkbenchItem } from '$lib/data/workbench';
+import type { ExternalWorkbenchItem } from '$lib/data/workbench';
+import { SquareRoundCorner } from '@lucide/svelte';
 
 //────────────────────────────────────────────────────────────────//
 
@@ -10,12 +11,12 @@ import type { WorkbenchItem } from '$lib/data/workbench';
  *  - description: A brief description of the functionality of the tool
  *  - label: A label for the tool, used for categorization
  */
-export const workbenchItems: WorkbenchItem[] = [
+export const workbenchItems: ExternalWorkbenchItem[] = [
 	{
-		name: "Image Editor",
+		title: "Image Editor",
+		subtitle: "Round the corners of images",
 		href: `https://mac-aron.github.io/png-rounded-corners/`,
-		description: "Round the corners of images",
-		label: "design"
+		icon: SquareRoundCorner
 	}
 ];
 

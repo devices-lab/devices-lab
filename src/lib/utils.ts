@@ -39,3 +39,14 @@ export function pick<T extends object, K extends readonly (keyof T)[]>(obj: T, k
 }
 
 export const clamp = (v: number, lo = -Infinity, hi = Infinity) => Math.min(hi, Math.max(lo, v));
+
+
+export function assert<T>(condition: T | undefined | null, message?: string): T {
+	if (!condition) {
+		throw new Error(message || "Assertion failed");
+	}
+	return condition;
+}
+
+// Make a string important by adding '!' to the end of each word
+export const makeImportant = (s: string): string => s.replace(/\S+/g, c => c.endsWith('!') ? c : c + '!');

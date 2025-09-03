@@ -1,7 +1,12 @@
 import * as Clippy from "js-angusj-clipper";
-
 import { parseAndFlattenPathClippy } from '$lib/workbench/logo/export/flatten';
 
+// https://github.com/xaviergonz/js-angusj-clipper/blob/master/docs/apiReference/shared/ClipperLibWrapper.md
+
+
+
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
 const CLIPPER_SCALE = 10000000;
 const CLIPPER_CLEAN = 0.001;
 
@@ -156,3 +161,50 @@ export async function ClippyOffset(subject: string, delta: number): Promise<stri
 	return endPaths(clipp, paths);
 }
 
+
+
+
+// Find elements by role
+function findElements(svgRoot: SVGSVGElement, role: string): PathElement[] {
+	// Subjects can be either paths or rectangles
+	const paths = svgRoot.querySelectorAll<SVGPathElement>(`path[data-clippy-role="${role}"]`);
+	//const rects = svgRoot.querySelectorAll<SVGRectElement>(`rect[data-clippy-role="${role}"]`);
+	//const circles = svgRoot.querySelectorAll<SVGCircleElement>(`circle[data-clippy-role="${role}"]`);
+	const out = [
+		...Array.from(paths).map(p => ({ element: p, path: p.getAttribute('d') || '' })),
+		//...Array.from(rects).map(r => ({ element: r, path: rectToPathD(r) })),
+		//...Array.from(circles).map(c => ({ element: c, path: circleOrEllipseToPathD(c) })),
+	].filter(Boolean);
+
+	if (!out.length) {
+		console.warn(`No ${role} elements found`);
+		return [];
+	}
+	return out;
+}
+
+// Flatten the provided SVG by converting strokes to paths.
+export async function ClippyFlattenSVG(svgRoot: SVGSVGElement, scale: number = 1): Promise<SVGSVGElement | undefined> {
+	const clips = findElements(svgRoot, 'clip');
+	const frames = findElements(svgRoot, 'frame');
+	const subjects = findElements(svgRoot, 'subject');
+
+	// sanity check
+	if (!subjects || subjects.length === 0) return;
+
+	const path = await ClippyFlatten(subjects, clips, frames, 1);
+
+	const newSvg = document.createElementNS(SVG_NS, 'svg');
+	newSvg.setAttribute('viewBox', svgRoot.getAttribute('viewBox') || '0 0 100 100');
+	newSvg.setAttribute('width', (parseFloat(svgRoot.getAttribute('width') || '100') * scale).toString());
+	newSvg.setAttribute('height', (parseFloat(svgRoot.getAttribute('height') || '100') * scale).toString());
+	//newSvg.setAttribute('class', svgRoot.getAttribute('class') || '');
+
+	const pathEl = document.createElementNS(SVG_NS, 'path');
+	pathEl.setAttribute('d', path);
+	pathEl.setAttribute('fill', '#000000');
+	pathEl.setAttribute('fill-rule', 'evenodd');
+
+	newSvg.appendChild(pathEl);
+	return newSvg;
+}

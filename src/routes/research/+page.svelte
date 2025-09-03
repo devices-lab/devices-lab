@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import ItemGrid from '$lib/items/Grid.svelte';
+	import ItemGrid from '$lib/items/ItemGrid.svelte';
 	import Item from '$lib/research/Item.svelte';
 
 	const { data }: PageProps = $props();

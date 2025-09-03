@@ -5,9 +5,9 @@
 	const { data }: PageProps = $props();
 </script>
 
-<ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
+<ul role="list" class="flex flex-col gap-y-4">
 	{#each data.workbench as item}
-		<li class="py-4">
+		<li class="">
 			<WorkbenchItem {item} />
 		</li>
 	{/each}

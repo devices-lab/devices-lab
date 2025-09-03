@@ -12,6 +12,7 @@
 	import { devMode, devModeLocal } from '$lib/utils';
 
 	import { Download, Loader } from '@lucide/svelte';
+	import BaseCard from '$lib/components/BaseCard.svelte';
 
 
 	interface Props {
@@ -54,7 +55,7 @@
 	</Button>
 {/snippet}
 
-<div class="relative my-8 divide-y divide-gray-200 rounded-lg bg-white shadow-sm dark:divide-white/10 dark:bg-gray-800 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+<BaseCard class="divide-y divide-gray-100 p-0!">
 	<div class="relative px-4 py-5 sm:px-6">
 		<div class="-mt-4 -ml-4 flex flex-wrap items-center justify-between xl:flex-nowrap">
 			<div class="mt-4 ml-4">
@@ -79,7 +80,7 @@
 		{@render children()}
 	</div>
 
-	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6 bg-gray-100">
+	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6  ">
 		<ButtonGroup>
 			{@render DownloadButton('PNG', '', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'transparent', monochrome: false, invert: false, threshold: 200 }))}
 			{@render DownloadButton('PNG', 'BW', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'white', monochrome: true, invert: false, threshold: 200 }))}
@@ -96,4 +97,4 @@
 			<!--{@render DownloadButton('Test', '', async () => {await sleep(2000)})}-->
 		</ButtonGroup>
 	</div>
-</div>
+</BaseCard>
