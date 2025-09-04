@@ -26,7 +26,7 @@
 		after:invisible
 		after:border
 		after:px-3.5
-		after:py-2.5
+		after:py-1.5
 		after:whitespace-pre-wrap
 		after:text-inherit
 		after:content-[attr(data-cloned-val)_'_']
@@ -37,7 +37,7 @@
 		[&>textarea]:[grid-area:1/1/2/2]
 		{props.class}"
 >
-	<textarea {...props} bind:value class="w-full appearance-none px-3.5 py-2.5 {props.class} {pre ? 'pl-20' : ''} {post ? 'pr-20' : ''}" rows="1"></textarea>
+	<textarea {...props} bind:value class="w-full appearance-none px-3.5 py-1.5 {props.class} {pre ? 'pl-20' : ''} {post ? 'pr-20' : ''}" rows="1"></textarea>
 
 	{#if pre}
 		<div class="absolute left-0 flex h-full w-15 items-center border-e-1 border-gray-300 p-0.5 pe-0 text-gray-700 dark:border-gray-600">

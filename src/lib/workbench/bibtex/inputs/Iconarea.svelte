@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { DefProps } from '$lib/utils';
+	import { getIcon, type DefProps } from '$lib/utils';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
-	import * as icons from '@lucide/svelte';
+	
 
 	import Textarea from './Textarea.svelte';
 
@@ -14,7 +14,7 @@
 	let { value = $bindable(), ...props }: Props = $props();
 
 	// Update the icon when the value changes
-	const selected = $derived({ icon: (icons as any)[value] });
+	const selected = $derived({icon: getIcon(value)});
 </script>
 
 {#snippet pre()}

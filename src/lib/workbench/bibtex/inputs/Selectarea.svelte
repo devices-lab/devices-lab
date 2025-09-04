@@ -1,33 +1,30 @@
 <script lang="ts">
 	import type { DefProps } from '$lib/utils';
-	import * as icons from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
-	import type { HTMLTextareaAttributes } from 'svelte/elements';
+	import type { HTMLSelectAttributes } from 'svelte/elements';
 
-	import HtmlTextarea from './HTMLTextarea.svelte';
+	import HtmlSelect from './HTMLSelect.svelte';
 
 	type Props = DefProps & {
 		value: string;
+		items: {key: string, title: string}[];
 		label?: string;
-		pre?: Snippet;
-		post?: Snippet;
-		input?: HTMLTextareaAttributes;
+		input?: HTMLSelectAttributes;
 	};
 
-	let { value = $bindable(), label = '', pre, post, input, ...props }: Props = $props();
+	let { value = $bindable(), items, label = '', input, ...props }: Props = $props();
 	const uid = $props.id();
 	const inputId = $derived(`input-${uid}`);
 </script>
 
 <div {...props}>
 	<label for={inputId} class="block text-sm/6 font-medium text-gray-900 dark:text-white">{label}</label>
-	<HtmlTextarea
+	<HtmlSelect
 		{...input}
 		id={inputId}
 		bind:value
+		{items}
 		name={label}
-		{pre}
-		{post}
 		class="rounded-md
 			bg-white
 			wrap-anywhere
@@ -39,7 +36,7 @@
 			focus:outline-2
 			focus:-outline-offset-2
 			focus:outline-primary-500
-			sm:text-sm/6
+			sm:text-sm/6.5
 			dark:bg-white/5
 			dark:text-white
 			dark:outline-1

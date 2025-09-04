@@ -1,7 +1,7 @@
-import { dois } from "$lib/_content/research";
-import { ScrollText } from "@lucide/svelte";
+//import { ScrollText } from "@lucide/svelte";
 import type { Picture } from 'vite-imagetools';
-import { cite } from "./cite";
+//import { cite } from "./cite";
+import { generateHash } from "$lib/utils";
 
 
 
@@ -31,9 +31,10 @@ export type Tag = {
 }
 
 
-export interface ResearchType {
+export type ResearchType = {
 	// core information
-	title: string;
+	name: string;				// -- a short name for the research item
+	title: string;				// -- the full title of the research item
 	abstract: string;
 	picture: string | Picture;
 	authors: Author[];
@@ -47,10 +48,40 @@ export interface ResearchType {
 	tags: Tag[];
 }
 
+export type ResearchItem = ResearchType & {
+	key: string;
+};
 
-import ImageCover from "$lib/assets/img/clipbit/cover.png?enhanced";
+export type ResearchLibrary = {
+	[key: string]: ResearchItem;
+};
+
+export function formatDate(date: Date): string {
+	if (!date.day || !date.month || !date.year) return 'n.d.';
+	return `${String(date.year).padStart(4, '0')}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
+}
 
 
+// Use vite to import all item files
+const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true }) as Record<string, { research: ResearchType }>;
+
+export const researchLibrary: ResearchLibrary = Object.fromEntries(
+	Object.entries(researchModules).map(([path, module]) => {
+		const key = path.split('/').pop()?.replace('.ts', '') || '';
+		return [key, { key, ...module.research }];
+	})
+);
+
+export const research: ResearchType[] = Object.values(researchModules).map(module => ({ ...module.research, key: generateKey(module.research.title) }));
+
+
+function generateKey(title: string): string {
+	const temp = generateHash(title);
+	console.log(temp);
+	return title.split(' ')[0] + '-' + temp.toString(36);
+}
+
+/*
 export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async doi => {
 	const data = (await cite(doi))[0];
 	return {
@@ -73,3 +104,4 @@ export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async 
 	};
 }));
 
+*/

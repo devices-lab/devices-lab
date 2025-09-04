@@ -1,6 +1,22 @@
 import type { ClassValue } from 'svelte/elements';
 import { writable } from 'svelte/store';
 
+import * as icons from '@lucide/svelte';
+
+// Get an icon by name
+export function getIcon(name: string): typeof icons.Icon | undefined {
+	return (icons as never)[name];
+}
+
+
+export const generateHash = (data: string) => {
+	let hash = 0;
+	for (const char of data) {
+		hash = (hash << 5) - hash + char.charCodeAt(0);
+		hash |= 0; // Constrain to 32bit integer
+	}
+	return hash;
+};
 
 export function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));

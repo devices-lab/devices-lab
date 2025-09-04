@@ -8,15 +8,16 @@
 	type Props = DefProps & {
 		content: Snippet<[Item]>;
 		items: Item[];
+		newItem: () => Item;
 		title: string;
 		subtitle: string;
 		resetClass?: string;
 	};
 
-	let { content, items = $bindable(), title, subtitle, resetClass, ...props }: Props = $props();
+	let { content, items = $bindable(), newItem, title, subtitle, resetClass, ...props }: Props = $props();
 
 	const add = () => {
-		items = [...items, {} as Item];
+		items = [...items, newItem()] as Item[];
 	};
 
 	const remove = (index: number) => {

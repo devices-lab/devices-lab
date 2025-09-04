@@ -2,8 +2,8 @@
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/BaseLink.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import type { ResearchType } from '$lib/data/research';
+	import { formatDate, type ResearchType } from '$lib/data/research';
+	import { getIcon } from '$lib/utils';
 	import { Award } from '@lucide/svelte';
 
 	const { item }: { item: ResearchType } = $props();
@@ -24,35 +24,38 @@
 						{#each item.awards as award}
 							<span class="flex items-center text-sm text-yellow-500">
 								<Award class="size-5" />
-								{award}
+								{award.name}
 							</span>
 						{/each}
 					</div>
 				{/if}
 
 				<p class="text-sm/5 font-semibold text-gray-900 dark:text-white">
-					{item.title}
+					{item.title || 'Title'}
 				</p>
 				<p class="mt-1 text-sm/5 text-gray-500 dark:text-gray-400">
-					{item.authors.map((author) => author.name).join(', ')}
+					{item.authors.map((author) => author.name).join(', ') || 'Authors'}
 				</p>
 			</div>
 
 			<div class="flex flex-col items-end text-end">
-				<p class="text-sm/6 text-nowrap text-gray-900 dark:text-white">{item.conference}</p>
-				<p class="text-sm/6 text-nowrap text-gray-900 dark:text-white">{item.location}</p>
-				<p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">{item.published}</p>
+				<p class="text-sm/6 text-nowrap text-gray-900 dark:text-white">{item.conference || 'n.d.'}</p>
+				<p class="text-sm/6 text-nowrap text-gray-900 dark:text-white">{item.location || 'n.d.'}</p>
+				<p class="mt-1 text-xs/5 text-gray-500 dark:text-gray-400">{formatDate(item.published)}</p>
 			</div>
 		</div>
 
 		<div class="my-2 flex-1 border-t-1 border-gray-200 py-2 dark:border-white/5">
-			<p class="text-sm text-gray-500 dark:text-gray-400">{@html item.abstract}</p>
+			<p class="text-sm text-gray-500 dark:text-gray-400">{@html item.abstract || 'Description'}</p>
 		</div>
 
 		<div class="flex items-center justify-end gap-x-6">
 			{#each item.links as link}
+				{@const icon = {icon: getIcon(link.icon)}}
 				<BaseLink href={link.href} class="flex text-sm text-blue-500 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" aria-label={link.title} target="_blank" rel="noopener noreferrer" title={link.title}>
-					<link.icon class="me-1 size-5" />
+					{#if icon.icon}
+						<icon.icon class="me-1 size-5" />
+					{/if}
 					{link.title}
 				</BaseLink>
 			{/each}

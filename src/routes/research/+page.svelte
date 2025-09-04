@@ -14,11 +14,6 @@
 					<ResearchItem {item} />
 				</li>
 			{/each}
-			{#each data.researchFromDOI as item}
-				<li class="mb-8">
-					<!--<ResearchItem {item} />-->
-				</li>
-			{/each}
 		</ul>
 	</section>
 {:else}

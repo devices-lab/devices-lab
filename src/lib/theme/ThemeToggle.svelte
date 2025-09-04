@@ -56,7 +56,7 @@
 </script>
 
 <!--<div class="relative z-0 inline-grid grid-cols-3 gap-0.5 rounded-full bg-gray-950/5 p-0.75 text-gray-950 dark:bg-white/10 dark:text-white w-full">-->
-<div class="flex justify-around">
+<div class="flex justify-around border-t border-gray-200 mt-2 dark:border-gray-700">
 	<Toggle bind:mode activeMode="light" uid={`theme-toggle-${uid}`}>
 		<svg viewBox="0 0 28 28" fill="none">
 			<circle cx="14" cy="14" r="3.5" stroke="currentColor"></circle>
