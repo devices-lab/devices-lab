@@ -1,13 +1,12 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import type { ResearchType } from '$lib/data/research';
-	import ResearchInput from '$lib/workbench/bibtex/Input.svelte';
+	import ResearchInput from '$lib/workbench/bibtex/ResearchInput.svelte';
 	import { Cross, Paperclip } from '@lucide/svelte';
 
-import LogicGlue from "$lib/assets/img/research/logicglue.png";
+	import LogicGlue from '$lib/assets/img/research/logicglue.png';
 
-	let researchData: ResearchType = $state(
-	{
+	let researchData: ResearchType = $state({
 		title: 'LogicGlue - Hardware-Independent Embedded Programming Through Platform-Independent Drivers',
 		abstract: 'LogicGlue is a platform-independent driver system that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.',
 		picture: LogicGlue,
@@ -25,7 +24,11 @@ import LogicGlue from "$lib/assets/img/research/logicglue.png";
 				affiliation: 'Third University'
 			}
 		],
-		published: '2025',
+		published: {
+			year: 2025,
+			month: 6,
+			day: 15
+		},
 		conference: 'EICS 2025',
 		location: 'Trier, Germany',
 		links: [
@@ -40,12 +43,21 @@ import LogicGlue from "$lib/assets/img/research/logicglue.png";
 				icon: 'Cross'
 			}
 		],
-		tags: ['example', 'research'],
-		awards: ['Test Award']
-	}
-	);
+		tags: [
+			{
+				string: 'example'
+			},
+			{
+				string: 'research'
+			}
+			
+		],
+		awards: [
+			{
+				name: 'Test Award'
+			}
+		]
+	});
 </script>
 
-
 <ResearchInput bind:research={researchData} />
-

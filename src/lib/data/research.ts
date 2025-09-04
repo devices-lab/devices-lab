@@ -1,10 +1,17 @@
 import { dois } from "$lib/_content/research";
-import { ScrollText, type Icon } from "@lucide/svelte";
+import { ScrollText } from "@lucide/svelte";
 import type { Picture } from 'vite-imagetools';
 import { cite } from "./cite";
 
 
-export interface Author {
+
+export type Date = {
+	year: number;
+	month: number;
+	day: number;
+};
+
+export type Author = {
 	name: string;
 	affiliation: string;
 }
@@ -12,8 +19,17 @@ export interface Author {
 export type Link = {
 	href: string;
 	title: string;
-	icon?: string;
+	icon: string;
 };
+
+export type Award = {
+	name: string;
+}
+
+export type Tag = {
+	string: string
+}
+
 
 export interface ResearchType {
 	// core information
@@ -22,13 +38,13 @@ export interface ResearchType {
 	picture: string | Picture;
 	authors: Author[];
 	// published
-	published: string;
+	published: Date;
 	conference: string;
 	location: string;
 	// additional information
 	links: Link[];
-	awards: string[];
-	tags: string[];
+	awards: Award[];
+	tags: Tag[];
 }
 
 

@@ -9,6 +9,6 @@
 	const { children, ...props }: Props = $props();
 </script>
 
-<div {...props} class="grid grid-cols-1 md:gap-x-6 gap-y-3 md:grid-cols-12 {props.class}">
+<div {...props} class="flex gap-x-2 flex-col sm:flex-row {props.class}">
 	{@render children()}
 </div>
