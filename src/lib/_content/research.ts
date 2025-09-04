@@ -1,4 +1,4 @@
-import type { Research } from '$lib/data/research';
+import type { ResearchType } from '$lib/data/research';
 import { Cross, Paperclip } from '@lucide/svelte';
 
 import LogicGlue from "$lib/assets/img/research/logicglue.png";
@@ -19,11 +19,11 @@ export const dois = [
 ];
 
 // Research items
-export const research: Research[] = [
+export const research: ResearchType[] = [
 	{
 		title: 'LogicGlue - Hardware-Independent Embedded Programming Through Platform-Independent Drivers',
-		abstract: 'LogicGlue is a platform-independent driver system that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.',
-		teaser: LogicGlue,
+		abstract: 'LogicGlue is a platform-independent driver <span class="text-red-400">system</span> that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.',
+		picture: LogicGlue,
 		authors: [
 			{
 				name: 'Mannu Lambrichts',
@@ -53,7 +53,8 @@ export const research: Research[] = [
 				icon: Cross
 			}
 		],
-		tags: ['example', 'research']
+		tags: ['example', 'research'],
+		awards: ['Test Award']
 	}
 ];
 

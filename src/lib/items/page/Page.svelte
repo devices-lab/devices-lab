@@ -12,6 +12,7 @@
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	
 	import { ProjectProps, VersionProps } from '$lib/workbench/logo/utils';
+	import BaseCard from '$lib/components/BaseCard.svelte';
 
 	const { children }: { children?: Snippet } = $props();
 
@@ -20,7 +21,8 @@
 </script>
 
 {#if item}
-	<section class="relative bg-white sm:px-6 sm:py-24 lg:px-8 dark:bg-gray-900">
+	<BaseCard class="sm:px-6! sm:py-10! lg:px-8!">
+	
 		<div class="relative lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
 			<!-- Image gallery -->
 			<div class="px-4 sm:mt-16 sm:px-0 lg:mt-0">
@@ -50,7 +52,8 @@
 				</section>
 			</div>
 		</div>
-	</section>
+
+</BaseCard>
 {:else}
 	<p class="text-center text-sm text-gray-500 italic">No items found.</p>
 {/if}

@@ -1,11 +1,11 @@
-import { downloadSVG } from '$lib/workbench/logo/utils';
+import { downloadSVG, KICAD_SCALE } from '$lib/workbench/logo/utils';
 import { ClippyFlattenSVG } from '$lib/workbench/logo/export/clippy';
 import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 import { assert } from '$lib/utils';
 
 export async function exportSvgForKiCad(id: string, filename: string) {
 	// Get the original SVG element
-	const clone = await generateSvgForKiCad(id, 0.2);
+	const clone = await generateSvgForKiCad(id, KICAD_SCALE);
 	if (!clone) {
 		console.warn(`Failed to generate SVG for ${id}`);
 		return;

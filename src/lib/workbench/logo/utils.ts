@@ -11,6 +11,8 @@ export const LOGO_ICON = "DL";
 export const LOGO_NAME = 'devices-lab';
 export const LOGO_DOMAIN = 'devices-lab.org';
 
+export const KICAD_SCALE = 0.5;
+
 // Props for creating a DevicesLab version stack
 export const VersionProps = (id: string, version: string) => ({
 	textLeft: LOGO_ICON,

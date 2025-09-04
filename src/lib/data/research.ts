@@ -12,22 +12,22 @@ export interface Author {
 export type Link = {
 	href: string;
 	title: string;
-	icon: typeof Icon;
+	icon?: string;
 };
 
-export interface Research {
+export interface ResearchType {
+	// core information
 	title: string;
 	abstract: string;
-	teaser: string | Picture;
+	picture: string | Picture;
 	authors: Author[];
-
+	// published
 	published: string;
 	conference: string;
 	location: string;
-
-
-
+	// additional information
 	links: Link[];
+	awards: string[];
 	tags: string[];
 }
 
@@ -35,7 +35,7 @@ export interface Research {
 import ImageCover from "$lib/assets/img/clipbit/cover.png?enhanced";
 
 
-export const researchFromDOI: Research[] = await Promise.all(dois.map(async doi => {
+export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async doi => {
 	const data = (await cite(doi))[0];
 	return {
 		title: data.title,

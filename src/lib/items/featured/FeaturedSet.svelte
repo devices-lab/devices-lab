@@ -32,6 +32,7 @@
 				self-end
 				rounded-full
 				bg-primary-200
+				dark:bg-primary-800
 				p-2
 				ps-4
 				font-semibold
@@ -43,7 +44,7 @@
 				focus-visible:outline-2
 				focus-visible:outline-offset-2
 				focus-visible:outline-primary-600
-				dark:text-primary-400
+				dark:text-primary-100
 				dark:hover:bg-primary-400
 				dark:hover:text-primary-900
 				dark:focus-visible:outline-primary-500"

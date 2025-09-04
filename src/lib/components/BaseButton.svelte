@@ -1,19 +1,18 @@
 <script lang="ts">
+	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
 
-	export type ButtonTheme = 'primary' | 'secondary' | 'link-primary' | 'link-secondary';
+	type ButtonTheme = 'primary' | 'secondary' | 'link-primary' | 'link-secondary' | undefined;
 
-	interface Props {
+	type Props = DefProps & {
 		children: Snippet;
 		theme?: ButtonTheme;
-		class?: ClassValue;
-		[key: string]: any;
-	}
+	};
 
-	const { children, theme = 'primary', class: className = '', ...props }: Props = $props();
+	const { children, theme, ...props }: Props = $props();
 
-	const buttonTheme: ClassValue = $derived.by(() => {
+	const buttonTheme: string = $derived.by(() => {
+		if (!theme) return '';
 		switch (theme) {
 			case 'primary':
 				return 'bg-primary-600 hover:bg-primary-500 dark:bg-primary-600 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500 text-white shadow-xs';
@@ -27,20 +26,6 @@
 	});
 </script>
 
-<button
-	type="button"
-	class={`cursor-pointer
-		rounded-full
-		px-3
-		py-1.5
-		font-semibold
-		focus-visible:outline-2
-		focus-visible:outline-offset-2
-		dark:shadow-none
-		${buttonTheme}
-		${className}
-	`}
-	{...props}
->
+<button {...props} type="button" class="cursor-pointer rounded-full px-3 py-1.5 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 dark:shadow-none {buttonTheme} {props.class}">
 	{@render children?.()}
 </button>

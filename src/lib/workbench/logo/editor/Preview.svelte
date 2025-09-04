@@ -128,7 +128,7 @@
 			<div class="flex flex-col gap-y-2">
 				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 					Parameters
-					<BaseButton onclick={download} class="flex items-center py-1 text-sm">
+					<BaseButton theme="primary" onclick={download} class="flex items-center py-1 text-sm">
 						<Download class="mr-2 size-4" />
 						Download
 					</BaseButton>
@@ -161,7 +161,7 @@
 				</div>
 
 				<div class="my-3 flex flex-col justify-center rounded-lg">
-					<BaseButton onclick={() => update(0)} type="button">Generate</BaseButton>
+					<BaseButton theme="primary" onclick={() => update(0)} type="button">Generate</BaseButton>
 					<BaseCheckbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="mt-2">
 						<span class="text-sm font-medium">Auto generate?</span>
 					</BaseCheckbox>

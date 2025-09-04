@@ -13,7 +13,32 @@
 </div>
 -->
 
-<label aria-label="Existing customers" class="group relative m-2 p-1 size-10 flex cursor-pointer rounded-lg bg-white has-checked:outline-2 has-checked:-outline-offset-2 has-checked:outline-primary-600 has-focus-visible:outline-3 has-focus-visible:-outline-offset-1 has-disabled:border-gray-400 has-disabled:bg-gray-200 has-disabled:opacity-25 dark:border-white/10 dark:bg-gray-800/50 dark:has-checked:bg-primary-500/10 dark:has-checked:outline-primary-500 dark:has-disabled:border-white/10 dark:has-disabled:bg-gray-800">
-	<input type="radio" name={uid} value="existing-customers" class="cursor-pointer absolute inset-0 appearance-none focus:outline-none" onchange={() => (mode = activeMode)} checked={mode === activeMode} />
+<label
+	aria-label="Existing customers"
+	class="group
+		relative
+		m-2
+		flex
+		size-10
+		cursor-pointer
+		rounded-lg
+		bg-white
+		p-1
+		has-checked:outline-2
+		has-checked:-outline-offset-2
+		has-checked:outline-gray-300
+		has-focus-visible:outline-3
+		has-focus-visible:-outline-offset-1
+		has-disabled:border-gray-400
+		has-disabled:bg-gray-200
+		has-disabled:opacity-25
+		dark:border-white/10
+		dark:bg-gray-800/50
+		dark:has-checked:bg-primary-500/10
+		dark:has-checked:outline-primary-500
+		dark:has-disabled:border-white/10
+		dark:has-disabled:bg-gray-800"
+>
+	<input type="radio" name={uid} value="existing-customers" class="absolute inset-0 cursor-pointer appearance-none focus:outline-none" onchange={() => (mode = activeMode)} checked={mode === activeMode} />
 	{@render children()}
 </label>

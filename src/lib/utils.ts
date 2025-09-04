@@ -1,3 +1,4 @@
+import type { ClassValue } from 'svelte/elements';
 import { writable } from 'svelte/store';
 
 
@@ -50,3 +51,10 @@ export function assert<T>(condition: T | undefined | null, message?: string): T 
 
 // Make a string important by adding '!' to the end of each word
 export const makeImportant = (s: string): string => s.replace(/\S+/g, c => c.endsWith('!') ? c : c + '!');
+
+
+
+export type DefProps = {
+	class?: ClassValue;
+	[key: string]: unknown;
+}

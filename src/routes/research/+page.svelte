@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import ItemGrid from '$lib/items/ItemGrid.svelte';
-	import Item from '$lib/research/Item.svelte';
+	import ResearchItem from '$lib/research/ItemCard.svelte';
 
 	const { data }: PageProps = $props();
 </script>
@@ -12,12 +11,12 @@
 		<ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
 			{#each data.research as item}
 				<li class="mb-8">
-					<Item {item} />
+					<ResearchItem {item} />
 				</li>
 			{/each}
 			{#each data.researchFromDOI as item}
 				<li class="mb-8">
-					<Item {item} />
+					<!--<ResearchItem {item} />-->
 				</li>
 			{/each}
 		</ul>

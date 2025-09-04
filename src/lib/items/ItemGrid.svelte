@@ -7,10 +7,10 @@
 
 
 {#if items.length}
-	<section aria-labelledby="items-heading" class="mt-8">
+	<section aria-labelledby="items-heading" class="mt-6">
 		<h2 id="items-heading" class="sr-only">Items</h2>
 
-		<div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
+		<div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
 			{#each items as item}
 				<ItemCard {item} />
 			{/each}
