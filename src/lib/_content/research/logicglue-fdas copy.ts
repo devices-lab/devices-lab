@@ -1,11 +1,9 @@
 import type { ResearchType } from "$lib/data/research";
 
 export const research: ResearchType = {
-	name: 'LogicGlue2',
-	title: 'LogicGlue',
-	abstract: `LogicGlue is a platform-independent driver system that de
-	couples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and 
-	protocols, simplifying prototyping while maintaining flexibility in hardware choice.`,
+	name: 'LogicGlue',
+	title: 'Hardware-Independent Embedded Programming Through Platform-Independent Drivers',
+	abstract: 'LogicGlue is a platform-independent driver system that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.',
 	authors: [
 		{
 			name: 'Mannu Lambrichts',
@@ -48,5 +46,8 @@ export const research: ResearchType = {
 		}
 	],
 	awards: [
+		{
+			name: 'Test Award'
+		},
 	]
 };

@@ -5,32 +5,33 @@
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
 
 	import HtmlTextarea from './HTMLTextarea.svelte';
+	import InputWrapper from './InputWrapper.svelte';
 
 	type Props = DefProps & {
 		value: string;
 		label?: string;
+		sublabel?: string;
 		pre?: Snippet;
 		post?: Snippet;
 		input?: HTMLTextareaAttributes;
 	};
 
-	let { value = $bindable(), label = '', pre, post, input, ...props }: Props = $props();
+	let { value = $bindable(), label = '', sublabel = '', pre, post, input, ...props }: Props = $props();
 	const uid = $props.id();
 	const inputId = $derived(`input-${uid}`);
 </script>
 
-<div {...props}>
-	<label for={inputId} class="block text-sm/6 font-medium text-gray-900 dark:text-white">{label}</label>
+
+<InputWrapper {inputId} {label} {sublabel} {...props}>
 	<HtmlTextarea
 		{...input}
-		id={inputId}
 		bind:value
+		id={inputId}
 		name={label}
 		{pre}
 		{post}
 		class="rounded-md
 			bg-white
-			wrap-anywhere
 			text-gray-900
 			outline-1
 			-outline-offset-1
@@ -48,4 +49,4 @@
 			dark:placeholder:text-gray-500
 			dark:focus:outline-primary-500"
 	/>
-</div>
+</InputWrapper>

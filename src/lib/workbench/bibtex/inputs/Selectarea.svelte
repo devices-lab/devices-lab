@@ -4,10 +4,11 @@
 	import type { HTMLSelectAttributes } from 'svelte/elements';
 
 	import HtmlSelect from './HTMLSelect.svelte';
+	import InputWrapper from './InputWrapper.svelte';
 
 	type Props = DefProps & {
 		value: string;
-		items: {key: string, title: string}[];
+		items: { key: string; title: string }[];
 		label?: string;
 		input?: HTMLSelectAttributes;
 	};
@@ -17,8 +18,7 @@
 	const inputId = $derived(`input-${uid}`);
 </script>
 
-<div {...props}>
-	<label for={inputId} class="block text-sm/6 font-medium text-gray-900 dark:text-white">{label}</label>
+<InputWrapper {inputId} {label} {...props}>
 	<HtmlSelect
 		{...input}
 		id={inputId}
@@ -45,4 +45,4 @@
 			dark:placeholder:text-gray-500
 			dark:focus:outline-primary-500"
 	/>
-</div>
+</InputWrapper>

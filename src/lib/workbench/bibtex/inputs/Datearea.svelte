@@ -56,10 +56,9 @@
 {/snippet}
 
 <div class=" ">
-	<div class="block text-sm/6 font-medium text-gray-900 dark:text-white">{label}</div>
 	<div class="flex flex-col items-center gap-4 sm:flex-row">
-		<Textarea bind:value={year} {...props} pre={labelYear} class="w-full flex-1" />
-		<Textarea bind:value={month} {...props} pre={labelMonth} class="w-full flex-1" />
-		<Textarea bind:value={day} {...props} pre={labelDay} class="w-full flex-1" />
+		<Textarea bind:value={year} label="Publication year" {...props} post={labelYear} class="w-full flex-1" />
+		<Textarea bind:value={month} label="Publication month" {...props} post={labelMonth} class="w-full flex-1" />
+		<Textarea bind:value={day} label="Publication day" {...props} post={labelDay} class="w-full flex-1" />
 	</div>
 </div>

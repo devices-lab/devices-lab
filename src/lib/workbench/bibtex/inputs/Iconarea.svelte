@@ -17,10 +17,10 @@
 	const selected = $derived({icon: getIcon(value)});
 </script>
 
-{#snippet pre()}
+{#snippet post()}
 	{#if selected.icon}
 		<selected.icon class="aspect-square size-full rounded-e-lg p-1.5 text-gray-600 dark:text-gray-50" />
 	{/if}
 {/snippet}
 
-<Textarea bind:value {pre} {...props} />
+<Textarea bind:value {post} {...props} />

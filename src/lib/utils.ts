@@ -55,7 +55,9 @@ export function pick<T extends object, K extends readonly (keyof T)[]>(obj: T, k
 	return out;
 }
 
-export const clamp = (v: number, lo = -Infinity, hi = Infinity) => Math.min(hi, Math.max(lo, v));
+export const clamp = (v: number, lo = -Infinity, hi = Infinity): number => Math.min(hi, Math.max(lo, v));
+
+export const isBound = (v: number, lo: number, hi: number): boolean => v >= lo && v <= hi;
 
 
 export function assert<T>(condition: T | undefined | null, message?: string): T {

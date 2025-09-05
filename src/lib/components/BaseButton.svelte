@@ -2,7 +2,7 @@
 	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 
-	type ButtonTheme = 'primary' | 'secondary' | 'link-primary' | 'link-secondary' | 'danger' | 'link-danger' | undefined;
+	type ButtonTheme = 'primary' | 'secondary' | 'link-primary' | 'link-secondary' | 'danger' | 'link-danger' | 'success' | undefined;
 
 	type Props = DefProps & {
 		children: Snippet;
@@ -26,6 +26,8 @@
 				return 'bg-red-600 hover:bg-red-500 dark:bg-red-600 dark:hover:bg-red-400 dark:focus-visible:outline-red-500 text-white shadow-xs';
 			case 'link-danger':
 				return 'bg-transparent text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:text-red-100';
+			case 'success':
+				return 'bg-green-600 hover:bg-green-500 dark:bg-green-600 dark:hover:bg-green-400 dark:focus-visible:outline-green-500 text-white shadow-xs';
 		}
 	});
 </script>

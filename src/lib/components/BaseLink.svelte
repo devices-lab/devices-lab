@@ -1,12 +1,18 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
+	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
+	import { resolve } from '$app/paths';
 
-	const { href, children, ...restProps }: { href: string; children?: Snippet; [key: string]: any } = $props();
+	type Props = DefProps & {
+		children: Snippet;
+		href: string;
+	};
+
+	const { children, href, ...props }: Props = $props();
 
 	const resolvedHref = $derived(href.startsWith('/') ? resolve(href) : href);
 </script>
 
-<a href={resolvedHref} {...restProps}>
+<a href={resolvedHref} {...props}>
 	{@render children?.()}
 </a>

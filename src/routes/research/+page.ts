@@ -1,12 +1,14 @@
 import type { PageLoad } from './$types';
 
 // Load research data
-import { research } from '$lib/data/research';
+import { fetchResearchData } from '$lib/data/research';
+
+
 
 
 export const load = (async () => {
-    return {
-		research,
+	return {
+		researchLibrary: fetchResearchData()
 	};
 }) satisfies PageLoad;
 

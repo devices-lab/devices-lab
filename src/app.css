@@ -1,29 +1,26 @@
 @import 'tailwindcss';
 
-
 @custom-variant dark (&:where(.dark, .dark *));
 
-
-
 @theme {
-    --font-ocr: 'OCR A Extended', 'OCR A Std', 'OCR A', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
-
-    --font-sans: InterVariable, sans-serif;
-    --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-
-
+	--font-ocr: 'OCR A Extended', 'OCR A Std', 'OCR A', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
+	
+	--font-sans: InterVariable, sans-serif;
+	--font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+	
+	
 	--animate-wiggle: wiggle 2s ease-in-out infinite;
 	@keyframes wiggle {
 		0%,
 		100% {
 			transform: rotate(-3deg);
 		}
+		
 		50% {
 			transform: rotate(3deg);
 		}
 	}
-
-
+	
 	--color-primary-50: oklch(98.4% 0.019 200.873);
 	--color-primary-100: oklch(95.6% 0.045 203.388);
 	--color-primary-200: oklch(91.7% 0.08 205.041);
@@ -35,8 +32,8 @@
 	--color-primary-800: oklch(45% 0.085 224.283);
 	--color-primary-900: oklch(39.8% 0.07 227.392);
 	--color-primary-950: oklch(30.2% 0.056 229.695);
-
-
+	
+	
 	--color-secondary-50: oklch(98.5% 0.002 247.839);
 	--color-secondary-100: oklch(96.7% 0.003 264.542);
 	--color-secondary-200: oklch(92.8% 0.006 264.531);
@@ -48,13 +45,11 @@
 	--color-secondary-800: oklch(27.8% 0.033 256.848);
 	--color-secondary-900: oklch(21% 0.034 264.665);
 	--color-secondary-950: oklch(13% 0.028 261.692);
-
-
 }
 
 html, body {
-  height: 100%;
-  min-height: fit-content;
+	height: 100%;
+	min-height: fit-content;
 }
 
 a.disabled {
@@ -62,3 +57,4 @@ a.disabled {
 	cursor: default;
 	opacity: 0.5;
 }
+

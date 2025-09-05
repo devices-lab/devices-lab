@@ -6,6 +6,6 @@
 
 {#if typeof src === 'string'}
 	<img {src} {...restProps} />
-{:else}
+{:else if src}
 	<enhanced:img {src} {...restProps} />
 {/if}

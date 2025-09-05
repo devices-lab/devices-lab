@@ -6,11 +6,11 @@
 	const { data }: PageProps = $props();
 </script>
 
-{#if data.research.length > 0}
+{#if data.researchLibrary}
 	<section class="relative">
 		<ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
-			{#each data.research as item}
-				<li class="mb-8">
+			{#each Object.values(data.researchLibrary) as item}
+				<li class="mb-12">
 					<ResearchItem {item} />
 				</li>
 			{/each}

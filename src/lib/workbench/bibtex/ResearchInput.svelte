@@ -1,67 +1,79 @@
 <script lang="ts">
-	import type { ResearchType, Author, Link, Tag, Award } from '$lib/data/research';
+	import type { Author, Award, Link, ResearchItem, Tag } from '$lib/data/research';
 
-	import InputSection from '$lib/workbench/bibtex/components/InputSection.svelte';
-	import InputSectionList from '$lib/workbench/bibtex/components/InputSectionList.svelte';
-	import Textarea from '$lib/workbench/bibtex/inputs/Textarea.svelte';
-	import Iconarea from '$lib/workbench/bibtex/inputs/Iconarea.svelte';
-	import Datearea from '$lib/workbench/bibtex/inputs/Datearea.svelte';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import ItemCard from '$lib/research/ItemCard.svelte';
+	import Datearea from '$lib/workbench/bibtex/inputs/Datearea.svelte';
+	import Iconarea from '$lib/workbench/bibtex/inputs/Iconarea.svelte';
+	import Textarea from '$lib/workbench/bibtex/inputs/Textarea.svelte';
+	import InputList from './inputs/InputList.svelte';
 
-	let { research = $bindable() }: { research: ResearchType } = $props();
+	let { research = $bindable() }: { research: ResearchItem } = $props();
 </script>
 
 <div class="divide-y divide-gray-900/10 dark:divide-white/10">
 	<div class="py-10">
-		<div class="flex-1 text-sm/8  text-gray-600 font-light dark:text-gray-300">Preview:</div>
+		<div class="flex-1 font-semibold text-gray-600 dark:text-gray-300">Preview:</div>
 
-		<div class="*:border-2 *:border-slate-500 *:shadow-lg">
+		<div class="mt-6">
 			<ItemCard item={research} />
 		</div>
 	</div>
 
-	<!-- Paper Information -->
-	<InputSection title="Paper" subtitle="Information about the publication.">
-		<Textarea bind:value={research.title} label="Title" class="col-span-full" />
-		<Textarea bind:value={research.abstract} label="Abstract" class="col-span-full" />
-	</InputSection>
+	<div class="py-10">
+		<div class="flex-1 font-semibold text-gray-600 dark:text-gray-300">Edit:</div>
 
-	<!-- Publication Information -->
-	<InputSection title="Publication" subtitle="Information about the publication.">
-		<Datearea bind:value={research.published} label="Date" class="flex-1" />
-		<Textarea bind:value={research.conference} label="Conference" class="" />
-		<Textarea bind:value={research.location} label="Location" class="" />
-	</InputSection>
+		<BaseCard class="">
+			<div class="px-4 py-6 *:mb-4 sm:p-8">
+				<div class="flex flex-col items-start gap-4 md:flex-row">
+					<Textarea bind:value={research.name} label="Name" sublabel="A very short title for the paper, typically one or two words." class="flex-1" />
+					<Textarea bind:value={research.title} label="Title" sublabel="The full title of the paper." class="flex-3" />
+				</div>
+				<Textarea bind:value={research.abstract} label="Abstract" sublabel="A brief summary of the paper. Can be the paper abstract, but doesn't need to be." />
 
-	<!-- Author Information -->
-	<InputSectionList bind:items={research.authors} newItem={(): Author => ({ name: '', affiliation: '' })} title="Authors" subtitle="Information about the authors." resetClass="mt-3">
-		{#snippet content(item: Author)}
-			<Textarea bind:value={item.name} label="Name" class="flex-1" input={{ placeholder: 'name' }} />
-			<Textarea bind:value={item.affiliation} label="Affiliation" class="flex-1" input={{ placeholder: 'affiliation' }} />
-		{/snippet}
-	</InputSectionList>
+				<div class="py-3 font-semibold">Publication:</div>
 
-	<!-- Links -->
-	<InputSectionList bind:items={research.links} newItem={(): Link => ({ title: '', icon: '', href: '' })} title="Links" subtitle="Information about the links." resetClass="mt-3">
-		{#snippet content(item: Link)}
-			<Textarea bind:value={item.title} label="Title" class="flex-1" input={{ placeholder: 'title' }} />
-			<Iconarea bind:value={item.icon} label="Icon" class="flex-1" input={{ placeholder: 'icon' }} />
-			<Textarea bind:value={item.href} label="URL" class="w-full" input={{ placeholder: 'https://example.com' }} />
-		{/snippet}
-	</InputSectionList>
+				<Datearea bind:value={research.published} label="Publication date" />
+				<div class="flex flex-col items-start gap-4 lg:flex-row">
+					<Textarea bind:value={research.conference} label="Conference" class="w-full lg:flex-1" />
+					<Textarea bind:value={research.location} label="Conference location" sublabel="City, country." class="w-full lg:flex-1" />
+				</div>
 
-	<!-- Awards -->
-	<InputSectionList bind:items={research.awards} newItem={(): Award => ({ name: '' })} title="Awards" subtitle="Awards received by the paper.">
-		{#snippet content(item: Award)}
-			<Textarea bind:value={item.name} label="" class="flex-1" input={{ placeholder: 'award' }} />
-		{/snippet}
-	</InputSectionList>
+				<div class="py-3 font-semibold">Authors:</div>
 
-	<!-- Tags -->
-	<InputSectionList bind:items={research.tags} newItem={(): Tag => ({ string: '' })} title="Tags" subtitle="Relevant tags for the paper.">
-		{#snippet content(item: Tag)}
-			<Textarea bind:value={item.string} label="" class="flex-1" input={{ placeholder: 'tag' }} />
-		{/snippet}
-	</InputSectionList>
+				<InputList bind:items={research.authors} newItem={(): Author => ({ name: '', affiliation: '' })} title="Authors" subtitle="Information about the authors.">
+					{#snippet content(item: Author)}
+						<Textarea bind:value={item.name} label="Name" class="flex-1" input={{ placeholder: 'name' }} />
+						<Textarea bind:value={item.affiliation} label="Affiliation" class="flex-1" input={{ placeholder: 'affiliation' }} />
+					{/snippet}
+				</InputList>
+
+				<div class="py-3 font-semibold">Links:</div>
+
+				<InputList bind:items={research.links} newItem={(): Link => ({ title: '', icon: '', href: '' })} title="Links" subtitle="Information about the links.">
+					{#snippet content(item: Link)}
+						<Textarea bind:value={item.title} label="Title" class="md:flex-1 xl:flex-2" input={{ placeholder: 'title' }} />
+						<Iconarea bind:value={item.icon} label="Icon" sublabel="See lucide.dev/icons." class="truncate text-nowrap md:flex-1 xl:flex-2" input={{ placeholder: 'icon' }} />
+						<Textarea bind:value={item.href} label="URL" sublabel="Can be external URL, or internal device / tool identifier." class="w-full xl:flex-3" input={{ placeholder: 'https://example.com' }} />
+					{/snippet}
+				</InputList>
+
+				<div class="py-3 font-semibold">Awards:</div>
+
+				<InputList bind:items={research.awards} newItem={(): Award => ({ name: '' })} title="Awards" subtitle="Awards received by the paper." resetClass="-mt-1.5">
+					{#snippet content(item: Award)}
+						<Textarea bind:value={item.name} label="" class="flex-1" input={{ placeholder: 'award' }} />
+					{/snippet}
+				</InputList>
+
+				<div class="py-3 font-semibold">Tags:</div>
+
+				<InputList bind:items={research.tags} newItem={(): Tag => ({ name: '' })} title="Tags" subtitle="Relevant tags for the paper." resetClass="-mt-1.5">
+					{#snippet content(item: Tag)}
+						<Textarea bind:value={item.name} label="" class="flex-1" input={{ placeholder: 'tag' }} />
+					{/snippet}
+				</InputList>
+			</div>
+		</BaseCard>
+	</div>
 </div>

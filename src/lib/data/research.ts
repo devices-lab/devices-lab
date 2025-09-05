@@ -1,7 +1,7 @@
 //import { ScrollText } from "@lucide/svelte";
 import type { Picture } from 'vite-imagetools';
 //import { cite } from "./cite";
-import { generateHash } from "$lib/utils";
+import { generateHash, isBound } from "$lib/utils";
 
 
 
@@ -27,16 +27,14 @@ export type Award = {
 }
 
 export type Tag = {
-	string: string
+	name: string
 }
-
 
 export type ResearchType = {
 	// core information
 	name: string;				// -- a short name for the research item
 	title: string;				// -- the full title of the research item
 	abstract: string;
-	picture: string | Picture;
 	authors: Author[];
 	// published
 	published: Date;
@@ -50,36 +48,92 @@ export type ResearchType = {
 
 export type ResearchItem = ResearchType & {
 	key: string;
+	picture: string | Picture;
 };
 
 export type ResearchLibrary = {
 	[key: string]: ResearchItem;
 };
 
-export function formatDate(date: Date): string {
-	if (!date.day || !date.month || !date.year) return 'n.d.';
-	return `${String(date.year).padStart(4, '0')}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
+
+export const DefaultResearchItem: ResearchItem = {
+	key: '',
+	picture: '',
+	name: '',
+	title: '',
+	abstract: '',
+	authors: [],
+	published: {
+		year: 0,
+		month: 0,
+		day: 0
+	},
+	conference: '',
+	location: '',
+	links: [],
+	tags: [],
+	awards: []
+};
+
+
+export function formatDate(date: Date): string | undefined {
+	if (!isBound(date.year, 0, 9999) || !isBound(date.month, 1, 12) || !isBound(date.day, 1, 31))
+		return;
+
+	const yearStr = String(date.year).padStart(4, '0');
+	const monthStr = String(date.month).padStart(2, '0');
+	const dayStr = String(date.day).padStart(2, '0');
+
+	// Parse string
+	if (!date.day || date.day < 1 || date.day > 31) {
+		if (!date.month || date.month < 1 || date.month > 12) {
+			return yearStr;
+		}
+		return `${yearStr}-${monthStr}`;
+	}
+	return `${yearStr}-${monthStr}-${dayStr}`;
 }
 
 
-// Use vite to import all item files
-const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true }) as Record<string, { research: ResearchType }>;
-
-export const researchLibrary: ResearchLibrary = Object.fromEntries(
-	Object.entries(researchModules).map(([path, module]) => {
-		const key = path.split('/').pop()?.replace('.ts', '') || '';
-		return [key, { key, ...module.research }];
-	})
-);
-
-export const research: ResearchType[] = Object.values(researchModules).map(module => ({ ...module.research, key: generateKey(module.research.title) }));
 
 
-function generateKey(title: string): string {
-	const temp = generateHash(title);
-	console.log(temp);
-	return title.split(' ')[0] + '-' + temp.toString(36);
+// Generate a unique key for the given research item
+export function generateKey(name: string): string {
+	const hash = generateHash(name);
+	return name.split(' ')[0] + '-' + hash.toString(36);
 }
+
+
+// Helper function to parse the module path into a key
+function parsePath(path: string): string {
+	return path.split('/').pop()?.replace('.ts', '') || '';
+}
+
+function parseImagePath(path: string): string {
+	return path.split('/').pop()?.replace(/\.(avif|gif|heif|jpeg|jpg|png|tiff|webp|svg)$/, '') || '';
+}
+
+//import LogicGlue from "$lib/assets/img/research/logicglue.png";
+// Dynamic import of research modules
+export function fetchResearchData(): ResearchLibrary {
+	// Use vite to import all item files
+	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true }) as Record<string, { research: ResearchType }>;
+	const imageModules = import.meta.glob('$lib/_content/research/**/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}', { eager: true, query: { enhanced: true } }) as Record<string, { default: Picture }>;
+
+	// Map image paths to their corresponding research item keys
+	const imageMap = Object.fromEntries(
+		Object.entries(imageModules).map(([path, module]) => {
+			const key = parseImagePath(path);
+			return [key, module.default];
+		})
+	);
+	
+	return Object.fromEntries(Object.entries(researchModules).map(([path, module]) => {
+		const key = parsePath(path);
+		return [key, { key, picture: imageMap[key] || '', ...module.research } satisfies ResearchItem];
+	}));
+}
+
 
 /*
 export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async doi => {
