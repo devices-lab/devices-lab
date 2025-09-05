@@ -2,8 +2,8 @@
 	import { clamp, type DefProps } from '$lib/utils';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
 
-	import Textarea from './Textarea.svelte';
 	import type { Date } from '$lib/data/research';
+	import Textarea from './Textarea.svelte';
 
 	type Props = DefProps & {
 		value: Date;
@@ -13,31 +13,48 @@
 
 	let { value = $bindable(), label, ...props }: Props = $props();
 
+	// Normalize the input values
+	function normalizeNumber(input: string, length: number, pad: number, min: number, max: number): string {
+		// strip leading zeros but keep a single zero if the input was all zeros
+		const hadChars = input.length > 0;
+		let s = input.replace(/^0+/, '');
+		if (hadChars && s.length === 0) s = '0';
 
-	const parse = (val: number): string => {
-		if (isNaN(val)) return '';
-		return val.toString();
+		// hard cap length before parsing
+		if (length > 0 && s.length > length) s = s.slice(0, length);
+
+		// parse and clamp
+		const n = Number.parseInt(s, 10);
+		if (Number.isNaN(n)) return '';
+		s = String(Math.min(Math.max(n, min), max));
+
+		// left-pad (except for literal "0")
+		if (s !== '0' && s.length < pad) s = s.padStart(pad, '0');
+
+		// if result is exactly `length` zeros, return empty
+		if (length > 0 && s.length === length && !/[1-9]/.test(s)) return '';
+
+		return s;
 	}
 
+	// Convert the input values into a number
 	const parseInput = (val: string, min: number, max: number, chars: number): number => {
-		// Trim leading zeros
-		val = val.replace(/^0+/, '');
-		// Clamp the length of the input
-		val = val.slice(0, chars);
-
 		// Parse the input
-		const parsed = parseInt(val);
-		if (isNaN(parsed)) return NaN;
-
+		let num = parseInt(val);
+		if (isNaN(num) || num === 0) return NaN;
 		// Clamp the parsed value
-		return clamp(parsed, min, max);
-	}
+		return clamp(num, min, max);
+	};
 
-	let year: string = $derived(parse(value.year).toString());
-	let month: string = $derived(parse(value.month).toString());
-	let day: string = $derived(parse(value.day).toString());
+	let year: string = $derived(normalizeNumber(value.year.toString(), 4, 0, 0, 9999));
+	let month: string = $derived(normalizeNumber(value.month.toString(), 2, 2, 0, 12));
+	let day: string = $derived(normalizeNumber(value.day.toString(), 2, 2, 0, 31));
 
 	$effect(() => {
+		//year = normalizeNumber(year, 4, 0, 0, 9999);
+		//month = normalizeNumber(month, 2, 2, 0, 12);
+		//day = normalizeNumber(day, 2, 2, 0, 31);
+		//
 		value = { year: parseInput(year, 1, 9999, 4), month: parseInput(month, 1, 12, 2), day: parseInput(day, 1, 31, 2) };
 	});
 </script>

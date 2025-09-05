@@ -1,7 +1,5 @@
 <script lang="ts" generics="Item">
-	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import type { DefProps } from '$lib/utils';
-	import { Plus } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 	import DividerAction from '../components/DividerAction.svelte';
 	import ResetButton from '../components/ResetButton.svelte';
@@ -12,9 +10,10 @@
 		newItem: () => Item;
 		title: string;
 		subtitle: string;
+		resetClass?: string;
 	};
 
-	let { content, items = $bindable(), newItem, title, subtitle, ...props }: Props = $props();
+	let { content, items = $bindable(), newItem, title, subtitle, resetClass, ...props }: Props = $props();
 
 	const add = () => {
 		items = [...items, newItem()] as Item[];
@@ -26,15 +25,14 @@
 	};
 </script>
 
-<div class="flex flex-1 flex-col flex-wrap gap-8">
-	<IconButton onclick={add} class="button-green text-sm/6 uppercase" text="Add" icon={Plus} iconClass="size-5" />
-	{#each items as item, i}
-		<div {...props} class="relative flex flex-row {props.class}">
-			<div class="flex flex-1 flex-col flex-wrap gap-y-0 sm:flex-row sm:gap-x-4">
+<div class="flex flex-col gap-y-6">
+	<div class="grid grid-cols-3 gap-4">
+		{#each items as item, i}
+			<div {...props} class="flex flex-row *:overflow-hidden {props.class}">
 				{@render content(item)}
+				<ResetButton onclick={() => remove(i)} class="" />
 			</div>
-			<ResetButton onclick={() => remove(i)} class="mx-auto flex-0" />
-		</div>
-	{/each}
+		{/each}
+	</div>
 	<DividerAction onclick={() => add()} class="py-2" />
 </div>

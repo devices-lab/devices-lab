@@ -1,19 +1,19 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { exportDxfForAltium } from '$lib/workbench/logo/export/altium';
 	import { exportPng } from '$lib/workbench/logo/export/image';
 	import { exportSvgForKiCad } from '$lib/workbench/logo/export/kicad';
-	import { exportDxfForAltium } from '$lib/workbench/logo/export/altium';
 	import { exportSvg, exportSvgFont } from '$lib/workbench/logo/export/svg';
+	import type { Snippet } from 'svelte';
 
+	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
 	import Button from '$lib/workbench/logo/editor/Button.svelte';
 	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
-	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
 
 	import { devMode, devModeLocal } from '$lib/utils';
 
-	import { Download, Loader } from '@lucide/svelte';
 	import BaseCard from '$lib/components/BaseCard.svelte';
-
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { Download } from '@lucide/svelte';
 
 	interface Props {
 		children: Snippet;
@@ -22,17 +22,18 @@
 		subtitle: string;
 	}
 
-	let { children, uid, title, subtitle}: Props = $props();
+	let { children, uid, title, subtitle }: Props = $props();
+
+	let loading = $state(false);
 
 	let clickCounter = 0;
 	async function handleClick(event: Event, onclick: () => Promise<void>) {
 		const button = event.currentTarget as HTMLButtonElement;
-		const loadingIndicator = document.getElementById(`loading-indicator-${uid}`);
 
 		// start spinner on button
 		button.disabled = true;
 		clickCounter++;
-		loadingIndicator?.classList.remove('hidden');
+		loading = true;
 
 		await onclick();
 
@@ -40,7 +41,7 @@
 		button.disabled = false;
 		clickCounter--;
 		if (clickCounter === 0) {
-			loadingIndicator?.classList.add('hidden');
+			loading = false;
 		}
 	}
 </script>
@@ -71,16 +72,14 @@
 				</div>
 			{/if}
 		</div>
-		<div role="status" class="absolute end-4 top-4 hidden" id={`loading-indicator-${uid}`}>
-			<Loader class="size-10 animate-spin text-blue-500" />
-		</div>
+		<Spinner {loading} class="absolute end-4 top-4" />
 	</div>
 
 	<div>
 		{@render children()}
 	</div>
 
-	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6  ">
+	<div class="relative flex flex-wrap justify-center gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
 		<ButtonGroup>
 			{@render DownloadButton('PNG', '', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'transparent', monochrome: false, invert: false, threshold: 200 }))}
 			{@render DownloadButton('PNG', 'BW', () => exportPng(uid, `${uid}`, { dpi: 1200, padding: 10, background: 'white', monochrome: true, invert: false, threshold: 200 }))}

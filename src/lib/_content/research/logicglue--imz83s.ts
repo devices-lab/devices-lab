@@ -3,40 +3,37 @@
 import type { ResearchType } from "$lib/data/research";
 
 export const research: ResearchType = {
+    "doi": "10.1145/3735498",
+	"type": "Research Paper",
     "name": "LogicGlue",
     "title": "Hardware-Independent Embedded Programming Through Platform-Independent Drivers",
     "abstract": "LogicGlue is a platform-independent driver system that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.",
     "authors": [
         {
             "name": "Mannu Lambrichts",
-            "affiliation": "Example University"
+            "affiliation": "School of Computing and Communications"
         },
         {
             "name": "Raf Ramakers",
-            "affiliation": "Another University"
+            "affiliation": "Digital Future Lab"
         },
         {
             "name": "Steve Hodges",
-            "affiliation": "Third University"
+            "affiliation": "School of Computing and Communications"
         }
     ],
     "published": {
         "year": 2025,
         "month": 6,
-        "day": 15
+        "day": 27
     },
     "conference": "EICS 2025",
     "location": "Trier, Germany",
     "links": [
         {
-            "href": "https://dl.acm.org/doi/10.1145/3735498",
-            "title": "DOI",
-            "icon": "Paperclip"
-        },
-        {
-            "href": "https://example.com/research/example-research",
-            "title": "Github",
-            "icon": "Cross"
+            "text": "DOI Link",
+            "href": "https://doi.org/10.1145/3735498",
+            "icon": "ScrollText"
         }
     ],
     "tags": [],

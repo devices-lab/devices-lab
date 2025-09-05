@@ -1,16 +1,17 @@
 <script lang="ts">
+	import { Download, RefreshCcw, Save, X } from '@lucide/svelte';
 	import { onDestroy, onMount, type Snippet } from 'svelte';
-	import { Download, Icon, Loader, RefreshCcw, Save, X } from '@lucide/svelte';
 
-	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
-	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
-	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { devMode, devModeLocal } from '$lib/utils';
+	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
+	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
+	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
 
 	import BaseButton from '$lib/components/BaseButton.svelte';
 	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
-	import LinkButton from '$lib/workbench/logo/editor/LinkButton.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import IconButton from '$lib/components/icons/IconButton.svelte';
 
 	interface Props {
 		uid: string;
@@ -106,7 +107,7 @@
 		<h3 class="mt-6 mb-2 font-semibold text-gray-900 md:mt-0 dark:text-gray-100">{title}:</h3>
 		<div class="justify-middle flex size-full items-center justify-center *:max-h-50">
 			{#await svg}
-				<Loader class="size-10 animate-spin text-blue-500" />
+				<Spinner loading={true} class="size-10" />
 			{:then value}
 				{#if value}
 					{@html value.outerHTML}
@@ -128,18 +129,15 @@
 			<div class="flex flex-col gap-y-2">
 				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 					Parameters
-					<BaseButton theme="primary" onclick={download} class="flex items-center py-1 text-sm">
-						<Download class="mr-2 size-4" />
-						Download
-					</BaseButton>
+					<IconButton onclick={download} class="button-primary text-sm" text="Download" icon={Download} iconClass="size-4" />
 				</div>
 
 				<div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
 					<span class="text-sm">Local storage:</span>
 					<div class="flex gap-x-2">
-						<LinkButton onclick={reset} color="text-red-500" label="Reset" icon={X} />
-						<LinkButton onclick={load} color="text-amber-500" label="Reload" icon={RefreshCcw} />
-						<LinkButton onclick={save} color="text-green-600" label="Save" icon={Save} />
+						<IconButton onclick={reset} class="link-red text-sm " text="Reset" textClass="text-gray-700 dark:text-gray-300" icon={X} iconClass="size-4" />
+						<IconButton onclick={load} class="link-amber text-sm " text="Reload" textClass="text-gray-700 dark:text-gray-300" icon={RefreshCcw} iconClass="size-4" />
+						<IconButton onclick={save} class="link-green text-sm " text="Save" textClass="text-gray-700 dark:text-gray-300" icon={Save} iconClass="size-4" />
 					</div>
 				</div>
 			</div>
@@ -161,7 +159,7 @@
 				</div>
 
 				<div class="my-3 flex flex-col justify-center rounded-lg">
-					<BaseButton theme="primary" onclick={() => update(0)} type="button">Generate</BaseButton>
+					<BaseButton class="button-primary" onclick={() => update(0)}>Generate</BaseButton>
 					<BaseCheckbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="mt-2">
 						<span class="text-sm font-medium">Auto generate?</span>
 					</BaseCheckbox>

@@ -1,17 +1,16 @@
 <script lang="ts">
-	import { Circle } from '@lucide/svelte';
-
-	import NumberInput from '$lib/workbench/logo/inputs/NumberInput.svelte';
-	import SVG from '$lib/workbench/logo/components/SVG.svelte';
-	import Rect from '$lib/workbench/logo/components/Rect.svelte';
-	import Text from '$lib/workbench/logo/components/Text.svelte';
-	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
-	import Preview from '$lib/workbench/logo/editor/Preview.svelte';
-	import BaseButton from '$lib/components/BaseButton.svelte';
-	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
-	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
-	import { IconDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type IconData } from '$lib/workbench/logo/defaults';
+	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import { devMode, devModeLocal } from '$lib/utils';
+	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import SVG from '$lib/workbench/logo/components/SVG.svelte';
+	import Text from '$lib/workbench/logo/components/Text.svelte';
+	import { IconDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type IconData } from '$lib/workbench/logo/defaults';
+	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
+	import Preview from '$lib/workbench/logo/editor/Preview.svelte';
+	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
+	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
+	import NumberInput from '$lib/workbench/logo/inputs/NumberInput.svelte';
+	import { Circle } from '@lucide/svelte';
 
 	//======================================================================================//
 
@@ -96,7 +95,7 @@
 			<!-- Border configuration -->
 			<BorderConfig bind:border={data.border} defaults={IconDefaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />
 
-			<BaseButton onclick={makeCircle} theme="link-secondary" class="me-auto flex items-center text-sm underline"><Circle class="mr-1 size-4" /> Make circle</BaseButton>
+			<IconButton onclick={makeCircle} class="link-secondary text-sm underline" text="Make circle" icon={Circle} iconClass="size-4" />
 		{/snippet}
 
 		{@render SnippetSVG()}
