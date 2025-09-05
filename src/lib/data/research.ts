@@ -98,9 +98,9 @@ export function formatDate(date: Date): string | undefined {
 
 
 // Generate a unique key for the given research item
-export function generateKey(name: string): string {
-	const hash = generateHash(name);
-	return name.split(' ')[0] + '-' + hash.toString(36);
+export function generateKey(name: string, title: string): string {
+	const hash = generateHash(title);
+	return name.toLowerCase().split(' ')[0] + '-' + hash.toString(36);
 }
 
 
@@ -127,7 +127,7 @@ export function fetchResearchData(): ResearchLibrary {
 			return [key, module.default];
 		})
 	);
-	
+
 	return Object.fromEntries(Object.entries(researchModules).map(([path, module]) => {
 		const key = parsePath(path);
 		return [key, { key, picture: imageMap[key] || '', ...module.research } satisfies ResearchItem];

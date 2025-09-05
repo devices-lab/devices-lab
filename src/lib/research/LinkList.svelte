@@ -23,7 +23,7 @@
 		return 'blue';
 	}
 
-	const chipBase = ['inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5', 'text-sm font-medium transition-colors duration-150', 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'].join(' ');
+	const chipBase = ['inline-flex items-center gap-1.5 rounded-lg shadow-sm border px-2.5 py-1', 'text-sm font-medium transition-colors duration-150', 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'].join(' ');
 
 	function variantClasses(v: ReturnType<typeof pickVariant>) {
 		switch (v) {

@@ -56,8 +56,8 @@
 			{/if}
 
 			<!-- Links -->
-			<div class="lg:flex lg:items-center lg:justify-between lg:pt-1">
-				<LinkList links={item.links} class="pt-1 lg:pt-0" />
+			<div class="lg:flex lg:items-center lg:justify-between pt-3">
+				<LinkList links={item.links} class="" />
 			</div>
 		</div>
 

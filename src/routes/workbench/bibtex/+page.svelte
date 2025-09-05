@@ -25,8 +25,8 @@
 	};
 	const importData = () => {};
 	const downloadData = () => {
-		if (!currentItem.key)
-			currentItem.key = generateKey(currentItem.title);
+		// generate key
+		currentItem.key = generateKey(currentItem.name, currentItem.title);
 
 		const { key, picture, ...data } = currentItem;
 		let dataString = 
