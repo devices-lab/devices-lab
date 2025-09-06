@@ -1,15 +1,8 @@
 <script lang="ts">
+	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/InputContainer.svelte';
 	import { getIcon, type DefProps } from '$lib/utils';
-	import type { HTMLTextareaAttributes } from 'svelte/elements';
-	
 
-	import Textarea from './Textarea.svelte';
-
-	type Props = DefProps & {
-		value: string;
-		label: string;
-		input?: HTMLTextareaAttributes;
-	};
+	type Props = DefProps & InputContainerProps;
 
 	let { value = $bindable(), ...props }: Props = $props();
 
@@ -23,4 +16,4 @@
 	{/if}
 {/snippet}
 
-<Textarea bind:value {post} {...props} />
+<InputContainer {...props} bind:value input="input" {post} />

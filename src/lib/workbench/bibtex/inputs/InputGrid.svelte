@@ -2,7 +2,7 @@
 	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 	import DividerAction from '../components/DividerAction.svelte';
-	import ResetButton from '../components/ResetButton.svelte';
+	import ResetButton from '../components/DeleteButton.svelte';
 
 	type Props = DefProps & {
 		content: Snippet<[Item]>;

@@ -15,31 +15,9 @@
 	$effect(() => {
 		div.dataset.clonedVal = value;
 	});
-
-
 </script>
 
-<div
-	bind:this={div}
-	class="
-		relative
-		grid
-		text-sm
-		after:invisible
-		after:border
-		after:px-3.5
-		after:pt-3
-		after:pb-2
-		after:whitespace-pre-wrap
-		after:text-inherit
-		after:content-[attr(data-cloned-val)_'_']
-		after:[grid-area:1/1/2/2]
-		[&>textarea]:resize-none
-		[&>textarea]:overflow-hidden
-		[&>textarea]:text-inherit
-		[&>textarea]:[grid-area:1/1/2/2]
-		"
->
+<div bind:this={div} class=" relative grid text-sm after:invisible after:border after:px-3.5 after:pt-3 after:pb-2 after:whitespace-pre-wrap after:text-inherit after:content-[attr(data-cloned-val)_'_'] after:[grid-area:1/1/2/2] [&>textarea]:resize-none [&>textarea]:overflow-hidden [&>textarea]:text-inherit [&>textarea]:[grid-area:1/1/2/2]">
 	<textarea {...props} bind:value class="w-full appearance-none px-3.5 pt-3 pb-2 {props.class} {pre ? 'pl-20' : ''} {post ? 'pr-20' : ''}" rows="1"></textarea>
 
 	{#if pre}
@@ -54,3 +32,6 @@
 		</div>
 	{/if}
 </div>
+
+
+

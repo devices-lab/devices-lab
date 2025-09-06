@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
-	import { resolve } from '$app/paths';
 
 	type Props = DefProps & {
 		children: Snippet;

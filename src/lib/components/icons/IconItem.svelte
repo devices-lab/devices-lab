@@ -3,7 +3,7 @@
 	import type { Icon } from '@lucide/svelte';
 
 	type Props = DefProps & {
-		icon: typeof Icon | string;
+		icon: typeof Icon | string | null | undefined;
 	};
 
 	const { icon, ...props }: Props = $props();

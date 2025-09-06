@@ -1,9 +1,8 @@
 <script lang="ts">
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseButton from '$lib/components/BaseButton.svelte';
 	import IconText from '$lib/components/icons/IconText.svelte';
 	import { type DefProps } from '$lib/utils';
 	import type { Icon } from '@lucide/svelte';
-	import BaseButton from '../BaseButton.svelte';
 
 	type Props = DefProps & {
 		onclick: () => void;
@@ -11,11 +10,12 @@
 		icon: typeof Icon | string;
 		textClass?: string;
 		iconClass?: string;
+		position?: 'left' | 'right';
 	};
 
-	const { text, icon, textClass, iconClass, ...props }: Props = $props();
+	const { text, icon, textClass, iconClass, position = 'left', ...props }: Props = $props();
 </script>
 
-<BaseButton {...props} class={props.class}>
-	<IconText {text} {icon} {iconClass} {textClass} />
+<BaseButton {...props}>
+	<IconText {text} {textClass} {icon} {iconClass} {position} />
 </BaseButton>

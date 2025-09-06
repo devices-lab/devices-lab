@@ -1,9 +1,8 @@
 <script lang="ts">
+	import TextField from '$lib/components/inputs/TextField.svelte';
+	import type { Date } from '$lib/data/research';
 	import { clamp, type DefProps } from '$lib/utils';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
-
-	import type { Date } from '$lib/data/research';
-	import Textarea from './Textarea.svelte';
 
 	type Props = DefProps & {
 		value: Date;
@@ -51,10 +50,6 @@
 	let day: string = $derived(normalizeNumber(value.day.toString(), 2, 2, 0, 31));
 
 	$effect(() => {
-		//year = normalizeNumber(year, 4, 0, 0, 9999);
-		//month = normalizeNumber(month, 2, 2, 0, 12);
-		//day = normalizeNumber(day, 2, 2, 0, 31);
-		//
 		value = { year: parseInput(year, 1, 9999, 4), month: parseInput(month, 1, 12, 2), day: parseInput(day, 1, 31, 2) };
 	});
 </script>
@@ -74,8 +69,8 @@
 
 <div class=" ">
 	<div class="flex flex-col items-center gap-4 sm:flex-row">
-		<Textarea bind:value={year} label="Publication year" {...props} post={labelYear} class="w-full flex-1" />
-		<Textarea bind:value={month} label="Publication month" {...props} post={labelMonth} class="w-full flex-1" />
-		<Textarea bind:value={day} label="Publication day" {...props} post={labelDay} class="w-full flex-1" />
+		<TextField bind:value={year} label="Publication year" {...props} post={labelYear} class="w-full flex-1" />
+		<TextField bind:value={month} label="Publication month" {...props} post={labelMonth} class="w-full flex-1" />
+		<TextField bind:value={day} label="Publication day" {...props} post={labelDay} class="w-full flex-1" />
 	</div>
 </div>

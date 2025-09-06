@@ -6,11 +6,12 @@
 
 	import BaseButton from '$lib/components/BaseButton.svelte';
 	import Selectarea from '$lib/workbench/bibtex/inputs/Selectarea.svelte';
-	import Textarea from '$lib/workbench/bibtex/inputs/Textarea.svelte';
+	import Textarea from '$lib/components/inputs/TextField.svelte';
 	import type { PageProps } from './$types';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import Textfield from '$lib/components/inputs/TextField.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -75,15 +76,15 @@
 <Notification bind:this={notification} />
 
 <!--<BaseCard class="flex flex-col items-center justify-between gap-3 rounded-full! border-1 border-gray-200 px-8 shadow-md! sm:flex-row ">-->
-<BaseCard class="flex w-full flex-col gap-6 border-1 border-gray-200 shadow-md!" scale="md:w-3/4">
+<BaseCard class="flex w-full flex-col gap-6 shadow-md!" scale="md:w-3/4">
 	<div class="flex flex-col gap-x-3 sm:flex-row">
-		<Textarea bind:value={doi} label="DOI" placeholder="Enter DOI" class="flex-1" />
-		<BaseButton class="button-slate mt-2 min-w-30 rounded-lg" onclick={importData}>Import</BaseButton>
+		<Textfield bind:value={doi} label="DOI" placeholder="Enter DOI" class="flex-1" />
+		<BaseButton class="button-slate my-auto py-2 min-w-30 rounded-lg" onclick={importData}>Import</BaseButton>
 	</div>
 
 	<div class="flex flex-col gap-x-3 sm:flex-row">
 		<Selectarea bind:value={selected} items={researchSelect} label="Research item" class="flex-1" />
-		<BaseButton class="button-slate mt-2 min-w-30 rounded-lg" onclick={loadData}>Load</BaseButton>
+		<BaseButton class="button-slate my-auto py-2 min-w-30 rounded-lg" onclick={loadData}>Load</BaseButton>
 	</div>
 
 	<div class="flex items-center gap-8">

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import type { DefProps } from '$lib/utils';
-	import { X } from '@lucide/svelte';
+	import { Trash2 } from '@lucide/svelte';
 
 	type Props = DefProps & {
 		onclick: () => void;
@@ -10,4 +10,4 @@
 	const { onclick, ...props }: Props = $props();
 </script>
 
-<IconButton {onclick} class="link-red text-sm" text="" icon={X} iconClass="size-6" />
+<IconButton {...props} {onclick} class="link-red text-sm opacity-50 {props.class}" text="" icon={Trash2} iconClass="size-5 ms-2" />

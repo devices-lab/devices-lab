@@ -10,11 +10,12 @@
 		icon: typeof Icon | string;
 		textClass?: string;
 		iconClass?: string;
+		position?: 'left' | 'right';
 	};
 
-	const { text, icon, textClass, iconClass, ...props }: Props = $props();
+	const { text, icon, textClass, iconClass, position = 'left', ...props }: Props = $props();
 </script>
 
-<BaseLink {...props} class={props.class}>
-	<IconText {text} {icon} {iconClass} {textClass} />
+<BaseLink {...props}>
+	<IconText {text} {textClass} {icon} {iconClass} {position} />
 </BaseLink>

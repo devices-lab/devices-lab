@@ -9,6 +9,6 @@
 	const { children, ...props }: Props = $props();
 </script>
 
-<button {...props} type="button" class="cursor-pointer rounded-full px-3 py-1.5 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 dark:shadow-none {props.class}">
+<button {...props} type="button" class={props.class}>
 	{@render children?.()}
 </button>
