@@ -21,7 +21,7 @@
 						group/link
 						rounded-full
 						px-2.5
-						py-1.5!
+						py-1!
 						text-sm/6
 						duration-150
 						hover:-translate-y-0.5

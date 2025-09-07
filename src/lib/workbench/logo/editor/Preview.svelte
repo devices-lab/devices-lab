@@ -35,7 +35,7 @@
 
 	let svgFlat: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
 	let svgKicad: Promise<SVGSVGElement | undefined> = $state(Promise.resolve(undefined));
-	let timeout: number;
+	let timeout: NodeJS.Timeout;
 
 	export const updatePreview = () => {
 		if (autoUpdate) {

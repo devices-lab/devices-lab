@@ -1,16 +1,28 @@
 <script lang="ts">
+	import { tooltip } from '$lib/tooltip';
+	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 
-	const { children, tooltip }: { children: Snippet; tooltip: Snippet } = $props();
+	type Props = DefProps & {
+		children: Snippet;
+		content: string;
+		params?: Record<string, any>;
+	};
+
+	const { children, content, params, ...props }: Props = $props();
 </script>
 
-<div class="group/award relative">
-	<div class="flex-root">
-		{@render children()}
-	</div>
-	<div class="absolute z-1000 hidden group-hover/award:block left-1/2 -translate-x-1/2 mt-1 isolate">
-		<div class="rounded-md bg-white p-2 text-gray-800 shadow-lg dark:bg-gray-800 dark:text-gray-200">
-			{@render tooltip()}
+<div {...props} class="group/tooltip relative {props.class}" use:tooltip={{ content, ...params }}>
+	{@render children()}
+	<!--
+	<div class="absolute left-1/2 mt-1 hidden -translate-x-1/2 group-hover/tooltip:inline-flex">
+		<div class="rounded-md bg-amber-200 p-2 text-gray-800 shadow-lg dark:bg-gray-800 dark:text-gray-200">
+			{#if typeof tooltipContent === 'string'}
+				{tooltipContent}
+			{:else}
+				{@render tooltipContent()}
+			{/if}
 		</div>
 	</div>
+	-->
 </div>

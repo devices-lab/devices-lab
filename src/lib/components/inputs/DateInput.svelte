@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TextField from '$lib/components/inputs/TextField.svelte';
+	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import type { Date } from '$lib/data/research';
 	import { clamp, type DefProps } from '$lib/utils';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
@@ -69,8 +69,8 @@
 
 <div class=" ">
 	<div class="flex flex-col items-center gap-4 sm:flex-row">
-		<TextField bind:value={year} label="Publication year" {...props} post={labelYear} class="w-full flex-1" />
-		<TextField bind:value={month} label="Publication month" {...props} post={labelMonth} class="w-full flex-1" />
-		<TextField bind:value={day} label="Publication day" {...props} post={labelDay} class="w-full flex-1" />
+		<TextInput bind:value={year} label="Publication year" {...props} post={labelYear} class="w-full flex-1" />
+		<TextInput bind:value={month} label="Publication month" {...props} post={labelMonth} class="w-full flex-1" />
+		<TextInput bind:value={day} label="Publication day" {...props} post={labelDay} class="w-full flex-1" />
 	</div>
 </div>

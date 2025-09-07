@@ -1,23 +1,5 @@
-<script lang="ts">
-	import type { DefProps } from '$lib/utils';
-	import type { Snippet } from 'svelte';
-	import type { HTMLSelectAttributes } from 'svelte/elements';
 
-	import HtmlSelect from './HTMLSelect.svelte';
-	import InputWrapper from './InputWrapper.svelte';
-
-	type Props = DefProps & {
-		value: string;
-		items: { key: string; title: string }[];
-		label?: string;
-		input?: HTMLSelectAttributes;
-	};
-
-	let { value = $bindable(), items, label = '', input, ...props }: Props = $props();
-	const uid = $props.id();
-	const inputId = $derived(`input-${uid}`);
-</script>
-
+<!--
 <InputWrapper {inputId} {label} {...props}>
 	<HtmlSelect
 		{...input}
@@ -46,3 +28,19 @@
 			dark:focus:outline-primary-500"
 	/>
 </InputWrapper>
+-->
+
+<script lang="ts">
+	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/InputContainer.svelte';
+	import type { DefProps } from '$lib/utils';
+	import HtmlSelect from '$lib/workbench/bibtex/inputs/HTMLSelect.svelte';
+
+	type Props = DefProps & InputContainerProps & {
+		items: { value: string; label: string }[];
+	};
+
+	let { value = $bindable(), items, ...props }: Props = $props();
+</script>
+
+
+<InputContainer {...props} bind:value input="select" inputProps={{options: items}} />

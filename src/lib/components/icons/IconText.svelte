@@ -15,11 +15,15 @@
 </script>
 
 <div {...props} class="flex items-center justify-center gap-2 {props.class}">
-	{#if position === 'left'}
-		<IconItem {icon} class={iconClass} />
-		<span class={textClass}>{text}</span>
+	{#if text}
+		{#if position === 'left'}
+			<IconItem {icon} class={iconClass} />
+			<span class={textClass}>{text}</span>
+		{:else}
+			<span class={textClass}>{text}</span>
+			<IconItem {icon} class={iconClass} />
+		{/if}
 	{:else}
-		<span class={textClass}>{text}</span>
 		<IconItem {icon} class={iconClass} />
 	{/if}
 </div>

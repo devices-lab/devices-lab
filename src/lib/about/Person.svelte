@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { TeamMember } from '$lib/data/about';
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import BaseLink from '$lib/components/BaseLink.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
+	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import type { TeamMember } from '$lib/data/about';
 
 	const { person }: { person: TeamMember } = $props();
 </script>
@@ -15,14 +15,8 @@
 	<!--<span class="mx-auto flex w-3/4 border-t mb-1 border-gray-200 dark:border-gray-700"></span>-->
 	<div class="mt-1 flex flex-wrap justify-center gap-2">
 		{#each person.sites as site}
-			<Tooltip>
-				<BaseLink href={site.href} class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" aria-label={site.title} target="_blank" rel="noopener noreferrer" title={site.title}>
-					<site.icon class="size-5" />
-				</BaseLink>
-
-				{#snippet tooltip()}
-					<p class="">{site.title}</p>
-				{/snippet}
+			<Tooltip content={site.title}>
+				<IconLink href={site.href} text="" icon={site.icon} iconClass="size-5" class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" external/>
 			</Tooltip>
 		{/each}
 	</div>

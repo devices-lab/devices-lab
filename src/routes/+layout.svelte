@@ -2,6 +2,9 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 
+	import tippy from 'tippy.js';
+	import 'tippy.js/dist/tippy.css'; // optional for styling
+
 	import type { LayoutData } from './$types';
 	import { onMount, type Snippet } from 'svelte';
 	import { page } from '$app/state';
@@ -30,7 +33,7 @@
 <div class="flex min-h-full flex-col">
 	<Header />
 
-	<div class="container mx-auto flex grow flex-col px-4 gap-y-5">
+	<div class="container mx-auto flex grow flex-col gap-y-5 px-4">
 		{#if hasBreadcrumbs}
 			<Breadcrumbs breadcrumbs={page.data.breadcrumbs} class="mt-6" />
 		{/if}

@@ -28,7 +28,7 @@
 		{#if item.picture}
 			<!-- Media -->
 			<div class="order-1 mx-auto flex flex-2 items-center overflow-hidden rounded-lg">
-				<BaseImg src={item.picture} alt="" class="w-full max-w-100 flex-0 grow rounded-lg" />
+				<BaseImg src={item.picture} alt="" class="w-full flex-0 grow rounded-lg" />
 			</div>
 		{/if}
 

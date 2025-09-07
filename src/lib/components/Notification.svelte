@@ -39,7 +39,7 @@
 
 	//======================================================================================//
 
-	let timer: number;
+	let timer: NodeJS.Timeout;
 
 	export const show = (type: NotificationType, title: string, message: string = '', timeout: number = NOTIFICATION_TIMEOUT_MS) => {
 		content = { active: true, type, title, message };

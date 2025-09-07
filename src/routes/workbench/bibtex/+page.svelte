@@ -1,17 +1,15 @@
 <script lang="ts">
-	import BaseCard from '$lib/components/BaseCard.svelte';
-	import { type Author, type Link, type ResearchItem, type ResearchType, DefaultResearchItem, fetchResearchDataDOI, generateAndDownloadCitation, generateKey } from '$lib/data/research';
-	import ResearchInput from '$lib/workbench/bibtex/ResearchInput.svelte';
-	import { Download, X } from '@lucide/svelte';
-
 	import BaseButton from '$lib/components/BaseButton.svelte';
-	import Selectarea from '$lib/workbench/bibtex/inputs/Selectarea.svelte';
-	import Textarea from '$lib/components/inputs/TextField.svelte';
-	import type { PageProps } from './$types';
+	import BaseCard from '$lib/components/BaseCard.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import Textfield from '$lib/components/inputs/TextField.svelte';
+	import TextInput from '$lib/components/inputs/TextInput.svelte';
+	import { type ResearchItem, DefaultResearchItem, fetchResearchDataDOI, generateAndDownloadCitation } from '$lib/data/research';
+	import ResearchInput from '$lib/workbench/bibtex/ResearchInput.svelte';
+	import Selectarea from '$lib/workbench/bibtex/inputs/Selectarea.svelte';
+	import { Download, X } from '@lucide/svelte';
+	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 
@@ -65,10 +63,10 @@
 	let currentItem: ResearchItem = $state({ ...DefaultResearchItem });
 
 	const researchSelect = $derived([
-		{ key: '', title: '' },
+		{ value: '', label: '' },
 		...Object.entries(data.researchLibrary).map(([key, item]) => ({
-			key,
-			title: item.name
+			value: key,
+			label: item.name
 		}))
 	]);
 </script>
@@ -76,19 +74,19 @@
 <Notification bind:this={notification} />
 
 <!--<BaseCard class="flex flex-col items-center justify-between gap-3 rounded-full! border-1 border-gray-200 px-8 shadow-md! sm:flex-row ">-->
-<BaseCard class="flex w-full flex-col gap-6 shadow-md!" scale="md:w-3/4">
+<BaseCard class="flex w-full flex-col gap-6 shadow-md! px-8 py-6" scale="md:w-3/4">
 	<div class="flex flex-col gap-x-3 sm:flex-row">
-		<Textfield bind:value={doi} label="DOI" placeholder="Enter DOI" class="flex-1" />
-		<BaseButton class="button-slate my-auto py-2 min-w-30 rounded-lg" onclick={importData}>Import</BaseButton>
+		<TextInput bind:value={doi} label="DOI" placeholder="Enter DOI" class="flex-1" />
+		<BaseButton class="button-slate my-auto py-1 min-w-30 rounded-lg" onclick={importData}>Import</BaseButton>
 	</div>
 
 	<div class="flex flex-col gap-x-3 sm:flex-row">
 		<Selectarea bind:value={selected} items={researchSelect} label="Research item" class="flex-1" />
-		<BaseButton class="button-slate my-auto py-2 min-w-30 rounded-lg" onclick={loadData}>Load</BaseButton>
+		<BaseButton class="button-slate my-auto py-1 min-w-30 rounded-lg" onclick={loadData}>Load</BaseButton>
 	</div>
 
 	<div class="flex items-center gap-8">
-		<IconButton onclick={downloadData} class="button-green mx-auto py-1! text-sm/6! tracking-wider uppercase" text="Download" icon={Download} />
+		<IconButton onclick={downloadData} class="button-green mx-auto py-2 px-4 text-sm/6 rounded-full tracking-wider uppercase" text="Download" icon={Download} />
 		<IconButton onclick={clearData} class="link-red absolute -bottom-10 left-0 m-1 text-sm" text="Clear" icon={X} />
 	</div>
 

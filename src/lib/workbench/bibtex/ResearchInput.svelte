@@ -1,16 +1,12 @@
 <script lang="ts">
-	import type { Author, Award, Link, ResearchItem, Tag } from '$lib/data/research';
-
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import ItemCard from '$lib/research/ItemCard.svelte';
-	import Datearea from '$lib/workbench/bibtex/inputs/Datearea.svelte';
-
-	import InputList from './inputs/InputList.svelte';
-	import InputGrid from './inputs/InputGrid.svelte';
-
+	import Datearea from '$lib/components/inputs/DateInput.svelte';
+	import IconInput from '$lib/components/inputs/IconInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import IconInput from '$lib/components/inputs/IconInput.svelte';
+	import type { Author, Award, Link, ResearchItem, Tag } from '$lib/data/research';
+	import ItemCard from '$lib/research/ItemCard.svelte';
+	import InputList from './inputs/InputList.svelte';
 
 	let { research = $bindable(), showFeedback = false }: { research: ResearchItem; showFeedback?: boolean } = $props();
 
@@ -30,52 +26,52 @@
 	</div>
 
 	<div class="py-10">
-		<BaseCard class="px-4 py-6 sm:p-8">
+		<BaseCard class="px-4 py-6 sm:p-8 flex flex-col gap-y-2">
 			<div class="flex flex-col items-start gap-4 md:flex-row">
-				<TextInput bind:value={research.name} label="Key" sublabel="Internal key for the paper." class="flex-1" {validate} />
-				<TextInput bind:value={research.title} label="Title" sublabel="The full title of the paper." class="flex-3" {validate} />
+				<TextInput bind:value={research.name} label="Key" sublabel="Internal key for the paper" class="flex-1" {validate} />
+				<TextInput bind:value={research.title} label="Title" sublabel="The full title of the paper" class="flex-3" {validate} />
 			</div>
 			<TextField bind:value={research.abstract} label="Abstract" sublabel="A brief summary of the paper. Can be the paper abstract, but doesn't need to be." {validate} />
-			<TextInput bind:value={research.doi} label="DOI" sublabel="DOI number for the paper." {validate} />
-			<TextInput bind:value={research.type} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)." area={research.type ? '' : 'outline-red-400'} {validate} />
+			<TextInput bind:value={research.doi} label="DOI" sublabel="DOI number for the paper" {validate} />
+			<TextInput bind:value={research.type} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)" area={research.type ? '' : 'outline-red-400'} {validate} />
 
 			<div class="mt-4 py-3 font-semibold">Publication:</div>
 
 			<Datearea bind:value={research.published} label="Publication date" {validate} />
-			<div class="flex flex-col items-start gap-4 md:flex-row">
-				<TextField bind:value={research.conference} label="Conference" class="lg:flex-1" {validate} />
-				<TextField bind:value={research.location} label="Conference location" sublabel="City, country." class="lg:flex-1" {validate} />
-			</div>
+			
+				<TextField bind:value={research.conference} label="Conference" class="flex-1" {validate} />
+				<TextField bind:value={research.location} label="Conference location" sublabel="City, country" class="flex-1" {validate} />
+		
 
-			<InputList bind:items={research.authors} newItem={(): Author => ({ name: '', affiliation: '' })} title="Authors" subtitle="Information about the authors.">
+			<InputList bind:items={research.authors} newItem={(): Author => ({ name: '', affiliation: '' })} title="Authors">
 				{#snippet content(item: Author)}
 					<TextInput bind:value={item.name} label="Name" class="flex-2" inputProps={{ placeholder: 'name' }} {validate} />
 					<TextInput bind:value={item.affiliation} label="Affiliation" class="flex-3" inputProps={{ placeholder: 'affiliation' }} {validate} />
 				{/snippet}
 			</InputList>
 
-			<InputList bind:items={research.links} newItem={(): Link => ({ text: '', icon: '', href: '' })} title="Links" subtitle="Information about the links." type="wide">
+			<InputList bind:items={research.links} newItem={(): Link => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" type="wide">
 				{#snippet content(item: Link)}
 					<div class="flex w-full flex-row items-start gap-4 xl:flex-1">
-						<TextInput bind:value={item.text} label="Title" class="flex-1" inputProps={{ placeholder: 'title' }} {validate} />
-						<IconInput bind:value={item.icon} label="Icon" sublabel="See lucide.dev/icons." class="flex-1" input={{ placeholder: 'icon' }} {validate} />
+						<TextInput bind:value={item.text} label="Title" sublabel="Name of the link" class="flex-1" inputProps={{ placeholder: 'title' }} {validate} />
+						<IconInput bind:value={item.icon} label="Icon" sublabel="See lucide.dev/icons" class="flex-1" input={{ placeholder: 'icon' }} {validate} />
 					</div>
-					<TextInput bind:value={item.href} label="URL" sublabel="Can be external URL, or internal device / tool identifier." class="flex-1" inputProps={{ placeholder: 'https://example.com' }} {validate} />
+					<TextInput bind:value={item.href} label="URL" sublabel="Can be external URL, or internal device / tool identifier" class="flex-1" inputProps={{ placeholder: 'https://example.com' }} {validate} />
 				{/snippet}
 			</InputList>
 
-			<InputList bind:items={research.awards} newItem={(): Award => ({ name: '', icon: '' })} title="Awards" subtitle="Awards received by the paper.">
+			<InputList bind:items={research.awards} newItem={(): Award => ({ name: '', icon: 'Medal' })} title="Awards">
 				{#snippet content(item: Award)}
-					<TextInput bind:value={item.name} label="Name" class="flex-1" inputProps={{ placeholder: 'award' }} {validate} />
-					<IconInput bind:value={item.icon} label="Icon" sublabel="See lucide.dev/icons." class="flex-1" input={{ placeholder: 'icon' }} {validate} />
+					<TextInput bind:value={item.name} label="Name" sublabel="Name of the award, like 'Best Paper' or 'Honorable Mention'" class="flex-1" inputProps={{ placeholder: 'award' }} {validate} />
+					<IconInput bind:value={item.icon} label="Icon" sublabel="See lucide.dev/icons" class="flex-1" input={{ placeholder: 'icon' }} {validate} />
 				{/snippet}
 			</InputList>
 
-			<InputGrid bind:items={research.tags} newItem={(): Tag => ({ name: '' })} title="Tags" subtitle="Relevant tags for the paper.">
+			<InputList bind:items={research.tags} newItem={(): Tag => ({ name: '' })} title="Tags">
 				{#snippet content(item: Tag)}
 					<TextInput bind:value={item.name} label="" class="" inputProps={{ placeholder: 'tag' }} {validate} />
 				{/snippet}
-			</InputGrid>
+			</InputList>
 		</BaseCard>
 	</div>
 </div>

@@ -1,6 +1,12 @@
 <script lang="ts">
 	import type { DefProps } from '$lib/utils';
 	import type { Component, Snippet } from 'svelte';
+	import Tooltip from '../Tooltip.svelte';
+	import { CircleQuestionMarkIcon } from '@lucide/svelte';
+	import IconLink from '../icons/IconLink.svelte';
+	import IconButton from '../icons/IconButton.svelte';
+	import IconItem from '../icons/IconItem.svelte';
+	import IconText from '../icons/IconText.svelte';
 
 	// Props for the input container
 	export type InputContainerProps = {
@@ -27,7 +33,7 @@
 	// Input data
 	let { value = $bindable(), input, inputProps, label, sublabel, pre, post, validate, ...props }: Props = $props();
 
-	const validInput = $derived(validate && validate(value));
+	const validInput = $derived(!validate || validate(value));
 
 	// Style for the input element
 	const inputStyle = $derived(`
@@ -44,10 +50,10 @@
 		outline-1
 		-outline-offset-1
 		outline-gray-300
-		placeholder:text-gray-400
-		focus:outline-2
-		focus:-outline-offset-2
-		focus:outline-primary-500
+		placeholder:text-gray-500/50
+		group-has-focus/item:outline-2
+		group-has-focus/item:-outline-offset-2
+		group-has-focus/item:outline-primary-500
 		disabled:cursor-not-allowed
 		disabled:bg-gray-50
 		disabled:text-gray-500
@@ -56,7 +62,7 @@
 		dark:text-gray-300
 		dark:outline-white/10
 		dark:placeholder:text-gray-500
-		dark:focus:outline-primary-500
+		dark:group-has-focus/item:outline-primary-500
 		dark:disabled:bg-white/10
 		dark:disabled:text-gray-500
 		dark:disabled:outline-white/5
@@ -87,23 +93,32 @@
 	`);
 
 	const labelStyle = $derived(`
-		absolute
-		top-0
+		flex
+		gap-2
+		absolute top-0 left-1.5 -translate-y-1/2
 		group-has-focus/item:text-primary-500
 		group-has-focus/item:font-medium
-		left-1.5
 		rounded-md
-		z-10
 		-translate-y-1/2
 		bg-white
 		px-2
 		py-0.5
 		text-xs
-		font-light
-		tracking-wide
-		uppercase
+		font-medium
 		dark:bg-gray-800
 		${validInput ? 'text-gray-900/60 dark:text-white' : 'text-red-600/40 dark:text-red-600/40 font-semibold'}
+	`);
+
+	const sublabelStyle = $derived(`
+		absolute
+		top-full
+		left-1.5
+		px-2
+		text-start
+		text-xs/5
+		font-normal
+		text-gray-900/40
+		dark:text-gray-400
 	`);
 
 	const uid = $props.id();
@@ -125,13 +140,8 @@
 	{/if}
 {/snippet}
 
-<div {...props} class="w-full pt-[20px] {sublabel ? '' : 'pb-[20px]'} {props.class}">
+<div {...props} class="w-full py-[10px] {props.class}">
 	<div class="group/item relative flex flex-1 flex-col">
-		<!-- Label on the top -->
-		<label for={inputId} class={labelStyle}>
-			{label}
-		</label>
-
 		<!-- Input wrapper -->
 		<div bind:this={div} class={wrapperStyle}>
 			<!-- Input element -->
@@ -145,7 +155,9 @@
 				<!-- Select element -->
 				<select bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle}>
 					{#each inputProps?.options as option}
-						<option value={option.value}>{option.label}</option>
+						<option value={option.value}>
+							{option.label} [{option.value}]
+						</option>
 					{/each}
 				</select>
 			{:else}
@@ -158,7 +170,36 @@
 			{@render sideContainer(post, 'right-0 border-s-1 ps-0')}
 		</div>
 
+		<!-- Label on the top -->
+		{#if label}
+			<div class={labelStyle}>
+				<span class="tracking-wide uppercase">{label}</span>
+				{#if sublabel}
+					<Tooltip content={sublabel} params={{ animation: 'fade', interactive: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 }}>
+						<IconItem icon={CircleQuestionMarkIcon} class="size-4 opacity-50" />
+					</Tooltip>
+				{/if}
+			</div>
+
+			<!--
+			<Tooltip class="absolute top-0 left-1.5">
+				{#snippet tooltip()}
+					<span>{sublabel}</span>
+				{/snippet}
+				<label for={inputId} class={labelStyle}>
+					{label}
+					{#if sublabel}
+						<CircleQuestionMarkIcon class="ml-1 h-4 w-4" />
+					{/if}
+				</label>
+			</Tooltip>-->
+		{/if}
+
 		<!-- Sublabel on the bottom -->
-		<div class=" ms-3.5 text-start text-xs/5 font-normal text-gray-900/40 dark:text-gray-400">{sublabel}</div>
+		{#if false}
+			<div class={sublabelStyle}>
+				{sublabel}
+			</div>
+		{/if}
 	</div>
 </div>
