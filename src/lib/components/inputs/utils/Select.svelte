@@ -2,10 +2,11 @@
 	import type { DefProps } from '$lib/utils';
 	import { Check, ChevronsUpDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	
 
 	type Props = DefProps & {
 		value: string;
-		items: { key: string; title: string }[];
+		items: { value: string; label: string }[];
 	};
 
 	let { value = $bindable(), items, ...props }: Props = $props();
@@ -38,15 +39,15 @@
 	</el-option>
 {/snippet}
 
-<el-select {...props} {value} class={props.class} bind:this={selectBox}>
-	<button type="button" class="flex items-center justify-between w-full">
-		<el-selectedcontent class="col-start-1 row-start-1 truncate pr-6">{items[0]?.title || ''}</el-selectedcontent>
+<el-select {value} class="" bind:this={selectBox}>
+	<button {...props} type="button" class="flex items-center justify-between w-full {props.class}">
+		<el-selectedcontent class="col-start-1 row-start-1 truncate pr-6">{items[0]?.label || ''}</el-selectedcontent>
 		<ChevronsUpDown class="size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"/>
 	</button>
 
 	<el-options anchor="bottom start" popover="auto" class="max-h-60 w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-		{#each items as { key, title }}
-			{@render SelectItem(title, key, key)}
+		{#each items as { value, label }}
+			{@render SelectItem(label, value, value)}
 		{/each}
 	</el-options>
 </el-select>

@@ -1,12 +1,11 @@
 <script lang="ts">
+	import Tooltip from '$lib/components/Tooltip.svelte';
+	import IconItem from '$lib/components/icons/IconItem.svelte';
+	import Select from '$lib/components/inputs/utils/Select.svelte';
+	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
 	import type { DefProps } from '$lib/utils';
-	import type { Component, Snippet } from 'svelte';
-	import Tooltip from '../Tooltip.svelte';
 	import { CircleQuestionMarkIcon } from '@lucide/svelte';
-	import IconLink from '../icons/IconLink.svelte';
-	import IconButton from '../icons/IconButton.svelte';
-	import IconItem from '../icons/IconItem.svelte';
-	import IconText from '../icons/IconText.svelte';
+	import type { Component, Snippet } from 'svelte';
 
 	// Props for the input container
 	export type InputContainerProps = {
@@ -27,7 +26,7 @@
 
 	type Props = DefProps &
 		InputContainerProps & {
-			input: Component | 'textarea' | 'input' | 'select';
+			input: Component | 'textarea' | 'input' | 'select' | 'select2' | 'selectType';
 		};
 
 	// Input data
@@ -40,6 +39,7 @@
 		px-5.5
 		pt-3.5
 		pb-2.5
+		min-h-[50px]
 		sm:text-sm/6
 		block
 		w-full
@@ -106,19 +106,7 @@
 		text-xs
 		font-medium
 		dark:bg-gray-800
-		${validInput ? 'text-gray-900/60 dark:text-white' : 'text-red-600/40 dark:text-red-600/40 font-semibold'}
-	`);
-
-	const sublabelStyle = $derived(`
-		absolute
-		top-full
-		left-1.5
-		px-2
-		text-start
-		text-xs/5
-		font-normal
-		text-gray-900/40
-		dark:text-gray-400
+		${validInput ? 'text-gray-900/60 dark:text-white' : 'text-red-600/60 dark:text-red-600/40'}
 	`);
 
 	const uid = $props.id();
@@ -160,6 +148,12 @@
 						</option>
 					{/each}
 				</select>
+			{:else if inputElement.el === 'select2'}
+				<!-- Select2 element -->
+				<Select bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+			{:else if inputElement.el === 'selectType'}
+				<!-- SelectType element -->
+				<SelectType bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
 			{:else}
 				<!-- Custom input -->
 				<inputElement.el bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
@@ -175,30 +169,10 @@
 			<div class={labelStyle}>
 				<span class="tracking-wide uppercase">{label}</span>
 				{#if sublabel}
-					<Tooltip content={sublabel} params={{ animation: 'fade', interactive: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 }}>
+					<Tooltip content={sublabel} params={{ animation: 'fade', interactive: true, allowHTML: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 }}>
 						<IconItem icon={CircleQuestionMarkIcon} class="size-4 opacity-50" />
 					</Tooltip>
 				{/if}
-			</div>
-
-			<!--
-			<Tooltip class="absolute top-0 left-1.5">
-				{#snippet tooltip()}
-					<span>{sublabel}</span>
-				{/snippet}
-				<label for={inputId} class={labelStyle}>
-					{label}
-					{#if sublabel}
-						<CircleQuestionMarkIcon class="ml-1 h-4 w-4" />
-					{/if}
-				</label>
-			</Tooltip>-->
-		{/if}
-
-		<!-- Sublabel on the bottom -->
-		{#if false}
-			<div class={sublabelStyle}>
-				{sublabel}
 			</div>
 		{/if}
 	</div>

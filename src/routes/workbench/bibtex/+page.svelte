@@ -7,9 +7,10 @@
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import { type ResearchItem, DefaultResearchItem, fetchResearchDataDOI, generateAndDownloadCitation } from '$lib/data/research';
 	import ResearchInput from '$lib/workbench/bibtex/ResearchInput.svelte';
-	import Selectarea from '$lib/workbench/bibtex/inputs/Selectarea.svelte';
+	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
 	import { Download, X } from '@lucide/svelte';
 	import type { PageProps } from './$types';
+	import SelectTypeInput from '$lib/components/inputs/SelectTypeInput.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -69,6 +70,9 @@
 			label: item.name
 		}))
 	]);
+
+
+	let temp = $state('');
 </script>
 
 <Notification bind:this={notification} />
@@ -81,7 +85,7 @@
 	</div>
 
 	<div class="flex flex-col gap-x-3 sm:flex-row">
-		<Selectarea bind:value={selected} items={researchSelect} label="Research item" class="flex-1" />
+		<SelectInput bind:value={selected} items={researchSelect} label="Research item" class="flex-1" />
 		<BaseButton class="button-slate my-auto py-1 min-w-30 rounded-lg" onclick={loadData}>Load</BaseButton>
 	</div>
 
@@ -89,6 +93,7 @@
 		<IconButton onclick={downloadData} class="button-green mx-auto py-2 px-4 text-sm/6 rounded-full tracking-wider uppercase" text="Download" icon={Download} />
 		<IconButton onclick={clearData} class="link-red absolute -bottom-10 left-0 m-1 text-sm" text="Clear" icon={X} />
 	</div>
+	<SelectTypeInput bind:value={temp} items={researchSelect} label="Type" class="flex-1" />
 
 	<Spinner {loading} class="absolute right-0 bottom-0 m-3" />
 </BaseCard>

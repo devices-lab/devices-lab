@@ -1,7 +1,7 @@
 <script lang="ts" generics="Item">
+	import DeleteButton from '$lib/components/DeleteButton.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import type { DefProps } from '$lib/utils';
-	import DeleteButton from '$lib/workbench/bibtex/components/DeleteButton.svelte';
 	import { Plus } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 
@@ -9,11 +9,11 @@
 		content: Snippet<[Item]>;
 		items: Item[];
 		newItem: () => Item;
-		type?: 'narrow' | 'wide';
+		gap?: 'gap-0' | 'gap-8';
 		title: string;
 	};
 
-	let { content, items = $bindable(), newItem, type = 'narrow', title, ...props }: Props = $props();
+	let { content, items = $bindable(), newItem, gap = 'gap-0', title, ...props }: Props = $props();
 
 	const add = () => {
 		items = [...items, newItem()] as Item[];
@@ -30,10 +30,10 @@
 		<div class="font-semibold">{title}</div>
 		<IconButton onclick={add} class="button-blue rounded-lg px-3 py-1 text-xs tracking-wide uppercase shadow-sm" text="Add" icon={Plus} iconClass="size-4" position="left" />
 	</div>
-	<div class="flex flex-1 flex-col flex-wrap {type === 'wide' ? 'gap-8' : 'gap-0'}">
+	<div class="flex flex-1 flex-col flex-wrap {gap}">
 		{#each items as item, i}
 			<div class="flex flex-row">
-				<div class="flex flex-1 flex-row gap-y-1 flex-wrap gap-x-2 sm:gap-x-4">
+				<div class="flex flex-1 flex-row flex-wrap gap-x-2 gap-y-1 sm:gap-x-4">
 					{@render content(item)}
 				</div>
 				<DeleteButton onclick={() => remove(i)} class="my-auto flex-0" />

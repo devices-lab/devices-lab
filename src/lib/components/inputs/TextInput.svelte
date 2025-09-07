@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/InputContainer.svelte';
+	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/utils/InputContainer.svelte';
 	import type { DefProps } from '$lib/utils';
 
 	type Props = DefProps & InputContainerProps;
