@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import type { Snippet } from 'svelte';
 
 	const { children, href, isLast }: { children: Snippet; href: string; isLast?: boolean } = $props();

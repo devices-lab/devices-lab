@@ -2,7 +2,7 @@
 	import { type ItemType } from '$lib/data/item';
 
 	import FeaturedItem from '$lib/items/featured/FeaturedItem.svelte';
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 
 	import { ChevronRight } from '@lucide/svelte';
 	import type { Route } from '$lib/data/routes';

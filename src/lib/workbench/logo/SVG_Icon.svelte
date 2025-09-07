@@ -95,7 +95,7 @@
 			<!-- Border configuration -->
 			<BorderConfig bind:border={data.border} defaults={IconDefaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />
 
-			<IconButton onclick={makeCircle} class="link-secondary text-sm underline" text="Make circle" icon={Circle} iconClass="size-4" />
+			<IconButton onclick={makeCircle} class="link-secondary" text={{ text: 'Make circle', class: 'text-sm underline' }} icon={{ icon: Circle, iconClass: 'size-4' }} />
 		{/snippet}
 
 		{@render SnippetSVG()}

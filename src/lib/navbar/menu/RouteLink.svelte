@@ -4,7 +4,7 @@
 	import type { ClassValue } from 'svelte/elements';
 	import type { Route as RouteType } from '$lib/data/routes';
 
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import Route from '$lib/navbar/menu/Route.svelte';
 
 	const { route, children, class: className, ...restProps }: { route: RouteType; children?: Snippet; class?: ClassValue; [key: string]: any } = $props();

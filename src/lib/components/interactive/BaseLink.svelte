@@ -1,13 +1,18 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
-		children: Snippet;
+	export type BaseLinkProps = {
 		href: string;
 		external?: boolean;
 	};
+
+	type Props = DefProps &
+		BaseLinkProps & {
+			children: Snippet;
+		};
 
 	const { children, href, external = false, ...props }: Props = $props();
 
@@ -18,6 +23,6 @@
 	});
 </script>
 
-<a href={resolvedHref} {...props} {...linkProps}>
+<ClassBox {props} tag="a" href={resolvedHref} {...linkProps}>
 	{@render children?.()}
-</a>
+</ClassBox>

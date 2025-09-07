@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { DefProps } from '$lib/utils';
 	import type { Snippet } from 'svelte';
 
@@ -14,6 +15,6 @@
 	const scaleClass = $derived(scale === 'small' ? 'md:max-w-2/3' : scale === 'full' ? 'w-full' : scale);
 </script>
 
-<div {...props} class="group relative mx-auto rounded-md bg-white p-4 shadow-xs outline outline-gray-900/5 sm:rounded-lg dark:bg-gray-800/50 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10 {props.class} {hoverClass} {scaleClass}">
+<ClassBox {props} class="group relative mx-auto rounded-md bg-white p-4 shadow-xs outline outline-gray-900/5 sm:rounded-lg dark:bg-gray-800/50 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10 {hoverClass} {scaleClass}">
 	{@render children()}
-</div>
+</ClassBox>

@@ -1,29 +1,32 @@
 <script lang="ts">
-	import IconItem from '$lib/components/icons/IconItem.svelte';
+	import IconItem, { type IconProps, type IconType } from '$lib/components/icons/IconItem.svelte';
+	import TextItem, { type TextProps, type TextType } from '$lib/components/icons/TextItem.svelte';
+	import { normaliseOptional, normaliseRequired } from '$lib/normalise';
 	import { type DefProps } from '$lib/utils';
-	import type { Icon } from '@lucide/svelte';
+	import ClassBox from '$lib/components/ClassBox.svelte';
 
-	type Props = DefProps & {
-		text: string;
-		icon: typeof Icon | string;
-		textClass?: string;
-		iconClass?: string;
-		position?: 'left' | 'right';
+	export type IconTextProps = DefProps & {
+		icon: IconType | IconProps;
+		text?: TextType | TextProps;
+		position?: 'iconFirst' | 'iconLast';
 	};
 
-	const { text, icon, textClass, iconClass, position = 'left', ...props }: Props = $props();
+	const { text, icon, position = 'iconFirst', ...props }: IconTextProps = $props();
+
+	const iconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
+	const textProps = $derived(normaliseOptional<TextProps, 'text'>(text, 'text'));
 </script>
 
-<div {...props} class="flex items-center justify-center gap-2 {props.class}">
-	{#if text}
-		{#if position === 'left'}
-			<IconItem {icon} class={iconClass} />
-			<span class={textClass}>{text}</span>
+<ClassBox {props} class="flex items-center justify-center gap-2">
+	{#if textProps}
+		{#if position === 'iconFirst'}
+			<IconItem {...iconProps} />
+			<TextItem {...textProps} />
 		{:else}
-			<span class={textClass}>{text}</span>
-			<IconItem {icon} class={iconClass} />
+			<TextItem {...textProps} />
+			<IconItem {...iconProps} />
 		{/if}
 	{:else}
-		<IconItem {icon} class={iconClass} />
+		<IconItem {...iconProps} />
 	{/if}
-</div>
+</ClassBox>

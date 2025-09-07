@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import BaseIcon from '$lib/components/BaseIcon.svelte';
 
 	import type { WorkbenchItem } from '$lib/data/workbench';

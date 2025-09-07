@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 
 	const Shop = {
 		name: 'Devices Lab',

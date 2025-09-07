@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { researchTypeItems } from '$lib/_content/workbench';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import DynamicList from '$lib/components/DynamicList.svelte';
 	import Datearea from '$lib/components/inputs/DateInput.svelte';
 	import IconInput from '$lib/components/inputs/IconInput.svelte';
+	import SelectTypeInput from '$lib/components/inputs/SelectTypeInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import type { Author, Award, Link, ResearchItem, Tag } from '$lib/data/research';
@@ -14,6 +16,8 @@
 		if (!value && showFeedback) return false;
 		return true;
 	};
+
+
 </script>
 
 <div class="divide-y divide-gray-900/10 text-gray-800 dark:divide-white/10 dark:text-gray-100">
@@ -33,7 +37,7 @@
 			</div>
 			<TextField bind:value={research.abstract} label="Abstract" sublabel="A brief summary of the paper. Can be the paper abstract, but doesn't need to be." {validate} />
 			<TextInput bind:value={research.doi} label="DOI" sublabel="DOI number for the paper" {validate} />
-			<TextInput bind:value={research.type} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)" area={research.type ? '' : 'outline-red-400'} {validate} />
+			<SelectTypeInput bind:value={research.type} items={researchTypeItems} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)" {validate} />
 
 			<div class="mt-4 py-3 font-semibold">Publication:</div>
 

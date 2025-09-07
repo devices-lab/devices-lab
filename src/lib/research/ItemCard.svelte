@@ -1,7 +1,6 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import Text from '$lib/components/Text.svelte';
 	import { formatDate, type ResearchItem } from '$lib/data/research';
 	import AwardList from '$lib/research/AwardList.svelte';
 	import LinkList from '$lib/research/LinkList.svelte';
@@ -34,10 +33,10 @@
 
 		<!-- Content -->
 		<div class="order-2 flex-3 space-y-2">
-			<Text class="text-xs font-semibold tracking-wide text-primary-600 uppercase dark:text-primary-400">{item.type}</Text>
-			<Text class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title}</Text>
-			<Text class="text-xs text-gray-600 italic dark:text-gray-400">{item.authors.map((author) => author.name).join(', ')}</Text>
-			<Text class="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 dark:text-gray-300">{@html item.abstract}</Text>
+			<div class="text-xs font-semibold tracking-wide text-primary-600 uppercase dark:text-primary-400">{item.type}</div>
+			<div class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title}</div>
+			<div class="text-xs text-gray-600 italic dark:text-gray-400">{item.authors.map((author) => author.name).join(', ')}</div>
+			<div class="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 dark:text-gray-300">{@html item.abstract}</div>
 
 			<!-- Inline meta for wide screens -->
 			<div class=" flex flex-col items-start gap-x-2 gap-y-1 pt-1 text-xs text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">

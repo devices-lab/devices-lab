@@ -4,7 +4,7 @@
 
 	type Props = DefProps &
 		InputContainerProps & {
-			items: { value: string; label: string }[];
+			items: string[];
 		};
 
 	let { value = $bindable(), items, ...props }: Props = $props();

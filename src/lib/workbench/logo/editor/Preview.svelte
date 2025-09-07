@@ -7,7 +7,7 @@
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
 
-	import BaseButton from '$lib/components/BaseButton.svelte';
+	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
 	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
@@ -129,15 +129,15 @@
 			<div class="flex flex-col gap-y-2">
 				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 					Parameters
-					<IconButton onclick={download} class="button-primary text-sm" text="Download" icon={Download} iconClass="size-4" />
+					<IconButton onclick={download} class="button-primary" text={{ text: 'Download', class: 'text-sm' }} icon={{ icon: Download, class: 'size-4' }} />
 				</div>
 
 				<div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
 					<span class="text-sm">Local storage:</span>
 					<div class="flex gap-x-2">
-						<IconButton onclick={reset} class="link-red text-sm " text="Reset" textClass="text-gray-700 dark:text-gray-300" icon={X} iconClass="size-4" />
-						<IconButton onclick={load} class="link-amber text-sm " text="Reload" textClass="text-gray-700 dark:text-gray-300" icon={RefreshCcw} iconClass="size-4" />
-						<IconButton onclick={save} class="link-green text-sm " text="Save" textClass="text-gray-700 dark:text-gray-300" icon={Save} iconClass="size-4" />
+						<IconButton onclick={reset} class="link-red" text={{ text: 'Reset', class: ' text-sm' }} icon={{ icon: X, iconClass: 'size-4' }} />
+						<IconButton onclick={load} class="link-amber" text={{ text: 'Reload', class: ' text-sm' }} icon={{ icon: RefreshCcw, iconClass: 'size-4' }} />
+						<IconButton onclick={save} class="link-green" text={{ text: 'Save', class: ' text-sm' }} icon={{ icon: Save, iconClass: 'size-4' }} />
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { DefProps } from '$lib/utils';
 	import { Check, ChevronsUpDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
@@ -26,7 +27,7 @@
 
 {#snippet SelectItem(label: string, sublabel: string, value: string)}
 	{@const optionProps = value === '' ? { disabled: true } : {}}
-	<el-option {value} {...optionProps} class="group/option disabled relative block  cursor-default py-2 pr-9 pl-3 text-gray-900 select-none focus:bg-primary-600 focus:text-white focus:outline-hidden disabled:text-red-300 dark:text-white dark:focus:bg-primary-500">
+	<el-option {value} {...optionProps} class="group/option disabled relative block  cursor-default py-2 pr-9 pl-3 {value? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-400'} select-none focus:bg-primary-600 focus:text-white focus:outline-hidden disabled:text-red-300  dark:focus:bg-primary-500">
 		<div class="flex">
 			<span class="truncate font-normal group-aria-selected/option:font-semibold">{label}</span>
 			{#if sublabel}
@@ -40,10 +41,10 @@
 {/snippet}
 
 <el-select {value} class="" bind:this={selectBox}>
-	<button {...props} type="button" class="flex items-center justify-between w-full {props.class}">
+	<ClassBox {props} tag="button" type="button" class="flex items-center justify-between w-full">
 		<el-selectedcontent class="col-start-1 row-start-1 truncate pr-6">{items[0]?.label || ''}</el-selectedcontent>
 		<ChevronsUpDown class="size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400"/>
-	</button>
+	</ClassBox>
 
 	<el-options anchor="bottom start" popover="auto" class="max-h-60 w-(--button-width) overflow-auto rounded-md bg-white py-1 text-base shadow-lg outline-1 outline-black/5 [--anchor-gap:--spacing(1)] data-leave:transition data-leave:transition-discrete data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
 		{#each items as { value, label }}

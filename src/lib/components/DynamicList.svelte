@@ -1,4 +1,5 @@
 <script lang="ts" generics="Item">
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import DeleteButton from '$lib/components/DeleteButton.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import type { DefProps } from '$lib/utils';
@@ -25,10 +26,10 @@
 	};
 </script>
 
-<div {...props} class="pt-4 {props.class}">
+<ClassBox {props} class="pt-4">
 	<div class="my-4 flex items-center justify-between">
 		<div class="font-semibold">{title}</div>
-		<IconButton onclick={add} class="button-blue rounded-lg px-3 py-1 text-xs tracking-wide uppercase shadow-sm" text="Add" icon={Plus} iconClass="size-4" position="left" />
+		<IconButton onclick={add} class="button-blue rounded-lg px-3 py-1 shadow-sm" text={{ text: 'Add', class: 'text-xs tracking-wide uppercase' }} icon={{ icon: Plus, class: 'size-4' }} position="iconLast" />
 	</div>
 	<div class="flex flex-1 flex-col flex-wrap {gap}">
 		{#each items as item, i}
@@ -42,4 +43,4 @@
 			<p class="text-sm text-gray-500 dark:text-gray-400 italic mb-4">No items found</p>
 		{/each}
 	</div>
-</div>
+</ClassBox>

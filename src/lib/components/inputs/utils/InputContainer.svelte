@@ -1,6 +1,10 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import IconItem from '$lib/components/icons/IconItem.svelte';
+	import IconText from '$lib/components/icons/IconText.svelte';
+	import InfoCircle from '$lib/components/icons/InfoCircle.svelte';
+	import TextItem from '$lib/components/icons/TextItem.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
 	import type { DefProps } from '$lib/utils';
@@ -41,7 +45,7 @@
 		pb-2.5
 		min-h-[50px]
 		sm:text-sm/6
-		block
+		flex
 		w-full
 		rounded-md
 		bg-white
@@ -128,7 +132,7 @@
 	{/if}
 {/snippet}
 
-<div {...props} class="w-full py-[10px] {props.class}">
+<ClassBox {props} class="w-full py-[10px]">
 	<div class="group/item relative flex flex-1 flex-col">
 		<!-- Input wrapper -->
 		<div bind:this={div} class={wrapperStyle}>
@@ -167,13 +171,12 @@
 		<!-- Label on the top -->
 		{#if label}
 			<div class={labelStyle}>
-				<span class="tracking-wide uppercase">{label}</span>
 				{#if sublabel}
-					<Tooltip content={sublabel} params={{ animation: 'fade', interactive: true, allowHTML: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 }}>
-						<IconItem icon={CircleQuestionMarkIcon} class="size-4 opacity-50" />
-					</Tooltip>
+					<IconText text={{ text: label, class: 'tracking-wide uppercase' }} icon={{ icon: CircleQuestionMarkIcon, class: 'size-4 opacity-50', tooltip: sublabel }} position="iconLast" />
+				{:else}
+					<TextItem text={label} class="tracking-wide uppercase" />
 				{/if}
 			</div>
 		{/if}
 	</div>
-</div>
+</ClassBox>

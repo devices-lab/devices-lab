@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import BaseLink from '$lib/components/BaseLink.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import Feature from '$lib/items/common/Feature.svelte';
 	import { type ItemType, getItemPath } from '$lib/data/item';
 	import BaseCard from '$lib/components/BaseCard.svelte';

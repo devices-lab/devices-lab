@@ -1,21 +1,19 @@
 <script lang="ts">
-	import BaseButton from '$lib/components/BaseButton.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
-	import { type DefProps } from '$lib/utils';
-	import type { Icon } from '@lucide/svelte';
+	import IconText, { type IconTextProps } from '$lib/components/icons/IconText.svelte';
+	import BaseButton, { type BaseButtonProps } from '$lib/components/interactive/BaseButton.svelte';
+	import type { DefProps } from '$lib/utils';
 
-	type Props = DefProps & {
-		onclick: () => void;
-		text: string;
-		icon: typeof Icon | string;
-		textClass?: string;
-		iconClass?: string;
-		position?: 'left' | 'right';
+	type InlineIconText = {
+		icon: IconTextProps['icon'];
+		text?: IconTextProps['text'];
+		position?: IconTextProps['position'];
 	};
 
-	const { text, icon, textClass, iconClass, position = 'left', ...props }: Props = $props();
+	export type IconLinkProps = DefProps & BaseButtonProps & InlineIconText;
+
+	const { icon, text, position, ...props }: IconLinkProps = $props();
 </script>
 
 <BaseButton {...props}>
-	<IconText {text} {textClass} {icon} {iconClass} {position} />
+	<IconText {icon} {text} {position} />
 </BaseButton>

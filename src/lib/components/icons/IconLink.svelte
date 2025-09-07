@@ -1,21 +1,19 @@
 <script lang="ts">
-	import BaseLink from '$lib/components/BaseLink.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
-	import { type DefProps } from '$lib/utils';
-	import type { Icon } from '@lucide/svelte';
+	import IconText, { type IconTextProps } from '$lib/components/icons/IconText.svelte';
+	import BaseLink, { type BaseLinkProps } from '$lib/components/interactive/BaseLink.svelte';
+	import type { DefProps } from '$lib/utils';
 
-	type Props = DefProps & {
-		href: string;
-		text: string;
-		icon: typeof Icon | string;
-		textClass?: string;
-		iconClass?: string;
-		position?: 'left' | 'right';
+	type InlineIconText = {
+		icon: IconTextProps['icon'];
+		text?: IconTextProps['text'];
+		position?: IconTextProps['position'];
 	};
 
-	const { text, icon, textClass, iconClass, position = 'left', ...props }: Props = $props();
+	export type IconLinkProps = DefProps & BaseLinkProps & InlineIconText;
+
+	const { icon, text, position, ...props }: IconLinkProps = $props();
 </script>
 
 <BaseLink {...props}>
-	<IconText {text} {textClass} {icon} {iconClass} {position} />
+	<IconText {icon} {text} {position} />
 </BaseLink>

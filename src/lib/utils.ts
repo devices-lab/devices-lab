@@ -1,7 +1,7 @@
-import type { ClassValue } from 'svelte/elements';
-import { writable } from 'svelte/store';
 
+import { writable } from 'svelte/store';
 import * as icons from '@lucide/svelte';
+import type { ClassValue } from 'svelte/elements';
 
 // Get an icon by name
 export function getIcon(name: string): typeof icons.Icon | undefined {
@@ -73,6 +73,32 @@ export const makeImportant = (s: string): string => s.replace(/\S+/g, c => c.end
 
 
 export type DefProps = {
-	class?: ClassValue;
+	class?: ClassValue; //import('clsx').ClassValue;
 	[key: string]: unknown;
+}
+
+// Utility: Build prefixed keys (iconText → iconText, iconClass → iconClass, etc.)
+export type Prefixed<T, P extends string> = {
+	[K in keyof T as `${P}${Capitalize<string & K>}`]?: T[K];
+};
+
+// Strip a prefix and decapitalize the next letter: iconText -> text, iconIconProps -> iconProps
+export function unprefix<T extends object>(src: Record<string, unknown>, prefix: string): Partial<T> {
+	const out: Record<string, unknown> = {};
+	const n = prefix.length;
+	for (const k in src) {
+		if (k.startsWith(prefix) && k.length > n) {
+			const bare = k.slice(n);
+			const decap = bare[0].toLowerCase() + bare.slice(1);
+			out[decap] = src[k];
+		}
+	}
+	return out as Partial<T>;
+}
+
+// Normalize a value by wrapping it in an object with a specific key
+export function normalize<TValue extends object, TUnion extends TValue | string | undefined>(v: TUnion, key: string): TValue | undefined {
+	if (v == null) return undefined;
+	if (typeof v === 'object') return v as TValue;
+	return { [key]: v } as TValue;
 }
