@@ -18,7 +18,7 @@
 				<IconLink
 					href={link.href}
 					external={true}
-					icon={{ icon: link.icon, class: 'size-5' }}
+					icon={{ icon: link.icon, class: 'size-5', fallback: 'Test' }}
 					text={{ text: link.text }}
 					class="
 						button-sky
