@@ -6,7 +6,7 @@
 
 	import VectorCard from '$lib/workbench/logo/VectorCard.svelte';
 	import { IconProps, LogoProps, ProjectProps, VersionProps, VersionPropsPill } from '$lib/workbench/logo/utils';
-	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
 	import BaseInput from '$lib/components/BaseInput.svelte';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 

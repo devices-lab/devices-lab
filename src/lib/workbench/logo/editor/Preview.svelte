@@ -8,7 +8,7 @@
 	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
 
 	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
-	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';

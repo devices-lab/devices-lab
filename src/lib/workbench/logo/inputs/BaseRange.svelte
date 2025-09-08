@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
-	import BaseInput from './BaseInput.svelte';
+	import BaseInput from '../../../components/BaseInput.svelte';
 
 	interface Props {
 		value?: string | number;

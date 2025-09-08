@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import CloseButton from '$lib/components/CloseButton.svelte';
+	import CloseButton from '$lib/components/interactive/CloseButton.svelte';
 	import type { ResearchItem, ResearchType } from '$lib/data/research';
 	import ItemCard from '$lib/research/ItemCard.svelte';
 	import type { DefProps } from '$lib/utils/utils';

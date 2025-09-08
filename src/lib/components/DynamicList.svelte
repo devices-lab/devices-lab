@@ -1,6 +1,6 @@
 <script lang="ts" generics="Item">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import DeleteButton from '$lib/components/DeleteButton.svelte';
+	import DeleteButton from '$lib/components/interactive/DeleteButton.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import { Plus } from '@lucide/svelte';

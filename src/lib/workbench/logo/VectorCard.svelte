@@ -5,7 +5,7 @@
 	import { exportSvg, exportSvgFont } from '$lib/workbench/logo/export/svg';
 	import type { Snippet } from 'svelte';
 
-	import BaseCheckbox from '$lib/components/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
 	import Button from '$lib/workbench/logo/editor/Button.svelte';
 	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
 
