@@ -1,6 +1,6 @@
 
 import type { Picture } from 'vite-imagetools';
-import { generateHash, isBound } from "$lib/utils";
+import { generateHash, isBound } from "$lib/utils/utils";
 
 
 export type Date = {

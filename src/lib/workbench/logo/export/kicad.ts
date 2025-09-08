@@ -1,7 +1,7 @@
 import { downloadSVG, KICAD_SCALE } from '$lib/workbench/logo/utils';
 import { ClippyFlattenSVG } from '$lib/workbench/logo/export/clippy';
 import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
-import { assert } from '$lib/utils';
+import { assert } from '$lib/utils/utils';
 
 export async function exportSvgForKiCad(id: string, filename: string) {
 	// Get the original SVG element

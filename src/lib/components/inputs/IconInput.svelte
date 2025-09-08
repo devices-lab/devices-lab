@@ -1,6 +1,6 @@
 <script lang="ts">
 	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/utils/InputContainer.svelte';
-	import { getIcon, type DefProps } from '$lib/utils';
+	import { getIcon, type DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & InputContainerProps;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IconText, { type IconTextProps } from '$lib/components/icons/IconText.svelte';
 	import BaseButton, { type BaseButtonProps } from '$lib/components/interactive/BaseButton.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 
 	type InlineIconText = {
 		icon: IconTextProps['icon'];

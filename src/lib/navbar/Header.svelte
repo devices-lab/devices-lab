@@ -6,7 +6,7 @@
 
 
 
-	import { devMode, devModeLocal } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
 	import { onMount } from 'svelte';
 
 	const uid = $props.id();

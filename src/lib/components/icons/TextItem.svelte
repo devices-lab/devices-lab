@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import { type DefProps } from '$lib/utils';
+	import { type DefProps } from '$lib/utils/utils';
 
 	export type TextType = string | null | undefined;
 

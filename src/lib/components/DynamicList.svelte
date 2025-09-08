@@ -2,7 +2,7 @@
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import DeleteButton from '$lib/components/DeleteButton.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import { Plus } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
 

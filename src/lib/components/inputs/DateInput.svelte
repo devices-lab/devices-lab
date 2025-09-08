@@ -1,7 +1,7 @@
 <script lang="ts">
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import type { Date } from '$lib/data/research';
-	import { clamp, type DefProps } from '$lib/utils';
+	import { clamp, type DefProps } from '$lib/utils/utils';
 	import type { HTMLTextareaAttributes } from 'svelte/elements';
 
 	type Props = DefProps & {

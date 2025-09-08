@@ -1,7 +1,7 @@
 import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 import IconItem from '$lib/components/icons/IconItem.svelte';
-import { safeUrl, type TagMap } from '$lib/components/parser/customText';
-import { svelteTag, htmlTag, htmlVoid } from '$lib/components/parser/maps-helpers';
+import { safeUrl, type TagMap } from '$lib/components/richtext/customText';
+import { svelteTag, htmlTag, htmlVoid } from '$lib/components/richtext/maps-helpers';
 import type { SvelteTagMap } from './NodeView.svelte';
 
 
@@ -11,8 +11,7 @@ export const svelteMap: SvelteTagMap = {
 		baseClass: 'underline underline-offset-4 decoration-dotted hover:decoration-solid link-blue',
 		pass: ['rel', 'target', 'aria-*', 'data-*'],
 		map: (a) => ({
-			href: safeUrl(String(a.href ?? '#')),
-			external: (a.target ?? '') === '_blank'
+			href: safeUrl(String(a.href ?? '#'))
 		}),
 		requiredChildren: true
 	}),

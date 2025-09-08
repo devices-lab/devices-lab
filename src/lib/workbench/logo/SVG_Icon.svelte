@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import { devMode, devModeLocal } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
 	import Rect from '$lib/workbench/logo/components/Rect.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Text from '$lib/workbench/logo/components/Text.svelte';

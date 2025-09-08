@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import { Check, ChevronsUpDown } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	

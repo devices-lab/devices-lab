@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { Tag } from '$lib/data/research';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
 		tags: Tag[];

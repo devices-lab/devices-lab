@@ -4,7 +4,7 @@
 	import TextItem from '$lib/components/icons/TextItem.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import { CircleQuestionMarkIcon } from '@lucide/svelte';
 	import type { Component, Snippet } from 'svelte';
 

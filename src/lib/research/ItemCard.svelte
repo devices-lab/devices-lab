@@ -1,8 +1,8 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import RichText from '$lib/components/parser/RichText.svelte';
-	import { svelteMap, tagMap } from '$lib/components/parser/maps';
+	import RichText from '$lib/components/richtext/RichText.svelte';
+	import { svelteMap, tagMap } from '$lib/components/richtext/maps';
 	import { formatDate, type ResearchItem } from '$lib/data/research';
 	import AwardList from '$lib/research/AwardList.svelte';
 	import LinkList from '$lib/research/LinkList.svelte';

@@ -1,12 +1,8 @@
 <!-- src/lib/components/richtext/NodeView.svelte -->
 <script lang="ts">
-	import { render, type TagMap, type Node, type TagNode } from '$lib/components/parser/customText';
-	import NodeView from '$lib/components/parser/NodeView.svelte';
-	import { cn, type cnType } from '$lib/cn';
-	import type { Component } from 'svelte';
-	import type { SvelteTagSpec } from '$lib/components/parser/maps-helpers';
-
-	
+	import { render, type Node, type TagMap, type TagNode } from '$lib/components/richtext/customText';
+	import type { SvelteTagSpec } from '$lib/components/richtext/maps-helpers';
+	import NodeView from '$lib/components/richtext/NodeView.svelte';
 
 	export type SvelteTagMap = Record<string, SvelteTagSpec<any>>;
 
@@ -29,7 +25,7 @@
 		{#key node}
 			<!-- Render as Svelte component -->
 			{@const nodeType = svelteMap[node.name]}
-			<nodeType.component {...nodeType.props ? nodeType.props!({ node, cn }) : node.attrs}>
+			<nodeType.component {...nodeType.props ? nodeType.props!({ node }) : node.attrs}>
 				{#if !nodeType.ignoreChildren}
 					{#each node.children as child (child)}
 						<NodeView node={child} {svelteMap} {tagMap} />
@@ -45,5 +41,4 @@
 			<NodeView node={child} {svelteMap} {tagMap} />
 		{/each}
 	{/if}
-
 {/if}

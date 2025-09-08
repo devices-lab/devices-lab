@@ -1,6 +1,6 @@
 <script lang="ts">
-	import NodeView, { type SvelteTagMap } from '$lib/components/parser/NodeView.svelte';
-	import { parse, type Node, type TagMap } from '$lib/components/parser/customText';
+	import NodeView, { type SvelteTagMap } from '$lib/components/richtext/NodeView.svelte';
+	import { parse, type Node, type TagMap } from '$lib/components/richtext/customText';
 
 	type Props = {
 		source?: string; // raw text with ${tag}[...]

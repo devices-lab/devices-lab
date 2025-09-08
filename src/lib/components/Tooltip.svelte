@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/cn';
-	import { tooltip } from '$lib/tooltip';
-	import type { DefProps } from '$lib/utils';
+	import { cn } from '$lib/utils/cn';
+	import { tooltip } from '$lib/utils/tooltip';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
 	type Props = DefProps & {

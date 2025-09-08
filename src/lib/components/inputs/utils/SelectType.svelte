@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
 		value: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { cn } from '$lib/cn';
+	import { cn } from '$lib/utils/cn';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import { Trash2 } from '@lucide/svelte';
 
 	type Props = DefProps & {

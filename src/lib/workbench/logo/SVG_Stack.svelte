@@ -12,7 +12,7 @@
 	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
 	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { StackDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type StackData } from '$lib/workbench/logo/defaults';
-	import { devMode, devModeLocal } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
 
 	//======================================================================================//
 

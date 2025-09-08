@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import { CirclePlus } from '@lucide/svelte';
 
 	type Props = DefProps & {

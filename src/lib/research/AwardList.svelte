@@ -3,7 +3,7 @@
 	import Batch from '$lib/components/batches/Batch.svelte';
 	import IconText from '$lib/components/icons/IconText.svelte';
 	import type { Award } from '$lib/data/research';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
 		awards: Award[];

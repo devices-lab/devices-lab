@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
 	type Props = DefProps & {

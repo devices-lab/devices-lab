@@ -4,7 +4,7 @@
 	import InputGroup from '../inputs/InputGroup.svelte';
 	import NumberInput from '../inputs/NumberInput.svelte';
 	import { untrack } from 'svelte';
-	import { clamp } from '$lib/utils';
+	import { clamp } from '$lib/utils/utils';
 
 
 	export type BorderCorner = {

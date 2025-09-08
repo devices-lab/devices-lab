@@ -1,8 +1,8 @@
 <script lang="ts">
 	import IconItem, { type IconProps, type IconType } from '$lib/components/icons/IconItem.svelte';
 	import TextItem, { type TextProps, type TextType } from '$lib/components/icons/TextItem.svelte';
-	import { normaliseOptional, normaliseRequired } from '$lib/normalise';
-	import { type DefProps } from '$lib/utils';
+	import { normaliseOptional, normaliseRequired } from '$lib/utils/normalise';
+	import { type DefProps } from '$lib/utils/utils';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 
 	export type IconTextProps = DefProps & {

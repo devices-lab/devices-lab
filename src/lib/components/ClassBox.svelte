@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { cn } from '$lib/cn'; // clsx + tailwind-merge helper
-	import type { DefProps } from '$lib/utils';
+	import { cn } from '$lib/utils/cn'; // clsx + tailwind-merge helper
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
 	type Props = DefProps & {

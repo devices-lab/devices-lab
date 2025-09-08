@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/lib/richtext/map-helpers.ts
-import { cn } from '$lib/cn'; // clsx + tailwind-merge
-import type { TagNode, TagMap } from '$lib/components/parser/customText';
+import { cn } from '$lib/utils/cn'; // clsx + tailwind-merge
+import type { TagNode, TagMap } from '$lib/components/richtext/customText';
 import type { Component } from 'svelte';
 
 
-// Infer props from a Svelte component constructor
-//export type ComponentCtor = new (...args: unknown[]) => { $$prop_def: unknown };
-//export type PropsOf<C extends ComponentCtor> = InstanceType<C>['$$prop_def'];
 // Accept ANY props/events/slots
 type AnyComponent = Component<any, any, any>;
 
@@ -34,7 +30,7 @@ function pickAttrs(attrs: Record<string, unknown>, allow: (string | `${string}-*
 /** Spec for a Svelte-backed tag (generic over the component) */
 export type SvelteTagSpec<C extends AnyComponent = AnyComponent> = {
 	component: C;
-	props?: (args: { node: TagNode; cn: typeof cn }) => Partial<ComponentProps<C>>;
+	props?: (args: { node: TagNode }) => Partial<ComponentProps<C>>;
 	ignoreChildren?: boolean;
 };
 
@@ -78,7 +74,7 @@ type HtmlTagOpts = {
 	/** pass-through attr names/prefixes (e.g., ['aria-*','data-*','rel','target']) */
 	pass?: (string | `${string}-*`)[];
 	/** add/rename attributes: get a new attrs object to merge */
-	map?: (a: Record<string, unknown>, node: TagNode) => Record<string, unknown>;
+	map?: (a: Record<string, string>, node: TagNode) => Record<string, unknown>;
 	requiredChildren?: boolean;          // warn in dev if no children
 	fallbackTextAttr?: string;           // e.g., use href or text as inner content if no children
 	void?: boolean;                      // void element: <br>, <hr>, <img>...
@@ -107,8 +103,8 @@ export function htmlTag(tagName: string, opts: HtmlTagOpts = {}): TagMap[string]
 		}
 
 		let body = renderChildren();
-		if (!body && opts.fallbackTextAttr && a[opts.fallbackTextAttr] != null) {
-			body = escapeHtml(String(a[opts.fallbackTextAttr]));
+		if (!body && opts.fallbackTextAttr && mapped[opts.fallbackTextAttr] != null) {
+			body = escapeHtml(String(mapped[opts.fallbackTextAttr]));
 		}
 		if (DEV && opts.requiredChildren && !body) {
 			console.warn(`[richtext] <${tagName}> expects children; none provided for <${node.name}>`);

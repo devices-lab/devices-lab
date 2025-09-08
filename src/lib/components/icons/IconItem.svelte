@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { cn } from '$lib/cn';
+	import { cn } from '$lib/utils/cn';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import { getIcon, type DefProps } from '$lib/utils';
+	import { getIcon, type DefProps } from '$lib/utils/utils';
 	import type { Icon } from '@lucide/svelte';
 
 	export type IconType = typeof Icon | string | null | undefined;

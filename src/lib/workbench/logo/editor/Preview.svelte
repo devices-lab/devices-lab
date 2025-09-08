@@ -2,7 +2,7 @@
 	import { Download, RefreshCcw, Save, X } from '@lucide/svelte';
 	import { onDestroy, onMount, type Snippet } from 'svelte';
 
-	import { devMode, devModeLocal } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';

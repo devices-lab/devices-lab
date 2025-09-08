@@ -9,7 +9,7 @@
 	import Button from '$lib/workbench/logo/editor/Button.svelte';
 	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
 
-	import { devMode, devModeLocal } from '$lib/utils';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
 
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';

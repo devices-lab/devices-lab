@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { cn } from '$lib/cn';
+	import { cn } from '$lib/utils/cn';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import { Routes } from '$lib/data/routes';
-	import type { DefProps } from '$lib/utils';
+	import type { DefProps } from '$lib/utils/utils';
 	import SVG_Pill from '$lib/workbench/logo/SVG_Pill.svelte';
 	import { LogoProps } from '$lib/workbench/logo/utils';
 

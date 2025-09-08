@@ -2,7 +2,7 @@
 	import OverlayLink from '$lib/overlay/OverlayLink.svelte';
 	import OverlayEgg from '$lib/overlay/OverlayEgg.svelte';
 
-	import { devMode } from '$lib/utils';
+	import { devMode } from '$lib/utils/utils';
 
 	export interface OverlayType {
 		renderedW: number;
