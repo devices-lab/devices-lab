@@ -17,6 +17,8 @@ import { research as clipbit3 } from '$research/clip-bit-2c7269';
 
 export const item: ItemType = {
 	name: "clip:bit",
+
+	slug: "clip-bit",
 	path: "/clip-bit",
 	pathName: "/clip:bit",
 

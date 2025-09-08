@@ -7,7 +7,7 @@
 </script>
 
 <BaseLink
-	{href}
+	link={href}
 	class={`
 		group/item
 		flex

@@ -16,7 +16,7 @@
 	<div class="mt-2 flex flex-wrap justify-center gap-2">
 		{#each person.sites as site}
 			<Tooltip content={site.text}>
-				<IconLink href={site.href} icon={{ icon: site.icon, class: "size-5" }} class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" external />
+				<IconLink link={site.href} icon={{ icon: site.icon, class: "size-5" }} class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" external />
 			</Tooltip>
 		{/each}
 	</div>

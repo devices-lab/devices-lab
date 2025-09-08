@@ -1,31 +1,34 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
+	import type { RouteId } from '$app/types';
 	import ClassBox from '$lib/components/ClassBox.svelte';
+	import { resolveHref, type ParamRoutes } from '$lib/data/routes';
 	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	export type BaseLinkProps = {
-		href: string;
+	export type LinkType = string | RouteId;
+
+	export type LinkProps = {
+		link?: LinkType;
+		slug?: string;
+		type?: ParamRoutes;
 		external?: boolean;
 	};
 
 	type Props = DefProps &
-		BaseLinkProps & {
-			children: Snippet;
+		LinkProps & {
+			children?: Snippet;
 		};
 
-	const { children, href, external = false, ...props }: Props = $props();
+	const { children, href, link, slug, type, external, ...props }: Props = $props();
 
+	const resolved = $derived(resolveHref(link, slug, type, external));
 
-
-	const externalLink = $derived(external || href.startsWith('http'));
-	const resolvedHref = $derived(href.startsWith('/') ? resolve(href) : href);
 	const linkProps = $derived({
-		target: externalLink ? '_blank' : undefined,
-		rel: externalLink ? 'noopener noreferrer' : undefined
+		target: resolved.external ? '_blank' : undefined,
+		rel: resolved.external ? 'noopener noreferrer' : undefined
 	});
 </script>
 
-<ClassBox {props} tag="a" href={resolvedHref} {...linkProps}>
+<ClassBox {props} tag="a" href={resolved.href} {...linkProps}>
 	{@render children?.()}
 </ClassBox>

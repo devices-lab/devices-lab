@@ -1,7 +1,5 @@
-import type { ItemType } from '$lib/data/item';
+import type { _ItemMap, _ItemType, ItemType } from '$lib/data/item';
 import { Routes } from '$lib/data/routes';
-import { stripLeadingSlash } from '$lib/utils/utils';
-
 
 // Each glob MUST be a literal string
 const deviceModules = import.meta.glob('/src/lib/_content/devices/**/*.ts', {
@@ -14,16 +12,18 @@ const mediaModules = import.meta.glob('/src/lib/_content/media/**/*.ts', {
 	eager: true, import: 'item'
 }) as Record<string, ItemType>;
 
-export const devices = Object.values(deviceModules).map((item) => ({ ...item, route: Routes.devices }));
-export const tools = Object.values(toolModules).map((item) => ({ ...item, route: Routes.tools }));
-export const media = Object.values(mediaModules).map((item) => ({ ...item, route: Routes.media }));
+export const devices: _ItemType[] = Object.values(deviceModules).map((item) => ({ ...item, route: Routes.devices }));
+export const tools: _ItemType[] = Object.values(toolModules).map((item) => ({ ...item, route: Routes.tools }));
+export const media: _ItemType[] = Object.values(mediaModules).map((item) => ({ ...item, route: Routes.media }));
 
 
 export const allItems = [...devices, ...tools, ...media];
 
 // Simple lookup maps by slug
-export const bySlug = {
-	device: Object.fromEntries(devices.map(i => [stripLeadingSlash(i.path), i])),
-	tool: Object.fromEntries(tools.map(i => [stripLeadingSlash(i.path), i])),
-	media: Object.fromEntries(media.map(i => [stripLeadingSlash(i.path), i])),
+export const bySlug: Record<string, _ItemMap> = {
+	device: Object.fromEntries(devices.map(i => [i.slug, i])),
+	tool: Object.fromEntries(tools.map(i => [i.slug, i])),
+	media: Object.fromEntries(media.map(i => [i.slug, i])),
 };
+
+export const allBySlug: Record<string, _ItemType> = Object.fromEntries(allItems.map(i => [i.slug, i]));

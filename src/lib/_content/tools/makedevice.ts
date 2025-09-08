@@ -8,6 +8,8 @@ import { research as makedevice } from '$research/makedevice--nwzdqd';
 
 export const item: ItemType = {
 	name: "MakeDevice",
+
+	slug: "makedevice",
 	path: "/makedevice",
 	pathName: "/makedevice",
 

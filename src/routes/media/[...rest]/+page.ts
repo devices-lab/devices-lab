@@ -3,12 +3,8 @@ import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	
-	const item = bySlug.device[params.slug];
+	const item = bySlug.media[params.rest];
+	if (!item) throw error(404, 'Media not found');
 
-	console.log(item);
-	if (!item || !item.visible) throw error(404, 'Device not found');
-
-	console.log(item);
 	return { item };
 }) satisfies PageLoad;

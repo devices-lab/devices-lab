@@ -5,6 +5,8 @@ import ImageCover from "$lib/assets/img/jacdac/cover.png?enhanced"
 
 export const item: ItemType = {
 	name: "Jacdac",
+	
+	slug: "jacdac",
 	path: "/jacdac",
 	pathName: "/jacdac",
 

@@ -27,7 +27,7 @@ function processWorkbenchList(items: (ExternalWorkbenchItem | InternalWorkbenchI
 }
 
 function parseHref(href: string): string {
-	return `${Routes.workbench.href}/${href.split('/').slice(1, -1).join('/')}`;
+	return `${Routes.workbench.id}/${href.split('/').slice(1, -1).join('/')}`;
 }
 
 // Combine internal and external workbench items into a single list

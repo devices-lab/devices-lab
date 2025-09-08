@@ -14,7 +14,7 @@
 	const linkClass = $derived(cn(height, props.class));
 </script>
 
-<BaseLink href={Routes.home.href} class={linkClass}>
+<BaseLink link={Routes.home.id} class={linkClass}>
 	<span class="sr-only">DevicesLab</span>
 	<SVG_Pill uid={'dl-name'} {...LogoProps()} />
 </BaseLink>

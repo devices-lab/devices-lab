@@ -5,6 +5,8 @@ import ImageCover from "$lib/assets/img/solderbit/cover.png?enhanced"
 
 export const item: ItemType = {
 	name: "solder:bit",
+
+	slug: "solder-bit",
 	path: "/solder-bit",
 	pathName: "/solder:bit",
 

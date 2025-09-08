@@ -1,6 +1,6 @@
 
 import type { Picture } from 'vite-imagetools';
-import { generateHash, isBound, type Link } from "$lib/utils/utils";
+import { generateHash, isBound} from "$lib/utils/utils";
 
 
 export type Date = {
@@ -14,7 +14,11 @@ export type Author = {
 	affiliation: string;
 }
 
-
+export type Link = {
+	href: string;
+	text: string;
+	icon: string;
+};
 
 export type Award = {
 	name: string;

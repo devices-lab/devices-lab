@@ -1,15 +1,15 @@
 <script lang="ts">
+	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
+	import { type _ItemType } from '$lib/data/item';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
-	import { type ItemType, getItemPath } from '$lib/data/item';
-	import BaseCard from '$lib/components/BaseCard.svelte';
 
-	const { item }: { item: ItemType } = $props();
+	const { item }: { item: _ItemType } = $props();
 </script>
 
 <BaseCard hover>
-	<BaseLink href={getItemPath(item)}>
+	<BaseLink link={item.route.id} slug={item.slug} type={item.route.type}>
 		<BaseImg src={item.cover} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
 		<div class="mt-4 flex items-center text-base font-medium text-gray-900 dark:text-white {item.family ? 'mb-2' : ''}">
 			{#if item.family}

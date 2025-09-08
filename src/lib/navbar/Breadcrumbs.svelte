@@ -1,24 +1,24 @@
 <script lang="ts">
-	import Breadcrumb from '$lib/navbar/Breadcrumb.svelte';
-	import type { ClassValue } from 'svelte/elements';
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import { Routes } from '$lib/data/routes';
+	import Breadcrumb from '$lib/navbar/Breadcrumb.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 
-	export interface BreadcrumbType {
+	export type BreadcrumbType = {
 		title: string;
 		href: string;
-	}
+	};
 
-	interface Props {
+	type Props = DefProps & {
 		breadcrumbs: BreadcrumbType[];
-		class?: ClassValue;
-		[key: string]: any;
-	}
-	const { breadcrumbs, class: className = '', ...restProps }: Props = $props();
+	};
+
+	const { breadcrumbs, ...props }: Props = $props();
 </script>
 
 <nav aria-label="Breadcrumb">
-	<ol role="list" class="flex flex-wrap items-center space-x-0 px-4 py-2 sm:space-x-3 {className}" {...restProps}>
-		<Breadcrumb href={Routes.home.href}>
+	<ClassBox {props} tag='ol' role="list" class="flex flex-wrap items-center space-x-0 px-4 py-2 sm:space-x-3">
+		<Breadcrumb href={Routes.home.id}>
 			<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 shrink-0">
 				<path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd" />
 			</svg>
@@ -38,5 +38,5 @@
 				{crumb.title}
 			</Breadcrumb>
 		{/each}
-	</ol>
+	</ClassBox>
 </nav>

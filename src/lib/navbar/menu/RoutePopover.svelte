@@ -12,7 +12,7 @@
 	const popoverID = `popover-${uid}`;
 
 	// Derive if we are the current (active) route
-	const current = $derived(page.data.route.href === route.href);
+	const current = $derived(page.data.route.id === route.id);
 </script>
 
 <div class="group/popover flex">

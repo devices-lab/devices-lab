@@ -12,10 +12,10 @@
 	const { item, ...props }: Props = $props();
 </script>
 
-<ClassBox {props}>
-	{#if item.features && item.features.length > 0}
+{#if item.features && item.features.length > 0}
+	<ClassBox {props}>
 		<Collapse label={'Features'}>
 			<BaseList items={item.features} />
 		</Collapse>
-	{/if}
-</ClassBox>
+	</ClassBox>
+{/if}

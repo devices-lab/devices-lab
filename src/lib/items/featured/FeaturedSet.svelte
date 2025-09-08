@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { type ItemType } from '$lib/data/item';
-
-	import FeaturedItem from '$lib/items/featured/FeaturedItem.svelte';
-	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-
-	import { ChevronRight } from '@lucide/svelte';
-	import type { Route } from '$lib/data/routes';
 	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import { type _ItemType } from '$lib/data/item';
+	import type { Route } from '$lib/data/routes';
+	import FeaturedItem from '$lib/items/featured/FeaturedItem.svelte';
+	import { ChevronRight } from '@lucide/svelte';
 
-	const { id, route, items = [] }: { id: string; route: Route; items?: ItemType[] } = $props();
+	const { id, route, items = [] }: { id: string; route: Route; items?: _ItemType[] } = $props();
 </script>
 
 <!-- Popover content -->
@@ -23,7 +20,7 @@
 				{/each}
 			</div>
 
-			<IconLink href={route.href} class="group self-end button-primary-highlight rounded-full p-2 ps-4 text-nowrap" text={{ text: 'See all items' }} icon={{ icon: ChevronRight, class: 'size-7 transition-all duration-300 group-hover:translate-x-1' }} position="iconLast" />
+			<IconLink link={route.id} class="group self-end button-primary-highlight rounded-full p-2 ps-4 text-nowrap" text={{ text: 'See all items' }} icon={{ icon: ChevronRight, class: 'size-7 transition-all duration-300 group-hover:translate-x-1' }} position="iconLast" />
 		</div>
 	</div>
 </el-popover>

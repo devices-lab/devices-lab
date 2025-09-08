@@ -1,16 +1,14 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
 
-	export interface CollapseItem {
-		label: string | Snippet;
+	type Props = DefProps & {
 		children: Snippet;
-		class?: ClassValue;
-		buttonClass?: ClassValue;
-		[key: string]: any;
-	}
+		label: string | Snippet;
+	};
 
-	const { label, children, class: className = '', buttonClass = 'my-2 py-4', ...restProps }: CollapseItem = $props();
+	const { children, label, ...props }: Props = $props();
 	const uid = $props.id();
 </script>
 
@@ -26,9 +24,9 @@
 	</span>
 {/snippet}
 
-<div class={className}>
+<ClassBox {props}>
 	<h3>
-		<button type="button" command="--toggle" commandfor={uid} class="group relative flex w-full cursor-pointer items-center justify-between text-left {buttonClass}">
+		<button type="button" command="--toggle" commandfor={uid} class="group relative mb-4 flex w-full cursor-pointer items-center justify-between text-left">
 			{#if typeof label === 'string'}
 				{@render defaultLabel(label)}
 			{:else}
@@ -36,7 +34,7 @@
 			{/if}
 		</button>
 	</h3>
-	<el-disclosure id={uid} class="contents" {...restProps}>
+	<el-disclosure id={uid} class="contents">
 		{@render children()}
 	</el-disclosure>
-</div>
+</ClassBox>

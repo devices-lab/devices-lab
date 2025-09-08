@@ -19,6 +19,6 @@
 			{/snippet}
 		</RoutePopover>
 	{:else}
-		<RouteLink {route} class={className} />
+		<RouteLink {route} />
 	{/if}
 {/each}

@@ -7,6 +7,7 @@ export const item: ItemType = {
 	name: "solder:bit",
 	path: "/solder-bit",
 	pathName: "/solder:bit",
+	slug: "",
 
 	teaser: "A range of devices created to learn soldering.",
 	description: "A range of devices created to learn soldering.",

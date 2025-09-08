@@ -9,6 +9,8 @@ import { CodeXml, Github } from '@lucide/svelte';
 
 export const item: ItemType = {
 	name: "solder:bit/gamepad",
+
+	slug: "solder-bit/gamepad",
 	path: "/solder-bit/gamepad",
 	pathName: "/solder:bit/gamepad",
 

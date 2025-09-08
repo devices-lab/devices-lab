@@ -7,6 +7,7 @@ export const item: ItemType = {
 	name: "Jacdac",
 	path: "/jacdac",
 	pathName: "/jacdac",
+	slug: "",
 
 	teaser: "Jacdac is a plug-and-play hardware and software stack for microcontrollers and their peripherals such as sensors and actuators.",
 	description: "Jacdac is a plug-and-play hardware and software stack for microcontrollers and their peripherals such as sensors and actuators.",

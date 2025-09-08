@@ -20,7 +20,7 @@
 </script>
 
 <BaseLink
-	{href}
+	link={href}
 	class="
 		absolute
 		rounded-full

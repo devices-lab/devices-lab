@@ -5,6 +5,8 @@ import ImageCover from "$lib/assets/img/microbit/cover.png?enhanced"
 
 export const item: ItemType = {
 	name: "micro:bit",
+
+	slug: "micro-bit",
 	path: "/micro-bit",
 	pathName: "/micro:bit",
 

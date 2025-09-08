@@ -21,8 +21,7 @@
 	<div class="flex flex-1 flex-col">
 		<span class="font-semibold">{label}</span>
 
-		<IconLink href={href} text={href} />
-	
+		<IconLink link={href} text={href} />
 	</div>
 
 	{#if sublabel}

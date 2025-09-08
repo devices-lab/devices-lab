@@ -1,5 +1,8 @@
-import { type Icon } from '@lucide/svelte';
+import { resolve } from '$app/paths';
+import type { Pathname, ResolvedPathname, RouteId } from '$app/types';
 import { Pages } from '$lib/_content/pages';
+import { type Icon } from '@lucide/svelte';
+import type { _ItemType } from './item';
 
 //────────────────────────────────────────────────────────────────//
 
@@ -21,63 +24,124 @@ export type PageData = Record<RouteName, PageInfo>;
 
 //────────────────────────────────────────────────────────────────//
 
+export type ParamRoutes = 'devices' | 'tools' | 'media';
+
+
+
+function isExternal(u: string): boolean {
+	return /^(https?:|mailto:|tel:)/.test(u);
+}
+
+/**
+ * Resolve a href, slug, and type into a full href and external flag.
+ * If href is external, return as is.
+ * If href is internal and no type, return as is.
+ * If href is internal and type is given, construct the full path using the slug.
+ */
+export function resolveHref(href?: string | RouteId, slug?: string, type?: ParamRoutes, external?: boolean): { href: string | ResolvedPathname, external: boolean } {
+	// Just return external links
+	if (href && isExternal(href)) {
+		return { href: href, external: external ?? true };
+	}
+	// Internal links without params
+	if (href && !type) {
+		return { href: resolve(href as Pathname), external: external ?? false };
+	}
+	// Sanity check
+	if (!slug) {
+		return { href: '/#', external: false };
+	}
+	// Internal links with params
+	switch (type) {
+		case 'devices':
+			return { href: resolve('/devices/[...rest]', { rest: slug }), external: external ?? false };
+		case 'tools':
+			return { href: resolve('/tools/[...rest]', { rest: slug }), external: external ?? false };
+		case 'media':
+			return { href: resolve('/media/[...rest]', { rest: slug }), external: external ?? false };
+		default:
+			break;
+	}
+	// Fallback for unresolved routes
+	console.warn(`Could not resolve route ${href} with slug ${slug} and type ${type}`);
+	return { href: '/', external: external ?? false };
+}
+
+/**
+ * If the path matches a device, tools, etc, return its full href.
+ */
+export function redirectHref(item: _ItemType): ResolvedPathname | undefined {
+	switch (item.route.type) {
+		case 'devices':
+			return resolve('/devices/[...rest]', { rest: item.slug });
+		case 'tools':
+			return resolve('/tools/[...rest]', { rest: item.slug });
+		case 'media':
+			return resolve('/media/[...rest]', { rest: item.slug });
+		default:
+			break;
+	}
+	return;;
+}
+
 // Route definition for each page
 export interface Route {
-	id: RouteName;
+	id: RouteId;
+	type?: ParamRoutes;
+
 	title: string;
-	href: string;
 	icon?: typeof Icon;
 }
 
 // Mapping of route names to their route definitions
 export const Routes: Record<RouteName, Route> = {
 	home: {
-		id: 'home',
+		id: '/',
+		type: undefined,
 		title: Pages.home.menuTitle,
-		href: '/',
-		icon: Pages.home.menuIcon
+		icon: Pages.home.menuIcon,
 	},
 	devices: {
-		id: 'devices',
+		id: '/devices',
+		type: 'devices',
 		title: Pages.devices.menuTitle,
-		href: '/devices',
-		icon: Pages.devices.menuIcon
+		icon: Pages.devices.menuIcon,
 	},
 	tools: {
-		id: 'tools',
+		id: '/tools',
+		type: 'tools',
 		title: Pages.tools.menuTitle,
-		href: '/tools',
-		icon: Pages.tools.menuIcon
+		icon: Pages.tools.menuIcon,
 	},
 	media: {
-		id: 'media',
+		id: '/media',
+		type: 'media',
 		title: Pages.media.menuTitle,
-		href: '/media',
-		icon: Pages.media.menuIcon
+		icon: Pages.media.menuIcon,
 	},
 	research: {
-		id: 'research',
+		id: '/research',
+		type: undefined,
 		title: Pages.research.menuTitle,
-		href: '/research',
-		icon: Pages.research.menuIcon
+		icon: Pages.research.menuIcon,
 	},
 	workbench: {
-		id: 'workbench',
+		id: '/workbench',
+		type: undefined,
 		title: Pages.workbench.menuTitle,
-		href: '/workbench',
-		icon: Pages.workbench.menuIcon
+		icon: Pages.workbench.menuIcon,
 	},
 	about: {
-		id: 'about',
+		id: '/about',
+		type: undefined,
 		title: Pages.about.menuTitle,
-		href: '/about',
-		icon: Pages.about.menuIcon
+		icon: Pages.about.menuIcon,
 	},
 	contact: {
-		id: 'contact',
+		id: '/contact',
+		type: undefined,
 		title: Pages.contact.menuTitle,
-		href: '/contact',
-		icon: Pages.contact.menuIcon
+		icon: Pages.contact.menuIcon,
 	}
 };
 

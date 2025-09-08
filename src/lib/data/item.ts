@@ -9,9 +9,14 @@ export interface ItemImage {
 	lg: Picture;
 }
 
-export interface ItemType {
+/**
+ * Represents a website item like device, tool or media.
+ */
+export type ItemType = {
 	// device name
 	name: string;
+
+	slug: string;
 	// relative path to the device, e.g. "/solder-bit/gamepad"
 	path: string;
 	// a nicer name for the path that will be shown in the breadcrumbs instead of the path, e.g. "solder:bit/gamepad"
@@ -43,28 +48,17 @@ export interface ItemType {
 	visible: boolean;
 	// indicates the item is featured or new
 	featured: boolean;
-
-	//// Automatically filled in
-	route?: Route;
 }
 
 
+/**
+ * Internal representation of an item with a route.
+ */
+export type _ItemType = ItemType & {
+	route: Route;
+};
 
-export function getItemPath(item: ItemType): string {
-	return (item.route?.href ?? '') + item.path;
-}
 
-export function modulesToItems(modules: Record<string, ItemType>): ItemType[] {
-	return Object.values(modules);
-}
-
-export function modulesToVisibleItems(modules: Record<string, ItemType>): ItemType[] {
-	return Object.values(modules).filter(m => m.visible ?? true);
-}
-
-export function modulesToFeaturedItems(modules: Record<string, ItemType>, route: Route): ItemType[] {
-	return Object.values(modules)
-		.filter(m => m.featured ?? false) // default featured=false unless explicitly true
-		.map(m => ({...m, route} satisfies ItemType)); // ensure route is set
-}
-
+export type _ItemMap = {
+	[key: string]: _ItemType;
+};

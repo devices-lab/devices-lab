@@ -11,7 +11,7 @@ export const svelteMap: SvelteTagMap = {
 		baseClass: 'underline underline-offset-4 decoration-dotted hover:decoration-solid link-blue',
 		pass: ['rel', 'target', 'aria-*', 'data-*'],
 		map: (a) => ({
-			href: safeUrl(String(a.href ?? '#'))
+			link: safeUrl(String(a.href ?? '#'))
 		}),
 		requiredChildren: true
 	}),

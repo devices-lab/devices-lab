@@ -1,8 +1,7 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import IconLink from '$lib/components/icons/IconLink.svelte';
-	import type { Link } from '$lib/data/research';
-	import { type DefProps } from '$lib/utils/utils';
+	import type { DefProps, Link } from '$lib/utils/utils';
 
 	type Props = DefProps & {
 		links: Link[];
@@ -16,8 +15,7 @@
 		{#each links as link}
 			<li role="">
 				<IconLink
-					href={link.href}
-					external={true}
+					link={link.href}
 					icon={{ icon: link.icon, class: 'size-5', fallback: 'Test' }}
 					text={{ text: link.text }}
 					class="

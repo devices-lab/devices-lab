@@ -1,21 +1,18 @@
 
 
-import type { LayoutLoad } from './$types';
 import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
+import type { LayoutLoad } from './$types';
 
-import { Routes } from '$lib/data/routes';
-import { devices, tools, media } from '$lib/_content/data';
-import { MainMenu, SideMenu } from '$lib/data/routes';
+import { allBySlug, devices, media, tools } from '$lib/_content/data';
+import { MainMenu, Routes, SideMenu } from '$lib/data/routes';
 
 //────────────────────────────────────────────────────────────────//
 
 // Featured items
-import { devicesFeatured } from '$lib/data/devices';
-import { toolsFeatured } from '$lib/data/tools';
-
 const featuredItems = {
-	[Routes.devices.id]: devicesFeatured,
-	[Routes.tools.id]: toolsFeatured
+	[Routes.devices.id]: devices.filter(device => device.featured),
+	[Routes.tools.id]: tools.filter(tool => tool.featured),
+	[Routes.media.id]: media.filter(media => media.featured)
 };
 
 //────────────────────────────────────────────────────────────────//
@@ -26,26 +23,25 @@ export const prerender = true;
 
 
 // If the path matches a device, tools, etc, return its full href and name
-const findPathName = (pathName: string): string => {
-	// Collect all item paths
-	const items = [
-		...devices,
-		...tools,
-		...media
-	];
+const findPathName = (pathName: string, params: string | undefined): string => {
+	let result = pathName;
 
-	for (const item of items) {
-		if (pathName.endsWith(item.path)) {
-			return pathName.replace(item.path, item.pathName);
-		}
-	}
+	// If we have params, try to find a matching item
+	const item = params ? allBySlug[params] : undefined;
+	if (item) 
+		result = pathName.replace(item.path, item.pathName);
 
-	return pathName;
+	//for (const item of allItems) {
+	//	if (pathName.endsWith(item.path)) {
+	//		return pathName.replace(item.path, item.pathName);
+	//	}
+	//}
+	return result;
 };
 
 // Create breadcrumbs based on the current path
-const createBreadcrumbs = (route: string): BreadcrumbType[] => {
-	const name = findPathName(route);
+const createBreadcrumbs = (route: string, params: string | undefined): BreadcrumbType[] => {
+	const name = findPathName(route, params);
 	const nameParts = name.split('/').filter(Boolean) || [];
 	const pathParts = route.split('/').filter(Boolean) || [];
 
@@ -60,9 +56,10 @@ const createBreadcrumbs = (route: string): BreadcrumbType[] => {
 
 
 export const load: LayoutLoad = async (event) => {
-	const route = event.route.id?.replace('[slug]', event.params.slug ?? '') ?? '/';
+
+	const route = event.route.id?.replace('[...rest]', event.params.rest ?? '') ?? '/';
 	//const route = parseEventRoute(routePath);
-	const breadcrumbs = createBreadcrumbs(route);
+	const breadcrumbs = createBreadcrumbs(route, event.params.rest);
 	return {
 		...(event.data ?? {}),
 		route: Routes.home, // will be overwritten in each page

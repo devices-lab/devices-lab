@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { ItemType } from '$lib/data/item';
+	import type { _ItemType } from '$lib/data/item';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 
-	const { items }: { items: ItemType[] } = $props();
+	const { items }: { items: _ItemType[] } = $props();
 </script>
 
 

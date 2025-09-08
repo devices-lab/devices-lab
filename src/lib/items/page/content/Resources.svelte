@@ -13,14 +13,14 @@
 	const { item, ...props }: Props = $props();
 </script>
 
-<ClassBox {props}>
-	{#if item.resources && item.resources.length > 0}
+{#if item.resources && item.resources.length > 0}
+	<ClassBox {props}>
 		<Collapse label={'Resources'}>
 			<BaseList bare class="flex flex-col items-start gap-y-3">
 				{#each item.resources as resource}
-					<IconSublink link={resource} icon={resource.icon} text={{ text: resource.text, class: 'font-semibold' }} subtext={{ text: resource.href, class: 'text-sm link-blue underline' }} />
+					<IconSublink link={resource.href} icon={resource.icon} text={{ text: resource.text, class: 'font-semibold' }} subtext={{ text: resource.href, class: 'text-sm link-blue underline' }} />
 				{/each}
 			</BaseList>
 		</Collapse>
-	{/if}
-</ClassBox>
+	</ClassBox>
+{/if}
