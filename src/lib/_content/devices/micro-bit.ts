@@ -24,7 +24,5 @@ export const item: ItemType = {
 
 	tags: ['microbit'],
 
-	family: false,
-	visible: true,
 	featured: false
 };

@@ -30,8 +30,7 @@ export const item: ItemType = {
 
 	tags: ['microbit', 'soldering'],
 
-	family: false,
-	visible: false,
+
 	featured: true,
 
 	features: [

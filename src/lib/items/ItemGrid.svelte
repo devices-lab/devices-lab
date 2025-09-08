@@ -1,4 +1,5 @@
 <script lang="ts">
+	import NoItems from '$lib/components/NoItems.svelte';
 	import type { _ItemType } from '$lib/data/item';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 
@@ -17,5 +18,5 @@
 		</div>
 	</section>
 {:else}
-	<p class="text-center text-sm text-gray-500 italic">No items found.</p>
+	<NoItems />
 {/if}

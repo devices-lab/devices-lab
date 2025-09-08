@@ -10,6 +10,7 @@
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import Title from '$lib/items/page/content/Title.svelte';
 	import type { DefProps } from '$lib/utils/utils';
+	import NoItems from '$lib/components/NoItems.svelte';
 
 	type Props = DefProps & {
 		item: ItemType;
@@ -38,6 +39,6 @@
 			</div>
 		</BaseCard>
 	{:else}
-		<p class="text-center text-sm text-gray-500 italic">No items found.</p>
+		<NoItems />
 	{/if}
 </ClassBox>

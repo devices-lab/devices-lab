@@ -1,7 +1,8 @@
 <script lang="ts" generics="Item">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import DeleteButton from '$lib/components/interactive/DeleteButton.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import DeleteButton from '$lib/components/interactive/DeleteButton.svelte';
+	import NoItems from '$lib/components/NoItems.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import { Plus } from '@lucide/svelte';
 	import type { Snippet } from 'svelte';
@@ -40,7 +41,7 @@
 				<DeleteButton onclick={() => remove(i)} class="my-auto flex-0" />
 			</div>
 		{:else}
-			<p class="text-sm text-gray-500 dark:text-gray-400 italic mb-4">No items found</p>
+			<NoItems />
 		{/each}
 	</div>
 </ClassBox>

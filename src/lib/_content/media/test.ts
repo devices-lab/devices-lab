@@ -24,7 +24,7 @@ export const item: ItemType = {
 
 	tags: ['test'],
 
-	family: false,
-	visible: false,
+
+	
 	featured: false
 };

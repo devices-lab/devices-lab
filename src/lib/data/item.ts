@@ -9,6 +9,20 @@ export interface ItemImage {
 	lg: Picture;
 }
 
+
+
+export type FamilyType = {
+	// device name
+	name: string;
+	// description
+	teaser: string;
+	description: string;
+	// images
+	cover: Picture;
+	// tags for filtering
+	tags: string[];
+}
+
 /**
  * Represents a website item like device, tool or media.
  */
@@ -25,6 +39,7 @@ export type ItemType = {
 	// description
 	teaser: string;
 	description: string;
+
 	// images
 	cover: Picture;
 	images: ItemImage[];
@@ -37,15 +52,14 @@ export type ItemType = {
 	features?: string[];
 	resources?: Link[];
 	publications?: ResearchType[];
-	
 
 	// tags for filtering
 	tags: string[];
 
 	// indicates if item a family of items, e.g. like solderbit?
-	family?: boolean;
+	//family?: boolean;
 	// indicates the item is visible on the main page ( devices within a family are typically only visible inside the family, not the main page )
-	visible: boolean;
+	// visible: boolean;
 	// indicates the item is featured or new
 	featured: boolean;
 }
@@ -56,6 +70,7 @@ export type ItemType = {
  */
 export type _ItemType = ItemType & {
 	route: Route;
+	family: _ItemType[];
 };
 
 

@@ -27,8 +27,8 @@ export const item: ItemType = {
 
 	tags: ['makedevice'],
 
-	family: false,
-	visible: true,
+	
+	
 	featured: true,
 
 	features: [
