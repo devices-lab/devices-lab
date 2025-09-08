@@ -1,6 +1,8 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
+	import RichText from '$lib/components/parser/RichText.svelte';
+	import { svelteMap, tagMap } from '$lib/components/parser/maps';
 	import { formatDate, type ResearchItem } from '$lib/data/research';
 	import AwardList from '$lib/research/AwardList.svelte';
 	import LinkList from '$lib/research/LinkList.svelte';
@@ -33,10 +35,12 @@
 
 		<!-- Content -->
 		<div class="order-2 flex-3 space-y-2">
-			<div class="text-xs font-semibold tracking-wide text-primary-600 uppercase dark:text-primary-400">{item.type}</div>
-			<div class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title}</div>
-			<div class="text-xs text-gray-600 italic dark:text-gray-400">{item.authors.map((author) => author.name).join(', ')}</div>
-			<div class="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 dark:text-gray-300">{@html item.abstract}</div>
+			<h2 class="text-xs font-semibold tracking-wide text-primary-600 uppercase dark:text-primary-400">{item.type}</h2>
+			<h1 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title}</h1>
+			<p class="text-xs text-gray-600 italic dark:text-gray-400">{item.authors.map((author) => author.name).join(', ')}</p>
+			<p class="text-sm leading-relaxed whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+				<RichText source={item.abstract} {svelteMap} {tagMap} />
+			</p>
 
 			<!-- Inline meta for wide screens -->
 			<div class=" flex flex-col items-start gap-x-2 gap-y-1 pt-1 text-xs text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">

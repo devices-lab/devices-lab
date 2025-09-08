@@ -1,9 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import IconItem from '$lib/components/icons/IconItem.svelte';
 	import IconText from '$lib/components/icons/IconText.svelte';
-	import InfoCircle from '$lib/components/icons/InfoCircle.svelte';
 	import TextItem from '$lib/components/icons/TextItem.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';

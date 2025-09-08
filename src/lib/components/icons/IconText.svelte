@@ -13,8 +13,8 @@
 
 	const { text, icon, position = 'iconFirst', ...props }: IconTextProps = $props();
 
-	const iconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
-	const textProps = $derived(normaliseOptional<TextProps, 'text'>(text, 'text'));
+	const iconProps: IconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
+	const textProps: TextProps | undefined = $derived(normaliseOptional<TextProps, 'text'>(text, 'text'));
 </script>
 
 <ClassBox {props} class="flex items-center justify-center gap-2">

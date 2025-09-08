@@ -40,7 +40,7 @@
 	const parseInput = (val: string, min: number, max: number, chars: number): number => {
 		// Parse the input
 		let num = parseInt(val);
-		if (isNaN(num) || num === 0) return NaN;
+		if (isNaN(num) || num === 0) return 0;
 		// Clamp the parsed value
 		return clamp(num, min, max);
 	};

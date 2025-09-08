@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { DefProps } from '$lib/utils';
-	import { onMount } from 'svelte';
 
 	type Props = DefProps & {
 		value: string;
@@ -16,7 +15,7 @@
 	</el-option>
 {/snippet}
 
-<el-autocomplete class="relative block" >
+<el-autocomplete class="relative block">
 	<input {...props} bind:value id="autocomplete" type="text" class={props.class} />
 	<button type="button" class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2" aria-label="Open">
 		<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-gray-400">

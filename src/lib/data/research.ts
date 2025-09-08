@@ -67,9 +67,9 @@ export const DefaultResearchItem: ResearchItem = {
 	abstract: '',
 	authors: [],
 	published: {
-		year: NaN,
-		month: NaN,
-		day: NaN
+		year: 0,
+		month: 0,
+		day: 0
 	},
 	conference: '',
 	location: '',
@@ -80,7 +80,7 @@ export const DefaultResearchItem: ResearchItem = {
 
 
 export function formatDate(date: Date): string | undefined {
-	if (!isBound(date.year, 0, 9999) && !isBound(date.month, 1, 12) && !isBound(date.day, 1, 31))
+	if (!isBound(date.year, 1, 9999) && !isBound(date.month, 1, 12) && !isBound(date.day, 1, 31))
 		return;
 
 	const yearStr = String(date.year).padStart(4, '0');
