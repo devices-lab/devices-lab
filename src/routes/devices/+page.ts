@@ -5,6 +5,7 @@ import { devices } from '$lib/data/devices';
 
 
 export const load = (async () => {
+	console.log(devices);
 	return {
 		devices
 	};

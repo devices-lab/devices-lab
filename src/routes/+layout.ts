@@ -3,9 +3,8 @@
 import type { LayoutLoad } from './$types';
 import type { BreadcrumbType } from '$lib/navbar/Breadcrumbs.svelte';
 
-import { Routes, parseEventRoute } from '$lib/data/routes';
-import { devicesCatalog } from '$lib/data/devices';
-import { toolsCatalog } from '$lib/data/tools';
+import { Routes } from '$lib/data/routes';
+import { devices, tools, media } from '$lib/_content/data';
 import { MainMenu, SideMenu } from '$lib/data/routes';
 
 //────────────────────────────────────────────────────────────────//
@@ -30,8 +29,9 @@ export const prerender = true;
 const findPathName = (pathName: string): string => {
 	// Collect all item paths
 	const items = [
-		...devicesCatalog,
-		...toolsCatalog,
+		...devices,
+		...tools,
+		...media
 	];
 
 	for (const item of items) {
@@ -60,7 +60,8 @@ const createBreadcrumbs = (route: string): BreadcrumbType[] => {
 
 
 export const load: LayoutLoad = async (event) => {
-	const route = parseEventRoute(event.route.id);
+	const route = event.route.id?.replace('[slug]', event.params.slug ?? '') ?? '/';
+	//const route = parseEventRoute(routePath);
 	const breadcrumbs = createBreadcrumbs(route);
 	return {
 		...(event.data ?? {}),

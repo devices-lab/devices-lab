@@ -10,6 +10,8 @@
 	const { route, children, class: className, ...restProps }: { route: RouteType; children?: Snippet; class?: ClassValue; [key: string]: any } = $props();
 
 	// Derive if we are the current (active) route
+	$inspect(page.data.route);
+	$inspect(route);
 	const current = $derived(page.data.route.href === route.href);
 </script>
 

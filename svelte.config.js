@@ -7,8 +7,8 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		alias: {
-			$devices: 'src/routes/[[devices=devices]]',
-			$tools: 'src/routes/[[tools=tools]]',
+			$devices: 'src/routes/devices', //[[devices=devices]]
+			$tools: 'src/routes/tools', //[[tools=tools]]
 			$media: 'src/routes/media',
 			$workbench: 'src/routes/workbench',
 			$research: 'src/lib/_content/research',

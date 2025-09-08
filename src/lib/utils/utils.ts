@@ -112,3 +112,6 @@ export function normalize<TValue extends object, TUnion extends TValue | string 
 	if (typeof v === 'object') return v as TValue;
 	return { [key]: v } as TValue;
 }
+
+
+export const stripLeadingSlash = (s: string) => s.startsWith("/") ? s.slice(1) : s;

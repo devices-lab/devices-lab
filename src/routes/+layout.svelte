@@ -23,6 +23,8 @@
 	});
 
 	const hasBreadcrumbs = $derived(page.data.breadcrumbs.length > 0);
+
+	$inspect(page.data);
 </script>
 
 <svelte:head>

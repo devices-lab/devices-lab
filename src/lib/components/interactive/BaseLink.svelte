@@ -16,6 +16,8 @@
 
 	const { children, href, external = false, ...props }: Props = $props();
 
+
+
 	const externalLink = $derived(external || href.startsWith('http'));
 	const resolvedHref = $derived(href.startsWith('/') ? resolve(href) : href);
 	const linkProps = $derived({

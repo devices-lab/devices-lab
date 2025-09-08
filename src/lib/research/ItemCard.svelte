@@ -28,7 +28,7 @@
 	<div class="mt-6 flex flex-col gap-8 lg:flex-row">
 		{#if item.picture}
 			<!-- Media -->
-			<div class="order-1 mx-auto flex flex-2 items-center overflow-hidden rounded-lg">
+			<div class="order-1 mx-auto flex flex-2 items-start lg:mt-0 overflow-hidden rounded-lg">
 				<BaseImg src={item.picture} alt="" class="w-full flex-0 grow rounded-lg" />
 			</div>
 		{/if}
@@ -55,7 +55,7 @@
 						<span><span class="text-gray-500 dark:text-gray-400">Location:</span> {item.location}</span>
 					</span>
 				{/if}
-				{#if item.published}
+				{#if item.published.year && item.published.month && item.published.day}
 					<span>
 						{#if item.conference || item.location}
 							<span class="hidden text-gray-300 sm:inline dark:text-gray-600">•</span>

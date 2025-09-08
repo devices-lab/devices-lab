@@ -102,6 +102,7 @@ export const SideMenu: Route[] = [
 //────────────────────────────────────────────────────────────────//
 
 // Utility function to 'resolve' event routes by replacing dynamic segments
+/*
 export const parseEventRoute = (route: string | null): string => {
 	if (!route) return '';
 	route = route.replace("[[devices=devices]]", "devices");
@@ -110,3 +111,4 @@ export const parseEventRoute = (route: string | null): string => {
 	route = route.replace("[[research=research]]", "research");
 	return route;
 };
+*/
