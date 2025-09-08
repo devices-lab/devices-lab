@@ -12,4 +12,4 @@
 	const iconClass = $derived(cn("link-red text-sm opacity-50", props.class));
 </script>
 
-<IconButton {...props} {onclick} class={iconClass} icon={{ icon: Trash2, class: 'size-5 ms-2' }} />
+<IconButton {...props} {onclick} class={iconClass} icon={{ icon: Trash2, class: 'size-5 ms-2', tooltip: 'Delete' }} />

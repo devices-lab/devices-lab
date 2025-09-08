@@ -6,7 +6,7 @@ export const research: ResearchType = {
     "doi": "10.1145/3735498",
 	"type": "Research Paper",
     "name": "LogicGlue",
-    "title": "Hardware-Independent Embedded Programming Through Platform-Independent Drivers",
+    "title": "LogicGlue: Hardware-Independent Embedded Programming Through Platform-Independent Drivers",
     "abstract": "LogicGlue is a platform-independent driver system that decouples application logic from hardware specifics, enabling embedded programs to run across different microcontrollers without modification. It preserves native component features and protocols, simplifying prototyping while maintaining flexibility in hardware choice.",
     "authors": [
         {

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import ItemPage from '$lib/items/page/Page.svelte';
+	import { page } from '$app/state';
+	import ItemPage from '$lib/items/page/ItemPage.svelte';
 </script>
 
-<ItemPage />
+<ItemPage item={page.data.item} />

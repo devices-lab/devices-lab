@@ -4,7 +4,7 @@
 	import type { Snippet } from 'svelte';
 
 	export type BaseButtonProps = {
-		onclick: () => void;
+		onclick?: () => void;
 	};
 
 	type Props = DefProps &
@@ -15,6 +15,6 @@
 	const { children, ...props }: Props = $props();
 </script>
 
-<ClassBox {props} tag="button" type="button">
+<ClassBox {props} tag="button" class="cursor-pointer" type="button">
 	{@render children?.()}
 </ClassBox>

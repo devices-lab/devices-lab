@@ -10,8 +10,8 @@ const config = {
 			$devices: 'src/routes/[[devices=devices]]',
 			$tools: 'src/routes/[[tools=tools]]',
 			$media: 'src/routes/media',
-			$research: 'src/routes/research',
 			$workbench: 'src/routes/workbench',
+			$research: 'src/lib/_content/research',
 		},
 		adapter: adapter(
 			{

@@ -6,7 +6,7 @@ export const research: ResearchType = {
     "doi": "10.1145/3596265",
 	"type": "Research Paper",
     "name": "CircuitGlue",
-    "title": "A Software Configurable Converter for Interconnecting Multiple Heterogeneous Electronic Components",
+    "title": "CircuitGlue: A Software Configurable Converter for Interconnecting Multiple Heterogeneous Electronic Components",
     "abstract": "CircuitGlue is an electronic prototyping board that facilitates the connection of various off-the-shelf electronic components and modules. The board's input header is software-configurable, allowing modules to be instantly compatible regardless of differences in voltage levels, interface types, communication protocols, and pinouts.",
     "authors": [
         {

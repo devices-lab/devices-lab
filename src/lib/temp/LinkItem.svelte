@@ -1,8 +1,16 @@
 <script lang="ts">
+	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
-	import Link from './Link.svelte';
 
-	const { label, sublabel, children, ...props }: { label: string; sublabel?: string; children?: Snippet; href: string } = $props();
+	type Props = DefProps & {
+		children?: Snippet;
+		href: string;
+		label: string;
+		sublabel: string;
+	};
+
+	const { children, href, label, sublabel, ...props }: Props = $props();
 </script>
 
 <li class="space-x- flex flex-row items-start space-x-2">
@@ -13,7 +21,8 @@
 	<div class="flex flex-1 flex-col">
 		<span class="font-semibold">{label}</span>
 
-		<Link {...props} />
+		<IconLink href={href} text={href} />
+	
 	</div>
 
 	{#if sublabel}

@@ -6,6 +6,7 @@
 
 	import { ChevronRight } from '@lucide/svelte';
 	import type { Route } from '$lib/data/routes';
+	import IconLink from '$lib/components/icons/IconLink.svelte';
 
 	const { id, route, items = [] }: { id: string; route: Route; items?: ItemType[] } = $props();
 </script>
@@ -22,36 +23,7 @@
 				{/each}
 			</div>
 
-			<BaseLink
-				href={route.href}
-				class="group
-				flex
-				flex-none
-				items-center
-				gap-x-2
-				self-end
-				rounded-full
-				bg-primary-200
-				dark:bg-primary-800
-				p-2
-				ps-4
-				font-semibold
-				text-primary-900
-				transition-all
-				duration-300
-				hover:bg-primary-600
-				hover:text-white
-				focus-visible:outline-2
-				focus-visible:outline-offset-2
-				focus-visible:outline-primary-600
-				dark:text-primary-100
-				dark:hover:bg-primary-400
-				dark:hover:text-primary-900
-				dark:focus-visible:outline-primary-500"
-			>
-				See all items
-				<ChevronRight class="size-7 transition-all duration-300 group-hover:translate-x-1" />
-			</BaseLink>
+			<IconLink href={route.href} class="group self-end button-primary-highlight rounded-full p-2 ps-4 text-nowrap" text={{ text: 'See all items' }} icon={{ icon: ChevronRight, class: 'size-7 transition-all duration-300 group-hover:translate-x-1' }} position="iconLast" />
 		</div>
 	</div>
 </el-popover>

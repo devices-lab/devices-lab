@@ -22,9 +22,9 @@ export const team: TeamMember[] = [
 		order: '1_senior',
 		href: 'https://www.lancaster.ac.uk/sci-tech/about-us/people/mannu-lambrichts',
 		sites: [
-			{ href: 'https://www.mannulambrichts.be', title: 'Profile page', icon: Globe },
-			{ href: 'https://github.com/MannuLambrichts', title: 'GitHub', icon: Github },
-			{ href: 'https://www.mannulambrichts.be/portfolio/', title: 'Drone Thingies', icon: Drone }
+			{ href: 'https://www.mannulambrichts.be', text: 'Profile page', icon: Globe },
+			{ href: 'https://github.com/MannuLambrichts', text: 'GitHub', icon: Github },
+			{ href: 'https://www.mannulambrichts.be/portfolio/', text: 'Drone Thingies', icon: Drone }
 		]
 	},
 	{

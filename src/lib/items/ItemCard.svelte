@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-	import Feature from '$lib/items/common/Feature.svelte';
+	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
 	import { type ItemType, getItemPath } from '$lib/data/item';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 
@@ -24,7 +24,7 @@
 		{/if}
 
 		{#if item.featured}
-			<Feature class="absolute top-3 left-1 sm:top-4 sm:left-2" />
+			<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
 		{/if}
 	</BaseLink>
 </BaseCard>

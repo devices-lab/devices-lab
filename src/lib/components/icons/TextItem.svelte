@@ -5,12 +5,18 @@
 	export type TextType = string | null | undefined;
 
 	export type TextProps = DefProps & {
-		text: string | null | undefined;
+		text: TextType;
+		subtext?: TextType;
 	};
 
-	const { text, ...props }: TextProps = $props();
+	const { text, subtext, ...props }: TextProps = $props();
 </script>
 
 {#if text}
-	<ClassBox {props} tag="span">{text}</ClassBox>
+	<ClassBox {props} tag="span" class="flex flex-col">
+		{text}
+		{#if subtext}
+			<span class="text-sm font-normal text-gray-400">{subtext}</span>
+		{/if}
+	</ClassBox>
 {/if}

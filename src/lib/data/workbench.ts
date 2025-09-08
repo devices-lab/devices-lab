@@ -31,8 +31,8 @@ function parseHref(href: string): string {
 }
 
 // Combine internal and external workbench items into a single list
-function modulesToWorkbench(modules: Record<string, { item: ExternalWorkbenchItem }>): WorkbenchItem[] {
-	const internalWorkbenchItems = Object.entries(modules).map(([key, value]) => ({ ...value.item, href: parseHref(key) }));
+function modulesToWorkbench(modules: Record<string, ExternalWorkbenchItem>): WorkbenchItem[] {
+	const internalWorkbenchItems = Object.entries(modules).map(([key, value]) => ({ ...value, href: parseHref(key) }));
 
 	return [
 		...processWorkbenchList(internalWorkbenchItems, false),

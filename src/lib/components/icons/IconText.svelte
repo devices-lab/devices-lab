@@ -4,26 +4,36 @@
 	import { normaliseOptional, normaliseRequired } from '$lib/utils/normalise';
 	import { type DefProps } from '$lib/utils/utils';
 	import ClassBox from '$lib/components/ClassBox.svelte';
+	import type { Snippet } from 'svelte';
 
 	export type IconTextProps = DefProps & {
-		icon: IconType | IconProps;
+		icon?: IconType | IconProps;
 		text?: TextType | TextProps;
+		children?: Snippet;
 		position?: 'iconFirst' | 'iconLast';
 	};
 
-	const { text, icon, position = 'iconFirst', ...props }: IconTextProps = $props();
+	const { text, icon, children, position = 'iconFirst', ...props }: IconTextProps = $props();
 
 	const iconProps: IconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
-	const textProps: TextProps | undefined = $derived(normaliseOptional<TextProps, 'text'>(text, 'text'));
+	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
 </script>
 
 <ClassBox {props} class="flex items-center justify-center gap-2">
-	{#if textProps}
+	{#if text}
 		{#if position === 'iconFirst'}
 			<IconItem {...iconProps} />
 			<TextItem {...textProps} />
 		{:else}
 			<TextItem {...textProps} />
+			<IconItem {...iconProps} />
+		{/if}
+	{:else if children}
+		{#if position === 'iconFirst'}
+			<IconItem {...iconProps} />
+			{@render children?.()}
+		{:else}
+			{@render children?.()}
 			<IconItem {...iconProps} />
 		{/if}
 	{:else}

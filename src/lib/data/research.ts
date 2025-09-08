@@ -1,6 +1,6 @@
 
 import type { Picture } from 'vite-imagetools';
-import { generateHash, isBound } from "$lib/utils/utils";
+import { generateHash, isBound, type Link } from "$lib/utils/utils";
 
 
 export type Date = {
@@ -14,11 +14,7 @@ export type Author = {
 	affiliation: string;
 }
 
-export type Link = {
-	href: string;
-	text: string;
-	icon: string;
-};
+
 
 export type Award = {
 	name: string;
@@ -116,20 +112,20 @@ function parsePath(path: string): string {
 // Dynamic import of research modules
 export function fetchResearchData(): ResearchLibrary {
 	// Use vite to import all research items and images
-	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true }) as Record<string, { research: ResearchType }>;
-	const imageModules = import.meta.glob('$lib/_content/research/**/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}', { eager: true, query: { enhanced: true } }) as Record<string, { default: Picture }>;
+	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true, import: 'research' }) as Record<string, ResearchType>;
+	const imageModules = import.meta.glob('$lib/_content/research/**/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}', { eager: true, query: { enhanced: true }, import: 'default' }) as Record<string, Picture>;
 
 	// Map image paths to their corresponding research item keys
 	const imageMap = Object.fromEntries(
 		Object.entries(imageModules).map(([path, module]) => {
 			const key = parsePath(path);
-			return [key, module.default];
+			return [key, module];
 		})
 	);
 
 	return Object.fromEntries(Object.entries(researchModules).map(([path, module]) => {
 		const key = parsePath(path);
-		return [key, { key, picture: imageMap[key] || '', ...module.research } satisfies ResearchItem];
+		return [key, { key, picture: imageMap[key] || '', ...module } satisfies ResearchItem];
 	}));
 }
 
@@ -178,7 +174,7 @@ export async function fetchResearchDataDOI(doi: string): Promise<ResearchItem | 
 				...DefaultResearchItem,
 				doi: item.DOI || doi,
 				name: '',
-				title: `${title}: ${subtitle}`,
+				title: `${title}: ${subtitle}`?.replace(/: $/, ''),
 				abstract: item.abstract ? item.abstract.replace(/<\/?jats:[^>]+>/g, '').replace(/<\/?[^>]+>/g, '') : '',
 				authors,
 				published,
@@ -240,3 +236,6 @@ export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async 
 }));
 
 */
+
+
+

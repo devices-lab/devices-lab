@@ -4,7 +4,7 @@
 	import type { DefProps } from '$lib/utils/utils';
 
 	type InlineIconText = {
-		icon: IconTextProps['icon'];
+		icon?: IconTextProps['icon'];
 		text?: IconTextProps['text'];
 		position?: IconTextProps['position'];
 	};

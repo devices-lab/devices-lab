@@ -9,6 +9,12 @@ import Image4 from "$lib/assets/img/clipbit/image4.jpeg?enhanced";
 import Image5 from "$lib/assets/img/clipbit/image5.jpeg?enhanced";
 import Image6 from "$lib/assets/img/clipbit/image6.jpeg?enhanced";
 
+import { research as clipbit1 } from '$research/clip-bit--6bn47b';
+import { research as clipbit2 } from '$research/clip-bit--cli8fm';
+import { research as clipbit3 } from '$research/clip-bit-2c7269';
+
+//
+
 export const item: ItemType = {
 	name: "clip:bit",
 	path: "/clip-bit",
@@ -36,5 +42,16 @@ export const item: ItemType = {
 
 	family: false,
 	visible: true,
-	featured: true
+	featured: true,
+
+	features: [
+		'LED displays for daylight readability',
+		'Up to 12 classification categories',
+		'Persistent data logging',
+		'Smart scanning of data collection sheets',
+		'Intelligent data upload for classes',
+		'Long life AA battery pack'
+	],
+	publications: [clipbit1, clipbit2, clipbit3],
+	resources: [],
 };

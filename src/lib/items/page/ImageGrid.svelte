@@ -1,9 +1,15 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import type { Picture } from 'vite-imagetools';
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { ItemImage } from '$lib/data/item';
+	import type { DefProps } from '$lib/utils/utils';
+	import type { Picture } from 'vite-imagetools';
 
-	const { images }: { images: ItemImage[] } = $props();
+	type Props = DefProps & {
+		images: ItemImage[];
+	};
+
+	const { images, ...props }: Props = $props();
 </script>
 
 {#snippet ImageButton(image: Picture)}
@@ -17,32 +23,34 @@
 {/snippet}
 
 {#snippet ImagePanel(image: Picture)}
-	<BaseImg src={image} alt="" class="aspect-square w-full object-contain sm:rounded-lg" />
+	<BaseImg src={image} alt="" class="lg:aspect-squarer w-full object-contain sm:rounded-lg my-5" />
 {/snippet}
 
-{#if images.length > 0}
-	<el-tab-group class="flex flex-col-reverse">
-		<!-- Image selector -->
-		<div class="mx-auto mt-6 block w-full max-w-2xl lg:max-w-none">
-			<el-tab-list class="grid grid-cols-3 gap-6 sm:grid-cols-4">
-				{#each images as { sm }}
-					{@render ImageButton(sm)}
+<ClassBox {props}>
+	{#if images.length > 0}
+		<el-tab-group class="flex flex-col-reverse">
+			<!-- Image selector -->
+			<div class="mx-auto mt-6 block w-full max-w-2xl lg:max-w-none">
+				<el-tab-list class="grid grid-cols-3 gap-6 sm:grid-cols-4">
+					{#each images as { sm }}
+						{@render ImageButton(sm)}
+					{/each}
+				</el-tab-list>
+			</div>
+			<!-- Image Panel -->
+			<el-tab-panels>
+				{#each images as { lg }}
+					{@render ImagePanel(lg)}
 				{/each}
-			</el-tab-list>
+			</el-tab-panels>
+		</el-tab-group>
+	{:else}
+		<!-- Placeholder -->
+		<div class="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
+			<svg class="mx-auto h-full w-full text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64">
+				<rect width="100%" height="100%" fill="currentColor" />
+				<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="#ffffff">No Image</text>
+			</svg>
 		</div>
-		<!-- Image Panel -->
-		<el-tab-panels>
-			{#each images as { lg }}
-				{@render ImagePanel(lg)}
-			{/each}
-		</el-tab-panels>
-	</el-tab-group>
-{:else}
-	<!-- Placeholder -->
-	<div class="aspect-square w-full overflow-hidden rounded-lg bg-gray-100">
-		<svg class="mx-auto h-full w-full text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 64 64">
-			<rect width="100%" height="100%" fill="currentColor" />
-			<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="#ffffff">No Image</text>
-		</svg>
-	</div>
-{/if}
+	{/if}
+</ClassBox>

@@ -2,6 +2,16 @@
 import { writable } from 'svelte/store';
 import * as icons from '@lucide/svelte';
 import type { ClassValue } from 'svelte/elements';
+import type { Icon } from '@lucide/svelte';
+
+export type Link = {
+	href: string;
+	text: string;
+	icon?: typeof Icon | string;
+};
+
+
+
 
 // Get an icon by name
 export function getIcon(name: string): typeof icons.Icon | undefined {

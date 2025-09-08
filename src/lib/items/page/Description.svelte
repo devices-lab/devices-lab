@@ -1,15 +1,16 @@
 <script lang="ts">
-	export interface DescriptionItem {
-		description: string;
-	}
+	import ClassBox from '$lib/components/ClassBox.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 
-	const { description }: DescriptionItem = $props();
+	type Props = DefProps & {
+		description: string;
+	};
+
+	const { description, ...props }: Props = $props();
 </script>
 
-<div class="mt-6">
-	<h3 class="sr-only">Description</h3>
-
+<ClassBox {props} class="mt-6">
 	<div class="space-y-6 text-base text-gray-700 dark:text-gray-300">
 		<p>{description}</p>
 	</div>
-</div>
+</ClassBox>

@@ -1,5 +1,8 @@
 import type { Picture } from 'vite-imagetools';
 import type { Route } from '$lib/data/routes';
+import type { Link } from '$lib/utils/utils';
+import type { ResearchType } from './research';
+
 
 export interface ItemImage {
 	sm: Picture;
@@ -20,11 +23,16 @@ export interface ItemType {
 	// images
 	cover: Picture;
 	images: ItemImage[];
-
+	
 	// logo generator stuff
 	projectName: string;
 	projectID: string;
 	projectVersion: string;
+
+	features?: string[];
+	resources?: Link[];
+	publications?: ResearchType[];
+	
 
 	// tags for filtering
 	tags: string[];
@@ -46,19 +54,17 @@ export function getItemPath(item: ItemType): string {
 	return (item.route?.href ?? '') + item.path;
 }
 
-export function modulesToItems(modules: Record<string, { item: ItemType }>): ItemType[] {
-	return Object.values(modules).map(m => m.item);
+export function modulesToItems(modules: Record<string, ItemType>): ItemType[] {
+	return Object.values(modules);
 }
 
-export function modulesToVisibleItems(modules: Record<string, { item: ItemType }>): ItemType[] {
-	return Object.values(modules)
-		.filter(m => m.item.visible ?? true) // default visible=true unless explicitly false
-		.map(m => m.item);
+export function modulesToVisibleItems(modules: Record<string, ItemType>): ItemType[] {
+	return Object.values(modules).filter(m => m.visible ?? true);
 }
 
-export function modulesToFeaturedItems(modules: Record<string, { item: ItemType }>, route: Route): ItemType[] {
+export function modulesToFeaturedItems(modules: Record<string, ItemType>, route: Route): ItemType[] {
 	return Object.values(modules)
-		.filter(m => m.item.featured ?? false) // default featured=false unless explicitly true
-		.map(m => ({...m.item, route} satisfies ItemType)); // ensure route is set
+		.filter(m => m.featured ?? false) // default featured=false unless explicitly true
+		.map(m => ({...m, route} satisfies ItemType)); // ensure route is set
 }
 

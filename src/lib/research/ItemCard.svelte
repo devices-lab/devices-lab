@@ -43,12 +43,27 @@
 			</p>
 
 			<!-- Inline meta for wide screens -->
-			<div class=" flex flex-col items-start gap-x-2 gap-y-1 pt-1 text-xs text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">
-				<span><span class="text-gray-500 dark:text-gray-400">Conference:</span> {item.conference}</span>
-				<span class="hidden text-gray-300 sm:inline dark:text-gray-600">•</span>
-				<span><span class="text-gray-500 dark:text-gray-400">Location:</span> {item.location}</span>
-				<span class="hidden text-gray-300 sm:inline dark:text-gray-600">•</span>
-				<span><span class="text-gray-500 dark:text-gray-400">Date:</span> {formatDate(item.published)}</span>
+			<div class=" flex flex-col flex-wrap items-start gap-x-2 gap-y-1 pt-1 text-xs text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">
+				{#if item.conference}
+					<span><span class="text-gray-500 dark:text-gray-400">Conference:</span> {item.conference}</span>
+				{/if}
+				{#if item.location}
+					<span>
+						{#if item.conference}
+							<span class="hidden text-gray-300 sm:inline dark:text-gray-600">•</span>
+						{/if}
+						<span><span class="text-gray-500 dark:text-gray-400">Location:</span> {item.location}</span>
+					</span>
+				{/if}
+				{#if item.published}
+					<span>
+						{#if item.conference || item.location}
+							<span class="hidden text-gray-300 sm:inline dark:text-gray-600">•</span>
+						{/if}
+						<span class="text-gray-500 dark:text-gray-400">Date:</span>
+						{formatDate(item.published)}
+					</span>
+				{/if}
 			</div>
 
 			<!-- Tags -->

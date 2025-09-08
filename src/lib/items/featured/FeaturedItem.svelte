@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-	import Feature from '$lib/items/common/Feature.svelte';
+	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
 	import { type ItemType, getItemPath } from '$lib/data/item';
 
 	const { item }: { item: ItemType } = $props();
@@ -13,5 +13,5 @@
 		<h4 class="text-center text-sm/6 font-semibold text-gray-900 dark:text-gray-300">{item.name}</h4>
 	</BaseLink>
 
-	<Feature class="absolute top-1 left-1 sm:top-2 sm:left-2" />
+	<FeaturedLabel class="absolute top-1 left-1 sm:top-2 sm:left-2" />
 </div>

@@ -4,6 +4,7 @@ interface TooltipProps {
 	content?: string;
 	[key: string]: unknown;
 }
+// https://atomiks.github.io/tippyjs/v6/getting-started/
 
 // tooltip.js
 export function tooltip(node: HTMLElement, params: TooltipProps = {}) {

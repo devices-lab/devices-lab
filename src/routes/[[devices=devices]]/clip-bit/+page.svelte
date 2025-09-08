@@ -1,12 +1,11 @@
 <script lang="ts">
-	import ItemPage from '$lib/items/page/Page.svelte';
-	import Collapse from '$lib/components/Collapse.svelte';
-	import LinkItem from '$lib/items/page/LinkItem.svelte';
-	import List from '$lib/items/page/List.svelte';
-	
-	import { Scroll } from '@lucide/svelte';
+	import { page } from '$app/state';
+	import ItemPage from '$lib/items/page/ItemPage.svelte';
 </script>
 
+<ItemPage item={page.data.item} />
+
+<!--
 <ItemPage>
 	<Collapse label={'Features'}>
 		<List items={['LED displays for daylight readability', 'Up to 12 classification categories', 'Persistent data logging', 'Smart scanning of data collection sheets', 'Intelligent data upload for classes', 'Long life AA battery pack']} />
@@ -25,3 +24,4 @@
 		</List>
 	</Collapse>
 </ItemPage>
+-->
