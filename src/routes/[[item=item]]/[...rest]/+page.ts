@@ -3,6 +3,7 @@ import { findRoute } from '$lib/data/routes';
 import { concat } from '$lib/utils/utils';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
+import { resolve } from '$app/paths';
 
 
 export const load = (async ({ params }) => {
@@ -11,7 +12,7 @@ export const load = (async ({ params }) => {
 	if (!params.item) {
 		const path = findPath(params.rest);
 		if (path)
-			throw redirect(307, path);
+			throw redirect(307, resolve('/' + path));
 		else
 			throw error(404, 'Item not found');
 	}
