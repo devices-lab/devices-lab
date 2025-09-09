@@ -1,7 +1,8 @@
 import type { Picture } from 'vite-imagetools';
 import type { Route } from '$lib/data/routes';
-import type { Link } from '$lib/utils/utils';
-import type { ResearchType } from './research';
+
+import type { Publication } from './research';
+import type { IconLink } from './indexer';
 
 
 export interface ItemImage {
@@ -50,8 +51,8 @@ export type ItemType = {
 	projectVersion: string;
 
 	features?: string[];
-	resources?: Link[];
-	publications?: ResearchType[];
+	resources?: IconLink[];
+	publications?: Publication[];
 
 	// tags for filtering
 	tags: string[];

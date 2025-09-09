@@ -1,14 +1,14 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
-	import type { ItemType } from '$lib/data/item';
+	import type { ItemData } from '$lib/data/indexer';
 	import type { DefProps } from '$lib/utils/utils';
 	import SVG_Stack from '$lib/workbench/logo/SVG_Stack.svelte';
 	import SVG_StackPill from '$lib/workbench/logo/SVG_StackPill.svelte';
 	import { ProjectProps, VersionProps } from '$lib/workbench/logo/utils';
 
 	type Props = DefProps & {
-		item: ItemType;
+		item: ItemData;
 	};
 
 	const { item, ...props }: Props = $props();

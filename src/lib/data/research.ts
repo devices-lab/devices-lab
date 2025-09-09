@@ -14,7 +14,7 @@ export type Author = {
 	affiliation: string;
 }
 
-export type Link = {
+export type Reference = {
 	href: string;
 	text: string;
 	icon: string;
@@ -29,7 +29,7 @@ export type Tag = {
 	name: string
 }
 
-export type ResearchType = {
+export type Publication = {
 	// core information
 	doi: string;
 	type: string;				// -- paper, extended abstract, ...
@@ -42,12 +42,12 @@ export type ResearchType = {
 	conference: string;
 	location: string;
 	// additional information
-	links: Link[];
+	links: Reference[];
 	awards: Award[];
 	tags: Tag[];
 }
 
-export type ResearchItem = ResearchType & {
+export type ResearchItem = Publication & {
 	key: string;
 	picture: string | Picture;
 };
@@ -116,7 +116,7 @@ function parsePath(path: string): string {
 // Dynamic import of research modules
 export function fetchResearchData(): ResearchLibrary {
 	// Use vite to import all research items and images
-	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true, import: 'research' }) as Record<string, ResearchType>;
+	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true, import: 'research' }) as Record<string, Publication>;
 	const imageModules = import.meta.glob('$lib/_content/research/**/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}', { eager: true, query: { enhanced: true }, import: 'default' }) as Record<string, Picture>;
 
 	// Map image paths to their corresponding research item keys
@@ -169,7 +169,7 @@ export async function fetchResearchDataDOI(doi: string): Promise<ResearchItem | 
 				month: dateParts[1] || NaN,
 				day: dateParts[2] || NaN
 			};
-			const links = item.URL ? [{ text: 'DOI Link', href: item.URL, icon: 'ScrollText' } satisfies Link] : [];
+			const links = item.URL ? [{ text: 'DOI Link', href: item.URL, icon: 'ScrollText' } satisfies Reference] : [];
 
 			const subtitle = (item.subtitle.length ? item.subtitle[0] : '');
 			const title = (item.title.length ? item.title[0] : '');

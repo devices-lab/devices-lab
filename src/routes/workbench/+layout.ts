@@ -6,6 +6,7 @@ import { Pages } from '$lib/_content/pages';
 export const load = (async () => {
 	return {
 		route: Routes.workbench,
+		breadcrumbs: Routes.workbench.breadcrumbs,
 		title: Pages.workbench.pageTitle,
 		subtitle: Pages.workbench.pageSubtitle,
 	};

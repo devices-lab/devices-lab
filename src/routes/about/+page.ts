@@ -5,6 +5,6 @@ import { team } from '$lib/data/about';
 
 export const load = (async () => {
     return {
-		team
+		team,
 	};
 }) satisfies PageLoad;

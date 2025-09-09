@@ -1,11 +1,11 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
+	import type { ItemData } from '$lib/data/indexer';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
-	import type { ItemType } from '$lib/data/item';
 	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
-		item: ItemType;
+		item: ItemData;
 	};
 
 	const { item, ...props }: Props = $props();

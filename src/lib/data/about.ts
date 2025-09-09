@@ -1,5 +1,5 @@
 import { team as teamData } from '$lib/_content/team';
-import type { Link } from '$lib/utils/utils';
+import type { IconLink } from '$lib/data/indexer';
 import type { Picture } from 'vite-imagetools';
 
 export type PersonOrder = '0_professor' | '1_senior' | '2_researcher' | '3_phd' | '4_master' | '5_bachelor' | '6_alumni';
@@ -11,7 +11,7 @@ export interface TeamMember {
 	imageAdj?: string;
 	order: PersonOrder;
 	href: string;
-	sites: Link[];
+	sites: IconLink[];
 }
 
 export const team: TeamMember[] = teamData.sort((a, b) => {

@@ -7,8 +7,8 @@
 	import SelectTypeInput from '$lib/components/inputs/SelectTypeInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import type { Author, Award, Link, ResearchItem, Tag } from '$lib/data/research';
-	import ItemCard from '$lib/research/ItemCard.svelte';
+	import type { Author, Award, Reference, ResearchItem, Tag } from '$lib/data/research';
+	import ResearchCard from '$lib/research/ResearchCard.svelte';
 
 	let { research = $bindable(), showFeedback = false }: { research: ResearchItem; showFeedback?: boolean } = $props();
 
@@ -25,7 +25,7 @@
 		<div class="my-4 flex-1 font-semibold text-gray-600 dark:text-gray-300">Preview:</div>
 
 		<div class="mt-6">
-			<ItemCard item={research} />
+			<ResearchCard item={research} />
 		</div>
 	</div>
 
@@ -52,8 +52,8 @@
 				{/snippet}
 			</DynamicList>
 
-			<DynamicList bind:items={research.links} newItem={(): Link => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" gap="gap-8">
-				{#snippet content(item: Link)}
+			<DynamicList bind:items={research.links} newItem={(): Reference => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" gap="gap-8">
+				{#snippet content(item: Reference)}
 					<div class="flex w-full flex-row items-start gap-4 xl:flex-1">
 						<TextInput bind:value={item.text} label="Title" sublabel="Name of the link" class="flex-1" inputProps={{ placeholder: 'title' }} {validate} />
 						<IconInput bind:value={item.icon} label="Icon" class="flex-1" input={{ placeholder: 'icon' }} {validate} />

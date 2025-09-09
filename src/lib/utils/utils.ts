@@ -2,15 +2,6 @@
 import { writable } from 'svelte/store';
 import * as icons from '@lucide/svelte';
 import type { ClassValue } from 'svelte/elements';
-import type { Icon } from '@lucide/svelte';
-
-export type Link = {
-	href: string;
-	text: string;
-	icon?: typeof Icon | string;
-};
-
-
 
 
 // Get an icon by name
@@ -114,4 +105,53 @@ export function normalize<TValue extends object, TUnion extends TValue | string 
 }
 
 
-export const stripLeadingSlash = (s: string) => s.startsWith("/") ? s.slice(1) : s;
+/**
+ * Remove a leading character from a string.
+ *
+ * @param input - The source string.
+ * @param charToRemove - The single character to remove if it appears at the start.
+ * @param options.repeat - If true, remove all consecutive leading occurrences. Default: false.
+ * @param options.ignoreCase - If true, match the leading character case-insensitively. Default: false.
+ *
+ * @example
+ * removeLeadingChar("/api", "/");                  // "api"
+ * removeLeadingChar("///path", "/", { repeat: true }); // "path"
+ * removeLeadingChar("AAAfoo", "a", { ignoreCase: true, repeat: true }); // "foo"
+ */
+export function removeLeadingChar(input: string, charToRemove: string, options: { repeat?: boolean; ignoreCase?: boolean } = {}): string {
+	const { repeat = false, ignoreCase = false } = options;
+
+	if (charToRemove.length !== 1) {
+		throw new Error("charToRemove must be exactly one character.");
+	}
+
+	// Escape regex metacharacters
+	const escaped = charToRemove.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	const flags = ignoreCase ? "i" : "";
+	const pattern = new RegExp(`^${escaped}${repeat ? "+" : ""}`, flags);
+
+	return input.replace(pattern, "");
+}
+
+/**
+ * Concatenate two strings with a separator.
+ * If exactly one value is `undefined`, return the other.
+ * If both are `undefined`, return `undefined`.
+ *
+ * Empty strings ("") are treated as real values and participate in concatenation.
+ *
+ * @example
+ * concatWithSeparator("foo", "bar", "/");   // "foo/bar"
+ * concatWithSeparator(undefined, "bar", "/"); // "bar"
+ * concatWithSeparator("foo", undefined, "/"); // "foo"
+ * concatWithSeparator(undefined, undefined, "/"); // undefined
+ * concatWithSeparator("", "bar", "/"); // "/bar"
+ */
+export function concat(a: string, b: string, separator?: string): string;
+export function concat(a: string | undefined, b: string | undefined, separator?: string): string;
+export function concat(a: string | undefined, b: string | undefined, separator = ""): string {
+	if (!a && !b) return '';
+	if (!a) return b as string;
+	if (!b) return a;
+	return a + separator + b;
+}

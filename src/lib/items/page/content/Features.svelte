@@ -2,11 +2,11 @@
 	import BaseList from '$lib/components/BaseList.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
-	import type { ItemType } from '$lib/data/item';
+	import type { ItemData } from '$lib/data/indexer';
 	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
-		item: ItemType;
+		item: ItemData;
 	};
 
 	const { item, ...props }: Props = $props();

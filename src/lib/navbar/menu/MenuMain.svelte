@@ -1,24 +1,27 @@
 <script lang="ts">
 	import { page } from '$app/state';
-
+	import { findFeaturedEntries } from '$lib/data/indexer';
+	import type { Route } from '$lib/data/routes';
+	import FeaturedList from '$lib/items/featured/FeaturedList.svelte';
 	import RouteLink from '$lib/navbar/menu/RouteLink.svelte';
 	import RoutePopover from '$lib/navbar/menu/RoutePopover.svelte';
-	import FeaturedSet from '$lib/items/featured/FeaturedSet.svelte';
-	import type { ClassValue } from 'svelte/elements';
+	import type { DefProps } from '$lib/utils/utils';
 
-	const { showFeaturedItems = false, class: className = '' }: { showFeaturedItems?: boolean; class?: ClassValue } = $props();
-	const featuredItems = $derived(page.data.featuredItems);
-	const routes = $derived(page.data.MainMenu);
+	type Props = DefProps & {};
+
+	const props: Props = $props();
+	const routes: Route[] = $derived(page.data.MainMenu);
 </script>
 
 {#each routes as route}
-	{#if showFeaturedItems && featuredItems[route.id] && featuredItems[route.id].length > 0}
-		<RoutePopover {route} class={className}>
+	{@const featuredItems = findFeaturedEntries(route.id)}
+	{#if featuredItems.length > 0}
+		<RoutePopover {route} {...props}>
 			{#snippet popover(id: string)}
-				<FeaturedSet {id} {route} items={featuredItems[route.id]} />
+				<FeaturedList {id} {route} items={featuredItems} />
 			{/snippet}
 		</RoutePopover>
 	{:else}
-		<RouteLink {route} />
+		<RouteLink {route} {...props} />
 	{/if}
 {/each}

@@ -45,18 +45,95 @@ export const allBySlug: Record<string, _ItemType> = Object.fromEntries(allItems.
 // slug automatically determined by filename and path
 // images automatically determined by images with the same filename prefix
 
-import { devicesTree, type DeviceNode } from '$lib/data/devices-tree';
 
-// Walk the tree
-function collectAllDevices(node = devicesTree, out: DeviceNode[] = []) {
-	for (const c of node.children) {
-		if (c.kind === 'device') out.push(c);
-		else collectAllDevices(c, out);
-	}
-	return out;
+/*
+
+devices/solder-bit.ts
+
+devices/clip-bit.ts
+devices/jacdac.ts
+devices/micro-bit.ts
+
+devices/solder-bit/index.ts
+devices/solder-bit/thumb.png
+devices/solder-bit/gamepad/index.ts
+devices/solder-bit/gamepad/thumb.png
+devices/solder-bit/gamepad/img001.png
+devices/solder-bit/gamepad/img002.jpg
+devices/solder-bit/gamepad/img003.jpeg
+devices/solder-bit/led-matrix/index.ts
+devices/solder-bit/led-matrix/thumb.png
+devices/solder-bit/led-matrix/img001.png
+devices/solder-bit/led-matrix/img002.jpg
+devices/solder-bit/led-matrix/img003.jpeg
+devices/solder-bit/led-matrix/img004.jpeg
+devices/solder-bit/thingy/index.ts
+devices/solder-bit/thingy/thumb.png
+devices/solder-bit/thingy/abc/index.ts
+devices/solder-bit/thingy/abc/thumb.png
+devices/clip-bit/index.ts
+devices/clip-bit/thumb.png
+devices/clip-bit/img001.png
+devices/clip-bit/img002.jpg
+devices/clip-bit/img003.jpeg
+devices/jacdac/index.ts
+devices/jacdac/thumb.png
+devices/jacdac/img001.png
+devices/jacdac/img002.jpeg
+devices/micro-bit/index.ts
+devices/micro-bit/thumb.png
+devices/micro-bit/img001.png
+devices/micro-bit/img002.jpeg
+devices/micro-bit/img003.jpeg
+
+
+{ 
+	devices/solder-bit: {
+		kind: 'family',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+	},
+	devices/clip-bit: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpg', import 'img003.jpeg'],
+	},
+	devices/jacdac: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpeg'],
+	},
+	devices/micro-bit: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpeg', import 'img003.jpeg'],
+	},
+	devices/solder-bit/gamepad: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpg', import 'img003.jpeg'],
+	},
+	devices/solder-bit/led-matrix: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpg', import 'img003.jpeg'],
+	},
+	devices/solder-bit/thingy: {
+		kind: 'family',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+	},
+	devices/solder-bit/thingy/abc: {
+		kind: 'device',
+		thumb: import 'thumb.png',
+		item: import 'index.ts',
+		images: [import 'img001.png', import 'img002.jpg', import 'img003.jpeg'],
+	},
 }
 
-console.log('All devices in tree:', collectAllDevices().map(d => d.item.name));
-console.log(devicesTree);
-
-export { devicesTree };
+*/

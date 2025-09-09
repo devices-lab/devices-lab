@@ -6,6 +6,7 @@ import { Pages } from '$lib/_content/pages';
 export const load = (async () => {
 	return {
 		route: Routes.about,
+		breadcrumbs: Routes.about.breadcrumbs,
 		title: Pages.about.pageTitle,
 		subtitle: Pages.about.pageSubtitle,
 	};

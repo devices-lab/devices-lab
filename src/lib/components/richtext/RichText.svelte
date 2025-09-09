@@ -1,21 +1,20 @@
 <script lang="ts">
-	import NodeView, { type SvelteTagMap } from '$lib/components/richtext/NodeView.svelte';
-	import { parse, type Node, type TagMap } from '$lib/components/richtext/customText';
+	import NodeView from '$lib/components/richtext/NodeView.svelte';
+	import { parse, type Node } from '$lib/components/richtext/customText';
+	import { svelteMap, tagMap } from '$lib/components/richtext/maps';
 
 	type Props = {
-		source?: string; // raw text with ${tag}[...]
-		nodes?: Node[]; // or pass a pre-parsed AST
-		svelteMap: SvelteTagMap; // tag → Svelte component
-		tagMap: TagMap; // tag → HTML renderer
+		source?: string;
+		nodes?: Node[];
 	};
 
-	const { source, nodes, svelteMap = {}, tagMap = {} }: Props = $props();
+	const { source, nodes }: Props = $props();
 
 	const tree = $derived.by(() => {
 		try {
 			return nodes ?? (source ? parse(source) : []);
 		} catch (error) {
-			//console.error('Error parsing rich text:', error);
+			console.error('Error parsing rich text:', error);
 			return [];
 		}
 	});

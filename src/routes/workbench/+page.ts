@@ -5,6 +5,6 @@ import { workbench } from '$lib/data/workbench';
 
 export const load = (async () => {
     return {
-		workbench
+		workbench,
 	};
 }) satisfies PageLoad;

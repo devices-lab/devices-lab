@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 
-	import ResearchItem from '$lib/research/ItemCard.svelte';
+	import ResearchCard from '$lib/research/ResearchCard.svelte';
 
 	const { data }: PageProps = $props();
 </script>
@@ -11,7 +11,7 @@
 		<ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
 			{#each Object.values(data.researchLibrary) as item}
 				<li class="mb-12">
-					<ResearchItem {item} />
+					<ResearchCard {item} />
 				</li>
 			{/each}
 		</ul>

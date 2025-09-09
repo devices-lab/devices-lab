@@ -1,22 +1,26 @@
 <script lang="ts">
 	import NoItems from '$lib/components/NoItems.svelte';
-	import type { _ItemType } from '$lib/data/item';
+	import type { Entry } from '$lib/data/indexer';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 
-	const { items }: { items: _ItemType[] } = $props();
+	type Props = {
+		entries: Entry[];
+	}
+
+	const { entries }: Props = $props();
 </script>
 
 
-{#if items.length}
+{#if entries.length}
 	<section aria-labelledby="items-heading" class="mt-6">
 		<h2 id="items-heading" class="sr-only">Items</h2>
 
 		<div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
-			{#each items as item}
-				<ItemCard {item} />
+			{#each entries as entry}
+				<ItemCard {entry} />
 			{/each}
 		</div>
 	</section>
 {:else}
-	<NoItems />
+	<NoItems class="text-center my-4"/>
 {/if}

@@ -4,23 +4,23 @@
 	import Collapse from '$lib/components/Collapse.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import IconText from '$lib/components/icons/IconText.svelte';
-	import type { ItemType } from '$lib/data/item';
-	import type { ResearchType } from '$lib/data/research';
+	import type { ItemData } from '$lib/data/indexer';
+	import type { Publication } from '$lib/data/research';
 	import Dialog from '$lib/items/page/content/Dialog.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import { ScrollText, Search } from '@lucide/svelte';
 
 	type Props = DefProps & {
-		item: ItemType;
+		item: ItemData;
 	};
 
 	const { item, ...props }: Props = $props();
 	const uid = $props.id();
 	const dialogId = $derived(`dialog-${uid}`);
 
-	let selectedPublication: ResearchType | undefined = $state();
+	let selectedPublication: Publication | undefined = $state();
 
-	function openPublication(publication: ResearchType) {
+	function openPublication(publication: Publication) {
 		selectedPublication = publication;
 	}
 </script>

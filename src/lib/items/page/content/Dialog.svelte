@@ -1,12 +1,12 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import CloseButton from '$lib/components/interactive/CloseButton.svelte';
-	import type { ResearchItem, ResearchType } from '$lib/data/research';
-	import ItemCard from '$lib/research/ItemCard.svelte';
+	import type { ResearchItem, Publication } from '$lib/data/research';
+	import ResearchCard from '$lib/research/ResearchCard.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 
 	type Props = DefProps & {
-		publication: ResearchType | undefined;
+		publication: Publication | undefined;
 		dialogId: string;
 	};
 
@@ -47,7 +47,7 @@
 				<ClassBox {props} class="relative">
 					<CloseButton command="close" commandfor={dialogId} class="absolute top-10 right-4 z-10" />
 					{#if publication}
-						<ItemCard item={publication as ResearchItem} />
+						<ResearchCard item={publication as ResearchItem} />
 					{/if}
 				</ClassBox>
 			</el-dialog-panel>

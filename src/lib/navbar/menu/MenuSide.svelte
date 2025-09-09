@@ -8,7 +8,7 @@
 </script>
 
 {#each routes as route}
-	<RouteLink {route} class="py-3"/>
+	<RouteLink {route} />
 {/each}
 
 <ThemeToggle />
