@@ -10,8 +10,8 @@ export const item: ItemData = {
 
 	// identification
 	projectName: 'Makedevice',
-	projectID: 'makedevice',
-	projectVersion: '1.0.0',
+	projectID: undefined,
+	projectVersion: undefined,
 
 	// content
 	features: [

@@ -1,9 +1,14 @@
 <script lang="ts">
+	import PlaceholderImage from '$lib/components/PlaceholderImage.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Picture } from 'vite-imagetools';
-	import ClassBox from '$lib/components/ClassBox.svelte';
-	import PlaceholderImage from './PlaceholderImage.svelte';
 
-	const { src, ...props }: { src: string | Picture | undefined; [key: string]: any } = $props();
+	type Props = DefProps & {
+		src?: string | Picture;
+		[key: string]: any;
+	};
+
+	const { src, ...props }: Props = $props();
 </script>
 
 {#if typeof src === 'string'}

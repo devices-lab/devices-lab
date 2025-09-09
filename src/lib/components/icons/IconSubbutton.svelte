@@ -4,32 +4,31 @@
 	import IconText from '$lib/components/icons/IconText.svelte';
 	import type { TextProps, TextType } from '$lib/components/icons/TextItem.svelte';
 	import TextItem from '$lib/components/icons/TextItem.svelte';
-	import BaseLink, { type LinkProps } from '$lib/components/interactive/BaseLink.svelte';
-	import type { Href, Link } from '$lib/data/routes';
+	import BaseButton, { type ButtonProps, type ButtonType } from '$lib/components/interactive/BaseButton.svelte';
 	import { normaliseRequired } from '$lib/utils/normalise';
 	import type { DefProps } from '$lib/utils/utils';
 
-	export type IconSublinkProps = DefProps & {
-		link: Href | Link | LinkProps;
+	export type IconSubbuttonProps = DefProps & {
+		onclick: ButtonType | ButtonProps;
 		icon?: IconType | IconProps;
 		text?: TextType | TextProps;
 		subtext?: TextType | TextProps;
 	};
 
-	const { text, icon, link, subtext, ...props }: IconSublinkProps = $props();
+	const { onclick, text, icon, subtext, ...props }: IconSubbuttonProps = $props();
 
-	const linkProps: LinkProps = $derived(normaliseRequired<LinkProps, 'link'>(link, 'link'));
+	const buttonProps: ButtonProps = $derived(normaliseRequired<ButtonProps, 'onclick'>(onclick, 'onclick'));
 	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
 	const subtextProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(subtext, 'text'));
 </script>
 
-<ClassBox {props}>
+<ClassBox {props} class="">
 	<IconText {icon}>
 		<div class="flex flex-col">
 			<TextItem {...textProps} />
-			<BaseLink {...linkProps}>
+			<BaseButton {...buttonProps}>
 				<TextItem {...subtextProps} />
-			</BaseLink>
+			</BaseButton>
 		</div>
 	</IconText>
 </ClassBox>

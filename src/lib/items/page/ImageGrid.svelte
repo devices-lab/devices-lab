@@ -2,7 +2,9 @@
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import PlaceholderImage from '$lib/components/PlaceholderImage.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
 	import type { DefProps } from '$lib/utils/utils';
+	import { onMount } from 'svelte';
 	import type { Picture } from 'vite-imagetools';
 
 	type Props = DefProps & {
@@ -10,10 +12,17 @@
 	};
 
 	const { images, ...props }: Props = $props();
+
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
+
+	$inspect(mounted);
 </script>
 
 {#snippet ImageButton(image: Picture)}
-	<button class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
+	<button class="max-h-24cursor-pointer relative flex h-24 items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
 		<span class="sr-only">Angled view</span>
 		<span class="absolute inset-0 overflow-hidden rounded-md">
 			<BaseImg src={image} alt="" class="size-full object-cover" />
@@ -23,10 +32,13 @@
 {/snippet}
 
 {#snippet ImagePanel(image: Picture)}
-	<BaseImg src={image} alt="" class="lg:aspect-squarer my-5 w-full object-contain sm:rounded-lg" />
+	<BaseImg src={image} alt="" class="my-5 w-full object-contain sm:rounded-lg lg:aspect-square {mounted ? 'block' : 'hidden'}" />
 {/snippet}
 
-<ClassBox {props}>
+<ClassBox {props} class="relative w-full">
+	{#key mounted}
+		<Spinner class="absolute top-1 left-1 size-16" loading={!mounted} />
+	{/key}
 	{#if images.length > 0}
 		<el-tab-group class="flex flex-col-reverse">
 			<!-- Image selector -->

@@ -35,9 +35,9 @@ export type ItemData = CommonData & {
 	description: string;
 
 	// identification
-	projectName: string;
-	projectID: string;
-	projectVersion: string;
+	projectName: string | undefined;
+	projectID: string | undefined;
+	projectVersion: string | undefined;
 
 	// content
 	features: string[];

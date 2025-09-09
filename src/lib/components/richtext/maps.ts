@@ -33,7 +33,7 @@ export const tagMap: TagMap = {
 	span: htmlTag('span'),
 	code: htmlTag('code', { map: (a) => (a.lang ? { 'data-lang': a.lang } : {}) }),
 	br: htmlVoid('br'),
-	hr: htmlVoid('hr'),
+	hr: htmlTag('span', { baseClass: 'flex border-b w-full h-px' }),
 	// if you want <a> in HTML path to show something when no children:
 	//link: htmlTag('a', {
 	//	pass: ['rel', 'target', 'aria-*', 'data-*'],

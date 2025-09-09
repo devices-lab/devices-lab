@@ -28,7 +28,6 @@
 					overflow-hidden
 					rounded-3xl
 					bg-white
-					dark:bg-gray-800
 					text-left
 					shadow-xl
 					transition-all
@@ -42,7 +41,8 @@
 					sm:w-full
 					sm:max-w-3xl
 					data-closed:sm:translate-y-0
-					data-closed:sm:scale-95"
+					data-closed:sm:scale-95
+					dark:bg-gray-800"
 			>
 				<ClassBox {props} class="relative">
 					<CloseButton command="close" commandfor={dialogId} class="absolute top-10 right-4 z-10" />

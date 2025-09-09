@@ -8,7 +8,7 @@ export const item: ItemData = {
 
 	// identification
 	projectName: "solder-bit/gamepad",
-	projectID: "0000",
+	projectID: "000",
 	projectVersion: "v1.0",
 
 	// content

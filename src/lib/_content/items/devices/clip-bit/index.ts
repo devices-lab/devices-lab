@@ -12,8 +12,8 @@ export const item: ItemData = {
 
 	// identification
 	projectName: "clip-bit",
-	projectID: "0000",
-	projectVersion: "v1.0",
+	projectID: undefined,
+	projectVersion: undefined,
 
 	// content
 	features: [
@@ -25,7 +25,9 @@ export const item: ItemData = {
 		'Long life AA battery pack'
 	],
 	publications: [clipbit1, clipbit2, clipbit3],
-	resources: [],
+	resources: [
+		{ text: "Poster", icon: 'Paperclip', href: "https://www.devices-lab.org/wp-content/uploads/2024/07/digitaleconomies_cloudletposter.pdf" }
+	],
 
 	tags: [],
 	featured: true,

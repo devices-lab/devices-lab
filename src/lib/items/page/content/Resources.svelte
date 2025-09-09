@@ -18,7 +18,7 @@
 		<Collapse label={'Resources'}>
 			<BaseList bare class="flex flex-col items-start gap-y-3">
 				{#each item.resources as resource}
-					<IconSublink link={resource.href} icon={resource.icon} text={{ text: resource.text, class: 'font-semibold' }} subtext={{ text: resource.href, class: 'text-sm link-blue underline' }} />
+					<IconSublink link={resource.href} icon={{icon: resource.icon, class: 'size-6'}} text={{ text: resource.text, class: 'font-semibold' }} subtext={{ text: resource.href, class: 'text-sm link-blue underline break-all' }} />
 				{/each}
 			</BaseList>
 		</Collapse>

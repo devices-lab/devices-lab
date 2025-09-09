@@ -99,7 +99,7 @@ export function htmlTag(tagName: string, opts: HtmlTagOpts = {}): TagMap[string]
 			if (DEV && node.children.length) {
 				console.warn(`[richtext] <${tagName}> ignores children; got some for <${node.name}>`);
 			}
-			return `<${tagName}${attrStr}>`;
+			return `<${tagName}${attrStr} />`;
 		}
 
 		let body = renderChildren();

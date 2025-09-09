@@ -1,20 +1,23 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
 	import IconItem, { type IconProps, type IconType } from '$lib/components/icons/IconItem.svelte';
 	import TextItem, { type TextProps, type TextType } from '$lib/components/icons/TextItem.svelte';
-	import { normaliseOptional, normaliseRequired } from '$lib/utils/normalise';
+	import { normaliseRequired } from '$lib/utils/normalise';
 	import { type DefProps } from '$lib/utils/utils';
-	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { Snippet } from 'svelte';
+
+	export type TextPosition = 'iconFirst' | 'iconLast';
 
 	export type IconTextProps = DefProps & {
 		icon?: IconType | IconProps;
 		text?: TextType | TextProps;
 		children?: Snippet;
-		position?: 'iconFirst' | 'iconLast';
+		position?: TextPosition;
 	};
 
 	const { text, icon, children, position = 'iconFirst', ...props }: IconTextProps = $props();
 
+	// Wrap props if needed
 	const iconProps: IconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
 	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
 </script>
@@ -31,9 +34,13 @@
 	{:else if children}
 		{#if position === 'iconFirst'}
 			<IconItem {...iconProps} />
-			{@render children?.()}
+			<div class="flex-1">
+				{@render children?.()}
+			</div>
 		{:else}
-			{@render children?.()}
+			<div class="flex-1">
+				{@render children?.()}
+			</div>
 			<IconItem {...iconProps} />
 		{/if}
 	{:else}

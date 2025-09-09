@@ -7,9 +7,9 @@ export const item: ItemData = {
 	description: 'description',
 
 	// identification
-	projectName: 'projectName',
-	projectID: 'projectID',
-	projectVersion: 'projectVersion',
+	projectName: undefined,
+	projectID: undefined,
+	projectVersion: undefined,
 
 	// content
 	features: [],

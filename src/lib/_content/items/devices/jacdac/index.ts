@@ -7,9 +7,9 @@ export const item: ItemData = {
 	description: 'Jacdac is a plug-and-play hardware and software stack for microcontrollers and their peripherals such as sensors and actuators.',
 
 	// identification
-	projectName: "jacdac",
-	projectID: "0000",
-	projectVersion: "v1.0",
+	projectName: undefined,
+	projectID: undefined,
+	projectVersion: undefined,
 
 	// content
 	features: [],

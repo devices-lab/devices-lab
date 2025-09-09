@@ -10,7 +10,7 @@
 	import { page } from '$app/state';
 
 	import NavBar from '$lib/navbar/NavBar.svelte';
-	import Breadcrumbs from '$lib/layout/Breadcrumbs.svelte';
+	import Breadcrumbs from '$lib/breadcrumbs/Breadcrumbs.svelte';
 
 	interface Props {
 		data: LayoutData;
