@@ -16,7 +16,7 @@
 </script>
 
 {#key entry}
-	<BaseCard link={entry.path} hover class="flex aspect-square flex-col items-center justify-between p-4">
+	<BaseCard link={entry.path} hover class="flex aspect-square flex-col items-center justify-between sm:p-4 max-w-xs sm:max-w-xs">
 		<div class="flex-1 overflow-hidden pb-12">
 			<BaseImg src={entry.thumb} alt="Item hero" class=" group-hover:grayscale/20 my-auto size-full flex-1 rounded-lg object-contain filter group-hover:opacity-20" />
 		</div>
@@ -28,15 +28,15 @@
 			<Badge text="Family" class="absolute top-0 right-0 rounded-bl-3xl px-4 py-3" />
 		{/if}
 
-		<div class="absolute inset-0 flex size-full flex-col justify-end bg-gradient-to-b from-white/0 from-0% to-slate-800/90 to-85% p-8 text-sm text-white opacity-0 transition-opacity duration-400 group-hover:opacity-90">
+		<div class="absolute inset-0 flex size-full flex-col justify-end bg-gradient-to-b from-slate-800/30 from-0% to-slate-800/90 to-85% p-4 sm:p-8 text-sm text-white opacity-0 transition-opacity duration-400 group-hover:opacity-90">
 			<div class="flex flex-row items-center gap-2">
 				<p class="mt-4 line-clamp-3 flex-1 leading-6">{entry.item.teaser}</p>
 				<ChevronRight class="size-6 text-white/70" />
 			</div>
 		</div>
 
-		<div class="absolute bottom-7 group-hover:-translate-y-23">
-			<h2 class="text-center text-xl font-semibold tracking-wide text-current group-hover:font-bold group-hover:text-white">{entry.item.name}</h2>
+		<div class="absolute bottom-4 sm:bottom-7 group-hover:-translate-y-20 sm:group-hover:-translate-y-23">
+			<h2 class="text-center text-md sm:text-xl font-semibold tracking-wide text-current group-hover:font-bold group-hover:text-white">{entry.item.name}</h2>
 		</div>
 	</BaseCard>
 {/key}

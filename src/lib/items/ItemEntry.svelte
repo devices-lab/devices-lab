@@ -7,13 +7,14 @@
 	type Props = {
 		entries?: Entry[];
 		entry?: Entry;
+		family: string;
 	};
 
-	const { entries, entry }: Props = $props();
+	const { entries, entry, family }: Props = $props();
 </script>
 
 {#if entries}
-	<ItemGrid {entries} />
+	<ItemGrid {entries} {family} />
 {:else if entry}
 	<ItemPage {entry} />
 {:else}

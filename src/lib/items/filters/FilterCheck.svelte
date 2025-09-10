@@ -20,5 +20,5 @@
 			<Check class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" />
 		</div>
 	</div>
-	<label for={`checkbox-input-${uid}`} class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900">{label}</label>
+	<label for={`checkbox-input-${uid}`} class="pr-6 text-sm font-medium whitespace-nowrap text-gray-900 normal-case">{label}</label>
 </ClassBox>

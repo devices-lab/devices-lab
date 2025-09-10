@@ -22,21 +22,23 @@ export const load = (async ({ params }) => {
 	const items: CatalogEntry = findEntries(path);
 	const breadcrumbs: BreadcrumbLink[] = createBreadcrumbs(path);
 
+	console.log('load item page', items.family);
+
 	switch (items.type) {
 		case 'item':
 			{
 				const entry = items.data as Entry;
-				return { breadcrumbs, entry, route: entry.route };
+				return { breadcrumbs, entry, route: entry.route, family: items.family };
 			}
 		case 'family':
 			{
 				const entries = items.data as Entry[];
-				return { breadcrumbs, entries, route: entries[0].route };
+				return { breadcrumbs, entries, route: entries[0].route, family: items.family };
 			}
 		case 'none':
 			{
 				if (!params.rest)
-					return { breadcrumbs, entries: [], route: findRoute(params.item) };
+					return { breadcrumbs, entries: [], route: findRoute(params.item), family: items.family };
 				else
 					throw error(404, 'Item not found');
 			}

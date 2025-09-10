@@ -1,12 +1,13 @@
 <script lang="ts">
 	import NoItems from '$lib/components/NoItems.svelte';
 	import type { Entry, ItemData } from '$lib/data/indexer';
+	import Filters from '$lib/items/filters/Filters.svelte';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 	import { onMount } from 'svelte';
-	import Filters from './filters/Filters.svelte';
 
 	type Props = {
 		entries: Entry[];
+		family: string;
 	};
 
 	const LOCAL_STORAGE_SORT_KEY = 'device-lab-sort-by';
@@ -16,20 +17,17 @@
 	export type Sorter = 'name' | 'newest' | 'type';
 
 	function saveSortByToLocalStorage(sortBy: Sorter) {
-		console.log('Saving sortBy to localStorage:', sortBy);
 		localStorage.setItem(LOCAL_STORAGE_SORT_KEY, sortBy);
 	}
 
 	function getSortByFromLocalStorage(defaultSorter: Sorter): Sorter {
 		const raw = localStorage.getItem(LOCAL_STORAGE_SORT_KEY);
-		console.log('Retrieved sortBy from localStorage:', raw);
 		return typeof raw === 'string' && (raw === 'name' || raw === 'newest' || raw === 'type') ? raw : defaultSorter;
 	}
-	
+
 	//========================================================================//
 
-	const { entries }: Props = $props();
-
+	const { entries, family }: Props = $props();
 
 	export type SorterItem = {
 		label: string;
@@ -43,14 +41,15 @@
 
 	//========================================================================//
 
-	let tags: FilterItem[] = $state(
-		entries
+	let tags: FilterItem[] = $state([]);
+	$effect(() => {
+		tags = entries
 			.map((e) => e.item.tags)
 			.flat()
 			.filter((tag, index, array) => array.indexOf(tag) === index)
 			.sort()
-			.map((tag) => ({ label: tag.name, checked: false }))
-	);
+			.map((tag) => ({ label: tag.name, checked: false }));
+	});
 
 	let types: FilterItem[] = $state([
 		{ label: 'Item', checked: false },
@@ -65,10 +64,7 @@
 
 	//========================================================================//
 
-
-
 	onMount(() => {
-		console.log('ItemGrid onMount');
 		sortBy = getSortByFromLocalStorage(sortBy);
 	});
 
@@ -111,9 +107,9 @@
 </script>
 
 <section aria-labelledby="items-heading" class="mt-6">
-	<Filters {tags} {types} bind:sortBy {sortByList} class="mb-8 rounded-full bg-white px-4 py-1 shadow-sm dark:bg-gray-800" />
 	{#if items.length}
-		<div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
+		<div class="mx-auto grid w-fit grid-cols-1 content-start gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
+			<Filters {tags} {types} bind:sortBy {sortByList} title={family} class="col-span-full rounded-lg border border-gray-100 bg-slate-200/60 px-4 py-2 dark:bg-gray-800" />
 			{#each items as entry}
 				<ItemCard {entry} />
 			{/each}

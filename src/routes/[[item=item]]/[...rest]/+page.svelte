@@ -5,4 +5,4 @@
 	const { data }: PageProps = $props();
 </script>
 
-<ItemEntry entries={data.entries} entry={data.entry} />
+<ItemEntry entries={data.entries} entry={data.entry} family={data.family} />

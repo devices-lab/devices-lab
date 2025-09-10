@@ -20,6 +20,8 @@
 			localStorage.setItem('devModeLocal', String(value));
 		});
 	});
+
+	const floatingNavbar = ''; //'m-4 rounded-xl';
 </script>
 
 <!-- Mobile menu -->
@@ -35,7 +37,7 @@
 		</div>
 	{/if}
 
-	<nav aria-label="Top" class="bg-white text-gray-700 shadow-xs dark:bg-gray-800 dark:text-gray-300 m-4 rounded-xl">
+	<nav aria-label="Top" class="bg-white text-gray-700 shadow-xs dark:bg-gray-800 dark:text-gray-300 mb-4 {floatingNavbar}">
 		<div class="mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
 			<!-- Logo (lg+) -->
 			<div class="hidden lg:flex lg:flex-1 lg:items-center">

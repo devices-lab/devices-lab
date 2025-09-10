@@ -17,6 +17,6 @@ export const item: ItemData = {
 	resources: [],
 	publications: [],
 
-	tags: [{'name': 'microbit'}, {'name': 'bbc'}],
+	tags: [{'name': 'microbit'}, {'name': 'BBC'}, {'name': 'available to buy'}],
 	featured: false,
 };

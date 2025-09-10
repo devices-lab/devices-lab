@@ -52,7 +52,7 @@ export type Entry = {
 	route: Route
 };
 
-export type CatalogEntry = { data: Entry[] | Entry | undefined, type: 'family' | 'item' | 'none' };
+export type CatalogEntry = { data: Entry[] | Entry | undefined, type: 'family' | 'item' | 'none', family: string };
 
 type RecordMap = Record<string, Entry>;
 type FeaturedMap = Record<string, Entry[]>;
@@ -168,16 +168,18 @@ const build = () => {
 	const findEntries = (path: string): CatalogEntry => {
 		// Check if we have an item for this path
 		const itemData = get(path);
-		if (itemData && itemData.kind === 'item')
-			return { data: itemData, type: 'item' };
+		if (itemData && itemData.kind === 'item') {
+			return { data: itemData, type: 'item', family: entries[itemData.parent]?.item.name || '' };
+		}
 
 		// Check if we have a family for this path
 		const listData = getChildren(path);
-		if (listData && listData.length > 0)
-			return { data: listData, type: 'family' };
+		if (listData && listData.length > 0) {
+			return { data: listData, type: 'family', family: entries[listData[0].parent]?.item.name || '' };
+		}
 
 		// No match found
-		return { data: undefined, type: 'none' };
+		return { data: undefined, type: 'none', family: '' };
 	};
 
 	const findFeaturedEntries = (routeId: RouteId | string): Entry[] => featured[routeId] || [];

@@ -19,7 +19,7 @@
 </script>
 
 {#snippet Content()}
-	<ClassBox {props} class="group relative mx-auto overflow-hidden rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none {hoverClass}">
+	<ClassBox {props} class="group relative overflow-hidden rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none {hoverClass}">
 		{@render children()}
 	</ClassBox>
 {/snippet}

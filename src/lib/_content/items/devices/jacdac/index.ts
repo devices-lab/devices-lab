@@ -17,6 +17,6 @@ export const item: ItemData = {
 	resources: [],
 	publications: [],
 
-	tags: [{'name': 'jacdac'}],
+	tags: [{'name': 'jacdac'}, {'name': 'available to buy'}],
 	featured: false,
 };
