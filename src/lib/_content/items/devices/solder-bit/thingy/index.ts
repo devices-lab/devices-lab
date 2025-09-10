@@ -5,6 +5,6 @@ export const item: FamilyData = {
 	pathName: 'thingy list',
 	teaser: 'teaser',
 
-	tags: ['test'],
+	tags: [{name: 'thingy'}],
 	featured: false,
 };

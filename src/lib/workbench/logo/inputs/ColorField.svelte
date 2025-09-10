@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseInput from '$lib/components/BaseInput.svelte';
-	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
 
 	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 

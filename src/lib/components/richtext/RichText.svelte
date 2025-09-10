@@ -14,7 +14,7 @@
 		try {
 			return nodes ?? (source ? parse(source) : []);
 		} catch (error) {
-			console.error('Error parsing rich text:', error);
+			//console.error('Error parsing rich text:', error);
 			return [];
 		}
 	});

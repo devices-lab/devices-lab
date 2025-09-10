@@ -51,8 +51,8 @@ export const Pages: PageData = {
 	contact: {
 		menuTitle: 'Contact Us',
 		menuIcon: Heart,
-		pageTitle: 'Contact Us',
-		pageSubtitle: 'Get in touch with our team'
+		pageTitle: 'Get in touch',
+		pageSubtitle: 'Have a question, an idea for collaboration, or want to visit the lab? Reach out, we\'d love to hear from you.'
 	}
 };
 

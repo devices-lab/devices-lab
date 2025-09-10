@@ -47,6 +47,7 @@
 	--color-secondary-950: var(--color-slate-950);
 }
 
+
 html, body {
 	height: 100%;
 	min-height: fit-content;

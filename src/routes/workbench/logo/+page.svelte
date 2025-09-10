@@ -1,14 +1,11 @@
 <script lang="ts">
+	import BaseCard from '$lib/components/BaseCard.svelte';
 	import SVG_Icon from '$lib/workbench/logo/SVG_Icon.svelte';
 	import SVG_Pill from '$lib/workbench/logo/SVG_Pill.svelte';
 	import SVG_Stack from '$lib/workbench/logo/SVG_Stack.svelte';
 	import SVG_StackPill from '$lib/workbench/logo/SVG_StackPill.svelte';
-
 	import VectorCard from '$lib/workbench/logo/VectorCard.svelte';
 	import { IconProps, LogoProps, ProjectProps, VersionProps, VersionPropsPill } from '$lib/workbench/logo/utils';
-	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
-	import BaseInput from '$lib/components/BaseInput.svelte';
-	import BaseCard from '$lib/components/BaseCard.svelte';
 
 	let projectName = $state('my-project');
 	let projectId = $state('0037');
@@ -19,7 +16,7 @@
 	let selectedCategory = $state<Category>('project');
 </script>
 
-<BaseCard class="flex flex-col gap-3 sm:flex-row bg-slate-200/50! dark:bg-slate-800!">
+<BaseCard class="flex w-3xl p-6 flex-col gap-3 sm:flex-row bg-slate-200/50! dark:bg-slate-800!">
 	<div class="grow">
 		<label for="project-name" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Project Name</label>
 		<div class="mt-2">

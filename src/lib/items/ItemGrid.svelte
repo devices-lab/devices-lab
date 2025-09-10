@@ -15,7 +15,7 @@
 	<section aria-labelledby="items-heading" class="mt-6">
 		<h2 id="items-heading" class="sr-only">Items</h2>
 
-		<div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10">
+		<div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
 			{#each entries as entry}
 				<ItemCard {entry} />
 			{/each}

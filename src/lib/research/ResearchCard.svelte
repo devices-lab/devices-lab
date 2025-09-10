@@ -1,12 +1,12 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
+	import Batch from '$lib/components/batches/Batch.svelte';
+	import Collapse from '$lib/components/Collapse2.svelte';
 	import RichText from '$lib/components/richtext/RichText.svelte';
 	import { formatDate, type ResearchItem } from '$lib/data/research';
 	import AwardList from '$lib/research/AwardList.svelte';
 	import LinkList from '$lib/research/LinkList.svelte';
-	import Batch from '../components/batches/Batch.svelte';
-	import TagList from './TagList.svelte';
 
 	const { item }: { item: ResearchItem } = $props();
 </script>
@@ -15,10 +15,10 @@
 	<!-- Awards float over the card -->
 	<AwardList awards={item.awards} class="absolute top-0 left-4 -translate-y-1/2" />
 
-	{#if item.conference}
+	{#if item.conferenceShort}
 		<div class="absolute top-0 right-0 flex">
 			<Batch class="rounded-none! rounded-tr-3xl! rounded-bl-2xl! bg-slate-50! text-slate-700! outline-slate-200 dark:bg-slate-900/20! dark:text-slate-300! dark:outline-slate-900/40!">
-				<span class="text-nowrapp flex-1 text-xs font-medium lg:text-sm/6">{item.conference}</span>
+				<span class="flex-1 px-2 py-1 text-sm font-medium text-nowrap">{item.conferenceShort}</span>
 			</Batch>
 		</div>
 	{/if}
@@ -27,8 +27,8 @@
 	<div class="mt-6 flex flex-col gap-8 lg:flex-row">
 		{#if item.picture}
 			<!-- Media -->
-			<div class="order-1 mx-auto flex flex-2 items-start overflow-hidden rounded-lg lg:mt-0">
-				<BaseImg src={item.picture} alt="" class="w-full flex-0 grow rounded-lg max-w-md" />
+			<div class="item order-1 mx-auto flex flex-2 items-start overflow-hidden rounded-lg lg:mt-0">
+				<BaseImg src={item.picture} alt="" class="w-full max-w-md flex-0 grow rounded-lg" />
 			</div>
 		{/if}
 
@@ -41,35 +41,26 @@
 				<RichText source={item.abstract} />
 			</p>
 
-			<!-- Inline meta for wide screens -->
-			<div class=" flex flex-col flex-wrap items-start gap-x-2 gap-y-1 pt-1 text-xs text-gray-600 sm:flex-row sm:items-center dark:text-gray-400">
-				{#if item.conference}
-					<span>
-						<span class="text-gray-500 dark:text-gray-400">Conference:</span>
-						{item.conference}
-					</span>
-					<span class="hidden text-gray-300 first:hidden last:hidden sm:inline dark:text-gray-600">•</span>
-				{/if}
-				{#if item.location}
-					<span>
-						<span class="text-gray-500 dark:text-gray-400">Location:</span>
-						{item.location}
-					</span>
-					<span class="hidden text-gray-300 first:hidden last:hidden sm:inline dark:text-gray-600">•</span>
-				{/if}
-				{#if item.published.year && item.published.month && item.published.day}
-					<span>
-						<span class="text-gray-500 dark:text-gray-400">Date:</span>
-						{formatDate(item.published)}
-					</span>
-					<span class="hidden text-gray-300 first:hidden last:hidden sm:inline dark:text-gray-600">•</span>
-				{/if}
-			</div>
+			<Collapse label="More info" class="hidden has-[span.item]:block">
+				<div class="flex grid-cols-12 flex-col rounded-lg p-2 text-xs sm:grid">
+					{#snippet ColItem(label: string, text: string | undefined)}
+						{#if text}
+							<span class="item col-span-3 text-gray-500 sm:col-span-2 dark:text-gray-400">{label}:</span>
+							<span class="item col-span-9 mb-2 text-gray-600 sm:col-span-10 sm:mb-0 dark:text-gray-400">{text}</span>
+						{/if}
+					{/snippet}
+
+					{@render ColItem('Conference', item.conference)}
+					{@render ColItem('Location', item.location)}
+					{@render ColItem('Date', formatDate(item.published))}
+					{@render ColItem('Tags', item.tags.map((tag) => tag.name).join(', '))}
+				</div>
+			</Collapse>
 
 			<!-- Tags -->
-			<div class="flex items-center justify-between">
+			<!--<div class="flex items-center justify-between">
 				<TagList tags={item.tags} class="" />
-			</div>
+			</div>-->
 
 			<!-- Links -->
 			<div class="pt-3 lg:flex lg:items-center lg:justify-between">

@@ -16,7 +16,7 @@
 
 {#if breadcrumbs.length > 0}
 	<nav aria-label="Breadcrumb">
-		<ClassBox {props} tag="ol" role="list" class="my-6 flex flex-wrap items-center gap-x-1 px-4 py-2 sm:gap-x-3">
+		<ClassBox {props} tag="ol" role="list" class="flex flex-wrap items-center gap-x-1 px-4 py-2 sm:gap-x-3">
 			<IconLink link={Routes.home.id} icon={{ icon: House, class: 'size-5' }} class={style} />
 			{#each breadcrumbs as crumb, i}
 				{@const current = i === breadcrumbs.length - 1 ? 'page' : undefined}

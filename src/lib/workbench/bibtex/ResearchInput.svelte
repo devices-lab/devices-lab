@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { researchTypeItems } from '$lib/_content/workbench';
+	import { ResearchTypeItems } from '$lib/data/research';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import DynamicList from '$lib/components/DynamicList.svelte';
 	import Datearea from '$lib/components/inputs/DateInput.svelte';
@@ -7,7 +7,8 @@
 	import SelectTypeInput from '$lib/components/inputs/SelectTypeInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import type { Author, Award, Reference, ResearchItem, Tag } from '$lib/data/research';
+	import type { Author, Award, Reference, Tag } from '$lib/data/data';
+	import type { ResearchItem } from '$lib/data/research';
 	import ResearchCard from '$lib/research/ResearchCard.svelte';
 
 	let { research = $bindable(), showFeedback = false }: { research: ResearchItem; showFeedback?: boolean } = $props();
@@ -32,17 +33,20 @@
 	<div class="py-10">
 		<BaseCard class="flex flex-col gap-y-2 px-4 py-6 sm:p-8">
 			<div class="flex flex-col items-start gap-4 md:flex-row">
-				<TextInput bind:value={research.name} label="Key" sublabel="Internal key for the paper <i>key</i>" class="flex-1" {validate} />
+				<TextInput bind:value={research.name} label="Key" sublabel="Internal key for the paper" class="flex-1" {validate} />
 				<TextInput bind:value={research.title} label="Title" sublabel="The full title of the paper" class="flex-3" {validate} />
 			</div>
-			<TextField bind:value={research.abstract} label="Abstract" sublabel="A brief summary of the paper. Can be the paper abstract, but doesn't need to be." {validate} />
+			<TextField bind:value={research.abstract} label="Abstract" sublabel="A brief summary of the paper. Can be the paper abstract, but doesn't need to be.<br/>Supports richtext." {validate} />
 			<TextInput bind:value={research.doi} label="DOI" sublabel="DOI number for the paper" {validate} />
-			<SelectTypeInput bind:value={research.type} items={researchTypeItems} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)" {validate} />
+			<SelectTypeInput bind:value={research.type} items={ResearchTypeItems} label="Type" sublabel="Type of the paper (research paper, poster, extended abstract, ...)" {validate} />
 
 			<div class="mt-4 py-3 font-semibold">Publication:</div>
 
 			<Datearea bind:value={research.published} label="Publication date" {validate} />
-			<TextField bind:value={research.conference} label="Conference" class="flex-1" {validate} />
+			<div class="flex flex-col items-start gap-4 md:flex-row">
+				<TextField bind:value={research.conference} label="Conference" class="flex-3" {validate} />
+				<TextField bind:value={research.conferenceShort} label="Abbreviation" class="flex-1" {validate} />
+			</div>
 			<TextField bind:value={research.location} label="Conference location" sublabel="City, country" class="flex-1" {validate} />
 
 			<DynamicList bind:items={research.authors} newItem={(): Author => ({ name: '', affiliation: '' })} title="Authors">

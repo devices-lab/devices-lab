@@ -1,7 +1,8 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import CloseButton from '$lib/components/interactive/CloseButton.svelte';
-	import type { ResearchItem, Publication } from '$lib/data/research';
+	import type { Publication } from '$lib/data/data';
+	import type { ResearchItem } from '$lib/data/research';
 	import ResearchCard from '$lib/research/ResearchCard.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 
@@ -45,7 +46,7 @@
 					dark:bg-gray-800"
 			>
 				<ClassBox {props} class="relative">
-					<CloseButton command="close" commandfor={dialogId} class="absolute top-10 right-4 z-10" />
+					<CloseButton command="close" commandfor={dialogId} class="absolute top-3 left-3 z-10" />
 					{#if publication}
 						<ResearchCard item={publication as ResearchItem} />
 					{/if}

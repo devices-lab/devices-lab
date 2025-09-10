@@ -17,12 +17,10 @@
 	onMount(() => {
 		mounted = true;
 	});
-
-	$inspect(mounted);
 </script>
 
 {#snippet ImageButton(image: Picture)}
-	<button class="max-h-24cursor-pointer relative flex h-24 items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
+	<button class="max-h-24 cursor-pointer relative flex h-24 items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
 		<span class="sr-only">Angled view</span>
 		<span class="absolute inset-0 overflow-hidden rounded-md">
 			<BaseImg src={image} alt="" class="size-full object-cover" />
@@ -32,7 +30,9 @@
 {/snippet}
 
 {#snippet ImagePanel(image: Picture)}
-	<BaseImg src={image} alt="" class="my-5 w-full object-contain sm:rounded-lg lg:aspect-square {mounted ? 'block' : 'hidden'}" />
+	<div hidden>
+		<BaseImg src={image} alt="" class="my-5 w-full object-contain sm:rounded-lg lg:aspect-square" />
+	</div>
 {/snippet}
 
 <ClassBox {props} class="relative w-full">

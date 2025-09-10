@@ -13,12 +13,12 @@ export const item: ItemData = {
 
 	// content
 	features: [
-		"Edge connector for BBC micro:bit",
-		"Four directional DPAD buttons",
-		"Two shoulder buttons",
-		"Two selector buttons",
-		"Five addressable RGB LEDs",
-		"Convenient AAA backpack"
+		{text: 'Edge connector for BBC micro:bit'},
+		{text: 'Four directional DPAD buttons'},
+		{text: 'Two shoulder buttons'},
+		{text: 'Two selector buttons'},
+		{text: 'Five addressable RGB LEDs'},
+		{text: 'Convenient AAA backpack'}
 	],
 	publications: [],
 	resources: [
@@ -26,6 +26,6 @@ export const item: ItemData = {
 		{ text: "MakeCode Extension", icon: 'CodeXml', href: "https://github.com/devices-lab/pxt-solderbit-gamepad" }
 	],
 
-	tags: ['soldering', 'gamepad'],
+	tags: [{'name': 'soldering'}, {'name': 'gamepad'}],
 	featured: true,
 };

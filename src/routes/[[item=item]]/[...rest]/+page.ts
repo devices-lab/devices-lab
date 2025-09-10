@@ -1,9 +1,9 @@
-import { createBreadcrumbs, findEntries, findPath, type Breadcrumb, type CatalogEntry, type Entry } from '$lib/data/indexer';
-import { findRoute } from '$lib/data/routes';
+import { resolve } from '$app/paths';
+import { createBreadcrumbs, findEntries, findPath, type CatalogEntry, type Entry } from '$lib/data/indexer';
+import { findRoute, type BreadcrumbLink } from '$lib/data/routes';
 import { concat } from '$lib/utils/utils';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
-import { resolve } from '$app/paths';
 
 
 export const load = (async ({ params }) => {
@@ -20,7 +20,7 @@ export const load = (async ({ params }) => {
 	// Find the requested item or family
 	const path = concat(params.item, params.rest, '/');
 	const items: CatalogEntry = findEntries(path);
-	const breadcrumbs: Breadcrumb[] = createBreadcrumbs(path);
+	const breadcrumbs: BreadcrumbLink[] = createBreadcrumbs(path);
 
 	switch (items.type) {
 		case 'item':

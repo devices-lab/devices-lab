@@ -2,15 +2,12 @@
 	import BaseList from '$lib/components/BaseList.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
-	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import IconSubbutton from '$lib/components/icons/IconSubbutton.svelte';
-	import IconSublink from '$lib/components/icons/IconSublink.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
+	import type { Publication } from '$lib/data/data';
 	import type { ItemData } from '$lib/data/indexer';
-	import type { Publication } from '$lib/data/research';
 	import Dialog from '$lib/items/page/content/Dialog.svelte';
 	import type { DefProps } from '$lib/utils/utils';
-	import { Paperclip, Scroll, ScrollText, Search } from '@lucide/svelte';
+	import { ScrollText } from '@lucide/svelte';
 
 	type Props = DefProps & {
 		item: ItemData;

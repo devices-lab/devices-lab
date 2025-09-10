@@ -1,6 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/components/icons/IconButton.svelte';
-	import { devMode, devModeLocal } from '$lib/utils/utils';
+	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Rect from '$lib/workbench/logo/components/Rect.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Text from '$lib/workbench/logo/components/Text.svelte';
@@ -27,8 +27,9 @@
 	let preview: Preview | undefined = $state();
 	let loadedData: IconData | undefined = $state();
 
+	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
 	const defaultData: IconData = $state({ ...IconDefaults, uid });
-	const data: IconData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= IconDefaults.version ? loadedData : defaultData);
+	const data: IconData = $derived(devEnabled && loadedData && loadedData.version >= IconDefaults.version ? loadedData : defaultData);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });

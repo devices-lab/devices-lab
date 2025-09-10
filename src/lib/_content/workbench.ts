@@ -22,14 +22,3 @@ export const workbenchItems: ExternalWorkbenchItem[] = [
 
 //────────────────────────────────────────────────────────────────//
 
-/**
- * List of research paper types.
- */
-export const researchTypeItems = [
-	'Research Paper',
-	'Thesis',
-	'Book',
-	'Extended Abstract',
-	'Poster',
-	'Report'
-];

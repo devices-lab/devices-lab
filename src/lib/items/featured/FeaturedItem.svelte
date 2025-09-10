@@ -1,9 +1,8 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
-	import { type _ItemType } from '$lib/data/item';
 	import type { Entry } from '$lib/data/indexer';
+	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
 
 	type Props = {
 		item: Entry;

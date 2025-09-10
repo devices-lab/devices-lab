@@ -1,19 +1,16 @@
 <script lang="ts">
+	import BaseCard from '$lib/components/BaseCard.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
+	import Button from '$lib/workbench/logo/editor/Button.svelte';
+	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
 	import { exportDxfForAltium } from '$lib/workbench/logo/export/altium';
 	import { exportPng } from '$lib/workbench/logo/export/image';
 	import { exportSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { exportSvg, exportSvgFont } from '$lib/workbench/logo/export/svg';
-	import type { Snippet } from 'svelte';
-
-	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
-	import Button from '$lib/workbench/logo/editor/Button.svelte';
-	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
-
-	import { devMode, devModeLocal } from '$lib/utils/utils';
-
-	import BaseCard from '$lib/components/BaseCard.svelte';
-	import Spinner from '$lib/components/Spinner.svelte';
 	import { Download } from '@lucide/svelte';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		children: Snippet;
@@ -23,6 +20,8 @@
 	}
 
 	let { children, uid, title, subtitle }: Props = $props();
+
+	const devEnabled = $derived($devMode || $overrideDevMode);
 
 	let loading = $state(false);
 
@@ -64,7 +63,7 @@
 				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
 			</div>
 
-			{#if $devMode}
+			{#if devEnabled}
 				<div class="m-4 sm:m-0">
 					<BaseCheckbox bind:checked={$devModeLocal}>
 						<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>

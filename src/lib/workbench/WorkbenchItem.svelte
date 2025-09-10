@@ -8,8 +8,8 @@
 	const { item }: { item: WorkbenchItem } = $props();
 </script>
 
-<BaseCard scale="small" hover>
-	<BaseLink link={item.href} external={item.external} class="flex justify-between">
+<BaseCard link={{href: item.href, external: item.external}} class="w-xl py-4 px-6 flex justify-between">
+
 		<div class="flex items-center space-x-4">
 			<IconText icon={{ icon: item.icon, fallback: item.title, class: 'size-8 text-gray-600 dark:text-gray-200' }} />
 			<div>
@@ -26,5 +26,5 @@
 				<ChevronRight class="size-5 flex-none text-gray-400" />
 			{/if}
 		</div>
-	</BaseLink>
+	
 </BaseCard>

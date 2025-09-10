@@ -1,9 +1,13 @@
 <script lang="ts">
+	import Badge from './Badge.svelte';
+
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import type { Entry } from '$lib/data/indexer';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
+	import ClassBox from '$lib/components/ClassBox.svelte';
+	import { ChevronRight } from '@lucide/svelte';
 
 	type Props = {
 		entry: Entry;
@@ -15,14 +19,42 @@
 </script>
 
 {#key entry}
-	<BaseCard hover>
+	<BaseCard link={entry.path} hover class="flex aspect-square flex-col  items-center justify-between p-4">
+		<div class="flex-1 overflow-hidden pb-12">
+			<BaseImg src={entry.thumb} alt="Item hero" class=" group-hover:grayscale/20 my-auto size-full flex-1 rounded-lg object-contain filter group-hover:opacity-20" />
+		</div>
+
+
+
+		{#if entry.item.featured}
+			<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
+		{/if}
+		{#if isFamily}
+			<Badge text="Family" class="absolute top-0 right-0 rounded-bl-3xl px-4 py-3" />
+		{/if}
+
+		<div class="absolute inset-0 flex size-full flex-col justify-end bg-gradient-to-b from-white/0 from-0% to-slate-800/90 to-85% p-8 text-sm text-white opacity-0 transition-opacity duration-400 group-hover:opacity-90">
+			<div class="flex flex-row items-center gap-2">
+				<p class="mt-4 line-clamp-3 flex-1 leading-6">{entry.item.teaser}</p>
+				<ChevronRight class="size-6 text-white/70" />
+			</div>
+		</div>
+
+		<div class="absolute bottom-7 group-hover:-translate-y-23">
+			<h2 class="text-center text-current group-hover:text-white text-xl font-semibold group-hover:font-bold tracking-wide">{entry.item.name}</h2>
+		</div>
+	</BaseCard>
+{/key}
+
+<!--
+
 		<BaseLink link={entry.path}>
 			<BaseImg src={entry.thumb} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
 			<div class="mt-4 flex items-center text-base font-medium text-gray-900 dark:text-white {isFamily ? 'mb-2' : ''}">
 				{#if isFamily}
 					<span class="me-2 inline-block rounded-full bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-700 dark:bg-gray-600 dark:text-white">Family</span>
 				{/if}
-				<h2>{entry.item.name}</h2>
+				<h2 class="text-lg font-semibold">{entry.item.name}</h2>
 			</div>
 			<p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{entry.item.teaser}</p>
 
@@ -34,5 +66,5 @@
 				<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
 			{/if}
 		</BaseLink>
-	</BaseCard>
-{/key}
+
+-->

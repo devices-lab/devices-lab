@@ -35,7 +35,7 @@
 		<Breadcrumbs />
 
 		{#if page.data.noHeader !== true && page.status === 200 && page.data.title}
-			<div class="border-t-0 border-b-2 border-gray-200 py-8 mb-8 text-center">
+			<div class="py-8 mb-8 text-center w-lg mx-auto">
 				<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{page.data.title}</h1>
 				{#if page.data.subtitle}
 					<p class="mx-auto mt-4 max-w-3xl text-base text-gray-500 dark:text-gray-400">{page.data.subtitle}</p>

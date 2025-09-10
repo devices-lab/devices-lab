@@ -1,17 +1,15 @@
 <script lang="ts">
-	import { Download, RefreshCcw, Save, X } from '@lucide/svelte';
-	import { onDestroy, onMount, type Snippet } from 'svelte';
-
-	import { devMode, devModeLocal } from '$lib/utils/utils';
-	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
-	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
-	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
-
-	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
-	import BaseCheckbox from '$lib/workbench/logo/inputs/BaseCheckbox.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
+	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
+	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
+	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
+	import { Download, RefreshCcw, Save, X } from '@lucide/svelte';
+	import { onDestroy, onMount, type Snippet } from 'svelte';
 
 	interface Props {
 		uid: string;
@@ -29,6 +27,8 @@
 	let notification: Notification | undefined = $state();
 
 	//======================================================================================//
+
+	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
 
 	let showPreview = $state(true);
 	let autoUpdate = $state(false);
@@ -66,7 +66,7 @@
 	}
 
 	export function save(user: boolean = true) {
-		if ($devMode && $devModeLocal) {
+		if (devEnabled) {
 			localStorage.setItem(`logo-save-${uid}`, dataString);
 			if (user) {
 				notification?.show('success', 'Successfully saved!');
@@ -123,21 +123,21 @@
 
 <Notification bind:this={notification} />
 
-{#if $devMode && $devModeLocal}
+{#if devEnabled}
 	<div class="lg:flex">
 		<div class="flex flex-col gap-y-5 p-6 lg:w-1/2">
 			<div class="flex flex-col gap-y-2">
 				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
 					Parameters
-					<IconButton onclick={download} class="button-primary" text={{ text: 'Download', class: 'text-sm' }} icon={{ icon: Download, class: 'size-4' }} />
+					<IconButton onclick={download} class="button-primary py-1 px-2 rounded-md" text={{ text: 'Download', class: 'text-sm' }} icon={{ icon: Download, class: 'size-5' }} />
 				</div>
 
 				<div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
 					<span class="text-sm">Local storage:</span>
 					<div class="flex gap-x-2">
-						<IconButton onclick={reset} class="link-red" text={{ text: 'Reset', class: ' text-sm' }} icon={{ icon: X, iconClass: 'size-4' }} />
-						<IconButton onclick={load} class="link-amber" text={{ text: 'Reload', class: ' text-sm' }} icon={{ icon: RefreshCcw, iconClass: 'size-4' }} />
-						<IconButton onclick={save} class="link-green" text={{ text: 'Save', class: ' text-sm' }} icon={{ icon: Save, iconClass: 'size-4' }} />
+						<IconButton onclick={reset} class="link-red py-1 px-2" text={{ text: 'Reset', class: 'text-sm' }} icon={{ icon: X, class: 'size-5' }} />
+						<IconButton onclick={load} class="link-amber py-1 px-2" text={{ text: 'Reload', class: 'text-sm' }} icon={{ icon: RefreshCcw, class: 'size-5' }} />
+						<IconButton onclick={save} class="link-green py-1 px-2" text={{ text: 'Save', class: 'text-sm' }} icon={{ icon: Save, class: 'size-5' }} />
 					</div>
 				</div>
 			</div>
@@ -159,7 +159,7 @@
 				</div>
 
 				<div class="my-3 flex flex-col justify-center rounded-lg">
-					<BaseButton class="button-primary" onclick={() => update(0)}>Generate</BaseButton>
+					<BaseButton class="button-primary rounded-full px-6 py-1 mx-auto" onclick={() => update(0)}>Generate</BaseButton>
 					<BaseCheckbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="mt-2">
 						<span class="text-sm font-medium">Auto generate?</span>
 					</BaseCheckbox>

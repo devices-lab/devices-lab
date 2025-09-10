@@ -1,18 +1,16 @@
 <script lang="ts">
-	import { calculateTextWidth } from '$lib/workbench/logo/utils';
-
-	import { Triangle } from '@lucide/svelte';
-
-	import NumberInput from '$lib/workbench/logo/inputs/NumberInput.svelte';
-	import SVG from '$lib/workbench/logo/components/SVG.svelte';
+	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Rect from '$lib/workbench/logo/components/Rect.svelte';
+	import SVG from '$lib/workbench/logo/components/SVG.svelte';
 	import Text from '$lib/workbench/logo/components/Text.svelte';
-	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
-	import Preview from '$lib/workbench/logo/editor/Preview.svelte';
-	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
-	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
 	import { StackDefaults, makeRoundedBorder, makeRoundedFrame, makeTextProps, type StackData } from '$lib/workbench/logo/defaults';
-	import { devMode, devModeLocal } from '$lib/utils/utils';
+	import BorderConfig from '$lib/workbench/logo/editor/BorderConfig.svelte';
+	import Preview from '$lib/workbench/logo/editor/Preview.svelte';
+	import SectionConfig from '$lib/workbench/logo/editor/SectionConfig.svelte';
+	import InputGroup from '$lib/workbench/logo/inputs/InputGroup.svelte';
+	import NumberInput from '$lib/workbench/logo/inputs/NumberInput.svelte';
+	import { calculateTextWidth } from '$lib/workbench/logo/utils';
+	import { Triangle } from '@lucide/svelte';
 
 	//======================================================================================//
 
@@ -30,8 +28,9 @@
 	let preview: Preview | undefined = $state();
 	let loadedData: StackData | undefined = $state();
 
+	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
 	const dataStore: StackData = $state({ ...StackDefaults, uid });
-	const data: StackData = $derived($devMode && $devModeLocal && loadedData && loadedData.version >= StackDefaults.version ? loadedData : dataStore);
+	const data: StackData = $derived(devEnabled && loadedData && loadedData.version >= StackDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 
 	const origin = $derived({ x: data.border.width / 2, y: data.border.width / 2 });

@@ -27,6 +27,7 @@ export function sleep(ms: number) {
 
 export const devMode = writable(false);
 export const devModeLocal = writable(false);
+export const overrideDevMode = writable(true);
 
 devMode.subscribe(() => {
 	devModeLocal.set(false);

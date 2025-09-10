@@ -1,21 +1,21 @@
 <script lang="ts">
+	import ClassBox from '$lib/components/ClassBox.svelte';
+	import type { DefProps } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
 
 	export type CheckboxTheme = 'primary' | 'secondary';
-
-	type Props = {
-		checked: boolean;
+	
+	type Props = DefProps & {
 		children?: Snippet;
+		label?: string;
+		checked: boolean;
 		theme?: CheckboxTheme;
-		class?: ClassValue;
-		[key: string]: any;
 	};
 
-	let { checked = $bindable(), children, theme = 'primary', class: className = '', ...props }: Props = $props();
+	let { children, label, checked = $bindable(), theme = 'primary', ...props }: Props = $props();
 	const uid = $props.id();
 
-	const checkboxTheme: ClassValue = $derived.by(() => {
+	const checkboxTheme: string = $derived.by(() => {
 		switch (theme) {
 			case 'primary':
 				return `
@@ -46,7 +46,7 @@
 		}
 	});
 
-	const checkboxLabelTheme: ClassValue = $derived.by(() => {
+	const checkboxLabelTheme: string = $derived.by(() => {
 		switch (theme) {
 			case 'primary':
 				return 'text-primary-500 group-has-checked:text-primary-600 dark:text-primary-100 dark:group-has-checked:text-primary-500';
@@ -56,7 +56,7 @@
 	});
 </script>
 
-<div class="group flex items-center gap-2 {className}">
+<ClassBox {props} class="group flex items-center gap-2">
 	<div class="grid size-4 grid-cols-1">
 		<input
 			id={uid}
@@ -83,7 +83,6 @@
 				dark:disabled:checked:bg-white/10
 				forced-colors:appearance-auto
 				{checkboxTheme}"
-			{...props}
 		/>
 
 		<svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25 dark:group-has-disabled:stroke-white/25">
@@ -93,6 +92,10 @@
 	</div>
 
 	<label for={uid} class="cursor-pointer {checkboxLabelTheme}">
-		{@render children?.()}
+		{#if children}
+			{@render children()}
+		{:else}
+			{label}
+		{/if}
 	</label>
-</div>
+</ClassBox>

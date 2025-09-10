@@ -26,67 +26,11 @@ export type PageData = Record<RouteName, PageInfo>;
 export type ParamRoutes = 'devices' | 'tools' | 'media';
 
 
-/*
-function isExternal(u: string): boolean {
-	return /^(https?:|mailto:|tel:)/.test(u);
-}
-
-*/
-
-/**
- * Resolve a href, slug, and type into a full href and external flag.
- * If href is external, return as is.
- * If href is internal and no type, return as is.
- * If href is internal and type is given, construct the full path using the slug.
-
-export function resolveHref(href?: string | RouteId, slug?: string, type?: ParamRoutes, external?: boolean): { href: string | ResolvedPathname, external: boolean } {
-	// Just return external links
-	if (href && isExternal(href)) {
-		return { href: href, external: external ?? true };
-	}
-	// Internal links without params
-	if (href && !type) {
-		return { href: resolve(href as Pathname), external: external ?? false };
-	}
-	// Sanity check
-	if (!slug) {
-		return { href: '#', external: false };
-	}
-	// Internal links with params
-	switch (type) {
-		case 'devices':
-			return { href: resolve('/devices/[...rest]', { rest: slug }), external: external ?? false };
-		case 'tools':
-			return { href: resolve('/tools/[...rest]', { rest: slug }), external: external ?? false };
-		case 'media':
-			return { href: resolve('/media/[...rest]', { rest: slug }), external: external ?? false };
-		default:
-			break;
-	}
-	// Fallback for unresolved routes
-	console.warn(`Could not resolve route ${href} with slug ${slug} and type ${type}`);
-	return { href: '/', external: external ?? false };
-}
- */
-
-/**
- * If the path matches a device, tools, etc, return its full href.
- */
-/*
-export function redirectHref(item: Entry): ResolvedPathname | undefined {
-	switch (item.route.key) {
-		case 'devices':
-			return resolve('/devices/[...rest]', { rest: item.slug });
-		case 'tools':
-			return resolve('/tools/[...rest]', { rest: item.slug });
-		case 'media':
-			return resolve('/media/[...rest]', { rest: item.slug });
-		default:
-			break;
-	}
-	return;;
-}
-	*/
+// Breadcrumb link structure
+export type BreadcrumbLink = {
+	title: string;
+	href: string;
+};
 
 // Route definition for each page
 export type Route = {
@@ -95,7 +39,7 @@ export type Route = {
 
 	title: string;
 	icon?: typeof Icon;
-	breadcrumbs: { title: string; href: string }[];
+	breadcrumbs: BreadcrumbLink[];
 }
 
 // Mapping of route names to their route definitions

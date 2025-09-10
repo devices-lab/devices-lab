@@ -1,17 +1,16 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import type { ItemType } from '$lib/data/item';
+	import NoItems from '$lib/components/NoItems.svelte';
+	import type { Entry, ItemData } from '$lib/data/indexer';
+	import Description from '$lib/items/page/content/Description.svelte';
 	import Features from '$lib/items/page/content/Features.svelte';
 	import Identifiers from '$lib/items/page/content/Identifiers.svelte';
 	import Publications from '$lib/items/page/content/Publications.svelte';
 	import Resources from '$lib/items/page/content/Resources.svelte';
-	import Description from '$lib/items/page/content/Description.svelte';
-	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import Title from '$lib/items/page/content/Title.svelte';
+	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import type { DefProps } from '$lib/utils/utils';
-	import NoItems from '$lib/components/NoItems.svelte';
-	import type { Entry, ItemData } from '$lib/data/indexer';
 
 	type Props = DefProps & {
 		entry: Entry;
@@ -23,7 +22,7 @@
 
 <ClassBox {props}>
 	{#if entry}
-		<BaseCard class="sm:px-6! sm:py-10! lg:px-8!">
+		<BaseCard class="mt-6 sm:px-6! sm:py-10! lg:px-8!">
 			<div class="relative lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
 				<!-- Image gallery -->
 				<ImageGrid images={entry.images} class="mx-auto mt-8 max-w-lg px-0 lg:mt-0" />

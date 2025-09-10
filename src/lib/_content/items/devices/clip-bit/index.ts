@@ -17,12 +17,12 @@ export const item: ItemData = {
 
 	// content
 	features: [
-		'LED displays for daylight readability',
-		'Up to 12 classification categories',
-		'Persistent data logging',
-		'Smart scanning of data collection sheets',
-		'Intelligent data upload for classes',
-		'Long life AA battery pack'
+		{text: 'LED displays for daylight readability'},
+		{text: 'Up to 12 classification categories'},
+		{text: 'Persistent data logging'},
+		{text: 'Smart scanning of data collection sheets'},
+		{text: 'Intelligent data upload for classes'},
+		{text: 'Long life AA battery pack'}
 	],
 	publications: [clipbit1, clipbit2, clipbit3],
 	resources: [
@@ -32,3 +32,4 @@ export const item: ItemData = {
 	tags: [],
 	featured: true,
 };
+
