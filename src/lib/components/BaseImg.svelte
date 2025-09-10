@@ -16,5 +16,5 @@
 {:else if src}
 	<enhanced:img {src} {...props} />
 {:else}
-	<PlaceholderImage />
+	<PlaceholderImage {...props}/>
 {/if}

@@ -20,11 +20,8 @@
 </script>
 
 {#snippet ImageButton(image: Picture)}
-	<button class="max-h-24 cursor-pointer relative flex h-24 items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
-		<span class="sr-only">Angled view</span>
-		<span class="absolute inset-0 overflow-hidden rounded-md">
-			<BaseImg src={image} alt="" class="size-full object-cover" />
-		</span>
+	<button class="relative flex max-h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
+		<BaseImg src={image} alt="" class="aspect-square size-auto object-cover" />
 		<span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 in-aria-selected:ring-primary-500"></span>
 	</button>
 {/snippet}

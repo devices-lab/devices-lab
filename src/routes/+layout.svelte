@@ -35,10 +35,10 @@
 		<Breadcrumbs />
 
 		{#if page.data.noHeader !== true && page.status === 200 && page.data.title}
-			<div class="py-8 mb-8 text-center w-lg mx-auto">
-				<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{page.data.title}</h1>
+			<div class="py-8 mb-8 text-center max-w-lg mx-auto overflow-hidden">
+				<h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 text-wrap">{page.data.title}</h1>
 				{#if page.data.subtitle}
-					<p class="mx-auto mt-4 max-w-3xl text-base text-gray-500 dark:text-gray-400">{page.data.subtitle}</p>
+					<p class="mx-auto mt-4 max-w-3xl text-base text-gray-500 dark:text-gray-400 text-wrap">{page.data.subtitle}</p>
 				{/if}
 			</div>
 		{/if}

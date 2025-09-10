@@ -1,12 +1,9 @@
 <script lang="ts">
-	import Badge from './Badge.svelte';
-
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import type { Entry } from '$lib/data/indexer';
+	import Badge from '$lib/items/Badge.svelte';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
-	import ClassBox from '$lib/components/ClassBox.svelte';
 	import { ChevronRight } from '@lucide/svelte';
 
 	type Props = {
@@ -19,12 +16,10 @@
 </script>
 
 {#key entry}
-	<BaseCard link={entry.path} hover class="flex aspect-square flex-col  items-center justify-between p-4">
+	<BaseCard link={entry.path} hover class="flex aspect-square flex-col items-center justify-between p-4">
 		<div class="flex-1 overflow-hidden pb-12">
 			<BaseImg src={entry.thumb} alt="Item hero" class=" group-hover:grayscale/20 my-auto size-full flex-1 rounded-lg object-contain filter group-hover:opacity-20" />
 		</div>
-
-
 
 		{#if entry.item.featured}
 			<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
@@ -41,7 +36,7 @@
 		</div>
 
 		<div class="absolute bottom-7 group-hover:-translate-y-23">
-			<h2 class="text-center text-current group-hover:text-white text-xl font-semibold group-hover:font-bold tracking-wide">{entry.item.name}</h2>
+			<h2 class="text-center text-xl font-semibold tracking-wide text-current group-hover:font-bold group-hover:text-white">{entry.item.name}</h2>
 		</div>
 	</BaseCard>
 {/key}

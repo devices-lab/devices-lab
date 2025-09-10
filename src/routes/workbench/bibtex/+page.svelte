@@ -23,6 +23,8 @@
 	let notification: Notification = $state() as Notification;
 
 	//======================================================================================//
+	
+	let currentItem: ResearchItem = $state({ ...DefaultResearchItem });
 
 	const clearData = () => {
 		currentItem = { ...DefaultResearchItem };
@@ -32,7 +34,7 @@
 	};
 	const loadData = () => {
 		if (selected && data.researchLibrary[selected]) {
-			currentItem = data.researchLibrary[selected];
+			currentItem = { ...data.researchLibrary[selected] };
 			notification?.show('success', 'Research data loaded');
 			showFeedback = true;
 		}
@@ -60,7 +62,6 @@
 		notification?.show('success', 'Download ready!');
 	};
 
-	let currentItem: ResearchItem = $state({ ...DefaultResearchItem });
 
 	const researchSelect = $derived([
 		{ value: '', label: 'Choose option...' },

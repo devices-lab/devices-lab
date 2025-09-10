@@ -6,19 +6,23 @@
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
-	import type { Feature, Publication, Reference, Tag } from '$lib/data/data';
-	import type { Entry, ItemData, ItemDataHelper } from '$lib/data/indexer';
+	import type { Feature, Reference, Tag } from '$lib/data/data';
+	import type { Entry, ItemData } from '$lib/data/indexer';
 	import type { ResearchLibrary } from '$lib/data/research';
 	import { Routes } from '$lib/data/routes';
+	import ItemCard from '$lib/items/ItemCard.svelte';
 	import ItemPage from '$lib/items/page/ItemPage.svelte';
 
 	type Props = {
-		item: ItemDataHelper;
+		entry: Entry;
+		researchKeys: string[];
 		showFeedback?: boolean;
 		researchLibrary: ResearchLibrary;
 	};
 
-	let { item = $bindable(), showFeedback = false, researchLibrary }: Props = $props();
+	let { entry = $bindable(), researchKeys = $bindable(), showFeedback = false, researchLibrary }: Props = $props();
+
+	let item: ItemData = $derived(entry.item as ItemData);
 
 	const validate = (value: string) => {
 		if (!value && showFeedback) return false;
@@ -31,9 +35,8 @@
 		label: item.name
 	}));
 
-	//let publications: string[] = $state(item.publications.filter(Boolean).map((p) => p.name));
 	$effect(() => {
-		item.publications = item.researchKeys.filter(Boolean).map((p) => researchLibrary[p]);
+		item.publications = researchKeys.filter(Boolean).map((p) => researchLibrary[p]);
 	});
 </script>
 
@@ -41,8 +44,11 @@
 	<div class="py-10">
 		<div class="my-4 flex-1 font-semibold text-gray-600 dark:text-gray-300">Preview:</div>
 
-		<div class="mt-6">
-			<ItemPage entry={{ item, thumb: undefined, path: '', parent: '', route: Routes.home, images: [], kind: 'item' } satisfies Entry} />
+		<div class="mt-6 flex flex-col lg:flex-row justify-center gap-8">
+			<div class="mx-auto mt-6 max-w-80">
+				<ItemCard {entry} />
+			</div>
+			<ItemPage {entry} />
 		</div>
 	</div>
 
@@ -78,9 +84,9 @@
 				{/snippet}
 			</DynamicList>
 
-			<DynamicList bind:items={item.researchKeys} newItem={(): string => publicationItems[0]?.value || ''} title="Publications">
+			<DynamicList bind:items={researchKeys} newItem={(): string => publicationItems[0]?.value || ''} title="Publications">
 				{#snippet content(_item: string, index: number)}
-					<SelectInput bind:value={item.researchKeys[index]} items={publicationItems} {validate} />
+					<SelectInput bind:value={researchKeys[index]} items={publicationItems} {validate} />
 				{/snippet}
 			</DynamicList>
 

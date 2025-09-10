@@ -4,13 +4,11 @@
 	import Spinner from '$lib/components/Spinner.svelte';
 	import IconButton from '$lib/components/icons/IconButton.svelte';
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
-	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
-	import ResearchInput from '$lib/workbench/bibtex/ResearchInput.svelte';
+	import { DefaultFamily, generateAndDownloadFamily, type Entry, type FamilyData } from '$lib/data/indexer';
+	import FamilyInput from '$lib/workbench/items/FamilyInput.svelte';
 	import { Download, X } from '@lucide/svelte';
 	import type { PageProps } from './$types';
-	import { DefaultItem, generateAndDownloadItem, type Entry, type ItemData, type ItemDataHelper } from '$lib/data/indexer';
-	import ItemInput from '$lib/workbench/items/ItemInput.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -23,48 +21,43 @@
 	let notification: Notification = $state() as Notification;
 
 	//======================================================================================//
-
-	let currentItem: Entry = $state({ ...DefaultItem });
-	let researchKeys: string[] = $state([]);
+	
+	let currentItem: Entry = $state({ ...DefaultFamily });
 
 	const clearData = () => {
-		currentItem = { ...DefaultItem };
-		researchKeys = [];
+		currentItem = { ...DefaultFamily };
 		selected = '';
 		showFeedback = false;
 	};
-
 	const loadData = () => {
-		if (selected && data.itemLibrary[selected] && data.itemLibrary[selected].kind === 'item') {
+		if (selected && data.itemLibrary[selected]) {
 			currentItem = { ...data.itemLibrary[selected] };
-			researchKeys = [...(currentItem.item as ItemData).publications.map((pub) => pub.key)];
 			notification?.show('success', 'Research data loaded');
 			showFeedback = true;
 		}
 	};
 
-	//researchKeys: [...item.publications.map(pub => pub.key)
-
 	const downloadData = () => {
-		generateAndDownloadItem(currentItem, researchKeys);
+		generateAndDownloadFamily(currentItem);
 		notification?.show('success', 'Download ready!');
 	};
+
 
 	type EntrySelect = { value: string; label: string };
 
 	// Helper to create select item from entry
-	const createSelectItem = (key: string, entry: Entry): EntrySelect | undefined => {
-		if (entry.kind === 'item') {
+	const createSelectFamily = (key: string, entry: Entry): EntrySelect | undefined => {
+		if (entry.kind === 'family') {
 			return { value: key, label: entry.item.name };
 		}
 		return undefined;
 	};
 	// Prepare the list of items for the select input
-	const itemSelect = $derived([
+	const familySelect = $derived([
 		{ value: '', label: 'Choose option...' },
 		...(Object.entries(data.itemLibrary)
-			.map(([key, entry]) => createSelectItem(key, entry))
-			.filter(Boolean) as EntrySelect[])
+			.map(([key, entry]) => createSelectFamily(key, entry))
+			.filter(Boolean) as EntrySelect[]),
 	]);
 </script>
 
@@ -73,7 +66,7 @@
 <!--<BaseCard class="flex flex-col items-center justify-between gap-3 rounded-full! border-1 border-gray-200 px-8 shadow-md! sm:flex-row ">-->
 <BaseCard class="flex w-full flex-col gap-6 px-8 py-6 shadow-md!" scale="md:w-3/4">
 	<div class="flex flex-col gap-x-3 sm:flex-row">
-		<SelectInput bind:value={selected} items={itemSelect} label="Device / tool / media item" class="flex-1" />
+		<SelectInput bind:value={selected} items={familySelect} label="Device / tool / media item" class="flex-1" />
 		<BaseButton class="button-slate my-auto min-w-30 rounded-md py-1" onclick={loadData}>Load</BaseButton>
 	</div>
 
@@ -85,4 +78,4 @@
 	<Spinner {loading} class="absolute right-0 bottom-0 m-3" />
 </BaseCard>
 
-<ItemInput bind:entry={currentItem} bind:researchKeys researchLibrary={data.researchLibrary} />
+<FamilyInput bind:entry={currentItem} {showFeedback} />
