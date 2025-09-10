@@ -1,7 +1,8 @@
 import type { ItemData } from "$lib/data/indexer";
 
 export const item: ItemData = {
-	name: 'gamepad',
+	modified: '1757500606031',
+	name: 'solder:bit/gamepad',
 	pathName: 'gamepad',
 	teaser: 'Learn surface mount soldering while building a versatile game controller for the BBC micro:bit.',
 	description: 'Learn to solder surface mount components whilst creating a versatile accessory for the BBC micro:bit. Ideal for controlling any interactive device, installation or robot. Supplied in low-cost kit form, partially assembled, or fully manufactured. Choose the level to suit your experience!',

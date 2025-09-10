@@ -1,8 +1,9 @@
 import type { ItemData } from "$lib/data/indexer";
 
 export const item: ItemData = {
-	name: 'name',
-	pathName: 'abc path',
+	modified: '1757500476430',
+	name: 'dummy 002',
+	pathName: 'dummy 002',
 	teaser: 'teaser',
 	description: 'description',
 

@@ -5,6 +5,7 @@ import { research as clipbit2 } from '$research/clip-bit--cli8fm';
 import { research as clipbit3 } from '$research/clip-bit-2c7269';
 
 export const item: ItemData = {
+	modified: '1757500606031',
 	name: 'clip:bit',
 	pathName: 'clip:bit',
 	teaser: 'Enhancing outdoor learning with persistent data logging for the BBC micro:bit.',

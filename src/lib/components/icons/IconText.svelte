@@ -7,22 +7,24 @@
 	import type { Snippet } from 'svelte';
 
 	export type TextPosition = 'iconFirst' | 'iconLast';
+	export type TextAlign = 'justify-start' | 'justify-center' | 'justify-end';
 
 	export type IconTextProps = DefProps & {
 		icon?: IconType | IconProps;
 		text?: TextType | TextProps;
 		children?: Snippet;
 		position?: TextPosition;
+		align?: TextAlign;
 	};
 
-	const { text, icon, children, position = 'iconFirst', ...props }: IconTextProps = $props();
+	const { text, icon, children, position = 'iconFirst', align = 'justify-center', ...props }: IconTextProps = $props();
 
 	// Wrap props if needed
 	const iconProps: IconProps = $derived(normaliseRequired<IconProps, 'icon'>(icon, 'icon'));
 	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
 </script>
 
-<ClassBox {props} class="flex items-center justify-center gap-2">
+<ClassBox {props} class="flex items-center {align} gap-2">
 	{#if text}
 		{#if position === 'iconFirst'}
 			<IconItem {...iconProps} />

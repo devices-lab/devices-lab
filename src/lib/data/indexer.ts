@@ -22,6 +22,7 @@ type CommonData = {
 };
 
 export type ItemData = CommonData & {
+	modified: string;
 	description: string;
 
 	// identification
@@ -216,6 +217,7 @@ export const createBreadcrumbs = catalog.createBreadcrumbs;
 export const DefaultItem: Entry = {
 	kind: 'item',
 	item: {
+		modified: '0',
 		name: '',
 		pathName: '',
 		teaser: '',
@@ -231,7 +233,7 @@ export const DefaultItem: Entry = {
 		// other
 		tags: [],
 		featured: false,
-	},
+	} as ItemData,
 	thumb: undefined,
 	images: [],
 	path: '',
@@ -248,7 +250,7 @@ export const DefaultFamily: Entry = {
 		// other
 		tags: [],
 		featured: false,
-	},
+	} as FamilyData,
 	thumb: undefined,
 	images: [],
 	path: '',
@@ -286,7 +288,7 @@ import type { ItemData } from "$lib/data/indexer";
 
 ${publicationImports}
 
-export const item: ItemData = ${JSON.stringify(entry.item, replacer, 4)};
+export const item: ItemData = ${JSON.stringify({...entry.item, modified: Date.now().toString()}, replacer, 4)};
 `;
 
 	// Replace the placeholder with actual publication names

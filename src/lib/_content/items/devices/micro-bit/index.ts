@@ -1,6 +1,7 @@
 import type { ItemData } from "$lib/data/indexer";
 
 export const item: ItemData = {
+	modified: '1757500476430',
 	name: 'micro:bit',
 	pathName: 'micro:bit',
 	teaser: 'The BBC micro:bit is an award-winning programmable device that allows students to get hands-on with coding and digital making.',
@@ -16,6 +17,6 @@ export const item: ItemData = {
 	resources: [],
 	publications: [],
 
-	tags: [{'name': 'microbit'}],
+	tags: [{'name': 'microbit'}, {'name': 'bbc'}],
 	featured: false,
 };

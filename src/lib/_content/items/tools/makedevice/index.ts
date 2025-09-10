@@ -3,6 +3,7 @@ import type { ItemData } from "$lib/data/indexer";
 import { research as makedevice } from '$research/makedevice--nwzdqd';
 
 export const item: ItemData = {
+	modified: '1757500476430',
 	name: 'Makedevice',
 	pathName: 'makedevice',
 	teaser: 'Makedevice project.',
