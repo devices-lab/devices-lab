@@ -44,11 +44,13 @@
 	<div class="py-10">
 		<div class="my-4 flex-1 font-semibold text-gray-600 dark:text-gray-300">Preview:</div>
 
-		<div class="mt-6 flex flex-col lg:flex-row justify-center gap-8">
+		<div class="mt-6 flex flex-col justify-center gap-8 lg:flex-row">
 			<div class="mx-auto mt-6 max-w-80">
 				<ItemCard {entry} />
 			</div>
-			<ItemPage {entry} />
+			<div class="flex-1">
+				<ItemPage {entry} />
+			</div>
 		</div>
 	</div>
 
