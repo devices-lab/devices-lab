@@ -1,9 +1,9 @@
 <script lang="ts">
-	import BaseCard from '$lib/components/BaseCard.svelte';
-	import { Mail, MapPin, Copy, Check } from '@lucide/svelte';
-	import type { PageProps } from './$types';
 	import banner from '$lib/assets/img/InfoLab-min.jpg?enhanced';
+	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/BaseImg.svelte';
+	import { Check, Copy, Mail, MapPin } from '@lucide/svelte';
+	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 

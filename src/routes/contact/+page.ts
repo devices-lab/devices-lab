@@ -1,7 +1,5 @@
-import type { PageLoad } from './$types';
-
-// Load contact data
 import { contact } from '$lib/data/contact';
+import type { PageLoad } from './$types';
 
 export const load = (async () => {
     return {

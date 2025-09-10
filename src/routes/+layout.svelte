@@ -1,16 +1,12 @@
 <script lang="ts">
-	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
-
-	import tippy from 'tippy.js';
-	import 'tippy.js/dist/tippy.css'; // optional for styling
-
-	import type { LayoutData } from './$types';
-	import { onMount, type Snippet } from 'svelte';
 	import { page } from '$app/state';
-
-	import NavBar from '$lib/navbar/NavBar.svelte';
+	import favicon from '$lib/assets/favicon.svg';
 	import Breadcrumbs from '$lib/breadcrumbs/Breadcrumbs.svelte';
+	import NavBar from '$lib/navbar/NavBar.svelte';
+	import { onMount, type Snippet } from 'svelte';
+	import 'tippy.js/dist/tippy.css';
+	import '../app.css';
+	import type { LayoutData } from './$types';
 
 	interface Props {
 		data: LayoutData;

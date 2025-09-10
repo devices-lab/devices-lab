@@ -1,7 +1,6 @@
-import type { LayoutLoad } from './$types';
-
-import { Routes } from '$lib/data/routes';
 import { Pages } from '$lib/_content/pages';
+import { Routes } from '$lib/data/routes';
+import type { LayoutLoad } from './$types';
 
 export const load = (async () => {
 	return {

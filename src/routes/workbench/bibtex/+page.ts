@@ -1,9 +1,7 @@
-import type { PageLoad } from './$types';
-import { item } from './about';
-
-// Load research data
 import { fetchResearchData } from '$lib/data/research';
 import { Routes } from '$lib/data/routes';
+import type { PageLoad } from './$types';
+import { item } from './about';
 
 export const load = (async () => {
 	return {

@@ -1,7 +1,5 @@
-import type { PageLoad } from './$types';
-
-// Load workbench data
 import { workbench } from '$lib/data/workbench';
+import type { PageLoad } from './$types';
 
 export const load = (async () => {
     return {

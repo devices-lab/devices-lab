@@ -1,7 +1,6 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
-
 	import ResearchCard from '$lib/research/ResearchCard.svelte';
+	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 </script>
