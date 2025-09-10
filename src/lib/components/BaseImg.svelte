@@ -5,7 +5,6 @@
 
 	type Props = DefProps & {
 		src?: string | Picture;
-		[key: string]: any;
 	};
 
 	const { src, ...props }: Props = $props();

@@ -76,7 +76,7 @@
 			{/if}
 
 			<!-- Optional map placeholder (replace with real embed if desired) -->
-			<div class="mt-4 aspect-[4/3] w-full overflow-hidden rounded-lg border border-dashed border-gray-300/70 text-center text-xs text-gray-400 dark:border-gray-600/70 dark:text-gray-500">
+			<div class="mt-4 aspect-[4/3] w-full overflow-hidden rounded-lg text-center text-xs text-gray-400 dark:text-gray-500">
 				<BaseImg src={banner} alt="" class="size-full object-cover" />
 			</div>
 		</BaseCard>

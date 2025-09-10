@@ -20,15 +20,15 @@
 </script>
 
 {#snippet ImageButton(image: Picture)}
-	<button class="relative flex max-h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
+	<button class="relative flex max-h-24 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
 		<BaseImg src={image} alt="" class="aspect-square size-auto object-cover" />
 		<span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 in-aria-selected:ring-primary-500"></span>
 	</button>
 {/snippet}
 
 {#snippet ImagePanel(image: Picture)}
-	<div hidden>
-		<BaseImg src={image} alt="" class="my-5 w-full object-contain sm:rounded-lg lg:aspect-square" />
+	<div hidden class="m-auto flex aspect-square h-full w-full justify-center *:[picture]:flex">
+		<BaseImg src={image} alt="" class="my-auto max-h-full w-fit max-w-full flex-1 rounded-3xl object-contain" />
 	</div>
 {/snippet}
 
