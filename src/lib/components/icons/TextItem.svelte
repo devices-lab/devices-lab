@@ -6,12 +6,13 @@
 
 	// A plain text value the component can render
 	export type TextType = string | null | undefined | Snippet;
+	export type TextTag = 'span' | 'div' | 'p' | 'label';
 
 	// Structured variant (may also include a class via DefProps)
 	export type TextProps = DefProps & {
 		text: TextType;
 		subtext?: TextType;
-		tag?: 'span' | 'div' | 'p' | 'label';
+		tag?: TextTag;
 		html?: boolean;
 	};
 
