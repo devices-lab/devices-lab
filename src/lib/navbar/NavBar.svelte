@@ -1,17 +1,16 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import { Routes, type Route } from '$lib/data/routes';
 	import Logo from '$lib/navbar/Logo.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
-	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
-	import MenuSide from '$lib/navbar/menu/MenuSide.svelte';
-	import { devMode, devModeLocal } from '$lib/utils/utils';
-	import { Hamburger, Hammer, Mail, Menu, Users } from '@lucide/svelte';
-	import { onMount } from 'svelte';
 	import LancasterLogo from '$lib/navbar/Picture1.png';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
-	import { page } from '$app/state';
+	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
+	import { devMode, devModeLocal } from '$lib/utils/utils';
+	import { Menu } from '@lucide/svelte';
+	import { onMount } from 'svelte';
 
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
