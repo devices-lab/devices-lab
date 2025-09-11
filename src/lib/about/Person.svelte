@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
-	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import type { TeamMember } from '$lib/data/about';
 
 	const { person }: { person: TeamMember } = $props();

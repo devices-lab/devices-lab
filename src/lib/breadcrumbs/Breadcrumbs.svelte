@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import { Routes } from '$lib/data/routes';
 	import type { DefProps } from '$lib/utils/utils';
 	import { ChevronRight, House } from '@lucide/svelte';

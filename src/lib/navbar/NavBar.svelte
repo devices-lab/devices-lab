@@ -1,10 +1,17 @@
 <script lang="ts">
+	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
+	import { Routes, type Route } from '$lib/data/routes';
 	import Logo from '$lib/navbar/Logo.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
 	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
 	import MenuSide from '$lib/navbar/menu/MenuSide.svelte';
 	import { devMode, devModeLocal } from '$lib/utils/utils';
+	import { Hamburger, Hammer, Mail, Menu, Users } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import LancasterLogo from '$lib/navbar/Picture1.png';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import { page } from '$app/state';
 
 	const uid = $props.id();
 	const menuID = `mobile-menu-${uid}`;
@@ -22,6 +29,8 @@
 	});
 
 	const floatingNavbar = ''; //'m-4 rounded-xl';
+
+	const SideMenu: Route[] = $derived(page.data.SideMenu);
 </script>
 
 <!-- Mobile menu -->
@@ -37,15 +46,10 @@
 		</div>
 	{/if}
 
-	<nav aria-label="Top" class="bg-white text-gray-700 shadow-xs dark:bg-gray-800 dark:text-gray-300 mb-4 {floatingNavbar}">
-		<div class="mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-			<!-- Logo (lg+) -->
-			<div class="hidden lg:flex lg:flex-1 lg:items-center">
-				<Logo height={'h-8'} />
-			</div>
-
+	<nav aria-label="Top" class="mb-4 bg-lu text-white shadow-xs {floatingNavbar}">
+		<div class="relative mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
 			<!-- Desktop menu (lg+) -->
-			<div class="hidden h-full lg:flex">
+			<div class="absolute inset-y-0 left-1/2 hidden h-full -translate-x-1/2 lg:flex">
 				<!-- Flyout menus -->
 				<el-popover-group class="group/popover-group inset-x-0 bottom-0 px-4">
 					<!-- Presentational element to emulate a border that sits on top of the popover -->
@@ -54,39 +58,34 @@
 							<div class="h-px w-full bg-gray-200"></div>
 						</div>
 					</div>
-					<div class="flex h-full justify-center space-x-8">
-						<MenuMain showFeaturedItems />
-					</div>
+
+					<MenuMain showFeaturedItems class="flex h-full justify-center gap-x-8" />
 				</el-popover-group>
 			</div>
 
 			<!-- Mobile menu (lg-) -->
 			<div class="flex flex-1 items-center lg:hidden">
-				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
+				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:focus-visible:outline-primary-500">
 					<span class="sr-only">Open menu</span>
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
-						<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
-					</svg>
+					<Menu class="size-6" />
 				</button>
 			</div>
 
-			<!-- Logo (lg-) -->
-			<Logo height={'h-8'} class="lg:hidden" />
+			<!-- Logo -->
+			<BaseLink link={Routes.home.id} class="absolute left-1/2 flex -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0">
+				<Logo class="m-auto h-8" />
+			</BaseLink>
 
-			<!-- Options -->
-			<div class="flex flex-1 items-center justify-end">
-				<el-dropdown>
-					<button type="button" class="flex cursor-pointer items-center rounded-full text-gray-400 hover:text-gray-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:text-gray-400 dark:hover:text-gray-300 dark:focus-visible:outline-primary-500">
-						<span class="sr-only">Open options</span>
-						<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
-							<path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-						</svg>
-					</button>
-					<el-menu anchor="bottom end" popover="auto" class="w-56 origin-top-right rounded-md bg-white shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-						<MenuSide />
-					</el-menu>
-				</el-dropdown>
+			<div class="absolute top-20 right-5 flex gap-2 sm:gap-4">
+				{#each SideMenu as route}
+					<IconLink link={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5', tooltip: route.title }} class="rounded-full border-1 sm:border-2 border-secondary-500 p-1.5 sm:p-2 text-secondary-500 shadow-sm" />
+				{/each}
 			</div>
+
+			<!-- Logo -->
+			<BaseLink link="https://www.lancaster.ac.uk/" class="lg:order-last">
+				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-10" />
+			</BaseLink>
 		</div>
 	</nav>
 </header>

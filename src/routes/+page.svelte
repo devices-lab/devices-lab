@@ -1,9 +1,12 @@
 <script lang="ts">
 	import banner from '$lib/assets/img/InfoLab-min.jpg?enhanced';
 	import BaseImg from '$lib/components/BaseImg.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
 	import { Routes } from '$lib/data/routes';
 	import OverlayContainer from '$lib/overlay/OverlayContainer.svelte';
+	import { ArrowRight } from '@lucide/svelte';
+
 </script>
 
 <div class="static">
@@ -11,13 +14,11 @@
 	<OverlayContainer imgWidth={banner.img.w} imgHeight={banner.img.h} />
 </div>
 
-<div class="flex grow flex-col items-center justify-center truncate p-5 text-center">
+<div class="flex grow flex-col items-center justify-center truncate p-5 text-center z-11">
 	<h1 class="font-ocr text-6xl font-semibold -tracking-normal text-balance text-gray-900 lg:text-8xl dark:text-white">Devices Lab</h1>
 	<p class="mt-8 text-lg font-medium text-pretty text-gray-600 sm:text-xl/8 dark:text-gray-400">Learn more about our research group and passion!</p>
-	<div class="mt-10 flex items-center justify-center gap-x-6">
-		<BaseLink link={Routes.devices.id} class="z-11 rounded-full bg-primary-600 px-4.5 py-3.5 font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:bg-primary-500 dark:hover:bg-primary-400 dark:focus-visible:outline-primary-500">
-			Discover our projects
-			<span aria-hidden="true">→</span>
-		</BaseLink>
+	<div class="mt-10 flex items-center justify-center gap-x-6 sm:gap-x-10 w-full">
+		<IconLink link={Routes.devices.id} class="bg-primary px-4 py-2 rounded-lg font-semibold shadow hover:bg-primary-hover hover:scale-101 transition-transform duration-200" icon={{icon: ArrowRight}} text={{text: 'Discover our projects', class: ''}} position='iconLast'/>
+		<IconLink link={Routes.about.id} class="bg-secondary px-4 py-2 rounded-lg font-semibold shadow hover:bg-secondary-hover hover:scale-101 transition-transform duration-200" icon={{icon: ArrowRight}} text={{text: 'Learn more about us', class: ''}} position='iconLast'/>
 	</div>
 </div>

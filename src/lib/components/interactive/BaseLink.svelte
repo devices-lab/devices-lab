@@ -23,6 +23,6 @@
 	});
 </script>
 
-<ClassBox {props} tag="a" href={resolved.href} {...linkProps}>
+<ClassBox {props} tag="a" href={resolved.href} class="cursor-pointer" {...linkProps}>
 	{@render children?.()}
 </ClassBox>

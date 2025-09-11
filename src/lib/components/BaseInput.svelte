@@ -25,7 +25,7 @@
 		placeholder:text-gray-400
 		focus:outline-2
 		focus:-outline-offset-2
-		focus:outline-primary-600
+		focus:outline-primary-500
 		disabled:border-gray-50
 		disabled:bg-gray-50
 		disabled:text-gray-500

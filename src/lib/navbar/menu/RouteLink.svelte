@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import type { Route as RouteType } from '$lib/data/routes';
-	import Route from '$lib/navbar/menu/Route.svelte';
+	import { cn } from '$lib/utils/cn';
+	import type { DefProps } from '$lib/utils/utils';
 
-	type Props = {
+	type Props = DefProps & {
+		component: typeof IconButton | typeof IconLink;
 		route: RouteType;
 	};
 
-	const { route }: Props = $props();
-	const current = $derived(page.data.route.id === route.id && !page.error);
+	const { component, route, class: _class, ...props }: Props = $props();
+
+	const current = $derived(page.data.route.id === route.id && !page.error ? { 'aria-current': 'page' } : undefined);
+	const el = $derived({ component });
 </script>
 
 {#key current}
-	<BaseLink link={route.id} aria-current={current ? 'page' : undefined} class="group/item flex items-center px-4 py-3 text-sm text-gray-700 hover:not-aria-[current]:text-gray-400 aria-[current]:bg-gray-200/50 dark:text-gray-300 dark:hover:not-aria-[current]:text-gray-400 dark:aria-[current]:bg-gray-600/50">
-		<Route {route} />
-	</BaseLink>
+	<el.component {...props} {...current} text={route.title} link={route.id} icon={{ icon: route.icon, class: 'size-5 opacity-50' }} class={cn('flex font-semibold px-4 py-3 text-sm hover:not-aria-[current]:text-current/80 aria-[current]:bg-current/20', _class)} />
 {/key}

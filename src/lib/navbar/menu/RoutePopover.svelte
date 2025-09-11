@@ -1,56 +1,38 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import type { Snippet } from 'svelte';
-	import type { ClassValue } from 'svelte/elements';
+	import ClassBox from '$lib/components/ClassBox.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import type { Entry } from '$lib/data/indexer';
 	import type { Route as RouteType } from '$lib/data/routes';
+	import RouteLink from '$lib/navbar/menu/RouteLink.svelte';
+	import type { DefProps } from '$lib/utils/utils';
+	import { ChevronRight } from '@lucide/svelte';
+	import type { Snippet } from 'svelte';
 
-	import Route from '$lib/navbar/menu/Route.svelte';
+	type Props = DefProps & {
+		children: Snippet;
+		route: RouteType;
+		items: Entry[];
+	};
 
-	const { route, popover, class: className }: { route: RouteType; popover: Snippet<[string]>; class?: ClassValue } = $props();
+	const { children, route, items, ...props }: Props = $props();
 
 	const uid = $props.id();
 	const popoverID = `popover-${uid}`;
-
-	// Derive if we are the current (active) route
-	const current = $derived(page.data.route.id === route.id);
 </script>
 
-<div class="group/popover flex">
-	<div class="relative flex">
-		<button
-			aria-current={current ? 'page' : undefined}
-			popovertarget={popoverID}
-			class={`
-				relative
-				flex
-				cursor-pointer
-				items-center
-				justify-center
-				px-4
-				py-2
-				text-sm font-medium
-				transition-colors
-				duration-200
-				ease-out
-				group-not-has-open/popover:text-gray-700
-				group-has-open/popover:text-primary-600
-				group-not-has-open/popover:hover:not-aria-[current]:text-gray-400
-				aria-[current]:bg-gray-200/50
-				dark:group-not-has-open/popover:text-gray-300
-				dark:group-has-open/popover:text-primary-300
-				dark:group-not-has-open/popover:hover:not-aria-[current]:text-gray-400 
-				dark:aria-[current]:bg-gray-600/50
-				${className}
-			`}
-		>
-			<Route {route}/>
-			<span aria-hidden="true" class="absolute inset-x-0 -bottom-px z-30 h-0.5 bg-transparent duration-200 ease-in group-has-open/popover:bg-primary-600 group-has-open/popover-group:duration-150 group-has-open/popover-group:ease-out"></span>
-		</button>
-	</div>
-
+<ClassBox {props} class="group/popover inline-flex">
+	<RouteLink component={IconButton} {route} class="overlay-test group-has-open/popover:border-b-3  group-has-open/popover:bg-current/10 group-has-open/popover:font-bold" popovertarget={popoverID} />
 	<!-- Popover content -->
-	{@render popover(popoverID)}
-</div>
+	<el-popover id={popoverID} anchor="bottom" popover="manual" class="w-full overflow-hidden bg-current text-sm transition [--anchor-gap:1px] backdrop:bg-black/10 open:block data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in">
+		<!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
+		<div aria-hidden="true" class="absolute inset-0 top-1/2 bg-white shadow-lg ring-1 ring-gray-900/5 dark:bg-gray-900 dark:shadow-none dark:ring-white/10"></div>
+		<div class="relative flex flex-col gap-8 bg-white p-8 dark:bg-gray-900">
+			<div class="mx-auto flex max-w-3xl justify-start sm:px-6 lg:max-w-7xl lg:px-8">
+				{@render children()}
+			</div>
 
-
-
+			<IconLink link={route.id} class="mx-auto rounded-full bg-primary px-4  py-1 font-semibold text-nowrap shadow hover:scale-102 hover:bg-primary-hover" text={{ text: 'See all items', class: 'ms-3' }} icon={{ icon: ChevronRight, class: 'size-7' }} position="iconLast" />
+		</div>
+	</el-popover>
+</ClassBox>

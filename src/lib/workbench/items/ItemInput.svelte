@@ -5,7 +5,7 @@
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
 	import type { Feature, Reference, Tag } from '$lib/data/data';
 	import type { Entry, ItemData } from '$lib/data/indexer';
 	import type { ResearchLibrary } from '$lib/data/research';

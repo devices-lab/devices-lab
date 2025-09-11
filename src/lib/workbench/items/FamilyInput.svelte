@@ -3,7 +3,7 @@
 	import DynamicList from '$lib/components/DynamicList.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
 	import type { Tag } from '$lib/data/data';
 	import type { Entry } from '$lib/data/indexer';
 	import ItemCard from '$lib/items/ItemCard.svelte';

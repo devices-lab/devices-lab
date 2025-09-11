@@ -16,7 +16,7 @@
 	let selectedCategory = $state<Category>('project');
 </script>
 
-<BaseCard class="flex w-3xl p-6 flex-col gap-3 sm:flex-row bg-slate-200/50! dark:bg-slate-800! mx-auto">
+<BaseCard class="flex max-w-3xl p-6 flex-col gap-3 sm:flex-row bg-slate-200/50! dark:bg-slate-800! mx-auto">
 	<div class="grow">
 		<label for="project-name" class="block text-sm/6 font-medium text-gray-900 dark:text-white">Project Name</label>
 		<div class="mt-2">

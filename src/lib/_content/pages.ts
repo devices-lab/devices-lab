@@ -1,5 +1,5 @@
 import type { PageData } from "$lib/data/routes";
-import { UserRound, Heart, Pickaxe } from '@lucide/svelte';
+import { Hammer, Mail, Users } from '@lucide/svelte';
 
 //────────────────────────────────────────────────────────────────//
 
@@ -38,19 +38,19 @@ export const Pages: PageData = {
 	},
 	workbench: {
 		menuTitle: 'Workbench',
-		menuIcon: Pickaxe,
+		menuIcon: Hammer,
 		pageTitle: 'Workbench',
 		pageSubtitle: 'A collection of custom tools designed to make our workflow more efficient and straightforward'
 	},
 	about: {
-		menuTitle: 'About Us',
-		menuIcon: UserRound,
+		menuTitle: 'About us!',
+		menuIcon: Users,
 		pageTitle: 'About Us',
 		pageSubtitle: 'Learn more about who we are'
 	},
 	contact: {
-		menuTitle: 'Contact Us',
-		menuIcon: Heart,
+		menuTitle: 'Contact us!',
+		menuIcon: Mail,
 		pageTitle: 'Get in touch',
 		pageSubtitle: 'Have a question, an idea for collaboration, or want to visit the lab? Reach out, we\'d love to hear from you.'
 	}

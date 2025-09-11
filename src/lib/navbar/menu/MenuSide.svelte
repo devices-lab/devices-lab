@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/state';
-
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import type { Route } from '$lib/data/routes';
 	import RouteLink from '$lib/navbar/menu/RouteLink.svelte';
 	import ThemeToggle from '$lib/theme/ThemeToggle.svelte';
 
-	const routes = $derived(page.data.SideMenu);
+	const routes: Route[] = $derived(page.data.SideMenu);
 </script>
 
 {#each routes as route}
-	<RouteLink {route} />
+	<RouteLink component={IconLink} {route} class="hover:bg-gray-100 dark:hover:bg-gray-800" />
 {/each}
 
 <ThemeToggle />

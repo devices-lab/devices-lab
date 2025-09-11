@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import IconLink from '$lib/components/icons/IconLink.svelte';
+	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import type { Reference } from '$lib/data/data';
 	import type { DefProps } from '$lib/utils/utils';
 
