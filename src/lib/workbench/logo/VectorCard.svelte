@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Button from '$lib/workbench/logo/editor/Button.svelte';

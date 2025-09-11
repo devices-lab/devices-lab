@@ -12,7 +12,7 @@
 
 	const { children, link, ...props }: Props = $props();
 
-	const hoverClass = $derived(link ? 'cursor-pointer transition-transform duration-200 hover:scale-102 shadow' : '');
+	const hoverClass = $derived(link ? 'cursor-pointer transition-transform duration-200 hover:scale-101 shadow' : '');
 
 	// outline outline-gray-900/5 dark:-outline-offset-1 dark:outline-white/10
 	// Gradient requires all images to have a transparant background: bg-gradient-to-b from-white to-slate-50 dark:from-gray-800 dark:to-gray-800

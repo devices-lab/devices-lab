@@ -4,6 +4,7 @@
 	import Filters from '$lib/items/filters/Filters.svelte';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 	import { onMount } from 'svelte';
+	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 	type Props = {
 		entries: Entry[];
@@ -41,14 +42,25 @@
 
 	//========================================================================//
 
+	let tags2 = new SvelteSet<FilterItem>();
+	$effect(() => {
+		tags2.clear();
+		entries.forEach((entry) => {
+			entry.item.tags?.forEach((tag) => {
+				tags2.add({ label: tag.name, checked: false });
+			});
+		});
+	});
+
 	let tags: FilterItem[] = $state([]);
 	$effect(() => {
+		tags = [];
 		tags = entries
-			.map((e) => e.item.tags)
+			.map((e) => e.item.tags.map((tag) => tag.name))
 			.flat()
 			.filter((tag, index, array) => array.indexOf(tag) === index)
 			.sort()
-			.map((tag) => ({ label: tag.name, checked: false }));
+			.map((tag) => ({ label: tag, checked: false }));
 	});
 
 	let types: FilterItem[] = $state([
@@ -107,14 +119,16 @@
 </script>
 
 <section aria-labelledby="items-heading" class="mt-6">
-	{#if items.length}
-		<div class="mx-auto grid w-fit grid-cols-1 content-start gap-6 sm:grid-cols-2 sm:gap-10 lg:grid-cols-3">
-			<Filters {tags} {types} bind:sortBy {sortByList} title={family} class="col-span-full rounded-lg border border-gray-100 bg-slate-200/60 px-4 py-2 dark:bg-gray-800" />
-			{#each items as entry}
-				<ItemCard {entry} />
-			{/each}
-		</div>
-	{:else}
-		<NoItems class="my-4 text-center" />
-	{/if}
+	<div class="pt-3 pb-6 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
+		{family}
+	</div>
+
+	<Filters {tags} {types} bind:sortBy {sortByList} class="col-span-full mb-10 w-full border-t border-gray-300 py-1" />
+	<div class="mx-auto flex w-full grid-cols-1 flex-col content-end items-center gap-6 sm:grid sm:w-fit sm:grid-cols-2 sm:content-start sm:gap-10 lg:grid-cols-3">
+		{#each items as entry}
+			<ItemCard {entry} />
+		{:else}
+			<NoItems class="my-4 text-center w-full col-span-full" />
+		{/each}
+	</div>
 </section>

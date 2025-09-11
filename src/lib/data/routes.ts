@@ -79,13 +79,6 @@ export const Routes: Record<RouteName, Route> = {
 		icon: Pages.research.menuIcon,
 		breadcrumbs: [{ title: 'research', href: '/research' }]
 	},
-	workbench: {
-		id: '/workbench',
-		key: 'workbench',
-		title: Pages.workbench.menuTitle,
-		icon: Pages.workbench.menuIcon,
-		breadcrumbs: [{ title: 'workbench', href: '/workbench' }]
-	},
 	about: {
 		id: '/about',
 		key: 'about',
@@ -99,7 +92,14 @@ export const Routes: Record<RouteName, Route> = {
 		title: Pages.contact.menuTitle,
 		icon: Pages.contact.menuIcon,
 		breadcrumbs: [{ title: 'contact', href: '/contact' }]
-	}
+	},
+	workbench: {
+		id: '/workbench',
+		key: 'workbench',
+		title: Pages.workbench.menuTitle,
+		icon: Pages.workbench.menuIcon,
+		breadcrumbs: [{ title: 'workbench', href: '/workbench' }]
+	},
 };
 
 export function findRoute(path: string): Route {
@@ -121,9 +121,9 @@ export const MainMenu: Route[] = [
 
 // Side navigation menu
 export const SideMenu: Route[] = [
-	Routes.workbench,
 	Routes.about,
-	Routes.contact
+	Routes.contact,
+	Routes.workbench,
 ];
 
 //────────────────────────────────────────────────────────────────//

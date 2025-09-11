@@ -28,7 +28,7 @@
 
 {#snippet ImagePanel(image: Picture)}
 	<div hidden class="m-auto flex aspect-square h-full w-full justify-center *:[picture]:flex">
-		<BaseImg src={image} alt="" class="my-auto max-h-full w-fit max-w-full flex-1 rounded-3xl object-contain" />
+		<BaseImg src={image} alt="" class="my-auto max-h-full w-fit max-w-full flex-1 rounded-lg object-contain" />
 	</div>
 {/snippet}
 

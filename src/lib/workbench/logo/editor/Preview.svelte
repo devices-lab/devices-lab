@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
 	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox.svelte';
+	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';

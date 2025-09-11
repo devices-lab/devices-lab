@@ -14,8 +14,6 @@
 	};
 
 	const { children, ...props }: Props = $props();
-
-
 </script>
 
 <ClassBox {props} tag="button" class="cursor-pointer" type="button">

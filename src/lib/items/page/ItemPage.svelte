@@ -22,8 +22,8 @@
 
 <ClassBox {props}>
 	{#if entry}
-		<BaseCard class="mt-6 sm:px-6! sm:py-10! lg:px-8!">
-			<div class="relative lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
+		<BaseCard class="mt-6 p-4 md:p-8 relative lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 xl:gap-x-20">
+		
 				<!-- Image gallery -->
 				<ImageGrid images={entry.images} class="mx-auto mt-8 max-w-lg px-0 lg:mt-0" />
 
@@ -37,7 +37,7 @@
 					<Publications {item} />
 					<Identifiers {item} />
 				</div>
-			</div>
+			
 		</BaseCard>
 	{:else}
 		<NoItems />

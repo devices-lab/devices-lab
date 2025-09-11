@@ -19,16 +19,14 @@
 	const { text, icon, link, subtext, ...props }: IconSublinkProps = $props();
 
 	const linkProps: LinkProps = $derived(normaliseRequired<LinkProps, 'link'>(link, 'link'));
-	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
-	const subtextProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(subtext, 'text'));
 </script>
 
 <ClassBox {props}>
 	<IconText {icon}>
 		<div class="flex flex-col">
-			<TextItem {...textProps} />
+			<TextItem {text} />
 			<BaseLink {...linkProps}>
-				<TextItem {...subtextProps} />
+				<TextItem text={subtext} />
 			</BaseLink>
 		</div>
 	</IconText>

@@ -18,16 +18,14 @@
 	const { onclick, text, icon, subtext, ...props }: IconSubbuttonProps = $props();
 
 	const buttonProps: ButtonProps = $derived(normaliseRequired<ButtonProps, 'onclick'>(onclick, 'onclick'));
-	const textProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(text, 'text'));
-	const subtextProps: TextProps = $derived(normaliseRequired<TextProps, 'text'>(subtext, 'text'));
 </script>
 
 <ClassBox {props} class="">
 	<IconText {icon}>
 		<div class="flex flex-col">
-			<TextItem {...textProps} />
+			<TextItem {text} />
 			<BaseButton {...buttonProps}>
-				<TextItem {...subtextProps} />
+				<TextItem text={subtext} />
 			</BaseButton>
 		</div>
 	</IconText>

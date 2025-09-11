@@ -2,7 +2,7 @@
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
 	import BaseButton from '$lib/components/interactive/BaseButton.svelte';

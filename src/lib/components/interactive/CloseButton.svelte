@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
 	import type { ButtonType } from '$lib/components/interactive/BaseButton.svelte';
 	import { cn } from '$lib/utils/cn';
 	import type { DefProps } from '$lib/utils/utils';

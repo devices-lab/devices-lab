@@ -13,9 +13,8 @@
 	const { children, content, params, ...props }: Props = $props();
 
 	const defaultParams = { animation: 'fade', interactive: true, allowHTML: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 };
-	const tooltipClass = $derived(cn("group/tooltip relative z-1000", props.class));
 </script>
 
-<div {...props} class={tooltipClass} use:tooltip={{ ...defaultParams, content, ...params }}>
+<div {...props} class={cn("group/tooltip relative z-1000 inline-flex", props.class)} use:tooltip={{ ...defaultParams, content, ...params }}>
 	{@render children()}
 </div>

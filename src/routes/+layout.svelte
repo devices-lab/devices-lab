@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import Breadcrumbs from '$lib/breadcrumbs/Breadcrumbs.svelte';
-	import NavBar from '$lib/navbar/NavBar.svelte';
+	import Navbar from '$lib/navbar/Navbar.svelte';
 	import { onMount, type Snippet } from 'svelte';
 	import 'tippy.js/dist/tippy.css';
 	import '../app.css';
@@ -25,9 +25,9 @@
 </svelte:head>
 
 <div class="flex min-h-full flex-col">
-	<NavBar />
+	<Navbar />
 
-	<div class="container mx-auto px-4 flex flex-col flex-1">
+	<div class="container mx-auto px-4 flex flex-col flex-1 ">
 		<Breadcrumbs />
 
 		{#if page.data.noHeader !== true && page.status === 200 && page.data.title}

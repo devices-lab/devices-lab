@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils/cn';
-	import IconButton from '$lib/components/icons/IconButton.svelte';
+	import IconButton from '$lib/components/interactive/IconButton.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import { Trash2 } from '@lucide/svelte';
 
