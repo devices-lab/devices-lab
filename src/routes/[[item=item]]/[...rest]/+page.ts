@@ -21,9 +21,7 @@ export const load = (async ({ params }) => {
 	const path = concat(params.item, params.rest, '/');
 	const items: CatalogEntry = findEntries(path);
 	const breadcrumbs: BreadcrumbLink[] = createBreadcrumbs(path);
-
-	console.log('load item page', items.family);
-
+	
 	switch (items.type) {
 		case 'item':
 			{

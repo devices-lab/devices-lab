@@ -66,7 +66,7 @@
 			{#if devEnabled}
 				<div class="m-4 sm:m-0">
 					<BaseCheckbox bind:checked={$devModeLocal}>
-						<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode?</span>
+						<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode</span>
 					</BaseCheckbox>
 				</div>
 			{/if}
@@ -90,9 +90,9 @@
 			{@render DownloadButton('SVG', 'KiCad', () => exportSvgForKiCad(uid, `${uid}-kicad`))}
 		</ButtonGroup>
 
-		<ButtonGroup>
+		<!--<ButtonGroup>
 			{@render DownloadButton('DFX', 'Altium', () => exportDxfForAltium(uid, `${uid}-altium`))}
-			<!--{@render DownloadButton('Test', '', async () => {await sleep(2000)})}-->
-		</ButtonGroup>
+			{@render DownloadButton('Test', '', async () => {await sleep(2000)})}
+		</ButtonGroup>-->
 	</div>
 </BaseCard>
