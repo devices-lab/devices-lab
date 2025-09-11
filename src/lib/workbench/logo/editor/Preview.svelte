@@ -161,7 +161,7 @@
 				<div class="my-3 flex flex-col justify-center rounded-lg">
 					<BaseButton class="button-primary rounded-full px-6 py-1 mx-auto" onclick={() => update(0)}>Generate</BaseButton>
 					<BaseCheckbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="mt-2">
-						<span class="text-sm font-medium">Auto generate?</span>
+						<span class="text-sm font-medium">Auto generate</span>
 					</BaseCheckbox>
 				</div>
 				{#if showPreview}

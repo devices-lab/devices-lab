@@ -33,6 +33,6 @@
 
 <div class="flex grow items-center gap-x-2">
 	<BaseCheckbox bind:checked={getEnable, setEnable}>
-		<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Enabled?</span>
+		<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Enabled</span>
 	</BaseCheckbox>
 </div>
