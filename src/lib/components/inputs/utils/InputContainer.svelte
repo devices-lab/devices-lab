@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
-	import TextItem from '$lib/components/icons/TextItem.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
+	import TextItem from '$lib/components/base/BaseText.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
 	import type { DefProps } from '$lib/utils/utils';
@@ -169,7 +169,7 @@
 		{#if label}
 			<div class={labelStyle}>
 				{#if sublabel}
-					<IconText text={{ text: label, class: 'tracking-wide uppercase' }} icon={{ icon: CircleQuestionMarkIcon, class: 'size-4 opacity-50', tooltip: sublabel }} position="iconLast" />
+					<IconText text={{ text: label, class: 'tracking-wide uppercase' }} icon={{ icon: CircleQuestionMarkIcon, class: 'size-4 opacity-50' }} position="iconLast" tooltip={{ content: sublabel }} />
 				{:else}
 					<TextItem text={label} class="tracking-wide uppercase" />
 				{/if}

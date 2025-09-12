@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconButton from '$lib/components/base/IconButton.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Rect from '$lib/workbench/logo/components/Rect.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';

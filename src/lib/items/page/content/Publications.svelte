@@ -1,8 +1,10 @@
 <script lang="ts">
+	import BaseText from '$lib/components/base/BaseText.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
+	import TextButton from '$lib/components/base/TextButton.svelte';
 	import BaseList from '$lib/components/BaseList.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
-	import IconSubbutton from '$lib/components/icons/IconSubbutton.svelte';
 	import type { Publication } from '$lib/data/data';
 	import type { ItemData } from '$lib/data/indexer';
 	import Dialog from '$lib/items/page/content/Dialog.svelte';
@@ -32,8 +34,13 @@
 		<Collapse label={'Publications'}>
 			<BaseList bare class="flex flex-col items-start gap-y-3">
 				{#each item.publications as publication}
-					<IconSubbutton onclick={{ onclick: () => openPublication(publication), command: 'show-modal', commandfor: dialogId}} icon={{ icon: ScrollText, class: 'size-6' }} text={{ text: publication.type, class: 'font-semibold' }} subtext={{ text: publication.title, class: 'underline text-sm text-start link-gray' }} />
-
+					{#snippet Content()}
+						<div class="flex flex-col">
+							<BaseText text={publication.type} class="font-semibold" />
+							<TextButton text={{ text: publication.title, class: 'underline text-sm text-start link-gray' }} onclick={() => openPublication(publication)} props={{ command: 'show-modal', commandfor: dialogId }} />
+						</div>
+					{/snippet}
+					<IconText icon={{ icon: ScrollText, class: 'size-6' }} text={{ text: Content }} position="iconFirst" />
 					<!--
 					<div class="flex w-full items-center justify-between gap-4 pe-4">
 						<IconText text={{ text: publication.title, class: 'flex-1', subtext: publication.type }} icon={{ icon: ScrollText, class: 'size-6' }} class="text-sm/5 font-semibold" />

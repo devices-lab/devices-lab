@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import BaseLink from '$lib/components/base/BaseLink.svelte';
+	import IconLink from '$lib/components/base/IconLink.svelte';
 	import { Routes, type Route } from '$lib/data/routes';
 	import Logo from '$lib/navbar/Logo.svelte';
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
@@ -71,18 +71,18 @@
 			</div>
 
 			<!-- Logo -->
-			<BaseLink link={Routes.home.id} class="absolute left-1/2 flex -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0">
+			<BaseLink href={Routes.home.id} class="absolute left-1/2 flex -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0">
 				<Logo class="m-auto h-8" />
 			</BaseLink>
 
 			<div class="absolute top-20 right-5 flex gap-2 sm:gap-4">
 				{#each SideMenu as route}
-					<IconLink link={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5', tooltip: route.title }} class="rounded-full border-1 sm:border-2 border-secondary-500 p-1.5 sm:p-2 text-secondary-500 shadow-sm" />
+					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5', tooltip: { content: route.title } }} class="flex rounded-full border-1 border-secondary-500 p-1.5 text-secondary-500 shadow-sm sm:border-2 sm:p-2" />
 				{/each}
 			</div>
 
 			<!-- Logo -->
-			<BaseLink link="https://www.lancaster.ac.uk/" class="lg:order-last">
+			<BaseLink href="https://www.lancaster.ac.uk/" class="lg:order-last">
 				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-10" />
 			</BaseLink>
 		</div>

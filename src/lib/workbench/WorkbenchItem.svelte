@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
 	import type { WorkbenchItem } from '$lib/data/workbench';
 	import { ChevronRight, ExternalLink } from '@lucide/svelte';
 

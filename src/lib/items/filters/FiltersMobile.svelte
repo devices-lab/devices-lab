@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Checkbox from '$lib/components/interactive/Checkbox.svelte';
+	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import Disclosure from '$lib/components/interactive/Disclosure.svelte';
 	import type { FilterItem } from '$lib/items/ItemGrid.svelte';
 	import { X } from '@lucide/svelte';
@@ -40,14 +40,14 @@
 					<Disclosure class="border-t border-gray-200" label={{ text: 'Tags', class: 'font-medium text-md text-gray-900' }}>
 						<div class="space-y-6">
 							{#each tags as item}
-								<Checkbox name="tags[]" label={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
+								<Checkbox name="tags[]" text={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
 							{/each}
 						</div>
 					</Disclosure>
 					<Disclosure class="border-t border-gray-200" label={{ text: 'Type', class: 'font-medium text-gray-900' }}>
 						<div class="space-y-6">
 							{#each types as item}
-								<Checkbox name="types[]" label={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
+								<Checkbox name="types[]" text={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
 							{/each}
 						</div>
 					</Disclosure>

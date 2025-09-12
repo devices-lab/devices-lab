@@ -6,6 +6,9 @@ interface TooltipProps {
 }
 // https://atomiks.github.io/tippyjs/v6/getting-started/
 
+// Default properties for all tooltips
+export const DefaultProps = { animation: 'fade', interactive: true, allowHTML: true, ignoreAttributes: true, appendTo: () => document.body, maxWidth: 260 };
+
 // tooltip.js
 export function tooltip(node: HTMLElement, params: TooltipProps = {}) {
 	// Determine the title to show. We want to prefer  the custom content passed in first, then the HTML title attribute then the aria-label in that order.

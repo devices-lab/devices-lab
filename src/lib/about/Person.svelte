@@ -1,7 +1,6 @@
 <script lang="ts">
 	import BaseImg from '$lib/components/BaseImg.svelte';
-	import Tooltip from '$lib/components/Tooltip.svelte';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import IconLink from '$lib/components/base/IconLink.svelte';
 	import type { TeamMember } from '$lib/data/about';
 
 	const { person }: { person: TeamMember } = $props();
@@ -12,12 +11,9 @@
 <p class="text-sm/4 text-gray-600 dark:text-gray-400">{person.role}</p>
 
 {#if person.sites.length > 0}
-	<!--<span class="mx-auto flex w-3/4 border-t mb-1 border-gray-200 dark:border-gray-700"></span>-->
 	<div class="mt-2 flex flex-wrap justify-center gap-2">
 		{#each person.sites as site}
-			<Tooltip content={site.text}>
-				<IconLink link={site.href} icon={{ icon: site.icon, class: "size-5" }} class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" external />
-			</Tooltip>
+			<IconLink href={site.href} class="text-sm text-gray-400 hover:text-gray-600 dark:text-gray-500 hover:dark:text-gray-300" tooltip={{ content: site.text }} icon={{ icon: site.icon, class: 'size-5' }} />
 		{/each}
 	</div>
 {/if}

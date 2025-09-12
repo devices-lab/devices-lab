@@ -11,12 +11,10 @@
 	};
 
 	const { entry }: Props = $props();
-
-	const isFamily = $derived(entry.kind === 'family');
 </script>
 
 {#key entry}
-	<BaseCard link={entry.path} hover class="flex aspect-square flex-col items-center justify-between sm:p-4 max-w-xs text-gray-900 ">
+	<BaseCard link={{href: entry.path}} class="flex aspect-square flex-col items-center justify-between sm:p-4 max-w-xs text-gray-900 ">
 		<div class="flex-1 overflow-hidden pb-12">
 			<BaseImg src={entry.thumb} alt="Item hero" class=" my-auto size-full flex-1 rounded-lg object-contain  group-hover:opacity-15 group-hover:grayscale-70 group-hover:blur-xs" />
 		</div>
@@ -24,7 +22,7 @@
 		{#if entry.item.featured}
 			<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
 		{/if}
-		{#if isFamily}
+		{#if entry.kind === 'family'}
 			<Badge text="Family" class="absolute top-0 right-0 rounded-bl-3xl px-4 py-3" />
 		{/if}
 
@@ -40,26 +38,3 @@
 		</div>
 	</BaseCard>
 {/key}
-
-<!--
-
-		<BaseLink link={entry.path}>
-			<BaseImg src={entry.thumb} alt="Item hero" class="aspect-square w-full rounded-lg object-contain" />
-			<div class="mt-4 flex items-center text-base font-medium text-gray-900 dark:text-white {isFamily ? 'mb-2' : ''}">
-				{#if isFamily}
-					<span class="me-2 inline-block rounded-full bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-700 dark:bg-gray-600 dark:text-white">Family</span>
-				{/if}
-				<h2 class="text-lg font-semibold">{entry.item.name}</h2>
-			</div>
-			<p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{entry.item.teaser}</p>
-
-			{#if entry.item.tags && entry.item.tags.length}
-				<p class="mt-2 text-sm text-gray-400 italic dark:text-gray-600">tags: {entry.item.tags.join(', ')}</p>
-			{/if}
-
-			{#if entry.item.featured}
-				<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
-			{/if}
-		</BaseLink>
-
--->

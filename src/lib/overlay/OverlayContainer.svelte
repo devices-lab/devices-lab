@@ -1,5 +1,4 @@
 <script lang="ts">
-	import OverlayLink from '$lib/overlay/OverlayLink.svelte';
 	import OverlayEgg from '$lib/overlay/OverlayEgg.svelte';
 
 	import { devMode } from '$lib/utils/utils';
@@ -56,7 +55,6 @@
 
 <div class="absolute inset-0 z-10 size-full overflow-hidden" use:resize>
 	{#if ready}
-		<!--<OverlayLink href="/test" label="test" x={0.3} y={0.5} overlay={{ renderedW, renderedH, offsetX, offsetY }} class=""/>-->
 		<OverlayEgg action={() => { devMode.set(!$devMode) }} x={0.588} y={0.765} overlay={{ renderedW, renderedH, offsetX, offsetY }}/>
 	{/if}
 </div>

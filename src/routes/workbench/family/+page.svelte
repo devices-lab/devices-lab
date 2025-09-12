@@ -2,9 +2,9 @@
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconButton from '$lib/components/base/IconButton.svelte';
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
-	import BaseButton from '$lib/components/interactive/BaseButton.svelte';
+	import BaseButton from '$lib/components/base/BaseButton.svelte';
 	import { DefaultFamily, generateAndDownloadFamily, type Entry, type FamilyData } from '$lib/data/indexer';
 	import FamilyInput from '$lib/workbench/items/FamilyInput.svelte';
 	import { Download, X } from '@lucide/svelte';

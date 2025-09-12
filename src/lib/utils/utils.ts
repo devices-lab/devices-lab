@@ -79,6 +79,13 @@ export type DefProps = {
 	[key: string]: unknown;
 }
 
+export type DefProps2 = {
+	class?: ClassValue; //import('clsx').ClassValue;
+	props?: Record<string, unknown>;
+};
+
+
+
 // Utility: Build prefixed keys (iconText → iconText, iconClass → iconClass, etc.)
 export type Prefixed<T, P extends string> = {
 	[K in keyof T as `${P}${Capitalize<string & K>}`]?: T[K];

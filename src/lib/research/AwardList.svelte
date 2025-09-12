@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Batch from '$lib/components/batches/Batch.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
 	import type { Award } from '$lib/data/data';
 	import type { DefProps } from '$lib/utils/utils';
 

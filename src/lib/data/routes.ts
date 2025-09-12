@@ -152,11 +152,8 @@ function isExternal(u: string): boolean {
 	return /^(https?:|mailto:|tel:)/.test(u);
 }
 
-export function resolveLink(link: Link | Href): Link {
-	// Make sure we have a Link object
-	if (typeof link === 'string') link = { href: link };
-
-	if (!link.href)
-		return { href: '#', external: link.external ?? false };
-	return (isExternal(link.href) ? { href: link.href, external: link.external ?? true } : { href: resolve(link.href), external: link.external ?? false });
+export function resolveLink(href: string | null | undefined): Link {
+	if (!href)
+		return { href: '#', external: false };
+	return (isExternal(href) ? { href, external: true } : { href: resolve(href), external: false });
 }

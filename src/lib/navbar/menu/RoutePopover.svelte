@@ -1,7 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import IconTextLink from '$lib/components/base/IconTextLink.svelte';
 	import type { Entry } from '$lib/data/indexer';
 	import type { Route as RouteType } from '$lib/data/routes';
 	import RouteLink from '$lib/navbar/menu/RouteLink.svelte';
@@ -22,7 +21,7 @@
 </script>
 
 <ClassBox {props} class="group/popover inline-flex">
-	<RouteLink component={IconButton} {route} class="overlay-test group-has-open/popover:border-b-3  group-has-open/popover:bg-current/10 group-has-open/popover:font-bold" popovertarget={popoverID} />
+	<RouteLink {route} button={{ props: { popovertarget: popoverID }, class: 'overlay-test group-has-open/popover:border-b-3  group-has-open/popover:bg-current/10 group-has-open/popover:font-bold' }} />
 	<!-- Popover content -->
 	<el-popover id={popoverID} anchor="bottom" popover="manual" class="w-full overflow-hidden bg-current text-sm transition [--anchor-gap:1px] backdrop:bg-black/10 open:block data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in">
 		<!-- Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow -->
@@ -32,7 +31,7 @@
 				{@render children()}
 			</div>
 
-			<IconLink link={route.id} class="mx-auto rounded-full bg-primary px-4  py-1 font-semibold text-nowrap shadow hover:scale-102 hover:bg-primary-hover" text={{ text: 'See all items', class: 'ms-3' }} icon={{ icon: ChevronRight, class: 'size-7' }} position="iconLast" />
+			<IconTextLink href={route.id} class="mx-auto rounded-full bg-primary px-4  py-1 font-semibold text-nowrap shadow hover:scale-102 hover:bg-primary-hover" iconText={{ text: { text: 'See all items', class: 'ms-3' }, icon: { icon: ChevronRight, class: 'size-7' }, position: 'iconLast' }} />
 		</div>
 	</el-popover>
 </ClassBox>

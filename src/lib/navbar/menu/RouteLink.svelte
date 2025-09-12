@@ -1,22 +1,30 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
+	import type { ButtonProps } from '$lib/components/base/BaseButton.svelte';
+	import type { LinkProps } from '$lib/components/base/BaseLink.svelte';
+	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
+	import IconTextLink from '$lib/components/base/IconTextLink.svelte';
 	import type { Route as RouteType } from '$lib/data/routes';
 	import { cn } from '$lib/utils/cn';
-	import type { DefProps } from '$lib/utils/utils';
 
-	type Props = DefProps & {
-		component: typeof IconButton | typeof IconLink;
+	type Props = {
 		route: RouteType;
+		link?: LinkProps;
+		button?: ButtonProps;
 	};
 
-	const { component, route, class: _class, ...props }: Props = $props();
+	const { route, link, button }: Props = $props();
 
-	const current = $derived(page.data.route.id === route.id && !page.error ? { 'aria-current': 'page' } : undefined);
-	const el = $derived({ component });
+	// Common props for both link and button
+	const commonProps = $derived({
+		iconText: { text: { text: route.title }, icon: { icon: route.icon, class: 'size-5 opacity-50' } },
+		class: cn('flex px-4 py-3 text-sm font-semibold hover:not-aria-[current]:text-current/80 aria-[current]:bg-current/20', link?.class ?? button?.class),
+		'aria-current': page.data.route.id === route.id && !page.error ? 'page' : undefined
+	});
 </script>
 
-{#key current}
-	<el.component {...props} {...current} text={route.title} link={route.id} icon={{ icon: route.icon, class: 'size-5 opacity-50' }} class={cn('flex font-semibold px-4 py-3 text-sm hover:not-aria-[current]:text-current/80 aria-[current]:bg-current/20', _class)} />
-{/key}
+{#if link}
+	<IconTextLink {...link} {...commonProps} />
+{:else if button}
+	<IconTextButton {...button} {...commonProps} />
+{/if}
