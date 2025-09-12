@@ -5,7 +5,6 @@ import { ClippyOffset } from '$lib/workbench/logo/export/clippy';
 import ocrAUrl from '$lib/assets/OCRAEXT.TTF';
 import * as opentype from 'opentype.js';
 
-
 let cachedFont: opentype.Font | null = null;
 async function loadFont(): Promise<opentype.Font | null> {
 	if (cachedFont) return cachedFont;
@@ -18,7 +17,7 @@ async function loadFont(): Promise<opentype.Font | null> {
 		console.error('Failed to load font for outlining', e);
 		return null;
 	}
-};
+}
 
 // Convert all <text> to filled <path> (with optional dilation)
 // Width fitting via `textWidth` (also accepts `text-width` and SVG's `textLength`)
@@ -43,10 +42,7 @@ export async function outlineAllText(svgRoot: SVGSVGElement) {
 		const y = parseFloat(t.getAttribute('y') || '0');
 
 		// Accept custom and common variants
-		const textWidthAttr =
-			t.getAttribute('textWidth') ??
-			t.getAttribute('text-width') ??
-			t.getAttribute('textLength');
+		const textWidthAttr = t.getAttribute('textWidth') ?? t.getAttribute('text-width') ?? t.getAttribute('textLength');
 		const requestedWidth = textWidthAttr ? parseFloat(textWidthAttr) : NaN;
 
 		const glyphs = font.stringToGlyphs(content);
@@ -56,8 +52,7 @@ export async function outlineAllText(svgRoot: SVGSVGElement) {
 		let adv = 0;
 		glyphs.forEach((g, i) => {
 			adv += (g.advanceWidth || 0) * scale;
-			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue)
-				adv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
+			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue) adv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
 			if (letterSpacing) adv += letterSpacing;
 		});
 
@@ -74,17 +69,14 @@ export async function outlineAllText(svgRoot: SVGSVGElement) {
 		const baselineY = y + baselineOffset(font, size, dominant);
 
 		// Helper: scale an x about the left edge after anchoring
-		const scaleX = (px: number | undefined) =>
-			px == null ? px : (drawX + sx * (px - drawX));
+		const scaleX = (px: number | undefined) => (px == null ? px : drawX + sx * (px - drawX));
 
 		// Build the path with x-coordinates already fitted to `textWidth`
 		let cursor = drawX;
 		const segs: string[] = [];
 		glyphs.forEach((g, i) => {
 			const gp = g.getPath(cursor, baselineY, size);
-			(gp.commands || []).forEach((cmd: {
-				type: string; x?: number; y?: number; x1?: number; y1?: number; x2?: number; y2?: number
-			}) => {
+			(gp.commands || []).forEach((cmd: { type: string; x?: number; y?: number; x1?: number; y1?: number; x2?: number; y2?: number }) => {
 				if (cmd.type === 'M') {
 					segs.push(`M${scaleX(cmd.x)} ${cmd.y}`);
 				} else if (cmd.type === 'L') {
@@ -100,8 +92,7 @@ export async function outlineAllText(svgRoot: SVGSVGElement) {
 
 			// Advance cursor in natural units; the coordinate scaling above handles the fit.
 			let gAdv = (g.advanceWidth || 0) * scale;
-			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue)
-				gAdv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
+			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue) gAdv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
 			if (letterSpacing) gAdv += letterSpacing;
 			cursor += gAdv;
 		});
@@ -149,10 +140,7 @@ export async function outlineAllText2(clone: SVGSVGElement) {
 		const y = parseFloat(t.getAttribute('y') || '0');
 
 		// Preferred custom attribute, then common variants
-		const textWidthAttr =
-			t.getAttribute('textWidth') ??
-			t.getAttribute('text-width') ??
-			t.getAttribute('textLength'); // SVG attribute
+		const textWidthAttr = t.getAttribute('textWidth') ?? t.getAttribute('text-width') ?? t.getAttribute('textLength'); // SVG attribute
 		const requestedWidth = textWidthAttr ? parseFloat(textWidthAttr) : NaN;
 
 		const glyphs = font.stringToGlyphs(content);
@@ -162,8 +150,7 @@ export async function outlineAllText2(clone: SVGSVGElement) {
 		let adv = 0;
 		glyphs.forEach((g, i) => {
 			adv += (g.advanceWidth || 0) * scale;
-			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue)
-				adv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
+			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue) adv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
 			if (letterSpacing) adv += letterSpacing;
 		});
 
@@ -193,8 +180,7 @@ export async function outlineAllText2(clone: SVGSVGElement) {
 				else if (cmd.type === 'Z') pathData.push('Z');
 			});
 			let gAdv = (g.advanceWidth || 0) * scale;
-			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue)
-				gAdv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
+			if (i < glyphs.length - 1 && (font as opentype.Font).getKerningValue) gAdv += (font as opentype.Font).getKerningValue(g, glyphs[i + 1]) * scale;
 			if (letterSpacing) gAdv += letterSpacing;
 			cursor += gAdv; // unscaled; we scale the entire geometry later
 		});
@@ -236,40 +222,36 @@ export async function outlineAllText2(clone: SVGSVGElement) {
 	}
 }
 
-
-
-
-
 function baselineOffset(font: opentype.Font, size: number, dominant: string) {
 	const asc = (font as opentype.Font).ascender || font.unitsPerEm * 0.8;
 	const desc = (font as opentype.Font).descender || -font.unitsPerEm * 0.2;
 	switch ((dominant || '').toLowerCase()) {
 		case 'central':
-		case 'middle': return ((asc + desc) / 2) * (size / font.unitsPerEm);
-		case 'text-before-edge': return asc * (size / font.unitsPerEm);
-		case 'text-after-edge': return -desc * (size / font.unitsPerEm);
-		default: return 0;
+		case 'middle':
+			return ((asc + desc) / 2) * (size / font.unitsPerEm);
+		case 'text-before-edge':
+			return asc * (size / font.unitsPerEm);
+		case 'text-after-edge':
+			return -desc * (size / font.unitsPerEm);
+		default:
+			return 0;
 	}
-};
+}
 
 function parseFontWeight(t: SVGTextElement): number | 'bold' | null {
 	const attr = (t.getAttribute('font-weight') || t.style.fontWeight || '').trim().toLowerCase();
-	if (!attr)
-		return null;
-	if (attr === 'bold' || attr === 'bolder')
-		return 'bold';
+	if (!attr) return null;
+	if (attr === 'bold' || attr === 'bolder') return 'bold';
 	const n = parseInt(attr, 10);
 	return isFinite(n) ? n : null;
 }
 
-function wantsSyntheticBold(t: SVGTextElement): { enabled: boolean, strengthEm: number } {
+function wantsSyntheticBold(t: SVGTextElement): { enabled: boolean; strengthEm: number } {
 	const force = (t.getAttribute('data-synthetic-bold') || '').toLowerCase();
 	const strengthAttr = t.getAttribute('data-bold-strength');
 	const strengthEm = isFinite(parseFloat(strengthAttr || '')) ? Math.max(0, parseFloat(strengthAttr!)) : 0.06;
-	if (force === 'true')
-		return { enabled: true, strengthEm };
+	if (force === 'true') return { enabled: true, strengthEm };
 	const w = parseFontWeight(t);
-	if (w === 'bold' || (typeof w === 'number' && w >= 600))
-		return { enabled: true, strengthEm };
+	if (w === 'bold' || (typeof w === 'number' && w >= 600)) return { enabled: true, strengthEm };
 	return { enabled: false, strengthEm };
 }

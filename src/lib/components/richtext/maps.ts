@@ -1,9 +1,8 @@
-import BaseLink from '$lib/components/interactive/BaseLink.svelte';
-import IconItem from '$lib/components/icons/IconItem.svelte';
+import BaseLink from '$lib/components/base/BaseLink.svelte';
+import BaseIcon from '$lib/components/base/BaseIcon.svelte';
 import { safeUrl, type TagMap } from '$lib/components/richtext/customText';
 import { svelteTag, htmlTag, htmlVoid } from '$lib/components/richtext/maps-helpers';
 import type { SvelteTagMap } from './NodeView.svelte';
-
 
 // ---- Svelte components ----
 export const svelteMap: SvelteTagMap = {
@@ -11,11 +10,11 @@ export const svelteMap: SvelteTagMap = {
 		baseClass: 'underline underline-offset-4 decoration-dotted hover:decoration-solid link-blue',
 		pass: ['rel', 'target', 'aria-*', 'data-*'],
 		map: (a) => ({
-			link: safeUrl(String(a.href ?? '#'))
+			href: safeUrl(String(a.href ?? '#'))
 		}),
 		requiredChildren: true
 	}),
-	icon: svelteTag(IconItem, {
+	icon: svelteTag(BaseIcon, {
 		baseClass: 'text-gray-600 dark:text-gray-400 size-4',
 		map: (a) => ({
 			icon: String(a.name ?? 'CircleQuestionMark')
@@ -42,7 +41,6 @@ export const tagMap: TagMap = {
 	//}),
 	ocr: htmlTag('span', { baseClass: 'font-ocr' })
 };
-
 
 /*
 Bold: ${bold}[bold]

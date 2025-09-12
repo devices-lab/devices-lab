@@ -7,25 +7,20 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		alias: {
-			$devices: 'src/routes/devices', //[[devices=devices]]
-			$tools: 'src/routes/tools', //[[tools=tools]]
-			$media: 'src/routes/media',
 			$workbench: 'src/routes/workbench',
-			$research: 'src/lib/_content/research',
+			$research: 'src/lib/_content/research'
 		},
-		adapter: adapter(
-			{
-				pages: 'build',
-				assets: 'build',
-				fallback: undefined,
-				precompress: false,
-				strict: true
-			}
-		),
+		adapter: adapter({
+			pages: 'build',
+			assets: 'build',
+			fallback: undefined,
+			precompress: false,
+			strict: true
+		}),
 		paths: {
-			base: process.argv.includes('dev') ? '/test' : process.env.BASE_PATH,
+			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
 			relative: false
-		},
+		}
 	}
 };
 

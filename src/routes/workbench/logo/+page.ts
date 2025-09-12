@@ -7,6 +7,9 @@ export const load = (async () => {
 		item,
 		title: item.title,
 		subtitle: item.subtitle,
-		breadcrumbs: [{ title: Routes.workbench.key, href: Routes.workbench.id }, { title: 'logo', href: '/workbench/logo' }],
+		breadcrumbs: [
+			{ title: Routes.workbench.key, href: Routes.workbench.id },
+			{ title: 'logo', href: '/workbench/logo' }
+		]
 	};
 }) satisfies PageLoad;

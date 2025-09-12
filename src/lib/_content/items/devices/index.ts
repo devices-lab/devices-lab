@@ -1,4 +1,4 @@
-import type { FamilyData } from "$lib/data/indexer";
+import type { FamilyData } from '$lib/data/indexer';
 
 export const item: FamilyData = {
 	name: 'Devices',
@@ -6,5 +6,5 @@ export const item: FamilyData = {
 	teaser: 'All our devices.',
 
 	tags: [],
-	featured: false,
+	featured: false
 };

@@ -124,7 +124,7 @@
 	</div>
 
 	<Filters {tags} {types} bind:sortBy {sortByList} class="col-span-full mb-10 w-full border-t border-gray-300 py-1" />
-	<div class="mx-auto flex w-full grid-cols-1 flex-col content-end items-center gap-6 sm:grid sm:w-fit sm:grid-cols-2 sm:content-start sm:gap-10 lg:grid-cols-3">
+	<div class="mx-auto flex w-full grid-cols-1 flex-col content-end items-center gap-6 sm:grid sm:w-fit sm:grid-cols-2 sm:content-start sm:gap-10 lg:grid-cols-3 2xl:grid-cols-4">
 		{#each items as entry}
 			<ItemCard {entry} />
 		{:else}

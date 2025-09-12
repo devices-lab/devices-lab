@@ -1,15 +1,15 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import Checkbox from '$lib/components/interactive/Checkbox.svelte';
+	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import Dropdown from '$lib/components/interactive/Dropdown.svelte';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import Popover from '$lib/components/interactive/Popover.svelte';
 	import type { FilterItem, Sorter, SorterItem } from '$lib/items/ItemGrid.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import { Check } from '@lucide/svelte';
 	import FiltersMobile from './FiltersMobile.svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		tags: FilterItem[];
 		types: FilterItem[];
 		sortByList: SorterItem[];
@@ -28,19 +28,18 @@
 	<FiltersMobile id={id_mobileFilters} {tags} {types} />
 
 	<div class="relative flex items-center justify-between">
-
 		{#snippet SortLabel()}
 			<span class="flex items-center">
 				Sort by
-				<span class="text-current/60 text-xs hidden sm:inline-flex">: [{sortByList.find((item) => item.key === sortBy)?.label.toLowerCase()}]</span>
+				<span class="hidden text-xs text-current/60 sm:inline-flex">: [{sortByList.find((item) => item.key === sortBy)?.label.toLowerCase()}]</span>
 			</span>
 		{/snippet}
-		
+
 		<!-- Sort by -->
 		<Dropdown label={{ text: SortLabel, class: 'font-medium text-gray-900 text-sm', html: true }}>
-			<div class="flex flex-col space-y-2">
+			<div class="flex flex-col space-y-0">
 				{#each sortByList as item}
-					<IconButton onclick={() => (sortBy = item.key)} class="p-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" text={{ text: item.label, class: 'text-sm first-letter:uppercase' }} icon={{ icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary-600' : ' text-transparent') }} align={'justify-start'} />
+					<IconTextButton onclick={() => (sortBy = item.key)} class="px-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" iconText={{ text: { text: item.label, class: 'p-2 text-sm first-letter:uppercase' }, icon: { icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary' : ' text-transparent') }, position: 'iconFirst' }} />
 				{/each}
 			</div>
 		</Dropdown>
@@ -53,14 +52,14 @@
 			<Popover label={{ text: 'Tags', class: 'font-medium text-sm' }}>
 				<div class="space-y-4">
 					{#each tags as item}
-						<Checkbox name="tags[]" label={{ text: item.label, class: 'text-sm first-letter:uppercase' }} bind:checked={item.checked} class="" />
+						<Checkbox name="tags[]" text={{ text: item.label, class: 'text-sm first-letter:uppercase' }} bind:checked={item.checked} class="" />
 					{/each}
 				</div>
 			</Popover>
 			<Popover label={{ text: 'Types', class: 'font-medium text-sm' }}>
 				<div class="space-y-4">
 					{#each types as item}
-						<Checkbox name="types[]" label={{ text: item.label, class: 'text-sm first-letter:uppercase' }} bind:checked={item.checked} class="" />
+						<Checkbox name="types[]" text={{ text: item.label, class: 'text-sm first-letter:uppercase' }} bind:checked={item.checked} class="" />
 					{/each}
 				</div>
 			</Popover>

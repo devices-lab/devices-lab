@@ -1,16 +1,15 @@
 <script lang="ts">
-	import ClassBox from '$lib/components/ClassBox.svelte';
-	import BaseLink, { type LinkType } from '$lib/components/interactive/BaseLink.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import BaseLink, { type LinkProps } from '$lib/components/base/BaseLink.svelte';
+	import { cn } from '$lib/utils/cn';
+	import type { DefProps2 } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
+	type Props = DefProps2 & {
 		children: Snippet;
-		hover?: boolean;
-		link?: LinkType;
+		link?: LinkProps;
 	};
 
-	const { children, link, ...props }: Props = $props();
+	const { children, link, ...rest }: Props = $props();
 
 	const hoverClass = $derived(link ? 'cursor-pointer transition-transform duration-200 hover:scale-101 shadow' : '');
 
@@ -19,13 +18,13 @@
 </script>
 
 {#snippet Content()}
-	<ClassBox {props} class="group relative overflow-hidden rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none {hoverClass}">
+	<div {...rest.props} class={cn('group relative rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none', hoverClass, rest.class)}>
 		{@render children()}
-	</ClassBox>
+	</div>
 {/snippet}
 
 {#if link}
-	<BaseLink {link} class="contents">
+	<BaseLink {...link}>
 		{@render Content()}
 	</BaseLink>
 {:else}

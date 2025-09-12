@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import IconLink from '$lib/components/interactive/IconLink.svelte';
 	import { findFeaturedEntries } from '$lib/data/indexer';
 	import type { Route } from '$lib/data/routes';
 	import FeaturedItem from '$lib/items/featured/FeaturedItem.svelte';
@@ -28,7 +27,7 @@
 				</div>
 			</RoutePopover>
 		{:else}
-			<RouteLink component={IconLink} {route} />
+			<RouteLink {route} link={{ href: route.id }} />
 		{/if}
 	{/each}
 </el-popover-group>

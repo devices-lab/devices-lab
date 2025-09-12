@@ -1,4 +1,4 @@
-import type { PageData } from "$lib/data/routes";
+import type { PageData } from '$lib/data/routes';
 import { Hammer, Mail, Users } from '@lucide/svelte';
 
 //────────────────────────────────────────────────────────────────//
@@ -19,7 +19,7 @@ export const Pages: PageData = {
 	devices: {
 		menuTitle: 'Devices',
 		pageTitle: 'Our Devices',
-		pageSubtitle: 'Explore the things we create',
+		pageSubtitle: 'Explore the things we create'
 	},
 	tools: {
 		menuTitle: 'Tools',
@@ -52,7 +52,7 @@ export const Pages: PageData = {
 		menuTitle: 'Contact us!',
 		menuIcon: Mail,
 		pageTitle: 'Get in touch',
-		pageSubtitle: 'Have a question, an idea for collaboration, or want to visit the lab? Reach out, we\'d love to hear from you.'
+		pageSubtitle: "Have a question, an idea for collaboration, or want to visit the lab? Reach out, we'd love to hear from you."
 	}
 };
 

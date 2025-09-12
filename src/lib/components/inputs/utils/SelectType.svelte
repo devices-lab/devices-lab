@@ -10,7 +10,7 @@
 </script>
 
 {#snippet SelectItem(value: string)}
-	<el-option {value} class="block truncate px-3 py-2 text-gray-900 select-none aria-selected:bg-primary-600 aria-selected:text-white dark:text-gray-300 dark:aria-selected:bg-primary-500">
+	<el-option {value} class="block truncate px-3 py-2 text-gray-900 select-none aria-selected:bg-primary aria-selected:text-white dark:text-gray-300">
 		{value}
 	</el-option>
 {/snippet}

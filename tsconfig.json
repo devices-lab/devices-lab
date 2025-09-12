@@ -10,7 +10,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler"
-	},
+	}
 	//"include": [
 	//	"src/**/*.d.ts",
 	//	"src/**/*.ts",

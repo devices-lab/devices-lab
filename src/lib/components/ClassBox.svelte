@@ -15,11 +15,8 @@
 	// Pull class out of attrs so we can merge it; spread the rest
 	const { class: attrsClass, ...attrsRest } = attrs; // own properties
 	const { class: propsClass, ...propsRest } = props; // passed properties
-	
-	// Merge base class (from component) with incoming attrs.class
-	const mergedClass = $derived(cn(attrsClass, propsClass));
 </script>
 
-<svelte:element this={tag} {...attrsRest} {...propsRest} class={mergedClass}>
+<svelte:element this={tag} {...attrsRest} {...propsRest} class={cn(attrsClass, propsClass)}>
 	{@render children?.()}
 </svelte:element>

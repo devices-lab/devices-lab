@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BaseInput from '$lib/components/BaseInput.svelte';
+	import BaseInput from '$lib/workbench/logo/inputs/BaseInput.svelte';
 	import BaseRange from '$lib/workbench/logo/inputs/BaseRange.svelte';
 	import Input from '$lib/workbench/logo/inputs/Input.svelte';
 	import type { Label } from '$lib/workbench/logo/inputs/InputLabel.svelte';
@@ -9,5 +9,5 @@
 
 <Input {label} {initial} onreset={() => (value = initial)}>
 	<BaseInput type="number" bind:value class="h-[30px] min-w-1/3 appearance-none px-3 py-1.5" {min} {max} {step} />
-	<BaseRange bind:value class="h-[30px] w-full accent-primary-600" {min} {max} {step} />
+	<BaseRange bind:value class="h-[30px] w-full accent-primary" {min} {max} {step} />
 </Input>

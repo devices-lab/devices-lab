@@ -1,14 +1,11 @@
-
 import { writable } from 'svelte/store';
 import * as icons from '@lucide/svelte';
 import type { ClassValue } from 'svelte/elements';
-
 
 // Get an icon by name
 export function getIcon(name: string): typeof icons.Icon | undefined {
 	return (icons as never)[name];
 }
-
 
 export const generateHash = (data: string) => {
 	let hash = 0;
@@ -22,9 +19,11 @@ export const generateHash = (data: string) => {
 export function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
+// Helper to extract the element type from an array type
+export type ElementOfArray<T> = T extends (infer U)[] ? U : never;
 
-
-
+export const MAX_COLORS = 6;
+export const colorIndex = writable(0);
 export const devMode = writable(false);
 export const devModeLocal = writable(false);
 export const overrideDevMode = writable(true);
@@ -46,13 +45,11 @@ export function hexToRgbA(hex: string, alpha: number) {
 	return '#ffffff';
 }
 
-
 export function pick<T extends object, K extends readonly (keyof T)[]>(obj: T, keys: K): Partial<Pick<T, K[number]>> {
 	const out = {} as Partial<Pick<T, K[number]>>;
 	for (const k of keys) {
 		const v = obj[k];
-		if (v !== undefined && v !== null)
-			out[k] = v;
+		if (v !== undefined && v !== null) out[k] = v;
 	}
 	return out;
 }
@@ -61,23 +58,29 @@ export const clamp = (v: number, lo = -Infinity, hi = Infinity): number => Math.
 
 export const isBound = (v: number, lo: number, hi: number): boolean => v >= lo && v <= hi;
 
-
 export function assert<T>(condition: T | undefined | null, message?: string): T {
 	if (!condition) {
-		throw new Error(message || "Assertion failed");
+		throw new Error(message || 'Assertion failed');
 	}
 	return condition;
 }
 
 // Make a string important by adding '!' to the end of each word
-export const makeImportant = (s: string): string => s.replace(/\S+/g, c => c.endsWith('!') ? c : c + '!');
-
-
+export const makeImportant = (s: string): string => s.replace(/\S+/g, (c) => (c.endsWith('!') ? c : c + '!'));
 
 export type DefProps = {
 	class?: ClassValue; //import('clsx').ClassValue;
 	[key: string]: unknown;
-}
+};
+
+export type DefProps2 = {
+	class?: ClassValue; //import('clsx').ClassValue;
+	props?: Record<string, unknown>;
+};
+
+export type ClassProp = {
+	class?: ClassValue; //import('clsx').ClassValue;
+};
 
 // Utility: Build prefixed keys (iconText → iconText, iconClass → iconClass, etc.)
 export type Prefixed<T, P extends string> = {
@@ -105,7 +108,6 @@ export function normalize<TValue extends object, TUnion extends TValue | string 
 	return { [key]: v } as TValue;
 }
 
-
 /**
  * Remove a leading character from a string.
  *
@@ -123,15 +125,15 @@ export function removeLeadingChar(input: string, charToRemove: string, options: 
 	const { repeat = false, ignoreCase = false } = options;
 
 	if (charToRemove.length !== 1) {
-		throw new Error("charToRemove must be exactly one character.");
+		throw new Error('charToRemove must be exactly one character.');
 	}
 
 	// Escape regex metacharacters
-	const escaped = charToRemove.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	const flags = ignoreCase ? "i" : "";
-	const pattern = new RegExp(`^${escaped}${repeat ? "+" : ""}`, flags);
+	const escaped = charToRemove.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	const flags = ignoreCase ? 'i' : '';
+	const pattern = new RegExp(`^${escaped}${repeat ? '+' : ''}`, flags);
 
-	return input.replace(pattern, "");
+	return input.replace(pattern, '');
 }
 
 /**
@@ -150,7 +152,7 @@ export function removeLeadingChar(input: string, charToRemove: string, options: 
  */
 export function concat(a: string, b: string, separator?: string): string;
 export function concat(a: string | undefined, b: string | undefined, separator?: string): string;
-export function concat(a: string | undefined, b: string | undefined, separator = ""): string {
+export function concat(a: string | undefined, b: string | undefined, separator = ''): string {
 	if (!a && !b) return '';
 	if (!a) return b as string;
 	if (!b) return a;

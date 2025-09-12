@@ -7,6 +7,6 @@ export const load = (async () => {
 		route: Routes.workbench,
 		breadcrumbs: Routes.workbench.breadcrumbs,
 		title: Pages.workbench.pageTitle,
-		subtitle: Pages.workbench.pageSubtitle,
+		subtitle: Pages.workbench.pageSubtitle
 	};
 }) satisfies LayoutLoad;

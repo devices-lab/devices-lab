@@ -143,7 +143,7 @@ export const team: TeamMember[] = [
 		order: '1_senior',
 		href: 'https://www.lancaster.ac.uk/scc/about-us/people/andrew-scott',
 		sites: []
-	},
+	}
 ];
 
 //────────────────────────────────────────────────────────────────//

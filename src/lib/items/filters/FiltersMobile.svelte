@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Checkbox from '$lib/components/interactive/Checkbox.svelte';
+	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import Disclosure from '$lib/components/interactive/Disclosure.svelte';
 	import type { FilterItem } from '$lib/items/ItemGrid.svelte';
 	import { X } from '@lucide/svelte';
@@ -28,7 +28,7 @@
 			<el-dialog-panel class="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white pt-4 pb-6 shadow-xl transition duration-300 ease-in-out data-closed:translate-x-full">
 				<div class="flex items-center justify-between px-4">
 					<h2 class="text-lg font-medium text-gray-900">Filters</h2>
-					<button type="button" command="close" commandfor={id} class="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-primary-500 focus:outline-hidden">
+					<button type="button" command="close" commandfor={id} class="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-hidden">
 						<span class="absolute -inset-0.5"></span>
 						<span class="sr-only">Close menu</span>
 						<X class="size-6" />
@@ -40,14 +40,14 @@
 					<Disclosure class="border-t border-gray-200" label={{ text: 'Tags', class: 'font-medium text-md text-gray-900' }}>
 						<div class="space-y-6">
 							{#each tags as item}
-								<Checkbox name="tags[]" label={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
+								<Checkbox name="tags[]" text={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
 							{/each}
 						</div>
 					</Disclosure>
 					<Disclosure class="border-t border-gray-200" label={{ text: 'Type', class: 'font-medium text-gray-900' }}>
 						<div class="space-y-6">
 							{#each types as item}
-								<Checkbox name="types[]" label={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
+								<Checkbox name="types[]" text={{ text: item.label, class: 'ms-3 text-sm text-gray-500 first-letter:uppercase' }} bind:checked={item.checked} class="gap-3" />
 							{/each}
 						</div>
 					</Disclosure>

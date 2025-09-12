@@ -3,7 +3,6 @@ import { cn } from '$lib/utils/cn'; // clsx + tailwind-merge
 import type { TagNode, TagMap } from '$lib/components/richtext/customText';
 import type { Component } from 'svelte';
 
-
 // Accept ANY props/events/slots
 type AnyComponent = Component<any, any, any>;
 
@@ -15,17 +14,13 @@ const DEV = !!import.meta.env?.DEV;
 /** pick attributes by exact key or wildcard suffix like 'aria-*', 'data-*' */
 function pickAttrs(attrs: Record<string, unknown>, allow: (string | `${string}-*`)[] = []) {
 	const out: Record<string, unknown> = {};
-	const allowExact = new Set(allow.filter(a => !a.endsWith('*')));
-	const allowPrefix = allow
-		.filter(a => a.endsWith('*'))
-		.map(a => a.slice(0, -1));
+	const allowExact = new Set(allow.filter((a) => !a.endsWith('*')));
+	const allowPrefix = allow.filter((a) => a.endsWith('*')).map((a) => a.slice(0, -1));
 	for (const k in attrs) {
-		if (allowExact.has(k) || allowPrefix.some(p => k.startsWith(p))) out[k] = attrs[k];
+		if (allowExact.has(k) || allowPrefix.some((p) => k.startsWith(p))) out[k] = attrs[k];
 	}
 	return out;
 }
-
-
 
 /** Spec for a Svelte-backed tag (generic over the component) */
 export type SvelteTagSpec<C extends AnyComponent = AnyComponent> = {
@@ -34,8 +29,6 @@ export type SvelteTagSpec<C extends AnyComponent = AnyComponent> = {
 	ignoreChildren?: boolean;
 };
 
-
-
 type SvelteTagOpts<C extends AnyComponent> = {
 	/** merge with node.attrs.class */
 	baseClass?: Parameters<typeof cn>[0];
@@ -43,8 +36,8 @@ type SvelteTagOpts<C extends AnyComponent> = {
 	pass?: (string | `${string}-*`)[];
 	/** derive extra component props from attributes (e.g., href coercion) */
 	map?: (a: Record<string, unknown>, node: TagNode) => Partial<ComponentProps<C>>;
-	requiredChildren?: boolean;          // warn in dev if no children
-	ignoreChildren?: boolean;            // component will ignore children (like <hr/>)
+	requiredChildren?: boolean; // warn in dev if no children
+	ignoreChildren?: boolean; // component will ignore children (like <hr/>)
 };
 
 /** SVELTE: define a tag that renders as a Svelte component */
@@ -67,7 +60,6 @@ export function svelteTag<C extends AnyComponent>(component: C, opts: SvelteTagO
 	};
 }
 
-
 type HtmlTagOpts = {
 	/** default classes */
 	baseClass?: string;
@@ -75,9 +67,9 @@ type HtmlTagOpts = {
 	pass?: (string | `${string}-*`)[];
 	/** add/rename attributes: get a new attrs object to merge */
 	map?: (a: Record<string, string>, node: TagNode) => Record<string, unknown>;
-	requiredChildren?: boolean;          // warn in dev if no children
-	fallbackTextAttr?: string;           // e.g., use href or text as inner content if no children
-	void?: boolean;                      // void element: <br>, <hr>, <img>...
+	requiredChildren?: boolean; // warn in dev if no children
+	fallbackTextAttr?: string; // e.g., use href or text as inner content if no children
+	void?: boolean; // void element: <br>, <hr>, <img>...
 };
 
 /** HTML: define a tag that renders as an HTML element string */

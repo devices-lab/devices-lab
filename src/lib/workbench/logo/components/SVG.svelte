@@ -14,7 +14,7 @@
 	const { uid, width, height, children, class: className = '', ...restProps }: Props = $props();
 </script>
 
-<svg id={uid} class="mx-auto size-full {className}" width={width} height={height} viewBox={`${0} ${0} ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" {...restProps}>
+<svg id={uid} class="mx-auto size-full {className}" {width} {height} viewBox={`${0} ${0} ${width} ${height}`} xmlns="http://www.w3.org/2000/svg" {...restProps}>
 	<g>
 		{@render children()}
 	</g>

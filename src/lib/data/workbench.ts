@@ -7,9 +7,9 @@ type BaseItem = {
 	title: string;
 	subtitle: string;
 	icon?: typeof Icon;
-}
+};
 
-export type ExternalWorkbenchItem = BaseItem & { href: string; };
+export type ExternalWorkbenchItem = BaseItem & { href: string };
 export type InternalWorkbenchItem = BaseItem & {};
 
 export type WorkbenchItem = BaseItem & {
@@ -17,13 +17,17 @@ export type WorkbenchItem = BaseItem & {
 	external: boolean;
 };
 
-
 // Process a list of workbench items to set the external flag and sort them by name
 function processWorkbenchList(items: (ExternalWorkbenchItem | InternalWorkbenchItem)[], external: boolean): WorkbenchItem[] {
-	return items.map(item => ({
-		...item,
-		external
-	} as WorkbenchItem)).sort((a, b) => a.title.localeCompare(b.title));
+	return items
+		.map(
+			(item) =>
+				({
+					...item,
+					external
+				}) as WorkbenchItem
+		)
+		.sort((a, b) => a.title.localeCompare(b.title));
 }
 
 function parseHref(href: string): string {
@@ -34,10 +38,7 @@ function parseHref(href: string): string {
 function modulesToWorkbench(modules: Record<string, ExternalWorkbenchItem>): WorkbenchItem[] {
 	const internalWorkbenchItems = Object.entries(modules).map(([key, value]) => ({ ...value, href: parseHref(key) }));
 
-	return [
-		...processWorkbenchList(internalWorkbenchItems, false),
-		...processWorkbenchList(externalWorkbenchItems, true)
-	];
+	return [...processWorkbenchList(internalWorkbenchItems, false), ...processWorkbenchList(externalWorkbenchItems, true)];
 }
 
 // Collect all devices

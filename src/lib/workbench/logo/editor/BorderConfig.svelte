@@ -6,7 +6,6 @@
 	import { untrack } from 'svelte';
 	import { clamp } from '$lib/utils/utils';
 
-
 	export type BorderCorner = {
 		dRadius: number;
 		use: boolean;
@@ -71,13 +70,13 @@
 		bind:value={border.width} 				initial={defaults.width} 	min={0} 				max={maxBorderWidth} />
 	<NumberInput 	label="Radius"
 		bind:value={border.radius} 				initial={defaults.radius} 	min={0} 				max={maxRadius} />
-	<NumberInput 	label={{label: "Radius TL", pre: Triangle, post: SquareArrowUpLeft, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
+	<NumberInput 	label={{label: "Radius TL", pre: Triangle, post: SquareArrowUpLeft, postClass: 'size-4.5 ms-1 text-primary'}} 	
 		bind:value={border.topL.dRadius} 		initial={defaults.topL.dRadius} 	min={-border.radius} 	max={maxRadiusTopLeft - border.radius} />
-	<NumberInput 	label={{label: "Radius TR", pre: Triangle, post: SquareArrowUpRight, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
+	<NumberInput 	label={{label: "Radius TR", pre: Triangle, post: SquareArrowUpRight, postClass: 'size-4.5 ms-1 text-primary'}} 	
 		bind:value={border.topR.dRadius} 		initial={defaults.topR.dRadius} 	min={-border.radius} 	max={maxRadiusTopRight - border.radius} />
-	<NumberInput 	label={{label: "Radius BL", pre: Triangle, post: SquareArrowDownLeft, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
+	<NumberInput 	label={{label: "Radius BL", pre: Triangle, post: SquareArrowDownLeft, postClass: 'size-4.5 ms-1 text-primary'}} 	
 		bind:value={border.bottomL.dRadius} 	initial={defaults.bottomL.dRadius} 	min={-border.radius} 	max={maxRadiusBottomLeft - border.radius} />
-	<NumberInput 	label={{label: "Radius BR", pre: Triangle, post: SquareArrowDownRight, postClass: 'size-4.5 ms-1 text-primary-600'}} 	
+	<NumberInput 	label={{label: "Radius BR", pre: Triangle, post: SquareArrowDownRight, postClass: 'size-4.5 ms-1 text-primary'}} 	
 		bind:value={border.bottomR.dRadius} 	initial={defaults.bottomR.dRadius} 	min={-border.radius} 	max={maxRadiusBottomRight - border.radius} />
 	<ColorInput 	label="Color"
 		bind:value={() => border.color, updateBorderColor} initial={defaults.color} />

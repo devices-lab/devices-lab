@@ -1,15 +1,16 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import IconText from '$lib/components/icons/IconText.svelte';
-	import TextItem from '$lib/components/icons/TextItem.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
+	import TextItem from '$lib/components/base/BaseText.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp, DefProps } from '$lib/utils/utils';
 	import { CircleQuestionMarkIcon } from '@lucide/svelte';
 	import type { Component, Snippet } from 'svelte';
+	import { cn } from '$lib/utils/cn';
 
 	// Props for the input container
-	export type InputContainerProps = {
+	export type InputContainerProps = DefProps & {
 		value: string;
 		// Properties for the input element
 		inputProps?: Record<string, any>;
@@ -21,11 +22,9 @@
 		post?: Snippet;
 		// Input validation
 		validate?: (value: string) => boolean;
-		// Additional props for the wrapping element
-		[key: string]: any;
 	};
 
-	type Props = DefProps &
+	type Props = ClassProp &
 		InputContainerProps & {
 			input: Component | 'textarea' | 'input' | 'select' | 'select2' | 'selectType';
 		};
@@ -54,7 +53,7 @@
 		placeholder:text-gray-500/50
 		group-has-focus/item:outline-2
 		group-has-focus/item:-outline-offset-2
-		group-has-focus/item:outline-primary-500
+		group-has-focus/item:outline-primary
 		disabled:cursor-not-allowed
 		disabled:bg-gray-50
 		disabled:text-gray-500
@@ -63,7 +62,7 @@
 		dark:text-gray-300
 		dark:outline-white/10
 		dark:placeholder:text-gray-500
-		dark:group-has-focus/item:outline-primary-500
+		dark:group-has-focus/item:outline-primary
 		dark:disabled:bg-white/10
 		dark:disabled:text-gray-500
 		dark:disabled:outline-white/5
@@ -97,7 +96,7 @@
 		flex
 		gap-2
 		absolute top-0 left-1.5 -translate-y-1/2
-		group-has-focus/item:text-primary-500
+		group-has-focus/item:text-primary
 		group-has-focus/item:font-medium
 		rounded-md
 		-translate-y-1/2
@@ -136,13 +135,13 @@
 			<!-- Input element -->
 			{#if inputElement.el === 'textarea'}
 				<!-- Textarea input -->
-				<textarea bind:value rows={1} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle}></textarea>
+				<textarea bind:value rows={1} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)}></textarea>
 			{:else if inputElement.el === 'input'}
 				<!-- Input element -->
-				<input bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<input bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else if inputElement.el === 'select'}
 				<!-- Select element -->
-				<select bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle}>
+				<select bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)}>
 					{#each inputProps?.options as option}
 						<option value={option.value}>
 							{option.label} [{option.value}]
@@ -151,13 +150,13 @@
 				</select>
 			{:else if inputElement.el === 'select2'}
 				<!-- Select2 element -->
-				<Select bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<Select bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else if inputElement.el === 'selectType'}
 				<!-- SelectType element -->
-				<SelectType bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<SelectType bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else}
 				<!-- Custom input -->
-				<inputElement.el bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<inputElement.el bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{/if}
 
 			<!-- Side elements -->
@@ -169,7 +168,7 @@
 		{#if label}
 			<div class={labelStyle}>
 				{#if sublabel}
-					<IconText text={{ text: label, class: 'tracking-wide uppercase' }} icon={{ icon: CircleQuestionMarkIcon, class: 'size-4 opacity-50', tooltip: sublabel }} position="iconLast" />
+					<IconText text={{ text: label, class: 'tracking-wide uppercase' }} icon={{ icon: CircleQuestionMarkIcon, class: 'size-4 opacity-50' }} position="iconLast" tooltip={{ content: sublabel }} />
 				{:else}
 					<TextItem text={label} class="tracking-wide uppercase" />
 				{/if}

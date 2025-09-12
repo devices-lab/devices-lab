@@ -1,15 +1,13 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import type { TextProps, TextType } from '$lib/components/icons/TextItem.svelte';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
-	import type { DefProps } from '$lib/utils/utils';
-	import { ChevronDown } from '@lucide/svelte';
-	import type { Snippet } from 'svelte';
+	import type { TextProps } from '$lib/components/base/BaseText.svelte';
 	import OpenButton from '$lib/components/interactive/OpenButton.svelte';
+	import type { ClassProp } from '$lib/utils/utils';
+	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		children: Snippet;
-		label: TextType | TextProps;
+		label: TextProps;
 	};
 
 	const { children, label, ...props }: Props = $props();
@@ -19,7 +17,7 @@
 </script>
 
 <ClassBox {props} class="px-4 py-6">
-	<OpenButton command="--toggle" commandfor={disclosureId} text={label} />
+	<OpenButton text={label} props={{ command: '--toggle', commandfor: disclosureId }} />
 	<el-disclosure id={disclosureId} hidden class="block pt-6">
 		{@render children()}
 	</el-disclosure>

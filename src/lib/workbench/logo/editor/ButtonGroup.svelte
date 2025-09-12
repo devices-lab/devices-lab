@@ -2,6 +2,6 @@
 	const props = $props();
 </script>
 
-<span class="group isolate inline-flex rounded-md shadow-xs dark:shadow-none *:first:rounded-l-full *:last:rounded-r-full">
+<span class="group isolate inline-flex rounded-md shadow-xs *:first:rounded-l-full *:last:rounded-r-full dark:shadow-none">
 	{@render props.children?.()}
 </span>

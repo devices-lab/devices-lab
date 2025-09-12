@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Rect from '$lib/workbench/logo/components/Rect.svelte';
 	import SVG from '$lib/workbench/logo/components/SVG.svelte';
@@ -96,7 +96,7 @@
 			<!-- Border configuration -->
 			<BorderConfig bind:border={data.border} defaults={IconDefaults.border} heightTop={data.height / 2} heightBottom={data.height / 2} widthLeft={data.width / 2} widthRight={data.width / 2} />
 
-			<IconButton onclick={makeCircle} class="link-secondary" text={{ text: 'Make circle', class: 'text-sm underline' }} icon={{ icon: Circle, iconClass: 'size-4' }} />
+			<IconTextButton onclick={makeCircle} class="link-gray" iconText={{ text: { text: 'Make circle', class: 'text-sm underline' }, icon: { icon: Circle, class: 'size-4' } }} />
 		{/snippet}
 
 		{@render SnippetSVG()}

@@ -23,4 +23,4 @@ export interface TeamMember {
 export const team: TeamMember[] = teamData.sort((a, b) => {
 	const levelComparison = a.order.localeCompare(b.order);
 	return levelComparison !== 0 ? levelComparison : a.name.localeCompare(b.name);
-})
+});

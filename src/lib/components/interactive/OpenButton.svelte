@@ -1,23 +1,16 @@
 <script lang="ts">
-	import type { TextProps, TextType } from '$lib/components/icons/TextItem.svelte';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
+	import type { ButtonProps } from '$lib/components/base/BaseButton.svelte';
+	import type { TextProps } from '$lib/components/base/BaseText.svelte';
+	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import { cn } from '$lib/utils/cn';
-	import type { DefProps } from '$lib/utils/utils';
 	import { ChevronDown } from '@lucide/svelte';
 
-	type Props = DefProps & {
-		text: TextType | TextProps;
+	type Props = ButtonProps & {
+		text?: TextProps;
 	};
 
-	const { text, class: _class, ...props }: Props = $props();
+	const { text, ...button }: Props = $props();
 </script>
 
-<IconButton 
-	{...props}
-	class={cn("flex w-full items-center justify-between px-2 py-3 ", _class)}
-	text={text} 
-	icon={{ icon: ChevronDown, class: 'size-5 not-in-aria-expanded:rotate-0 in-aria-expanded:-rotate-180 text-current/40' }} 
-	align="justify-between w-full" 
-	position="iconLast" 
-/>
-
+<span class="sr-only">Open</span>
+<IconTextButton {...button} class={cn('flex w-full items-center justify-between px-2 py-3', button.class)} iconText={{ text: text, icon: { icon: ChevronDown, class: 'size-5 not-in-aria-expanded:rotate-0 in-aria-expanded:-rotate-180 text-current/40' }, position: 'iconLast' }} />

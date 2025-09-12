@@ -1,13 +1,13 @@
 <script lang="ts">
-	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import PlaceholderImage from '$lib/components/PlaceholderImage.svelte';
+	import PlaceholderImage from '$lib/components/images/PlaceholderImage.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import { onMount } from 'svelte';
 	import type { Picture } from 'vite-imagetools';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		images: Picture[];
 	};
 
@@ -20,9 +20,9 @@
 </script>
 
 {#snippet ImageButton(image: Picture)}
-	<button class="relative flex max-h-24 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-white text-sm font-medium text-gray-900 uppercase hover:bg-gray-50 focus:ring-3 focus:ring-primary-500/50 focus:ring-offset-4 focus:outline-hidden">
+	<button class="relative flex max-h-24 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-white hover:bg-gray-50 focus:ring-3 focus:ring-primary/50 focus:ring-offset-4 focus:outline-hidden">
 		<BaseImg src={image} alt="" class="aspect-square size-auto object-cover" />
-		<span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 in-aria-selected:ring-primary-500"></span>
+		<span aria-hidden="true" class="pointer-events-none absolute inset-0 rounded-md ring-2 ring-transparent ring-offset-2 in-aria-selected:ring-primary"></span>
 	</button>
 {/snippet}
 

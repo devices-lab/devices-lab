@@ -1,15 +1,11 @@
 <script lang="ts">
+	import type { ButtonProps } from '$lib/components/base/BaseButton.svelte';
+	import IconButton from '$lib/components/base/IconButton.svelte';
 	import { cn } from '$lib/utils/cn';
-	import IconButton from '$lib/components/interactive/IconButton.svelte';
-	import type { DefProps } from '$lib/utils/utils';
 	import { Trash2 } from '@lucide/svelte';
 
-	type Props = DefProps & {
-		onclick: () => void;
-	};
-
-	const { onclick, ...props }: Props = $props();
-	const iconClass = $derived(cn("link-red text-sm opacity-50", props.class));
+	const button: ButtonProps = $props();
 </script>
 
-<IconButton {...props} {onclick} class={iconClass} icon={{ icon: Trash2, class: 'size-5 ms-2', tooltip: 'Delete' }} />
+<span class="sr-only">Delete</span>
+<IconButton {...button} class={cn('link-red text-sm opacity-50', button.class)} tooltip={{ content: 'Delete' }} icon={{ icon: Trash2, class: 'size-5 ms-2' }} />

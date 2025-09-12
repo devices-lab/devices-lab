@@ -5,5 +5,5 @@ import { ScrollText } from '@lucide/svelte';
 export const item: InternalWorkbenchItem = {
 	title: 'BibTeX Formatter',
 	subtitle: 'Format BibTeX entries for entering them on this website',
-	icon: ScrollText,
+	icon: ScrollText
 };

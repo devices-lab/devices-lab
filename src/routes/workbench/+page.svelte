@@ -5,10 +5,8 @@
 	const { data }: PageProps = $props();
 </script>
 
-<ul role="list" class="flex flex-col gap-y-4">
+<div class="flex flex-col gap-y-6">
 	{#each data.workbench as item}
-		<li class="">
-			<WorkbenchItem {item} />
-		</li>
+		<WorkbenchItem {item} />
 	{/each}
-</ul>
+</div>

@@ -20,20 +20,14 @@ type PngOpts = {
  * Export a high-resolution PNG suitable for Altium bitmap import.
  */
 export async function exportPng(id: string, filename: string, opts: PngOpts = {}) {
-	const {
-		dpi = 1200,
-		padding = 10,
-		background = 'transparent',
-		monochrome = false,
-		invert = false,
-		threshold = 200,
-	} = opts;
+	const { dpi = 1200, padding = 10, background = 'transparent', monochrome = false, invert = false, threshold = 200 } = opts;
 
 	const CSS_DPI = 96; // 1 SVG/CSS px = 1/96"
 
-	const node = document.getElementById(id) as SVGSVGElement | null; if (!node) return;
+	const node = document.getElementById(id) as SVGSVGElement | null;
+	if (!node) return;
 	const clone = node.cloneNode(true) as SVGSVGElement;
-	clone.querySelectorAll('style').forEach(s => s.remove());
+	clone.querySelectorAll('style').forEach((s) => s.remove());
 
 	await outlineAllText(clone);
 
@@ -68,8 +62,9 @@ export async function exportPng(id: string, filename: string, opts: PngOpts = {}
 	// optional background
 	if (background !== 'transparent') {
 		const bg = document.createElementNS(SVG_NS, 'rect');
-		bg.setAttribute('x', '0'); bg.setAttribute('y', '0');
-		bg.setAttribute('width', String(vbW)); 
+		bg.setAttribute('x', '0');
+		bg.setAttribute('y', '0');
+		bg.setAttribute('width', String(vbW));
 		bg.setAttribute('height', String(vbH));
 		bg.setAttribute('fill', background);
 		out.appendChild(bg);
@@ -127,31 +122,48 @@ export async function exportPng(id: string, filename: string, opts: PngOpts = {}
 		const alphaCutoff = 8; // ignore pixels with alpha <= 8 (fully transparent background)
 
 		for (let i = 0; i < data.length; i += 4) {
-			let r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+			let r = data[i],
+				g = data[i + 1],
+				b = data[i + 2],
+				a = data[i + 3];
 
 			if (bgIsTransparent && a <= alphaCutoff) {
 				// Leave truly transparent pixels alone
-				r = g = b = 0; a = 0;
+				r = g = b = 0;
+				a = 0;
 			} else if (monochrome) {
 				// Luma-based 1-bit classification on visible pixels
 				const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-				const inkOn = luma <= threshold;        // dark → ink
+				const inkOn = luma <= threshold; // dark → ink
 				if (inkOn) {
-					r = g = b = 0; a = 255;               // opaque black
+					r = g = b = 0;
+					a = 255; // opaque black
 				} else {
-					if (bgIsTransparent) { a = 0; }       // transparent background
-					else { r = g = b = 255; a = 255; }    // solid white background
+					if (bgIsTransparent) {
+						a = 0;
+					} // transparent background
+					else {
+						r = g = b = 255;
+						a = 255;
+					} // solid white background
 				}
 			}
 
-			if (invert) { r = 255 - r; g = 255 - g; b = 255 - b; } // keep alpha as set
+			if (invert) {
+				r = 255 - r;
+				g = 255 - g;
+				b = 255 - b;
+			} // keep alpha as set
 
-			data[i] = r; data[i + 1] = g; data[i + 2] = b; data[i + 3] = a;
+			data[i] = r;
+			data[i + 1] = g;
+			data[i + 2] = b;
+			data[i + 3] = a;
 		}
 
 		ctx.putImageData(imgData, 0, 0);
 	}
-	
+
 	URL.revokeObjectURL(url);
 
 	// Save PNG

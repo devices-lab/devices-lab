@@ -1,12 +1,12 @@
 <script lang="ts">
-	import BaseList from '$lib/components/BaseList.svelte';
-	import ClassBox from '$lib/components/ClassBox.svelte';
-	import Collapse from '$lib/components/Collapse.svelte';
-	import IconSublink from '$lib/components/icons/IconSublink.svelte';
+	import BaseText from '$lib/components/base/BaseText.svelte';
+	import IconText from '$lib/components/base/IconText.svelte';
+	import TextLink from '$lib/components/base/TextLink.svelte';
 	import type { ItemData } from '$lib/data/indexer';
-	import type { DefProps } from '$lib/utils/utils';
+	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		item: ItemData;
 	};
 
@@ -14,13 +14,15 @@
 </script>
 
 {#if item.resources && item.resources.length > 0}
-	<ClassBox {props}>
-		<Collapse label={'Resources'}>
-			<BaseList bare class="flex flex-col items-start gap-y-3">
-				{#each item.resources as resource}
-					<IconSublink link={resource.href} icon={{icon: resource.icon, class: 'size-6'}} text={{ text: resource.text, class: 'font-semibold' }} subtext={{ text: resource.href, class: 'text-sm link-blue underline break-all' }} />
-				{/each}
-			</BaseList>
-		</Collapse>
-	</ClassBox>
+	<BaseCollapse {...props} label="Relevant Links">
+		{#each item.resources as resource}
+			{#snippet Content()}
+				<div class="flex flex-col">
+					<BaseText text={resource.text} class="font-semibold" />
+					<TextLink text={{ text: resource.href, class: 'underline break-all decoration-current/40' }} href={resource.href} class="text-start text-blue-500" />
+				</div>
+			{/snippet}
+			<IconText icon={{ icon: resource.icon, class: 'size-5 min-w-5' }} text={{ text: Content }} position="iconFirst" />
+		{/each}
+	</BaseCollapse>
 {/if}
