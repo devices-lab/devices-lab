@@ -1,4 +1,3 @@
-
 // Narrowing guard for plain objects (not null)
 export function isObject<T extends object>(v: unknown): v is T {
 	return typeof v === 'object' && v !== null;

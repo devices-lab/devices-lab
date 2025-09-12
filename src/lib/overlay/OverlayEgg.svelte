@@ -17,11 +17,11 @@
 	const leftPx = $derived(overlay.offsetX + overlay.renderedW * x);
 	const topPx = $derived(overlay.offsetY + overlay.renderedH * y);
 
-	const classList = $derived(cn('absolute size-2 rounded-full cursor-pointer text-transparent shadow-none', rest.class));
+	const classList = $derived(cn('pointer-events-auto absolute size-2 cursor-pointer rounded-full bg-transparent text-transparent shadow-none', rest.class));
 </script>
 
 {#if typeof action === 'string'}
-	<BaseLink {...rest} href={action} class={classList} props={{ style: `left: ${leftPx}px; top: ${topPx}px; transform: translate(-50%, -50%);` }} />
+	<BaseLink href={action} class={classList} props={{ style: `left: ${leftPx}px; top: ${topPx}px; transform: translate(-50%, -50%);` }} />
 {:else}
-	<BaseButton {...rest} onclick={action} class={classList} props={{ style: { left: `${leftPx}px`, top: `${topPx}px`, transform: 'translate(-50%, -50%)' } }} />
+	<BaseButton onclick={action} class={classList} props={{ style: `left: ${leftPx}px; top: ${topPx}px; transform: translate(-50%, -50%);` }} />
 {/if}

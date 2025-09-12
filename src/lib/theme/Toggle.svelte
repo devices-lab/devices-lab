@@ -34,8 +34,8 @@
 		has-disabled:opacity-25
 		dark:border-white/10
 		dark:bg-gray-800/50
-		dark:has-checked:bg-primary-500/10
-		dark:has-checked:outline-primary-500
+		dark:has-checked:bg-primary/10
+		dark:has-checked:outline-primary
 		dark:has-disabled:border-white/10
 		dark:has-disabled:bg-gray-800"
 >

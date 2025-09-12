@@ -1,11 +1,6 @@
-
 import type { Author, Publication, Reference, Date } from '$lib/data/data';
-import { generateHash, isBound } from "$lib/utils/utils";
+import { generateHash, isBound } from '$lib/utils/utils';
 import type { Picture } from 'vite-imagetools';
-
-
-
-
 
 export type ResearchItem = Publication & {
 	picture: string | Picture;
@@ -18,15 +13,7 @@ export type ResearchLibrary = {
 /**
  * List of research paper types.
  */
-export const ResearchTypeItems = [
-	'Research Paper',
-	'Thesis',
-	'Book',
-	'Extended Abstract',
-	'Poster',
-	'Report'
-];
-
+export const ResearchTypeItems = ['Research Paper', 'Thesis', 'Book', 'Extended Abstract', 'Poster', 'Report'];
 
 export const DefaultResearchItem: ResearchItem = {
 	key: '',
@@ -50,10 +37,8 @@ export const DefaultResearchItem: ResearchItem = {
 	awards: []
 };
 
-
 export function formatDate(date: Date): string | undefined {
-	if (!isBound(date.year, 1, 9999) && !isBound(date.month, 1, 12) && !isBound(date.day, 1, 31))
-		return undefined;
+	if (!isBound(date.year, 1, 9999) && !isBound(date.month, 1, 12) && !isBound(date.day, 1, 31)) return undefined;
 
 	const yearStr = String(date.year).padStart(4, '0');
 	const monthStr = String(date.month).padStart(2, '0');
@@ -69,26 +54,26 @@ export function formatDate(date: Date): string | undefined {
 	return `${yearStr}-${monthStr}-${dayStr}`;
 }
 
-
-
-
 // Generate a unique key for the given research item
 export function generateKey(name: string, title: string): string {
 	const hash = generateHash(title);
 	return name.toLowerCase().split(' ').join('-') + '-' + hash.toString(36);
 }
 
-
 // Helper function to parse the module path into a key
 function parsePath(path: string): string {
-	return path.split('/').pop()?.replace(/\.(ts|js|svelte|avif|gif|heif|jpeg|jpg|png|tiff|webp|svg)$/, '') || '';
+	return (
+		path
+			.split('/')
+			.pop()
+			?.replace(/\.(ts|js|svelte|avif|gif|heif|jpeg|jpg|png|tiff|webp|svg)$/, '') || ''
+	);
 }
-
 
 // Dynamic import of research modules
 export function fetchResearchData(): ResearchLibrary {
 	// Use vite to import all research items and images
-	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true, import: 'research' }) as Record<string, Publication>;
+	const researchModules = import.meta.glob('$lib/_content/research/**/*.ts', { eager: true, import: 'research' }) as Record<string, Publication>;
 	const imageModules = import.meta.glob('$lib/_content/research/**/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp,svg}', { eager: true, query: { enhanced: true }, import: 'default' }) as Record<string, Picture>;
 
 	// Map image paths to their corresponding research item keys
@@ -99,19 +84,23 @@ export function fetchResearchData(): ResearchLibrary {
 		})
 	);
 
-	return Object.fromEntries(Object.values(researchModules).map((module) => {
-		return [module.key, { picture: imageMap[module.key] || '', ...module } satisfies ResearchItem];
-	}));
+	return Object.fromEntries(
+		Object.values(researchModules).map((module) => {
+			return [module.key, { picture: imageMap[module.key] || '', ...module } satisfies ResearchItem];
+		})
+	);
 }
 
 // Dynamic import of research modules, without images
 export function fetchResearchDataSimple(): ResearchLibrary {
 	// Use vite to import all research items and images
-	const researchModules = import.meta.glob("$lib/_content/research/**/*.ts", { eager: true, import: 'research' }) as Record<string, Publication>;
+	const researchModules = import.meta.glob('$lib/_content/research/**/*.ts', { eager: true, import: 'research' }) as Record<string, Publication>;
 
-	return Object.fromEntries(Object.values(researchModules).map((module) => {
-		return [module.key, { picture: '', ...module } satisfies ResearchItem];
-	}));
+	return Object.fromEntries(
+		Object.values(researchModules).map((module) => {
+			return [module.key, { picture: '', ...module } satisfies ResearchItem];
+		})
+	);
 }
 
 // Fetch research data by DOI.
@@ -152,8 +141,8 @@ export async function fetchResearchDataDOI(doi: string): Promise<ResearchItem | 
 			};
 			const links = item.URL ? [{ text: 'DOI Link', href: item.URL, icon: 'ScrollText' } satisfies Reference] : [];
 
-			const subtitle = (item.subtitle.length ? item.subtitle[0] : '');
-			const title = (item.title.length ? item.title[0] : '');
+			const subtitle = item.subtitle.length ? item.subtitle[0] : '';
+			const title = item.title.length ? item.title[0] : '';
 
 			return {
 				...DefaultResearchItem,
@@ -174,16 +163,15 @@ export async function fetchResearchDataDOI(doi: string): Promise<ResearchItem | 
 	});*/
 }
 
-
 // Generate and download a citation file for the given research item
 export function generateAndDownloadCitation(item: ResearchItem): void {
 	item.key = generateKey(item.name, item.title);
 
 	// Custom replacer to handle picture field
 	const replacer = (key: string, value: unknown) => {
-		if (key === "picture") return undefined; // omit from final output
-		return value
-	}
+		if (key === 'picture') return undefined; // omit from final output
+		return value;
+	};
 
 	// Build the file content
 	const dataString = `
@@ -226,6 +214,3 @@ export const researchFromDOI: ResearchType[] = await Promise.all(dois.map(async 
 }));
 
 */
-
-
-

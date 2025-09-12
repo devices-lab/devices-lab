@@ -31,7 +31,7 @@
 				{@render children()}
 			</div>
 
-			<IconTextLink href={route.id} class="mx-auto rounded-full bg-primary px-4  py-1 font-semibold text-nowrap shadow hover:scale-102 hover:bg-primary-hover" iconText={{ text: { text: 'See all items', class: 'ms-3' }, icon: { icon: ChevronRight, class: 'size-7' }, position: 'iconLast' }} />
+			<IconTextLink href={route.id} class="mx-auto rounded-full bg-black/70 px-4 py-1 font-semibold text-nowrap text-white shadow hover:scale-102" iconText={{ text: { text: 'See all items', class: 'ms-3' }, icon: { icon: ChevronRight, class: 'size-7' }, position: 'iconLast' }} />
 		</div>
 	</el-popover>
 </ClassBox>

@@ -3,65 +3,52 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+:root {
+	--color-lu-0: #b5121b;
+	--color-lu-1: #4a6187;
+	--color-lu-2: #324147;
+	--color-lu-3: #006382;
+	--color-lu-4: #008375;
+	--color-lu-5: #8A3E65;
+
+	--color-lu-secondary: #bec0c2;
+
+	--color-root: var(--color-lu-0);
+	--color-root-secondary: var(--color-lu-secondary);
+}
+
+@theme inline {
 	--font-ocr: 'OCR A Extended', 'OCR A Std', 'OCR A', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
-	
+
 	--font-sans: InterVariable, sans-serif;
 	--font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-	
-	
+
 	--animate-wiggle: wiggle 2s ease-in-out infinite;
 	@keyframes wiggle {
 		0%,
 		100% {
 			transform: rotate(-3deg);
 		}
-		
+
 		50% {
 			transform: rotate(3deg);
 		}
 	}
-	
-	--color-lu: #b80007;
-	--color-lu-secondary: #a8adad;
-	
-	--color-primary-500: var(--color-lu);
-	--color-secondary-500: var(--color-lu-secondary);
 
-	
-	/*
-	--color-secondary-50: var(--color-slate-50);
-	--color-secondary-100: var(--color-slate-100);
-	--color-secondary-200: var(--color-slate-200);
-	--color-secondary-300: var(--color-slate-300);
-	--color-secondary-400: var(--color-slate-400);
-	--color-secondary-500: var(--color-slate-500);
-	--color-secondary-600: var(--color-slate-600);
-	--color-secondary-700: var(--color-slate-700);
-	--color-secondary-800: var(--color-slate-800);
-	--color-secondary-900: var(--color-slate-900);
-	--color-secondary-950: var(--color-slate-950);
-	*/
+	--color-primary: var(--color-root);
+	--color-secondary: var(--color-root-secondary);
 }
 
-@utility bg-primary {
-	@apply bg-primary-500/80 text-white;
+@utility bg-focus {
+	@apply bg-primary/80 text-white hover:bg-primary/100;
 }
 
-@utility bg-primary-hover {
-	@apply bg-primary hover:bg-primary-500/100 hover:opacity-100
+@utility bg-focus2 {
+	@apply bg-secondary/80 text-white hover:bg-secondary/60;
 }
 
-@utility bg-secondary {
-	@apply bg-secondary-500/80 text-white;
-}
-
-@utility bg-secondary-hover {
-	@apply bg-secondary hover:bg-secondary-500/100;
-}
-
-
-html, body {
+html,
+body {
 	height: 100%;
 	min-height: fit-content;
 }
@@ -73,7 +60,7 @@ a.disabled {
 }
 
 @utility button-base {
-	@apply inline-flex items-center justify-center border focus:outline-2 focus:-outline-offset-1 focus:outline-primary-500 focus:ring-0 focus:ring-offset-1 cursor-pointer;
+	@apply inline-flex cursor-pointer items-center justify-center border focus:ring-0 focus:ring-offset-1 focus:outline-2 focus:-outline-offset-1 focus:outline-primary;
 }
 
 .button-red {
@@ -164,103 +151,97 @@ a.disabled {
 	@apply button-base border-stone-200 bg-stone-50 text-stone-700 hover:bg-stone-100/80 dark:border-stone-900/40 dark:bg-stone-900/20 dark:text-stone-300 dark:hover:bg-stone-900/30;
 }
 
-
-
-
 @utility link-base {
-	@apply bg-transparent border-0 outline-none cursor-pointer;
+	@apply cursor-pointer border-0 bg-transparent outline-none;
 }
 
 .link-red {
-	@apply link-base text-red-600 hover:text-red-600/50 dark:hover:text-red-400/50 dark:text-red-400;
+	@apply link-base text-red-600 hover:text-red-600/50 dark:text-red-400 dark:hover:text-red-400/50;
 }
 
 .link-orange {
-	@apply link-base text-orange-600 hover:text-orange-600/50 dark:hover:text-orange-400/50 dark:text-orange-400;
+	@apply link-base text-orange-600 hover:text-orange-600/50 dark:text-orange-400 dark:hover:text-orange-400/50;
 }
 
 .link-amber {
-	@apply link-base text-amber-600 hover:text-amber-600/50 dark:hover:text-amber-400/50 dark:text-amber-400;
+	@apply link-base text-amber-600 hover:text-amber-600/50 dark:text-amber-400 dark:hover:text-amber-400/50;
 }
 
 .link-yellow {
-	@apply link-base text-yellow-600 hover:text-yellow-600/50 dark:hover:text-yellow-400/50 dark:text-yellow-400;
+	@apply link-base text-yellow-600 hover:text-yellow-600/50 dark:text-yellow-400 dark:hover:text-yellow-400/50;
 }
 
 .link-lime {
-	@apply link-base text-lime-600 hover:text-lime-600/50 dark:hover:text-lime-400/50 dark:text-lime-400;
+	@apply link-base text-lime-600 hover:text-lime-600/50 dark:text-lime-400 dark:hover:text-lime-400/50;
 }
 
 .link-green {
-	@apply link-base text-green-600 hover:text-green-600/50 dark:hover:text-green-400/50 dark:text-green-400;
+	@apply link-base text-green-600 hover:text-green-600/50 dark:text-green-400 dark:hover:text-green-400/50;
 }
 
 .link-emerald {
-	@apply link-base text-emerald-600 hover:text-emerald-600/50 dark:hover:text-emerald-400/50 dark:text-emerald-400;
+	@apply link-base text-emerald-600 hover:text-emerald-600/50 dark:text-emerald-400 dark:hover:text-emerald-400/50;
 }
 
 .link-teal {
-	@apply link-base text-teal-600 hover:text-teal-600/50 dark:hover:text-teal-400/50 dark:text-teal-400;
+	@apply link-base text-teal-600 hover:text-teal-600/50 dark:text-teal-400 dark:hover:text-teal-400/50;
 }
 
 .link-cyan {
-	@apply link-base text-cyan-600 hover:text-cyan-600/50 dark:hover:text-cyan-400/50 dark:text-cyan-400;
+	@apply link-base text-cyan-600 hover:text-cyan-600/50 dark:text-cyan-400 dark:hover:text-cyan-400/50;
 }
 
 .link-sky {
-	@apply link-base text-sky-600 hover:text-sky-600/50 dark:hover:text-sky-400/50 dark:text-sky-400;
+	@apply link-base text-sky-600 hover:text-sky-600/50 dark:text-sky-400 dark:hover:text-sky-400/50;
 }
 
 .link-blue {
-	@apply link-base text-blue-600 hover:text-blue-600/50 dark:hover:text-blue-400/50 dark:text-blue-400;
+	@apply link-base text-blue-600 hover:text-blue-600/50 dark:text-blue-400 dark:hover:text-blue-400/50;
 }
 
 .link-indigo {
-	@apply link-base text-indigo-600 hover:text-indigo-600/50 dark:hover:text-indigo-400/50 dark:text-indigo-400;
+	@apply link-base text-indigo-600 hover:text-indigo-600/50 dark:text-indigo-400 dark:hover:text-indigo-400/50;
 }
 
 .link-violet {
-	@apply link-base text-violet-600 hover:text-violet-600/50 dark:hover:text-violet-400/50 dark:text-violet-400;
+	@apply link-base text-violet-600 hover:text-violet-600/50 dark:text-violet-400 dark:hover:text-violet-400/50;
 }
 
 .link-purple {
-	@apply link-base text-purple-600 hover:text-purple-600/50 dark:hover:text-purple-400/50 dark:text-purple-400;
+	@apply link-base text-purple-600 hover:text-purple-600/50 dark:text-purple-400 dark:hover:text-purple-400/50;
 }
 
 .link-fuchsia {
-	@apply link-base text-fuchsia-600 hover:text-fuchsia-600/50 dark:hover:text-fuchsia-400/50 dark:text-fuchsia-400;
+	@apply link-base text-fuchsia-600 hover:text-fuchsia-600/50 dark:text-fuchsia-400 dark:hover:text-fuchsia-400/50;
 }
 
 .link-pink {
-	@apply link-base text-pink-600 hover:text-pink-600/50 dark:hover:text-pink-400/50 dark:text-pink-400;
+	@apply link-base text-pink-600 hover:text-pink-600/50 dark:text-pink-400 dark:hover:text-pink-400/50;
 }
 
 .link-rose {
-	@apply link-base text-rose-600 hover:text-rose-600/50 dark:hover:text-rose-400/50 dark:text-rose-400;
+	@apply link-base text-rose-600 hover:text-rose-600/50 dark:text-rose-400 dark:hover:text-rose-400/50;
 }
 
 .link-slate {
-	@apply link-base text-slate-600 hover:text-slate-600/50 dark:hover:text-slate-400/50 dark:text-slate-400;
+	@apply link-base text-slate-600 hover:text-slate-600/50 dark:text-slate-400 dark:hover:text-slate-400/50;
 }
 
 .link-gray {
-	@apply link-base text-gray-600 hover:text-gray-600/50 dark:hover:text-gray-400/50 dark:text-gray-400;
+	@apply link-base text-gray-600 hover:text-gray-600/50 dark:text-gray-400 dark:hover:text-gray-400/50;
 }
 
 .link-zinc {
-	@apply link-base text-zinc-600 hover:text-zinc-600/50 dark:hover:text-zinc-400/50 dark:text-zinc-400;
+	@apply link-base text-zinc-600 hover:text-zinc-600/50 dark:text-zinc-400 dark:hover:text-zinc-400/50;
 }
 
 .link-neutral {
-	@apply link-base text-neutral-600 hover:text-neutral-600/50 dark:hover:text-neutral-400/50 dark:text-neutral-400;
+	@apply link-base text-neutral-600 hover:text-neutral-600/50 dark:text-neutral-400 dark:hover:text-neutral-400/50;
 }
 
 .link-stone {
-	@apply link-base text-stone-600 hover:text-stone-600/50 dark:hover:text-stone-400/50 dark:text-stone-400;
+	@apply link-base text-stone-600 hover:text-stone-600/50 dark:text-stone-400 dark:hover:text-stone-400/50;
 }
-
-
-
 
 /*
 @layer components {

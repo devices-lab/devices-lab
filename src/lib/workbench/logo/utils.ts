@@ -1,5 +1,3 @@
-
-
 // Number of milliseconds to wait before generating the SVG
 export const GENERATOR_DELAY_MS = 1000;
 
@@ -7,7 +5,7 @@ export type SVG_Role = 'subject' | 'clip' | 'frame' | 'ignore';
 
 export const DATA_VERSION = 6;
 
-export const LOGO_ICON = "DL";
+export const LOGO_ICON = 'DL';
 export const LOGO_NAME = 'devices-lab';
 export const LOGO_DOMAIN = 'devices-lab.org';
 
@@ -17,13 +15,13 @@ export const KICAD_SCALE = 0.5;
 export const VersionProps = (id: string, version: string) => ({
 	textLeft: LOGO_ICON,
 	textRightTop: `${id}`,
-	textRightBottom: `${version}`,
+	textRightBottom: `${version}`
 });
 
 // Props for creating a DevicesLab version pill
 export const VersionPropsPill = (id: string, version: string) => ({
 	textLeft: LOGO_ICON,
-	textRight: `${id}-${version}`,
+	textRight: `${id}-${version}`
 });
 
 // Props for creating a DevicesLab logo
@@ -35,15 +33,13 @@ export const LogoProps = () => ({
 // Props for creating a DevicesLab project
 export const ProjectProps = (name: string) => ({
 	textTop: LOGO_DOMAIN,
-	textBottom: `${name.charAt(0) === '/'? name : '/' + name}`,
+	textBottom: `${name.charAt(0) === '/' ? name : '/' + name}`
 });
 
 // Props for creating a DevicesLab icon
 export const IconProps = () => ({
 	text: LOGO_ICON
 });
-
-
 
 //export const BACKGROUND = 'none';
 //export const FONT_FAMILY = `'OCR A Extended', 'OCR A Std', 'OCR A', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace`;
@@ -59,15 +55,6 @@ export const calculateTextWidth = (text: string, size: number) => {
 };
 
 export const FLATTEN_TOLERANCE = 0.01;
-
-
-
-
-
-
-
-
-
 
 /* ─────────────────────────────────────────────────────────────── */
 /* ───────────────────────── Downloaders ───────────────────────── */
@@ -127,7 +114,6 @@ export function downloadSVGFont(element: SVGSVGElement, filename: string) {
 	downloadSVG(clone, filename);
 }
 
-
 export function downloadDXF(dxf: string, filename: string) {
 	const blob = new Blob([dxf], { type: 'application/dxf' });
 	const url = URL.createObjectURL(blob);
@@ -156,25 +142,3 @@ export async function downloadPNG(canvas: HTMLCanvasElement, filename: string) {
 		save(b);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

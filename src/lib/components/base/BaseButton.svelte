@@ -15,13 +15,12 @@
 	const { children, ...button }: ButtonProps & { children?: Snippet } = $props();
 </script>
 
-
 {#if button.tooltip}
-	<button {...button.props} onclick={button.onclick} class={cn('hover:opacity-70 cursor-pointer', button.class)} type="button" use:tooltipAction={{ ...button.tooltip.params, content: button.tooltip.content }}>
+	<button {...button.props} onclick={button.onclick} class={cn('cursor-pointer hover:opacity-70', button.class)} type="button" use:tooltipAction={{ ...button.tooltip.params, content: button.tooltip.content }}>
 		{@render children?.()}
 	</button>
 {:else}
-	<button {...button.props} onclick={button.onclick} class={cn('hover:opacity-70 cursor-pointer', button.class)} type="button">
+	<button {...button.props} onclick={button.onclick} class={cn('cursor-pointer hover:opacity-70', button.class)} type="button">
 		{@render children?.()}
 	</button>
 {/if}

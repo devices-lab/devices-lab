@@ -1,4 +1,4 @@
-import type { ItemData } from "$lib/data/indexer";
+import type { ItemData } from '$lib/data/indexer';
 
 export const item: ItemData = {
 	modified: '1757500476430',
@@ -17,6 +17,6 @@ export const item: ItemData = {
 	resources: [],
 	publications: [],
 
-	tags: [{'name': 'microbit'}, {'name': 'BBC'}, {'name': 'available to buy'}],
-	featured: false,
+	tags: [{ name: 'microbit' }, { name: 'BBC' }, { name: 'available to buy' }],
+	featured: false
 };

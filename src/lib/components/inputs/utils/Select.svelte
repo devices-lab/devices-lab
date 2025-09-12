@@ -26,14 +26,14 @@
 
 {#snippet SelectItem(label: string, sublabel: string, value: string)}
 	{@const optionProps = value === '' ? { disabled: true } : {}}
-	<el-option {value} {...optionProps} class="group/option disabled relative block cursor-default py-2 pr-9 pl-3 {value ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-400'} select-none focus:bg-primary-500/80 focus:text-white focus:outline-hidden disabled:text-red-300">
+	<el-option {value} {...optionProps} class="group/option disabled relative block cursor-default py-2 pr-9 pl-3 {value ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-400'} select-none focus:bg-primary/80 focus:text-white focus:outline-hidden disabled:text-red-300">
 		<div class="flex">
 			<span class="truncate font-normal group-aria-selected/option:font-semibold">{label}</span>
 			{#if sublabel}
 				<span class="ml-2 truncate text-current/50">[{sublabel}]</span>
 			{/if}
 		</div>
-		<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-500 group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden">
+		<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-primary group-not-aria-selected/option:hidden group-focus/option:text-white in-[el-selectedcontent]:hidden">
 			<Check class="size-5" />
 		</span>
 	</el-option>

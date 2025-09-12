@@ -11,5 +11,5 @@
 	"workbench.tree.indent": 20,
 	"tailwind-css-language-mode-formatter.applyMaxLineLength": 1000,
 	"tailwind-css-language-mode-formatter.useTabs": true,
-	"tailwind-css-language-mode-formatter.indentSize": 4,
+	"tailwind-css-language-mode-formatter.indentSize": 4
 }

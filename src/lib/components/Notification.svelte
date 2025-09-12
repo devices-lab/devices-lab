@@ -73,7 +73,7 @@
 							<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{content.message}</p>
 						</div>
 						<div class="ml-4 flex shrink-0">
-							<IconButton onclick={() => (content.active = false)} icon={{ icon: X, class: 'size-5' }} class="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 dark:hover:text-white dark:focus:outline-primary-500" />
+							<IconButton onclick={() => (content.active = false)} icon={{ icon: X, class: 'size-5' }} class="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-primary dark:hover:text-white dark:focus:outline-primary" />
 						</div>
 					</div>
 				</div>

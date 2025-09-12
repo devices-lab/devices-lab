@@ -10,6 +10,6 @@ export const load: LayoutLoad = async (event) => {
 		route: Routes.home, // will be overwritten in each page
 		breadcrumbs: [],
 		MainMenu,
-		SideMenu,
+		SideMenu
 	};
 };

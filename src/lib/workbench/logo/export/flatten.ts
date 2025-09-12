@@ -1,4 +1,4 @@
-import * as Clippy from "js-angusj-clipper";
+import * as Clippy from 'js-angusj-clipper';
 
 const FLATTEN_TOLERANCE = 0.01;
 
@@ -10,11 +10,14 @@ const FLATTEN_TOLERANCE = 0.01;
 //   flattenQuad(p0,p1,p2,tol,out: Path): void
 export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): Clippy.Paths {
 	// Now supports: M,L,H,V,C,Q,A,Z (absolute & relative)
-	const tokens = Array.from(
-		d.matchAll(/[MmLlHhVvCcQqAaZz]|-?\d*\.?\d+(?:e[-+]?\d+)?/g)
-	).map(m => m[0]);
+	const tokens = Array.from(d.matchAll(/[MmLlHhVvCcQqAaZz]|-?\d*\.?\d+(?:e[-+]?\d+)?/g)).map((m) => m[0]);
 
-	let i = 0, cmd = '', cx = 0, cy = 0, sx = 0, sy = 0;
+	let i = 0,
+		cmd = '',
+		cx = 0,
+		cy = 0,
+		sx = 0,
+		sy = 0;
 	const polys: Clippy.Paths = [];
 	let poly: Clippy.Path | null = null;
 
@@ -24,14 +27,18 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 	while (i < tokens.length) {
 		const t = tokens[i++];
 		if (isCmd(t)) cmd = t;
-		else { i--; } // number encountered; reuse last cmd
+		else {
+			i--;
+		} // number encountered; reuse last cmd
 
 		switch (cmd) {
-			case 'M': case 'm': {
+			case 'M':
+			case 'm': {
 				const rel = cmd === 'm';
 				cx = (rel ? cx : 0) + read();
 				cy = (rel ? cy : 0) + read();
-				sx = cx; sy = cy;
+				sx = cx;
+				sy = cy;
 				poly = [{ x: cx, y: cy }];
 				polys.push(poly);
 				// Subsequent pairs are implicit LineTos
@@ -43,7 +50,8 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 				break;
 			}
 
-			case 'L': case 'l': {
+			case 'L':
+			case 'l': {
 				const rel = cmd === 'l';
 				while (i < tokens.length && !isCmd(tokens[i])) {
 					cx = (rel ? cx : 0) + read();
@@ -54,7 +62,8 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 				break;
 			}
 
-			case 'H': case 'h': {
+			case 'H':
+			case 'h': {
 				const rel = cmd === 'h';
 				while (i < tokens.length && !isCmd(tokens[i])) {
 					cx = (rel ? cx : 0) + read();
@@ -64,7 +73,8 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 				break;
 			}
 
-			case 'V': case 'v': {
+			case 'V':
+			case 'v': {
 				const rel = cmd === 'v';
 				while (i < tokens.length && !isCmd(tokens[i])) {
 					cy = (rel ? cy : 0) + read();
@@ -74,38 +84,53 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 				break;
 			}
 
-			case 'Q': case 'q': {
+			case 'Q':
+			case 'q': {
 				const rel = cmd === 'q';
 				while (i < tokens.length && !isCmd(tokens[i])) {
-					const x1 = (rel ? cx : 0) + read(), y1 = (rel ? cy : 0) + read();
-					const x = (rel ? cx : 0) + read(), y = (rel ? cy : 0) + read();
-					const p0 = { x: cx, y: cy }, p1 = { x: x1, y: y1 }, p2 = { x, y };
+					const x1 = (rel ? cx : 0) + read(),
+						y1 = (rel ? cy : 0) + read();
+					const x = (rel ? cx : 0) + read(),
+						y = (rel ? cy : 0) + read();
+					const p0 = { x: cx, y: cy },
+						p1 = { x: x1, y: y1 },
+						p2 = { x, y };
 					const out: Clippy.Path = [];
 					flattenQuad(p0, p1, p2, tol, out);
 					poly ??= [{ x: cx, y: cy }];
-					out.forEach(p => poly!.push(p));
-					cx = x; cy = y;
+					out.forEach((p) => poly!.push(p));
+					cx = x;
+					cy = y;
 				}
 				break;
 			}
 
-			case 'C': case 'c': {
+			case 'C':
+			case 'c': {
 				const rel = cmd === 'c';
 				while (i < tokens.length && !isCmd(tokens[i])) {
-					const x1 = (rel ? cx : 0) + read(), y1 = (rel ? cy : 0) + read();
-					const x2 = (rel ? cx : 0) + read(), y2 = (rel ? cy : 0) + read();
-					const x = (rel ? cx : 0) + read(), y = (rel ? cy : 0) + read();
-					const p0 = { x: cx, y: cy }, p1 = { x: x1, y: y1 }, p2 = { x: x2, y: y2 }, p3 = { x, y };
+					const x1 = (rel ? cx : 0) + read(),
+						y1 = (rel ? cy : 0) + read();
+					const x2 = (rel ? cx : 0) + read(),
+						y2 = (rel ? cy : 0) + read();
+					const x = (rel ? cx : 0) + read(),
+						y = (rel ? cy : 0) + read();
+					const p0 = { x: cx, y: cy },
+						p1 = { x: x1, y: y1 },
+						p2 = { x: x2, y: y2 },
+						p3 = { x, y };
 					const out: Clippy.Path = [];
 					flattenCubic(p0, p1, p2, p3, tol, out);
 					poly ??= [{ x: cx, y: cy }];
-					out.forEach(p => poly!.push(p));
-					cx = x; cy = y;
+					out.forEach((p) => poly!.push(p));
+					cx = x;
+					cy = y;
 				}
 				break;
 			}
 
-			case 'A': case 'a': {
+			case 'A':
+			case 'a': {
 				const rel = cmd === 'a';
 				while (i < tokens.length && !isCmd(tokens[i])) {
 					const rx = Math.abs(read());
@@ -120,34 +145,36 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 					if (rx === 0 || ry === 0) {
 						poly ??= [{ x: cx, y: cy }];
 						poly.push({ x, y });
-						cx = x; cy = y;
+						cx = x;
+						cy = y;
 						continue;
 					}
 
 					// Convert to cubic Béziers and flatten each
-					const segs = arcToCubicSegments(
-						cx, cy, x, y, rx, ry, phiDeg, largeArcFlag, sweepFlag
-					);
+					const segs = arcToCubicSegments(cx, cy, x, y, rx, ry, phiDeg, largeArcFlag, sweepFlag);
 
 					poly ??= [{ x: cx, y: cy }];
 					let p0 = { x: cx, y: cy };
 					for (const s of segs) {
 						const out: Clippy.Path = [];
 						flattenCubic(p0, s.c1, s.c2, s.p, tol, out);
-						out.forEach(pt => poly!.push(pt));
+						out.forEach((pt) => poly!.push(pt));
 						p0 = s.p;
 					}
-					cx = x; cy = y;
+					cx = x;
+					cy = y;
 				}
 				break;
 			}
 
-			case 'Z': case 'z': {
+			case 'Z':
+			case 'z': {
 				if (poly && (poly[poly.length - 1].x !== sx || poly[poly.length - 1].y !== sy)) {
 					poly.push({ x: sx, y: sy });
 				}
 				poly = null;
-				cx = sx; cy = sy;
+				cx = sx;
+				cy = sy;
 				break;
 			}
 
@@ -159,21 +186,23 @@ export function parseAndFlattenPathClippy(d: string, tol = FLATTEN_TOLERANCE): C
 	}
 
 	// Close any ring that appears open
-	polys.forEach(p => {
+	polys.forEach((p) => {
 		if (p.length > 2) {
-			const a = p[0], b = p[p.length - 1];
+			const a = p[0],
+				b = p[p.length - 1];
 			if (a.x !== b.x || a.y !== b.y) p.push({ x: a.x, y: a.y });
 		}
 	});
 
 	// Drop tiny rings
-	return polys.filter(p => p.length >= 3);
+	return polys.filter((p) => p.length >= 3);
 }
 
 /** Convert an SVG elliptical arc to cubic Bézier segments (≤90° each). */
-function arcToCubicSegments(x1: number, y1: number, x2: number, y2: number, rx: number, ry: number, phiDeg: number, largeArc: boolean, sweep: boolean): Array<{ c1: { x: number, y: number }, c2: { x: number, y: number }, p: { x: number, y: number } }> {
+function arcToCubicSegments(x1: number, y1: number, x2: number, y2: number, rx: number, ry: number, phiDeg: number, largeArc: boolean, sweep: boolean): Array<{ c1: { x: number; y: number }; c2: { x: number; y: number }; p: { x: number; y: number } }> {
 	const phi = (phiDeg * Math.PI) / 180;
-	const cosφ = Math.cos(phi), sinφ = Math.sin(phi);
+	const cosφ = Math.cos(phi),
+		sinφ = Math.sin(phi);
 
 	// Step 1: Transform to the arc coordinate system (per SVG spec)
 	const dx = (x1 - x2) / 2;
@@ -182,33 +211,38 @@ function arcToCubicSegments(x1: number, y1: number, x2: number, y2: number, rx: 
 	const y1p = -sinφ * dx + cosφ * dy;
 
 	// Step 2: Ensure radii are large enough
-	const rxs = rx * rx, rys = ry * ry;
+	const rxs = rx * rx,
+		rys = ry * ry;
 	const λ = (x1p * x1p) / rxs + (y1p * y1p) / rys;
 	if (λ > 1) {
 		const s = Math.sqrt(λ);
-		rx *= s; ry *= s;
+		rx *= s;
+		ry *= s;
 	}
 
 	// Recompute squares after potential scaling
-	const rx2 = rx * rx, ry2 = ry * ry;
+	const rx2 = rx * rx,
+		ry2 = ry * ry;
 
 	// Step 3: Center calculation in the transformed space
-	const sign = (largeArc === sweep) ? -1 : 1;
+	const sign = largeArc === sweep ? -1 : 1;
 	const num = rx2 * ry2 - rx2 * (y1p * y1p) - ry2 * (x1p * x1p);
 	const den = rx2 * (y1p * y1p) + ry2 * (x1p * x1p);
 	const k = Math.max(0, num / den); // guard small negatives from fp error
 	const coef = sign * Math.sqrt(k);
 
-	const cxp = coef * (rx * y1p) / ry;
-	const cyp = coef * (-ry * x1p) / rx;
+	const cxp = (coef * (rx * y1p)) / ry;
+	const cyp = (coef * (-ry * x1p)) / rx;
 
 	// Step 4: Transform center back to absolute
 	const cx = cosφ * cxp - sinφ * cyp + (x1 + x2) / 2;
 	const cy = sinφ * cxp + cosφ * cyp + (y1 + y2) / 2;
 
 	// Step 5: Angles
-	const v1x = (x1p - cxp) / rx, v1y = (y1p - cyp) / ry;
-	const v2x = (-x1p - cxp) / rx, v2y = (-y1p - cyp) / ry;
+	const v1x = (x1p - cxp) / rx,
+		v1y = (y1p - cyp) / ry;
+	const v2x = (-x1p - cxp) / rx,
+		v2y = (-y1p - cyp) / ry;
 
 	const θ1 = vectorAngle(1, 0, v1x, v1y);
 	let Δθ = vectorAngle(v1x, v1y, v2x, v2y);
@@ -218,7 +252,7 @@ function arcToCubicSegments(x1: number, y1: number, x2: number, y2: number, rx: 
 	if (sweep && Δθ < 0) Δθ += 2 * Math.PI;
 
 	// Subdivide into ≤90° segments
-	const segments: Array<{ c1: { x: number, y: number }, c2: { x: number, y: number }, p: { x: number, y: number } }> = [];
+	const segments: Array<{ c1: { x: number; y: number }; c2: { x: number; y: number }; p: { x: number; y: number } }> = [];
 	const n = Math.max(1, Math.ceil(Math.abs(Δθ) / (Math.PI / 2)));
 	const δ = Δθ / n;
 
@@ -244,13 +278,15 @@ function arcUnitSegmentToCubic(cx: number, cy: number, rx: number, ry: number, c
 	const t = (4 / 3) * Math.tan(Δ / 4);
 
 	// Points on the unit circle for start/end
-	const cosA = Math.cos(θA), sinA = Math.sin(θA);
-	const cosB = Math.cos(θB), sinB = Math.sin(θB);
+	const cosA = Math.cos(θA),
+		sinA = Math.sin(θA);
+	const cosB = Math.cos(θB),
+		sinB = Math.sin(θB);
 
 	// Unit circle → ellipse (scale) → rotate → translate
 	const map = (x: number, y: number) => ({
-		x: cx + (rx * (x * cosφ - y * sinφ)),
-		y: cy + (ry * (x * sinφ + y * cosφ))
+		x: cx + rx * (x * cosφ - y * sinφ),
+		y: cy + ry * (x * sinφ + y * cosφ)
 	});
 
 	// Start/end points (already known globally, but we compute locally for control math)
@@ -268,14 +304,9 @@ function arcUnitSegmentToCubic(cx: number, cy: number, rx: number, ry: number, c
 	return { c1, c2, p };
 }
 
-
-
-
-
-
-
 function distancePointToLine(p: Clippy.IntPoint, a: Clippy.IntPoint, b: Clippy.IntPoint): number {
-	const dx = b.x - a.x, dy = b.y - a.y;
+	const dx = b.x - a.x,
+		dy = b.y - a.y;
 	if (dx === 0 && dy === 0) return Math.hypot(p.x - a.x, p.y - a.y);
 	const t = ((p.x - a.x) * dx + (p.y - a.y) * dy) / (dx * dx + dy * dy);
 	const proj = { x: a.x + t * dx, y: a.y + t * dy };
@@ -289,7 +320,9 @@ function flattenQuad(p0: Clippy.IntPoint, p1: Clippy.IntPoint, p2: Clippy.IntPoi
 		out.push(p2);
 		return;
 	}
-	const p01 = mid(p0, p1), p12 = mid(p1, p2), p012 = mid(p01, p12);
+	const p01 = mid(p0, p1),
+		p12 = mid(p1, p2),
+		p012 = mid(p01, p12);
 	flattenQuad(p0, p01, p012, tol, out);
 	flattenQuad(p012, p12, p2, tol, out);
 }
@@ -298,11 +331,17 @@ function flattenCubic(p0: Clippy.IntPoint, p1: Clippy.IntPoint, p2: Clippy.IntPo
 	// Use control points’ max distance to baseline as flatness test
 	const d1 = distancePointToLine(p1, p0, p3);
 	const d2 = distancePointToLine(p2, p0, p3);
-	if (Math.max(d1, d2) <= tol) { out.push(p3); return; }
+	if (Math.max(d1, d2) <= tol) {
+		out.push(p3);
+		return;
+	}
 	// de Casteljau split at t = 0.5
 	const m = (a: Clippy.IntPoint, b: Clippy.IntPoint) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-	const p01 = m(p0, p1), p12 = m(p1, p2), p23 = m(p2, p3);
-	const p012 = m(p01, p12), p123 = m(p12, p23);
+	const p01 = m(p0, p1),
+		p12 = m(p1, p2),
+		p23 = m(p2, p3);
+	const p012 = m(p01, p12),
+		p123 = m(p12, p23);
 	const p0123 = m(p012, p123);
 	flattenCubic(p0, p01, p012, p0123, tol, out);
 	flattenCubic(p0123, p123, p23, p3, tol, out);

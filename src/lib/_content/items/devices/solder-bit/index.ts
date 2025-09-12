@@ -1,4 +1,4 @@
-import type { FamilyData } from "$lib/data/indexer";
+import type { FamilyData } from '$lib/data/indexer';
 
 export const item: FamilyData = {
 	name: 'solder:bit',
@@ -6,5 +6,5 @@ export const item: FamilyData = {
 	teaser: 'A range of devices created to learn soldering.',
 
 	tags: [],
-	featured: false,
+	featured: false
 };

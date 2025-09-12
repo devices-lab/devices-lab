@@ -1,16 +1,10 @@
-
 import type { RouteId } from '$app/types';
 import type { Feature, Publication, Reference, Tag } from '$lib/data/data';
 import { findRoute, Routes, type BreadcrumbLink, type Route } from '$lib/data/routes';
 import { removeLeadingChar } from '$lib/utils/utils';
 import type { Picture } from 'vite-imagetools';
 
-
-
-
-
 type Kind = 'family' | 'item';
-
 
 type CommonData = {
 	name: string;
@@ -49,17 +43,15 @@ export type Entry = {
 	images: Picture[];
 	path: string;
 	parent: string;
-	route: Route
+	route: Route;
 };
 
-export type CatalogEntry = { data: Entry[] | Entry | undefined, type: 'family' | 'item' | 'none', family: string };
+export type CatalogEntry = { data: Entry[] | Entry | undefined; type: 'family' | 'item' | 'none'; family: string };
 
 type RecordMap = Record<string, Entry>;
 type FeaturedMap = Record<string, Entry[]>;
 
 const BASE_PATH = '/src/lib/_content/items/';
-
-
 
 const build = () => {
 	// Collect all index.ts modules (lazy)
@@ -115,8 +107,7 @@ const build = () => {
 
 		// If featured, add to featured map for its route
 		if (item.featured) {
-			if (!featured[route.id])
-				featured[route.id] = [];
+			if (!featured[route.id]) featured[route.id] = [];
 			featured[route.id].push(entries[path]);
 		}
 	}
@@ -160,10 +151,9 @@ const build = () => {
 		return out;
 	};
 
-
 	const findPath = (param: string): string | undefined => {
 		return Object.keys(entries).find((key) => key.endsWith(param));
-	}
+	};
 
 	const findEntries = (path: string): CatalogEntry => {
 		// Check if we have an item for this path
@@ -184,7 +174,6 @@ const build = () => {
 
 	const findFeaturedEntries = (routeId: RouteId | string): Entry[] => featured[routeId] || [];
 
-
 	const createBreadcrumbs = (path: string): BreadcrumbLink[] => {
 		const parts = path.split('/').filter(Boolean);
 		const out: BreadcrumbLink[] = [];
@@ -198,7 +187,7 @@ const build = () => {
 			});
 		}
 		return out;
-	}
+	};
 
 	return { entries, findFeaturedEntries, findEntries, findPath, createBreadcrumbs };
 };
@@ -211,10 +200,6 @@ export const findPath = catalog.findPath;
 export const findEntries = catalog.findEntries;
 export const findFeaturedEntries = catalog.findFeaturedEntries;
 export const createBreadcrumbs = catalog.createBreadcrumbs;
-
-
-
-
 
 export const DefaultItem: Entry = {
 	kind: 'item',
@@ -234,7 +219,7 @@ export const DefaultItem: Entry = {
 		publications: [],
 		// other
 		tags: [],
-		featured: false,
+		featured: false
 	} as ItemData,
 	thumb: undefined,
 	images: [],
@@ -251,7 +236,7 @@ export const DefaultFamily: Entry = {
 		teaser: '',
 		// other
 		tags: [],
-		featured: false,
+		featured: false
 	} as FamilyData,
 	thumb: undefined,
 	images: [],
@@ -262,7 +247,10 @@ export const DefaultFamily: Entry = {
 
 function cleanVariableName(name: string): string {
 	// Replace invalid characters with underscores
-	return name.replace(/[^a-zA-Z0-9_$]/g, '_').replace(/^(\d)/, '_$1').toLowerCase();
+	return name
+		.replace(/[^a-zA-Z0-9_$]/g, '_')
+		.replace(/^(\d)/, '_$1')
+		.toLowerCase();
 }
 
 // Generate and download a citation file for the given research item
@@ -271,7 +259,7 @@ export function generateAndDownloadItem(entry: Entry, researchKeys: string[]): v
 
 	const removeDups = (arr: string[]): string[] => {
 		return arr.filter((item, index) => arr.indexOf(item) === index);
-	}
+	};
 
 	researchKeys = removeDups(researchKeys);
 	const publicationImports = researchKeys.map((p) => `import { research as ${cleanVariableName(p)} } from '$research/${p}';`).join('\n');
@@ -279,9 +267,9 @@ export function generateAndDownloadItem(entry: Entry, researchKeys: string[]): v
 
 	// Custom replacer to handle publications array
 	const replacer = (key: string, value: unknown) => {
-		if (key === "publications") return PUBLICATION_PLACEHOLDER; // placeholder
+		if (key === 'publications') return PUBLICATION_PLACEHOLDER; // placeholder
 		return value ?? '';
-	}
+	};
 
 	// Build the file content
 	let dataString = `
@@ -290,7 +278,7 @@ import type { ItemData } from "$lib/data/indexer";
 
 ${publicationImports}
 
-export const item: ItemData = ${JSON.stringify({...entry.item, modified: Date.now().toString()}, replacer, 4)};
+export const item: ItemData = ${JSON.stringify({ ...entry.item, modified: Date.now().toString() }, replacer, 4)};
 `;
 
 	// Replace the placeholder with actual publication names
@@ -302,7 +290,6 @@ export const item: ItemData = ${JSON.stringify({...entry.item, modified: Date.no
 	link.download = `index.ts`;
 	link.click();
 }
-
 
 // Generate and download a citation file for the given research item
 export function generateAndDownloadFamily(entry: Entry): void {

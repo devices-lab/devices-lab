@@ -8,7 +8,7 @@
 	import MobileMenu from '$lib/navbar/Mobile.svelte';
 	import LancasterLogo from '$lib/navbar/Picture1.png';
 	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
-	import { devMode, devModeLocal } from '$lib/utils/utils';
+	import { colorIndex, devMode, devModeLocal } from '$lib/utils/utils';
 	import { Menu } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
@@ -16,6 +16,7 @@
 	const menuID = `mobile-menu-${uid}`;
 
 	onMount(() => {
+		colorIndex.set(parseInt(localStorage.getItem('colorIndex') || '0') || 0);
 		devMode.set(localStorage.getItem('devMode') === 'true');
 		devModeLocal.set(localStorage.getItem('devModeLocal') === 'true');
 
@@ -25,11 +26,10 @@
 		devModeLocal.subscribe((value) => {
 			localStorage.setItem('devModeLocal', String(value));
 		});
+		colorIndex.subscribe((value) => {
+			localStorage.setItem('colorIndex', String(value) ?? '0');
+		});
 	});
-
-	const floatingNavbar = ''; //'m-4 rounded-xl';
-
-	const SideMenu: Route[] = $derived(page.data.SideMenu);
 </script>
 
 <!-- Mobile menu -->
@@ -39,14 +39,14 @@
 <header class="relative z-100">
 	{#if $devMode}
 		<div class=" bg-gray-200">
-			<div class=" bg-primary-500/50 text-center text-sm text-gray-900 dark:bg-white/10">
+			<div class=" bg-primary/50 text-center text-sm text-gray-900 dark:bg-white/10">
 				<div class="font-semibold">Dev!</div>
 			</div>
 		</div>
 	{/if}
 
-	<nav aria-label="Top" class="mb-4 bg-lu text-white shadow-xs {floatingNavbar}">
-		<div class="relative mx-auto flex items-center justify-between px-4 py-1 sm:py-3 sm:px-6 lg:px-8">
+	<nav aria-label="Top" class="mb-4 bg-primary text-white shadow-xs">
+		<div class="relative mx-auto flex items-center justify-between px-4 py-1 sm:px-6 sm:py-3 lg:px-8">
 			<!-- Desktop menu (lg+) -->
 			<div class="absolute inset-y-0 left-1/2 hidden h-full -translate-x-1/2 lg:flex">
 				<!-- Flyout menus -->
@@ -64,7 +64,7 @@
 
 			<!-- Mobile menu (lg-) -->
 			<div class="flex flex-1 items-center lg:hidden">
-				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 ">
+				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
 					<span class="sr-only">Open menu</span>
 					<Menu class="size-6" />
 				</button>
@@ -75,9 +75,9 @@
 				<Logo class="m-auto h-6 sm:h-8" />
 			</BaseLink>
 
-			<div class="absolute top-15 sm:top-20 right-5 flex gap-2 sm:gap-4">
-				{#each SideMenu as route}
-					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5' }} tooltip={{ content: route.title }} class="flex rounded-full border-1 border-secondary-500 p-1.5 text-secondary-500 shadow-sm sm:border-1.5 sm:p-2 hover:scale-110 transition-transform duration-100" />
+			<div class="absolute top-15 right-5 flex gap-2 sm:top-20 sm:gap-4">
+				{#each page.data.SideMenu as route}
+					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5' }} tooltip={{ content: route.title }} class="sm:border-1.5 flex rounded-full border-1 border-secondary p-1.5 text-secondary shadow-sm transition-transform duration-100 hover:scale-110 sm:p-2" />
 				{/each}
 			</div>
 

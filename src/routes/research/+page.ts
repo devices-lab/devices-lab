@@ -6,4 +6,3 @@ export const load = (async () => {
 		researchLibrary: fetchResearchData()
 	};
 }) satisfies PageLoad;
-

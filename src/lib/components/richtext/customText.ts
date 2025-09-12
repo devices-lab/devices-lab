@@ -16,21 +16,13 @@ export interface TagNode {
 }
 
 /** Renderers turn a TagNode into HTML (string). */
-export type TagRenderer = (ctx: {
-	node: TagNode;
-	renderChildren: () => string;
-	escapeHtml: (s: string) => string;
-	escapeAttr: (s: string) => string;
-}) => string;
+export type TagRenderer = (ctx: { node: TagNode; renderChildren: () => string; escapeHtml: (s: string) => string; escapeAttr: (s: string) => string }) => string;
 
 export type TagMap = Record<string, TagRenderer>;
 
 /** Basic HTML escaping for text nodes */
 export function escapeHtml(s: string): string {
-	return s
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;');
+	return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 /** Escape attribute values */
@@ -134,8 +126,8 @@ export function parse(input: string): Node[] {
 		// Optional children: only if '[' follows
 		let children: Node[] = [];
 		if (peek() === '[') {
-			i++;                    // consume '['
-			children = parseNodes(']');  // <-- IMPORTANT: pass the end-char
+			i++; // consume '['
+			children = parseNodes(']'); // <-- IMPORTANT: pass the end-char
 		} else if (peek() === ']') {
 			// (optional) be forgiving: swallow a stray ']' right after a tag
 			i++; // so it won't leak into output
@@ -179,11 +171,7 @@ export function parse(input: string): Node[] {
 
 		const readBare = () => {
 			const start = j;
-			while (
-				j < head.length &&
-				!/\s/.test(head[j]!) &&
-				head[j] !== '='
-			) j++;
+			while (j < head.length && !/\s/.test(head[j]!) && head[j] !== '=') j++;
 			return head.slice(start, j);
 		};
 
@@ -239,16 +227,18 @@ export function parse(input: string): Node[] {
 /** Render the AST to HTML using a tag map. Unknown tags: render children only. */
 export function render(nodes: Node[], map: TagMap = {}): string {
 	const _render = (ns: Node[]): string =>
-		ns.map((node) => {
-			if (node.type === 'text') return escapeHtml(node.value);
-			const renderer = map[node.name];
-			const renderChildren = () => _render(node.children);
-			if (renderer) {
-				return renderer({ node, renderChildren, escapeHtml, escapeAttr });
-			}
-			// Fallback: drop the wrapper, keep content
-			return renderChildren();
-		}).join('');
+		ns
+			.map((node) => {
+				if (node.type === 'text') return escapeHtml(node.value);
+				const renderer = map[node.name];
+				const renderChildren = () => _render(node.children);
+				if (renderer) {
+					return renderer({ node, renderChildren, escapeHtml, escapeAttr });
+				}
+				// Fallback: drop the wrapper, keep content
+				return renderChildren();
+			})
+			.join('');
 	return _render(nodes);
 }
 
@@ -256,4 +246,3 @@ export function render(nodes: Node[], map: TagMap = {}): string {
 export function toHtml(input: string, map: TagMap): string {
 	return render(parse(input), map);
 }
-

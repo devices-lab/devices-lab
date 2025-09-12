@@ -53,7 +53,7 @@
 		placeholder:text-gray-500/50
 		group-has-focus/item:outline-2
 		group-has-focus/item:-outline-offset-2
-		group-has-focus/item:outline-primary-500
+		group-has-focus/item:outline-primary
 		disabled:cursor-not-allowed
 		disabled:bg-gray-50
 		disabled:text-gray-500
@@ -62,7 +62,7 @@
 		dark:text-gray-300
 		dark:outline-white/10
 		dark:placeholder:text-gray-500
-		dark:group-has-focus/item:outline-primary-500
+		dark:group-has-focus/item:outline-primary
 		dark:disabled:bg-white/10
 		dark:disabled:text-gray-500
 		dark:disabled:outline-white/5
@@ -96,7 +96,7 @@
 		flex
 		gap-2
 		absolute top-0 left-1.5 -translate-y-1/2
-		group-has-focus/item:text-primary-500
+		group-has-focus/item:text-primary
 		group-has-focus/item:font-medium
 		rounded-md
 		-translate-y-1/2

@@ -13,16 +13,13 @@
 		color: string;
 	};
 
-
 	type Props = {
 		label: string;
 		section: SectionData;
 		defaults: SectionData;
 	};
 
-	let { label, section = $bindable(), defaults}: Props = $props();
-
-
+	let { label, section = $bindable(), defaults }: Props = $props();
 </script>
 
 <!-- prettier-ignore -->

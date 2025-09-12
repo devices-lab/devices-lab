@@ -28,7 +28,7 @@
 			<el-dialog-panel class="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white pt-4 pb-6 shadow-xl transition duration-300 ease-in-out data-closed:translate-x-full">
 				<div class="flex items-center justify-between px-4">
 					<h2 class="text-lg font-medium text-gray-900">Filters</h2>
-					<button type="button" command="close" commandfor={id} class="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-primary-500 focus:outline-hidden">
+					<button type="button" command="close" commandfor={id} class="relative -mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:outline-hidden">
 						<span class="absolute -inset-0.5"></span>
 						<span class="sr-only">Close menu</span>
 						<X class="size-6" />

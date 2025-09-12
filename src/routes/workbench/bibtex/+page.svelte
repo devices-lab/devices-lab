@@ -89,7 +89,7 @@
 <Notification bind:this={notification} />
 
 <BaseCard class="mx-auto flex w-full max-w-3xl flex-col gap-3 pt-6 shadow-md">
-	<h1 class="my-2 mb-3 px-8 text-sm font-semibold text-primary-500">Select an existing item to get started:</h1>
+	<h1 class="my-2 mb-3 px-8 text-sm font-semibold text-primary">Select an existing item to get started:</h1>
 
 	<div class="flex flex-col gap-x-3 px-8 sm:flex-row">
 		<TextInput bind:value={doi} label="DOI" placeholder="Enter DOI" class="flex-1" />

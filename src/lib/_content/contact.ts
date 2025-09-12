@@ -16,6 +16,6 @@ export const contact: Contact = {
 	address_2: 'LA1 4WA',
 	address_3: 'United Kingdom',
 	email: 'devices-lab@lancaster.ac.uk'
-}
+};
 
 //────────────────────────────────────────────────────────────────//

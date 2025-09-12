@@ -6,7 +6,7 @@
 
 	type Props = {
 		item: Entry;
-	}
+	};
 	const { item }: Props = $props();
 </script>
 

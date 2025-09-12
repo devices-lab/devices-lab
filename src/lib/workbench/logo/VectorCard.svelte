@@ -64,7 +64,7 @@
 
 			{#if devEnabled}
 				<div class="m-4 sm:m-0">
-					<Checkbox bind:checked={$devModeLocal} text={{ text: 'Dev Mode', class: 'text-sm font-semibold text-primary-500' }} class="gap-2" />
+					<Checkbox bind:checked={$devModeLocal} text={{ text: 'Dev Mode', class: 'text-sm font-semibold text-primary' }} class="gap-2" />
 				</div>
 			{/if}
 		</div>

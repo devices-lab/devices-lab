@@ -23,11 +23,11 @@
 </script>
 
 {#if link.tooltip}
-	<a {...attributes} {...link.props} href={resolved.href} class={cn('hover:opacity-70 cursor-pointer', link.class)} use:tooltipAction={{ ...link.tooltip.params, content: link.tooltip.content }}>
+	<a {...attributes} {...link.props} href={resolved.href} class={cn('cursor-pointer hover:opacity-70', link.class)} use:tooltipAction={{ ...link.tooltip.params, content: link.tooltip.content }}>
 		{@render children?.()}
 	</a>
 {:else}
-	<a {...attributes} {...link.props} href={resolved.href} class={cn('hover:opacity-70 cursor-pointer', link.class)}>
+	<a {...attributes} {...link.props} href={resolved.href} class={cn('cursor-pointer hover:opacity-70', link.class)}>
 		{@render children?.()}
 	</a>
 {/if}

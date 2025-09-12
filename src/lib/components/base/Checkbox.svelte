@@ -18,7 +18,7 @@
 
 <div {...rest.props} class={cn('flex items-center gap-3', rest.class)}>
 	<div class="group/checkbox grid size-4 grid-cols-1">
-		<input id={`checkbox-input-${uid}`} type="checkbox" bind:checked {name} class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-primary-500 checked:bg-primary-500 indeterminate:border-primary-500 indeterminate:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
+		<input id={`checkbox-input-${uid}`} type="checkbox" bind:checked {name} class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-primary checked:bg-primary indeterminate:border-primary indeterminate:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto" />
 		<Check class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-gray-950/25 group-has-checked/checkbox:stroke-white" />
 	</div>
 	{#if text}

@@ -15,7 +15,7 @@
 
 {#if item.projectID || item.projectName || item.projectVersion}
 	<BaseCollapse {...props} label="Project Identifiers">
-		<div class="flex flex-wrap justify-center gap-5 items-center">
+		<div class="flex flex-wrap items-center justify-center gap-5">
 			{#if item.projectID && item.projectVersion}
 				<div class="self-justify-center max-w-fit fill-white opacity-80 *:max-h-15 dark:fill-gray-300">
 					<SVG_StackPill uid={'dl-version-stack'} {...VersionProps(item.projectID, item.projectVersion)} />

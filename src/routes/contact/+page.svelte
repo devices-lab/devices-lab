@@ -27,7 +27,7 @@
 
 {#snippet Glyph(icon: typeof Icon)}
 	{@const el = { icon: icon }}
-	<div class="flex size-12 items-center justify-center rounded-lg bg-primary-500 text-white ring-1 ring-primary-500 transition group-hover:scale-105">
+	<div class="flex size-12 items-center justify-center rounded-lg bg-primary text-white ring-1 ring-primary transition group-hover:scale-105">
 		<el.icon class="size-6" aria-hidden="true" />
 	</div>
 {/snippet}
@@ -43,9 +43,9 @@
 
 			{#if data?.contact?.email}
 				<div class="mt-2 flex items-center gap-2">
-					<a href={`mailto:${data.contact.email}`} class="font-mono text-sm font-semibold text-primary-500 underline-offset-2 hover:underline" rel="noopener noreferrer">{data.contact.email}</a>
+					<a href={`mailto:${data.contact.email}`} class="font-mono text-sm font-semibold text-primary underline-offset-2 hover:underline" rel="noopener noreferrer">{data.contact.email}</a>
 
-					<button type="button" class="inline-flex size-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-primary-500/50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600" aria-label={copied ? 'Email copied' : 'Copy email'} onclick={copyEmail}>
+					<button type="button" class="inline-flex size-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 transition hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-primary/50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600" aria-label={copied ? 'Email copied' : 'Copy email'} onclick={copyEmail}>
 						{#if copied}
 							<Check class="size-4 text-green-600 dark:text-green-400" />
 						{:else}

@@ -13,12 +13,11 @@ import { SquareRoundCorner } from '@lucide/svelte';
  */
 export const workbenchItems: ExternalWorkbenchItem[] = [
 	{
-		title: "Image Editor",
-		subtitle: "Round the corners of images",
+		title: 'Image Editor',
+		subtitle: 'Round the corners of images',
 		href: `https://mac-aron.github.io/png-rounded-corners/`,
 		icon: SquareRoundCorner
 	}
 ];
 
 //────────────────────────────────────────────────────────────────//
-

@@ -99,10 +99,10 @@
 		const xw = x0 + width;
 		const yh = y0 + height;
 
-		const rTL = (border && border.topL.use) ? border.radius + border.topL.dRadius : 0;
-		const rTR = (border && border.topR.use) ? border.radius + border.topR.dRadius : 0;
-		const rBR = (border && border.bottomR.use) ? border.radius + border.bottomR.dRadius : 0;
-		const rBL = (border && border.bottomL.use) ? border.radius + border.bottomL.dRadius : 0;
+		const rTL = border && border.topL.use ? border.radius + border.topL.dRadius : 0;
+		const rTR = border && border.topR.use ? border.radius + border.topR.dRadius : 0;
+		const rBR = border && border.bottomR.use ? border.radius + border.bottomR.dRadius : 0;
+		const rBL = border && border.bottomL.use ? border.radius + border.bottomL.dRadius : 0;
 
 		const KAPPA = 0.5522847498307936;
 

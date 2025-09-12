@@ -1,7 +1,7 @@
 <script lang="ts">
 	import OverlayEgg from '$lib/overlay/OverlayEgg.svelte';
 
-	import { devMode } from '$lib/utils/utils';
+	import { colorIndex, devMode, MAX_COLORS } from '$lib/utils/utils';
 
 	export interface OverlayType {
 		renderedW: number;
@@ -53,8 +53,16 @@
 	const ready = $derived(Boolean(cw && ch && imgWidth && imgHeight));
 </script>
 
-<div class="absolute inset-0 z-10 size-full overflow-hidden" use:resize>
+<div class="pointer-events-none absolute inset-0 z-12 size-full overflow-hidden" use:resize>
 	{#if ready}
-		<OverlayEgg action={() => { devMode.set(!$devMode) }} x={0.588} y={0.765} overlay={{ renderedW, renderedH, offsetX, offsetY }}/>
+		<OverlayEgg
+			action={() => {
+				colorIndex.set(($colorIndex + 1) % MAX_COLORS);
+				//devMode.set(!$devMode);
+			}}
+			x={0.588}
+			y={0.765}
+			overlay={{ renderedW, renderedH, offsetX, offsetY }}
+		/>
 	{/if}
 </div>

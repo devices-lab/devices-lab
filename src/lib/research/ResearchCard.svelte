@@ -34,7 +34,7 @@
 
 		<!-- Content -->
 		<div class="order-2 flex-3 space-y-2">
-			<h2 class="text-xs font-semibold tracking-wide text-primary-500 uppercase">{item.type}</h2>
+			<h2 class="text-xs font-semibold tracking-wide text-primary uppercase">{item.type}</h2>
 			<h1 class="text-xl font-semibold">{item.title}</h1>
 			<p class="text-xs text-current/70 italic">{item.authors.map((author) => author.name).join(', ')}</p>
 			<p class="text-sm leading-relaxed whitespace-pre-wrap">

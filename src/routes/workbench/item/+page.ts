@@ -11,6 +11,9 @@ export const load = (async () => {
 		itemLibrary: entries,
 		title: item.title,
 		subtitle: item.subtitle,
-		breadcrumbs: [{ title: Routes.workbench.key, href: Routes.workbench.id }, { title: 'item', href: '/workbench/item' }],
+		breadcrumbs: [
+			{ title: Routes.workbench.key, href: Routes.workbench.id },
+			{ title: 'item', href: '/workbench/item' }
+		]
 	};
 }) satisfies PageLoad;

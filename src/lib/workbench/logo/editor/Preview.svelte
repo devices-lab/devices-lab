@@ -165,7 +165,7 @@
 
 				<div class="my-3 flex flex-col justify-center gap-2 rounded-lg">
 					<BaseButton class="mx-auto rounded-full bg-sky-600/30 px-6 py-1 font-semibold" onclick={() => update(0)}>Generate</BaseButton>
-					<Checkbox bind:checked={autoUpdate} text={{ text: 'Auto generate', class: 'text-sm font-semibold text-primary-500' }} class="gap-2" />
+					<Checkbox bind:checked={autoUpdate} text={{ text: 'Auto generate', class: 'text-sm font-semibold text-primary' }} class="gap-2" />
 				</div>
 				{#if showPreview}
 					<div class="h-full gap-4">

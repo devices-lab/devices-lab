@@ -1,6 +1,6 @@
-import type { BorderData } from "$lib/workbench/logo/editor/BorderConfig.svelte";
-import type { SectionData } from "$lib/workbench/logo/editor/SectionConfig.svelte";
-import { DATA_VERSION } from "$lib/workbench/logo/utils";
+import type { BorderData } from '$lib/workbench/logo/editor/BorderConfig.svelte';
+import type { SectionData } from '$lib/workbench/logo/editor/SectionConfig.svelte';
+import { DATA_VERSION } from '$lib/workbench/logo/utils';
 
 //======================================================================================//
 
@@ -179,7 +179,6 @@ export const StackPillDefaults: StackPillData = {
 	border: makeBorder({ color: '#000000', width: 10, radius: 40 })
 };
 
-
 //======================================================================================//
 //======================================================================================//
 
@@ -196,7 +195,7 @@ export type TextAttrBag = {
 // small, testable helper
 export function makeTextProps({ boldness, offsetX, offsetY, fontSize, color }: SectionData, centerX: number, centerY: number): TextAttrBag {
 	return {
-		'data-synthetic-bold': (boldness !== 0 ? 'true' : 'false'),
+		'data-synthetic-bold': boldness !== 0 ? 'true' : 'false',
 		'data-bold-strength': boldness.toString(),
 		dx: centerX + offsetX,
 		dy: centerY + offsetY,
@@ -205,11 +204,9 @@ export function makeTextProps({ boldness, offsetX, offsetY, fontSize, color }: S
 	};
 }
 
-
-
 export type BorderFlags = Partial<Record<'topL' | 'topR' | 'bottomL' | 'bottomR', boolean>>;
 
-// Make a rounded border 
+// Make a rounded border
 export function makeRoundedBorder(base: BorderData, flags?: BorderFlags): BorderData {
 	return {
 		color: 'none',
@@ -238,7 +235,7 @@ export function makeRoundedFrame(base: BorderData, flags?: BorderFlags): BorderD
 }
 
 // Make a default border
-export function makeBorder({ color = '#000000', width = 0, radius = 0 }: { color?: string, width?: number, radius?: number }, flags?: BorderFlags): BorderData {
+export function makeBorder({ color = '#000000', width = 0, radius = 0 }: { color?: string; width?: number; radius?: number }, flags?: BorderFlags): BorderData {
 	return {
 		color,
 		width,

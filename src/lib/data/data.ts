@@ -1,11 +1,6 @@
-
-
-
-
-
 export type Feature = {
 	text: string;
-}
+};
 
 export type Date = {
 	year: number;
@@ -16,7 +11,7 @@ export type Date = {
 export type Author = {
 	name: string;
 	affiliation: string;
-}
+};
 
 export type Reference = {
 	href: string;
@@ -27,19 +22,19 @@ export type Reference = {
 export type Award = {
 	name: string;
 	icon: string;
-}
+};
 
 export type Tag = {
-	name: string
-}
+	name: string;
+};
 
 export type Publication = {
 	// core information
-	key: string;				// -- unique id, e.g., DOI
+	key: string; // -- unique id, e.g., DOI
 	doi: string;
-	type: string;				// -- paper, extended abstract, ...
-	name: string;				// -- a short name for the research item
-	title: string;				// -- the full title of the research item
+	type: string; // -- paper, extended abstract, ...
+	name: string; // -- a short name for the research item
+	title: string; // -- the full title of the research item
 	abstract: string;
 	authors: Author[];
 	// published
@@ -51,4 +46,4 @@ export type Publication = {
 	links: Reference[];
 	awards: Award[];
 	tags: Tag[];
-}
+};

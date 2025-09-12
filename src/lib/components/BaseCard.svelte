@@ -18,7 +18,7 @@
 </script>
 
 {#snippet Content()}
-	<div {...rest.props} class={cn("group relative rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none", hoverClass, rest.class)}>
+	<div {...rest.props} class={cn('group relative rounded-3xl bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-100 dark:shadow-none', hoverClass, rest.class)}>
 		{@render children()}
 	</div>
 {/snippet}

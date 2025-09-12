@@ -9,6 +9,9 @@ export const load = (async () => {
 		researchLibrary: fetchResearchData(),
 		title: item.title,
 		subtitle: item.subtitle,
-		breadcrumbs: [{ title: Routes.workbench.key, href: Routes.workbench.id }, { title: 'bibtex', href: '/workbench/bibtex' }],
+		breadcrumbs: [
+			{ title: Routes.workbench.key, href: Routes.workbench.id },
+			{ title: 'bibtex', href: '/workbench/bibtex' }
+		]
 	};
 }) satisfies PageLoad;

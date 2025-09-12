@@ -2,7 +2,7 @@ import { contact } from '$lib/data/contact';
 import type { PageLoad } from './$types';
 
 export const load = (async () => {
-    return {
+	return {
 		contact
 	};
 }) satisfies PageLoad;

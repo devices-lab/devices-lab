@@ -4,7 +4,6 @@ import { safeUrl, type TagMap } from '$lib/components/richtext/customText';
 import { svelteTag, htmlTag, htmlVoid } from '$lib/components/richtext/maps-helpers';
 import type { SvelteTagMap } from './NodeView.svelte';
 
-
 // ---- Svelte components ----
 export const svelteMap: SvelteTagMap = {
 	link: svelteTag(BaseLink, {
@@ -42,7 +41,6 @@ export const tagMap: TagMap = {
 	//}),
 	ocr: htmlTag('span', { baseClass: 'font-ocr' })
 };
-
 
 /*
 Bold: ${bold}[bold]

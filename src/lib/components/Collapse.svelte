@@ -20,7 +20,7 @@
 		iconText={{
 			...iconText,
 			icon: { icon: ChevronDown, class: cn('size-5 text-gray-400 in-aria-expanded:rotate-180', iconText.icon?.class) },
-			text: { ...iconText.text, class: cn('not-in-aria-expanded:text-current in-aria-expanded:text-primary-500', iconText.text?.class) }
+			text: { ...iconText.text, class: cn('not-in-aria-expanded:text-current in-aria-expanded:text-primary', iconText.text?.class) }
 		}}
 		class="group/label w-full"
 		props={{ command: '--toggle', commandfor: `collapse-${uid}` }}

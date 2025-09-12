@@ -13,7 +13,8 @@
 <input
 	bind:value
 	name="base-input"
-	class={`block
+	class={`not-disabled:cursor-initial
+		block
 		rounded-md
 		bg-white
 		text-base
@@ -21,11 +22,10 @@
 		outline-1
 		-outline-offset-1
 		outline-gray-300
-		not-disabled:cursor-initial
 		placeholder:text-gray-400
 		focus:outline-2
 		focus:-outline-offset-2
-		focus:outline-primary-500
+		focus:outline-primary
 		disabled:border-gray-50
 		disabled:bg-gray-50
 		disabled:text-gray-500
@@ -36,11 +36,10 @@
 		dark:text-white
 		dark:outline-white/10
 		dark:placeholder:text-gray-500
-		dark:focus:outline-primary-500
+		dark:focus:outline-primary
 		dark:disabled:border-gray-700
 		dark:disabled:bg-gray-800/20
 		${className}
 	`}
 	{...props}
 />
-

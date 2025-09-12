@@ -25,7 +25,6 @@ export type PageData = Record<RouteName, PageInfo>;
 
 export type ParamRoutes = 'devices' | 'tools' | 'media';
 
-
 // Breadcrumb link structure
 export type BreadcrumbLink = {
 	title: string;
@@ -40,7 +39,7 @@ export type Route = {
 	title: string;
 	icon?: typeof Icon;
 	breadcrumbs: BreadcrumbLink[];
-}
+};
 
 // Mapping of route names to their route definitions
 export const Routes: Record<RouteName, Route> = {
@@ -99,32 +98,22 @@ export const Routes: Record<RouteName, Route> = {
 		title: Pages.workbench.menuTitle,
 		icon: Pages.workbench.menuIcon,
 		breadcrumbs: [{ title: 'workbench', href: '/workbench' }]
-	},
+	}
 };
 
 export function findRoute(path: string): Route {
 	const raw = path.split('?')[0].split('#')[0];
 	const cleanPath = raw.startsWith('/') ? raw : '/' + raw; // Ensure leading slash
-	return Object.values(Routes).find(route => route.id !== '/' && cleanPath.startsWith(route.id)) || Routes.home;
+	return Object.values(Routes).find((route) => route.id !== '/' && cleanPath.startsWith(route.id)) || Routes.home;
 }
 
 //────────────────────────────────────────────────────────────────//
 
 // Main navigation menu
-export const MainMenu: Route[] = [
-	Routes.home,
-	Routes.devices,
-	Routes.tools,
-	Routes.media,
-	Routes.research
-];
+export const MainMenu: Route[] = [Routes.home, Routes.devices, Routes.tools, Routes.media, Routes.research];
 
 // Side navigation menu
-export const SideMenu: Route[] = [
-	Routes.about,
-	Routes.contact,
-	Routes.workbench,
-];
+export const SideMenu: Route[] = [Routes.about, Routes.contact, Routes.workbench];
 
 //────────────────────────────────────────────────────────────────//
 
@@ -147,13 +136,11 @@ export type Link = {
 	external?: boolean;
 };
 
-
 function isExternal(u: string): boolean {
 	return /^(https?:|mailto:|tel:)/.test(u);
 }
 
 export function resolveLink(href: string | null | undefined): Link {
-	if (!href)
-		return { href: '#', external: false };
-	return (isExternal(href) ? { href, external: true } : { href: resolve(href), external: false });
+	if (!href) return { href: '#', external: false };
+	return isExternal(href) ? { href, external: true } : { href: resolve(href), external: false };
 }
