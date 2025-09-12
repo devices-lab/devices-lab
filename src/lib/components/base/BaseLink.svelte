@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { TooltipProps } from '$lib/components/base/Tooltip.svelte';
-	import Tooltip from '$lib/components/base/Tooltip.svelte';
 	import { resolveLink, type Link } from '$lib/data/routes';
 	import { cn } from '$lib/utils/cn';
+	import { tooltip as tooltipAction } from '$lib/utils/tooltip';
 	import type { DefProps2 } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
@@ -22,16 +22,12 @@
 	});
 </script>
 
-{#snippet Content()}
-	<a {...attributes} {...link.props} href={resolved.href} class={cn('cursor-pointer', link.class)}>
+{#if link.tooltip}
+	<a {...attributes} {...link.props} href={resolved.href} class={cn('hover:opacity-70 cursor-pointer', link.class)} use:tooltipAction={{ ...link.tooltip.params, content: link.tooltip.content }}>
 		{@render children?.()}
 	</a>
-{/snippet}
-
-{#if link.tooltip}
-	<Tooltip tooltip={link.tooltip}>
-		{@render Content()}
-	</Tooltip>
 {:else}
-	{@render Content()}
+	<a {...attributes} {...link.props} href={resolved.href} class={cn('hover:opacity-70 cursor-pointer', link.class)}>
+		{@render children?.()}
+	</a>
 {/if}

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Notification from '$lib/components/Notification.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
-	import IconButton from '$lib/components/base/IconButton.svelte';
 	import BaseButton from '$lib/components/base/BaseButton.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
+	import Checkbox from '$lib/components/base/Checkbox.svelte';
+	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
@@ -100,11 +100,16 @@
 			save(false);
 		});
 	});
+
+	$effect(() => {
+		showPreview;
+		updatePreview();
+	});
 </script>
 
 {#snippet SVGPreview(svg: Promise<SVGSVGElement | undefined>, title: string)}
 	<div class="mt-8 flex min-h-30 flex-col">
-		<h3 class="mt-6 mb-2 font-semibold text-gray-900 md:mt-0 dark:text-gray-100">{title}:</h3>
+		<h3 class="mt-6 mb-2 font-semibold md:mt-0">{title}:</h3>
 		<div class="justify-middle flex size-full items-center justify-center *:max-h-50">
 			{#await svg}
 				<Spinner loading={true} class="size-10" />
@@ -127,17 +132,17 @@
 	<div class="lg:flex">
 		<div class="flex flex-col gap-y-5 p-6 lg:w-1/2">
 			<div class="flex flex-col gap-y-2">
-				<div class="flex items-center justify-between text-lg font-medium text-gray-900 dark:text-gray-100">
+				<div class="flex items-center justify-between text-lg font-medium">
 					Parameters
-					<IconButton onclick={download} class="button-primary py-1 px-2 rounded-md" text={{ text: 'Download', class: 'text-sm' }} icon={{ icon: Download, class: 'size-5' }} />
+					<IconTextButton onclick={download} class="rounded-lg bg-sky-600/30 px-3 py-1" iconText={{ text: { text: 'Download', class: 'text-sm' }, icon: { icon: Download, class: 'size-5' } }} />
 				</div>
 
-				<div class="flex items-center justify-between text-gray-900 dark:text-gray-100">
+				<div class="flex items-center justify-between">
 					<span class="text-sm">Local storage:</span>
 					<div class="flex gap-x-2">
-						<IconButton onclick={reset} class="link-red py-1 px-2" text={{ text: 'Reset', class: 'text-sm' }} icon={{ icon: X, class: 'size-5' }} />
-						<IconButton onclick={load} class="link-amber py-1 px-2" text={{ text: 'Reload', class: 'text-sm' }} icon={{ icon: RefreshCcw, class: 'size-5' }} />
-						<IconButton onclick={save} class="link-green py-1 px-2" text={{ text: 'Save', class: 'text-sm' }} icon={{ icon: Save, class: 'size-5' }} />
+						<IconTextButton onclick={reset} class="px-2 py-1 text-red-600" iconText={{ text: { text: 'Reset', class: 'text-sm' }, icon: { icon: X, class: 'size-5' } }} />
+						<IconTextButton onclick={load} class="px-2 py-1 text-amber-600" iconText={{ text: { text: 'Reload', class: 'text-sm' }, icon: { icon: RefreshCcw, class: 'size-5' } }} />
+						<IconTextButton onclick={save} class="px-2 py-1 text-green-600" iconText={{ text: { text: 'Save', class: 'text-sm' }, icon: { icon: Save, class: 'size-5' } }} />
 					</div>
 				</div>
 			</div>
@@ -151,18 +156,16 @@
 			<div class="flex flex-col gap-y-6">
 				<div class="flex gap-x-4">
 					<div class="flex flex-col md:w-full">
-						<h3 class="mb-2 font-semibold text-gray-900 dark:text-gray-100">Preview:</h3>
+						<h3 class="mb-2 font-semibold">Preview:</h3>
 						<div class="md:max-h-50 md:min-h-40">
 							{@render children()}
 						</div>
 					</div>
 				</div>
 
-				<div class="my-3 flex flex-col justify-center rounded-lg">
-					<BaseButton class="button-primary rounded-full px-6 py-1 mx-auto" onclick={() => update(0)}>Generate</BaseButton>
-					<BaseCheckbox bind:checked={autoUpdate} onchange={() => updatePreview()} class="mt-2">
-						<span class="text-sm font-medium">Auto generate</span>
-					</BaseCheckbox>
+				<div class="my-3 flex flex-col justify-center gap-2 rounded-lg">
+					<BaseButton class="mx-auto rounded-full bg-sky-600/30 px-6 py-1 font-semibold" onclick={() => update(0)}>Generate</BaseButton>
+					<Checkbox bind:checked={autoUpdate} text={{ text: 'Auto generate', class: 'text-sm font-semibold text-primary-500' }} class="gap-2" />
 				</div>
 				{#if showPreview}
 					<div class="h-full gap-4">

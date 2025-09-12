@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import BaseLink from '$lib/components/base/BaseLink.svelte';
 	import type { Entry } from '$lib/data/indexer';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';

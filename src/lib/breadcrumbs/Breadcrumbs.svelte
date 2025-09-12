@@ -23,7 +23,7 @@
 				{@const current = i === breadcrumbs.length - 1 ? 'page' : undefined}
 				<ChevronRight class="size-5 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
 				{#key crumb}
-					<TextLink href={crumb.href} class={style} props={{ 'aria-current': current }} text={crumb.title} />
+					<TextLink href={crumb.href} class={style} props={{ 'aria-current': current }} text={{text: crumb.title}} />
 				{/key}
 			{/each}
 		</ClassBox>

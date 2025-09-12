@@ -35,7 +35,7 @@ export const LogoProps = () => ({
 // Props for creating a DevicesLab project
 export const ProjectProps = (name: string) => ({
 	textTop: LOGO_DOMAIN,
-	textBottom: `/${name}`
+	textBottom: `${name.charAt(0) === '/'? name : '/' + name}`,
 });
 
 // Props for creating a DevicesLab icon
@@ -59,6 +59,7 @@ export const calculateTextWidth = (text: string, size: number) => {
 };
 
 export const FLATTEN_TOLERANCE = 0.01;
+
 
 
 

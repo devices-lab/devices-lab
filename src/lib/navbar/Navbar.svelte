@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import BaseLink from '$lib/components/base/BaseLink.svelte';
 	import IconLink from '$lib/components/base/IconLink.svelte';
 	import { Routes, type Route } from '$lib/data/routes';
@@ -46,7 +46,7 @@
 	{/if}
 
 	<nav aria-label="Top" class="mb-4 bg-lu text-white shadow-xs {floatingNavbar}">
-		<div class="relative mx-auto flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+		<div class="relative mx-auto flex items-center justify-between px-4 py-1 sm:py-3 sm:px-6 lg:px-8">
 			<!-- Desktop menu (lg+) -->
 			<div class="absolute inset-y-0 left-1/2 hidden h-full -translate-x-1/2 lg:flex">
 				<!-- Flyout menus -->
@@ -72,18 +72,18 @@
 
 			<!-- Logo -->
 			<BaseLink href={Routes.home.id} class="absolute left-1/2 flex -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0">
-				<Logo class="m-auto h-8" />
+				<Logo class="m-auto h-6 sm:h-8" />
 			</BaseLink>
 
-			<div class="absolute top-20 right-5 flex gap-2 sm:gap-4">
+			<div class="absolute top-15 sm:top-20 right-5 flex gap-2 sm:gap-4">
 				{#each SideMenu as route}
-					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5', tooltip: { content: route.title } }} class="flex rounded-full border-1 border-secondary-500 p-1.5 text-secondary-500 shadow-sm sm:border-2 sm:p-2" />
+					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5' }} tooltip={{ content: route.title }} class="flex rounded-full border-1 border-secondary-500 p-1.5 text-secondary-500 shadow-sm sm:border-1.5 sm:p-2 hover:scale-110 transition-transform duration-100" />
 				{/each}
 			</div>
 
 			<!-- Logo -->
 			<BaseLink href="https://www.lancaster.ac.uk/" class="lg:order-last">
-				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-10" />
+				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-6 sm:h-10" />
 			</BaseLink>
 		</div>
 	</nav>

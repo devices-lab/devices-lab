@@ -37,9 +37,9 @@
 
 		<!-- Sort by -->
 		<Dropdown label={{ text: SortLabel, class: 'font-medium text-gray-900 text-sm', html: true }}>
-			<div class="flex flex-col space-y-2">
+			<div class="flex flex-col space-y-0">
 				{#each sortByList as item}
-					<IconTextButton onclick={() => (sortBy = item.key)} class="p-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" iconText={{ text: { text: item.label, class: 'text-sm first-letter:uppercase' }, icon: { icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary-600' : ' text-transparent') }, position: "iconFirst" }} />
+					<IconTextButton onclick={() => (sortBy = item.key)} class="px-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" iconText={{ text: { text: item.label, class: 'p-2 text-sm first-letter:uppercase' }, icon: { icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary-600' : ' text-transparent') }, position: "iconFirst" }} />
 				{/each}
 			</div>
 		</Dropdown>

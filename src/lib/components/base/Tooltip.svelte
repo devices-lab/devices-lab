@@ -13,7 +13,7 @@
 </script>
 
 {#if tooltip.content}
-	<div {...tooltip.props} class={cn('group/tooltip relative z-1000 inline-flex', tooltip.class)} use:tooltipAction={{ ...tooltip.params, content: tooltip.content }}>
+	<div {...tooltip.props} class={cn('group/tooltip relative block=inline', tooltip.class)} use:tooltipAction={{ ...tooltip.params, content: tooltip.content }}>
 		{@render children()}
 	</div>
 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import PlaceholderImage from '$lib/components/PlaceholderImage.svelte';
+	import PlaceholderImage from '$lib/components/images/PlaceholderImage.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import { onMount } from 'svelte';

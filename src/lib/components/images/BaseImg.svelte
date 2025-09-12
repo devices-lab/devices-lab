@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PlaceholderImage from '$lib/components/PlaceholderImage.svelte';
+	import PlaceholderImage from '$lib/components/images/PlaceholderImage.svelte';
 	import type { DefProps } from '$lib/utils/utils';
 	import type { Picture } from 'vite-imagetools';
 

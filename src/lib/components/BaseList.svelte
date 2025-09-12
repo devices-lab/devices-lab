@@ -21,7 +21,7 @@
 	{/each}
 {/snippet}
 
-<ClassBox {props} tag="ul" role="list" class="{bare == true ? 'pl-2' : 'list-disc pl-5 *:pl-2'} space-y-1 text-sm/6 text-gray-700 marker:text-gray-300 dark:text-gray-300 dark:marker:text-gray-600 ">
+<ClassBox {props} tag="ul" role="list" class="{bare == true ? 'pl-2' : 'list-disc pl-5 *:pl-2'} space-y-1 marker:text-current/30 ">
 	<!-- Handle snippet rendering -->
 	{#if children}
 		{@render children()}

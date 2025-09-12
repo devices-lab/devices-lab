@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BaseInput from '$lib/components/BaseInput.svelte';
+	import BaseInput from '$lib/workbench/logo/inputs/BaseInput.svelte';
 	import BaseRange from '$lib/workbench/logo/inputs/BaseRange.svelte';
 	import Input from '$lib/workbench/logo/inputs/Input.svelte';
 	import type { Label } from '$lib/workbench/logo/inputs/InputLabel.svelte';

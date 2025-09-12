@@ -19,20 +19,20 @@
 </script>
 
 {#snippet Content()}
-	<resolvedIcon.icon {...icon.props} class={cn('inline-flex items-center', icon.class)} />
+	{#if icon.icon}
+		<resolvedIcon.icon {...icon.props} class={cn('inline-flex items-center', icon.class)} />
+	{:else if icon.fallback}
+		<!-- Fallback if icon is not available -->
+		<span {...icon.props} class={cn('inline-flex items-center justify-center rounded-lg border border-current/50 font-ocr font-black', icon?.class)}>
+			{icon.fallback.toUpperCase().charAt(0)}
+		</span>
+	{/if}
 {/snippet}
 
-{#if icon.icon}
-	{#if icon.tooltip}
-		<Tooltip tooltip={icon.tooltip}>
-			{@render Content()}
-		</Tooltip>
-	{:else}
+{#if icon.tooltip}
+	<Tooltip tooltip={icon.tooltip}>
 		{@render Content()}
-	{/if}
-{:else if icon.fallback}
-	<!-- Fallback if icon is not available -->
-	<span {...icon.props} class={cn('inline-flex items-center justify-center rounded-lg border border-current/50 font-ocr font-black', icon?.class)}>
-		{icon.fallback.toUpperCase().charAt(0)}
-	</span>
+	</Tooltip>
+{:else}
+	{@render Content()}
 {/if}

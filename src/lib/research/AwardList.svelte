@@ -16,7 +16,7 @@
 	<ClassBox {props} class="flex flex-wrap items-start gap-2">
 		{#each awards as award}
 			<Batch class="text-yellow-500! dark:text-yellow-400!">
-				<IconText icon={{ icon: award.icon }} text={{ text: award.name, class: 'uppercase font-semibold' }} />
+				<IconText icon={{ icon: award.icon, class: 'size-5' }} text={{ text: award.name, class: 'uppercase text-xs font-semibold' }} position="iconFirst" />
 			</Batch>
 		{/each}
 	</ClassBox>

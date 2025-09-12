@@ -1,8 +1,9 @@
 <script lang="ts">
 	import BaseIcon, { type IconProps } from '$lib/components/base/BaseIcon.svelte';
 	import BaseText, { type TextProps } from '$lib/components/base/BaseText.svelte';
-	import Tooltip, { type TooltipProps } from '$lib/components/base/Tooltip.svelte';
+	import { type TooltipProps } from '$lib/components/base/Tooltip.svelte';
 	import { cn } from '$lib/utils/cn';
+	import { tooltip as tooltipAction } from '$lib/utils/tooltip';
 	import { type DefProps2 } from '$lib/utils/utils';
 
 	export type TextPosition = 'iconFirst' | 'iconLast';
@@ -17,27 +18,27 @@
 </script>
 
 {#snippet Content()}
-	<div {...rest.props} class={cn('flex items-center gap-2', rest.class)}>
-		{#if text && icon}
-			{#if position === 'iconFirst'}
-				<BaseIcon {...icon} />
-				<BaseText {...text} />
-			{:else}
-				<BaseText {...text} />
-				<BaseIcon {...icon} />
-			{/if}
-		{:else if icon}
+	{#if text && icon}
+		{#if position === 'iconFirst'}
 			<BaseIcon {...icon} />
-		{:else if text}
 			<BaseText {...text} />
+		{:else}
+			<BaseText {...text} />
+			<BaseIcon {...icon} />
 		{/if}
-	</div>
+	{:else if icon}
+		<BaseIcon {...icon} />
+	{:else if text}
+		<BaseText {...text} />
+	{/if}
 {/snippet}
 
 {#if tooltip}
-	<Tooltip {tooltip}>
+	<div {...rest.props} class={cn('flex items-center gap-2', rest.class)} use:tooltipAction={{ ...tooltip.params, content: tooltip.content }}>
 		{@render Content()}
-	</Tooltip>
+	</div>
 {:else}
-	{@render Content()}
+	<div {...rest.props} class={cn('flex items-center gap-2', rest.class)}>
+		{@render Content()}
+	</div>
 {/if}

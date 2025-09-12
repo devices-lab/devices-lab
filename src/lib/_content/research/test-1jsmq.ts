@@ -20,5 +20,5 @@ export const research: Publication = {
     "location": "",
     "links": [],
     "tags": [],
-    "awards": []
+    "awards": [{name: "Test Award", icon: "Trophy"}],
 };

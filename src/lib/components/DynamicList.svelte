@@ -27,8 +27,8 @@
 	};
 </script>
 
-<ClassBox {props} class="pt-4">
-	<div class="my-4 flex items-center justify-between">
+<ClassBox {props}>
+	<div class="mb-4 flex items-center justify-between">
 		<div class="font-semibold">{title}</div>
 		<IconTextButton onclick={add} class="button-blue rounded-lg px-3 py-1 shadow-sm" iconText={{ text: { text: 'Add', class: 'text-xs tracking-wide uppercase' }, icon: { icon: Plus, class: 'size-4' }, position: "iconLast" }} />
 	</div>

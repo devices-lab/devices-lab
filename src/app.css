@@ -69,7 +69,7 @@
 }
 
 @utility bg-primary-hover {
-	@apply bg-primary hover:bg-primary-500/100;
+	@apply bg-primary hover:bg-primary-500/100 hover:opacity-100
 }
 
 @utility bg-secondary {

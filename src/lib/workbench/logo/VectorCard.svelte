@@ -1,11 +1,10 @@
 <script lang="ts">
+	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import BaseCheckbox from '$lib/components/interactive/BaseCheckbox2.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { devMode, devModeLocal, overrideDevMode } from '$lib/utils/utils';
 	import Button from '$lib/workbench/logo/editor/Button.svelte';
 	import ButtonGroup from '$lib/workbench/logo/editor/ButtonGroup.svelte';
-	import { exportDxfForAltium } from '$lib/workbench/logo/export/altium';
 	import { exportPng } from '$lib/workbench/logo/export/image';
 	import { exportSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { exportSvg, exportSvgFont } from '$lib/workbench/logo/export/svg';
@@ -55,19 +54,17 @@
 	</Button>
 {/snippet}
 
-<BaseCard class="divide-y divide-gray-100 p-0!">
+<BaseCard class="divide-y divide-gray-100 p-4 ">
 	<div class="relative px-4 py-5 sm:px-6">
 		<div class="-mt-4 -ml-4 flex flex-wrap items-center justify-between xl:flex-nowrap">
 			<div class="mt-4 ml-4">
-				<h2 class="text-2xl font-semibold text-gray-900 dark:text-white">{title}</h2>
-				<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
+				<h2 class="text-2xl font-semibold">{title}</h2>
+				<p class="mt-1 text-sm text-current/60">{subtitle}</p>
 			</div>
 
 			{#if devEnabled}
 				<div class="m-4 sm:m-0">
-					<BaseCheckbox bind:checked={$devModeLocal}>
-						<span class="text-sm font-semibold text-primary-600 dark:text-primary-100">Dev Mode</span>
-					</BaseCheckbox>
+					<Checkbox bind:checked={$devModeLocal} text={{ text: 'Dev Mode', class: 'text-sm font-semibold text-primary-500' }} class="gap-2" />
 				</div>
 			{/if}
 		</div>

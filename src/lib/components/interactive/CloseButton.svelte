@@ -8,4 +8,4 @@
 </script>
 
 <span class="sr-only">Close</span>
-<IconButton {...button} class={cn('link-gray text-sm opacity-50', button.class)} tooltip={{ content: 'Close' }} icon={{ icon: X, class: 'size-8' }} />
+<IconButton {...button} class={cn('link-gray text-sm opacity-50', button.class)} icon={{ icon: X, class: 'size-8' }} />

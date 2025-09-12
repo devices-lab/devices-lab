@@ -7,6 +7,7 @@
 	import type { DefProps } from '$lib/utils/utils';
 	import { CircleQuestionMarkIcon } from '@lucide/svelte';
 	import type { Component, Snippet } from 'svelte';
+	import { cn } from '$lib/utils/cn';
 
 	// Props for the input container
 	export type InputContainerProps = {
@@ -136,13 +137,13 @@
 			<!-- Input element -->
 			{#if inputElement.el === 'textarea'}
 				<!-- Textarea input -->
-				<textarea bind:value rows={1} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle}></textarea>
+				<textarea bind:value rows={1} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)}></textarea>
 			{:else if inputElement.el === 'input'}
 				<!-- Input element -->
-				<input bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<input bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else if inputElement.el === 'select'}
 				<!-- Select element -->
-				<select bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle}>
+				<select bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)}>
 					{#each inputProps?.options as option}
 						<option value={option.value}>
 							{option.label} [{option.value}]
@@ -151,13 +152,13 @@
 				</select>
 			{:else if inputElement.el === 'select2'}
 				<!-- Select2 element -->
-				<Select bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<Select bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else if inputElement.el === 'selectType'}
 				<!-- SelectType element -->
-				<SelectType bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<SelectType bind:value items={[]} placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{:else}
 				<!-- Custom input -->
-				<inputElement.el bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={inputStyle} />
+				<inputElement.el bind:value placeholder={label?.toLocaleLowerCase()} {...inputProps} id={inputId} class={cn(inputStyle, inputProps?.class)} />
 			{/if}
 
 			<!-- Side elements -->

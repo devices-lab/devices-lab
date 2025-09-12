@@ -7,6 +7,8 @@
 	import 'tippy.js/dist/tippy.css';
 	import '../app.css';
 	import type { LayoutData } from './$types';
+	import BaseLink from '$lib/components/base/BaseLink.svelte';
+	import { Routes } from '$lib/data/routes';
 
 	interface Props {
 		data: LayoutData;
@@ -42,7 +44,11 @@
 		{@render children?.()}
 	</div>
 
-	<footer class="mt-10 mb-2 py-1">
-		<p class="mt-8 text-center text-sm/6 text-gray-600 md:order-1 md:mt-0 dark:text-gray-400">&copy; 2025 Lancaster University. All rights reserved.</p>
+	<footer class="mt-10 mb-2 py-1 flex flex-col items-center">
+		<p class="mt-8 text-center text-sm/6 text-gray-600 md:mt-0 dark:text-gray-400">&copy; 2025 Lancaster University. All rights reserved.</p>
+		<div class="flex gap-2">
+			<BaseLink href={Routes.about.id} class="mt-4 text-sm text-gray-600 hover:underline md:order-2 md:mt-0 underline dark:text-gray-400 hover:dark:text-gray-200">About</BaseLink>
+			<BaseLink href={Routes.contact.id} class="mt-4 text-sm text-gray-600 hover:underline md:order-3 md:mt-0 underline dark:text-gray-400 hover:dark:text-gray-200">Contact</BaseLink>
+		</div>
 	</footer>
 </div>

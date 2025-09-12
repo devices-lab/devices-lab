@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TooltipProps } from '$lib/components/base/Tooltip.svelte';
-	import Tooltip from '$lib/components/base/Tooltip.svelte';
 	import { cn } from '$lib/utils/cn';
+	import { tooltip as tooltipAction } from '$lib/utils/tooltip';
 	import type { DefProps2 } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
@@ -15,16 +15,13 @@
 	const { children, ...button }: ButtonProps & { children?: Snippet } = $props();
 </script>
 
-{#snippet Content()}
-	<button {...button.props} onclick={button.onclick} class={cn('cursor-pointer', button.class)} type="button">
-		{@render children?.()}
-	</button>
-{/snippet}
 
 {#if button.tooltip}
-	<Tooltip tooltip={button.tooltip}>
-		{@render Content()}
-	</Tooltip>
+	<button {...button.props} onclick={button.onclick} class={cn('hover:opacity-70 cursor-pointer', button.class)} type="button" use:tooltipAction={{ ...button.tooltip.params, content: button.tooltip.content }}>
+		{@render children?.()}
+	</button>
 {:else}
-	{@render Content()}
+	<button {...button.props} onclick={button.onclick} class={cn('hover:opacity-70 cursor-pointer', button.class)} type="button">
+		{@render children?.()}
+	</button>
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
-	import BaseImg from '$lib/components/BaseImg.svelte';
+	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import type { Entry } from '$lib/data/indexer';
 	import Badge from '$lib/items/Badge.svelte';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
@@ -14,7 +14,7 @@
 </script>
 
 {#key entry}
-	<BaseCard link={{href: entry.path}} class="flex aspect-square flex-col items-center justify-between sm:p-4 max-w-xs text-gray-900 ">
+	<BaseCard link={{href: entry.path}} class="flex aspect-square flex-col items-center justify-between sm:p-4 max-w-xs overflow-hidden">
 		<div class="flex-1 overflow-hidden pb-12">
 			<BaseImg src={entry.thumb} alt="Item hero" class=" my-auto size-full flex-1 rounded-lg object-contain  group-hover:opacity-15 group-hover:grayscale-70 group-hover:blur-xs" />
 		</div>

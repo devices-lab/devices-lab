@@ -22,8 +22,8 @@ export const generateHash = (data: string) => {
 export function sleep(ms: number) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-
+// Helper to extract the element type from an array type
+export type ElementOfArray<T> = T extends (infer U)[] ? U : never;
 
 export const devMode = writable(false);
 export const devModeLocal = writable(false);
@@ -83,6 +83,11 @@ export type DefProps2 = {
 	class?: ClassValue; //import('clsx').ClassValue;
 	props?: Record<string, unknown>;
 };
+
+export type DefProps3 = {
+	class?: ClassValue; //import('clsx').ClassValue;
+};
+
 
 
 

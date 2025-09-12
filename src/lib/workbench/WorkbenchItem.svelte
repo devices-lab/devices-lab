@@ -7,7 +7,7 @@
 	const { item }: { item: WorkbenchItem } = $props();
 </script>
 
-<BaseCard link={{ href: item.href, external: item.external }} class="flex max-w-xl justify-between px-6 py-4 mx-auto">
+<BaseCard link={{ href: item.href }} class="flex max-w-xl justify-between px-6 py-4 mx-auto overflow-hidden">
 	<div class="flex items-center space-x-4">
 		<IconText icon={{ icon: item.icon, fallback: item.title, class: 'size-8 text-gray-600 dark:text-gray-200' }} />
 		<div>
