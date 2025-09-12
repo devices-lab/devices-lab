@@ -4,9 +4,9 @@
 	import TextLink from '$lib/components/base/TextLink.svelte';
 	import type { ItemData } from '$lib/data/indexer';
 	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		item: ItemData;
 	};
 

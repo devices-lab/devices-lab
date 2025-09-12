@@ -2,9 +2,9 @@
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import IconTextLink from '$lib/components/base/IconTextLink.svelte';
 	import type { Reference } from '$lib/data/data';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		links: Reference[];
 	};
 

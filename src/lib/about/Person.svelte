@@ -3,9 +3,9 @@
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import type { TeamMember } from '$lib/data/about';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		person: TeamMember;
 	};
 

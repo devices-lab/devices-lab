@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { ItemData } from '$lib/data/indexer';
 	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import SVG_Stack from '$lib/workbench/logo/SVG_Stack.svelte';
 	import SVG_StackPill from '$lib/workbench/logo/SVG_StackPill.svelte';
 	import { ProjectProps, VersionProps } from '$lib/workbench/logo/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		item: ItemData;
 	};
 

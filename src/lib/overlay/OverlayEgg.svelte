@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { DefProps } from '$lib/utils/utils';
-	import type { Snippet } from 'svelte';
+	import BaseButton from '$lib/components/base/BaseButton.svelte';
 	import BaseLink from '$lib/components/base/BaseLink.svelte';
 	import { type OverlayType } from '$lib/overlay/OverlayContainer.svelte';
 	import { cn } from '$lib/utils/cn';
-	import BaseButton from '$lib/components/base/BaseButton.svelte';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		action: string | (() => void);
 		x: number;
 		y: number;

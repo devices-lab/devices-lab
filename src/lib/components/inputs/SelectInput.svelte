@@ -1,9 +1,7 @@
 <script lang="ts">
 	import InputContainer, { type InputContainerProps } from '$lib/components/inputs/utils/InputContainer.svelte';
-	import type { DefProps } from '$lib/utils/utils';
 
-	type Props = DefProps &
-		InputContainerProps & {
+	type Props = InputContainerProps & {
 			items: { value: string; label: string }[];
 		};
 

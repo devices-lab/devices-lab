@@ -144,7 +144,7 @@
 				{/snippet}
 			</DynamicList>
 
-			<DynamicList bind:items={currentItem.links} newItem={(): Reference => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" gap="gap-8" class="my-4">
+			<DynamicList bind:items={currentItem.links} newItem={(): Reference => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" listProps={{ class: 'gap-8' }} class="my-4">
 				{#snippet content(item: Reference)}
 					<div class="flex w-full flex-row items-start gap-4 xl:flex-1">
 						<TextInput bind:value={item.text} label="Title" sublabel="Name of the link" class="flex-1" inputProps={{ placeholder: 'title' }} {validate} />

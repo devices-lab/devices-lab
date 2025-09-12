@@ -1,10 +1,10 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		label: string;
 		children: Snippet;
 	};

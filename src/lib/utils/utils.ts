@@ -84,7 +84,7 @@ export type DefProps2 = {
 	props?: Record<string, unknown>;
 };
 
-export type DefProps3 = {
+export type ClassProp = {
 	class?: ClassValue; //import('clsx').ClassValue;
 };
 

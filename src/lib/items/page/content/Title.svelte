@@ -2,9 +2,9 @@
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { ItemData } from '$lib/data/indexer';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		item: ItemData;
 	};
 

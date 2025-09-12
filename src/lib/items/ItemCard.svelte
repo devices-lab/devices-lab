@@ -1,8 +1,8 @@
 <script lang="ts">
+	import BadgeDark from '$lib/components/badges/BadgeDark.svelte';
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import type { Entry } from '$lib/data/indexer';
-	import Badge from '$lib/items/Badge.svelte';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
 	import { ChevronRight } from '@lucide/svelte';
 
@@ -23,7 +23,7 @@
 			<FeaturedLabel class="absolute top-3 left-1 sm:top-4 sm:left-2" />
 		{/if}
 		{#if entry.kind === 'family'}
-			<Badge text="Family" class="absolute top-0 right-0 rounded-bl-3xl px-4 py-3" />
+			<BadgeDark text="Family" class="absolute top-0 right-0 rounded-bl-3xl px-4 py-3" />
 		{/if}
 
 		<div class="absolute inset-0 flex w-full flex-col justify-end bg-gradient-to-b from-slate-500/0 from-0% to-black/0 to-85% p-4 sm:p-6 text-sm opacity-0  group-hover:opacity-90">

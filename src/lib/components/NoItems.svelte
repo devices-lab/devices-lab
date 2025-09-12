@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		children?: Snippet | string;
 		text?: string;
 	};

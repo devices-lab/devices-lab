@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { CircleAlert, CircleCheckBig, CircleX, Icon } from '@lucide/svelte';
+	import { CircleAlert, CircleCheckBig, CircleX, Icon, X } from '@lucide/svelte';
+	import CloseButton from './interactive/CloseButton.svelte';
+	import IconButton from './base/IconButton.svelte';
 
 	const NOTIFICATION_TIMEOUT_MS = 3000;
 
@@ -55,7 +57,6 @@
 	};
 
 	//======================================================================================//
-	
 </script>
 
 <div aria-live="assertive" class="pointer-events-none fixed inset-0 z-100 flex items-end px-4 py-6 sm:items-start sm:p-6">
@@ -72,12 +73,7 @@
 							<p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{content.message}</p>
 						</div>
 						<div class="ml-4 flex shrink-0">
-							<button type="button" onclick={() => (content.active = false)} class="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-primary-600 dark:hover:text-white dark:focus:outline-primary-500">
-								<span class="sr-only">Close</span>
-								<svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
-									<path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
-								</svg>
-							</button>
+							<IconButton onclick={() => (content.active = false)} icon={{ icon: X, class: 'size-5' }} class="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-primary-500 dark:hover:text-white dark:focus:outline-primary-500" />
 						</div>
 					</div>
 				</div>

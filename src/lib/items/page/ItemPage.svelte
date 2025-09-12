@@ -10,9 +10,9 @@
 	import Resources from '$lib/items/page/content/Resources.svelte';
 	import Title from '$lib/items/page/content/Title.svelte';
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		entry: Entry;
 	};
 

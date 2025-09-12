@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import BaseImg from '$lib/components/images/BaseImg.svelte';
-	import Batch from '$lib/components/batches/Batch.svelte';
+	import Batch from '$lib/components/badges/BadgeLight.svelte';
 	import Collapse from '$lib/components/Collapse.svelte';
 	import RichText from '$lib/components/richtext/RichText.svelte';
 	import { formatDate, type ResearchItem } from '$lib/data/research';

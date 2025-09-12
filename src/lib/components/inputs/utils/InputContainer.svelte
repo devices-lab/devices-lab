@@ -4,13 +4,13 @@
 	import TextItem from '$lib/components/base/BaseText.svelte';
 	import Select from '$lib/components/inputs/utils/Select.svelte';
 	import SelectType from '$lib/components/inputs/utils/SelectType.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp, DefProps } from '$lib/utils/utils';
 	import { CircleQuestionMarkIcon } from '@lucide/svelte';
 	import type { Component, Snippet } from 'svelte';
 	import { cn } from '$lib/utils/cn';
 
 	// Props for the input container
-	export type InputContainerProps = {
+	export type InputContainerProps = DefProps & {
 		value: string;
 		// Properties for the input element
 		inputProps?: Record<string, any>;
@@ -22,11 +22,9 @@
 		post?: Snippet;
 		// Input validation
 		validate?: (value: string) => boolean;
-		// Additional props for the wrapping element
-		[key: string]: any;
 	};
 
-	type Props = DefProps &
+	type Props = ClassProp &
 		InputContainerProps & {
 			input: Component | 'textarea' | 'input' | 'select' | 'select2' | 'selectType';
 		};

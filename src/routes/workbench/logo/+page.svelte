@@ -42,7 +42,6 @@
 	let selectedCategory = $state<Category>('project');
 </script>
 
-
 <BaseCard class="mx-auto flex w-full max-w-3xl flex-col gap-3 py-6 shadow-md">
 	<h1 class="my-2 mb-3 px-8 text-sm font-semibold text-primary-500">Specify your project information here:</h1>
 
@@ -54,7 +53,7 @@
 </BaseCard>
 
 {#snippet CategoryButton(label: string, category: Category)}
-	<button type="button" class="flex-1 grow cursor-pointer border-b-2 px-2 {selectedCategory === category ? ' border-primary-500 text-primary-600 dark:border-primary-400 dark:text-primary-400' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
+	<button type="button" class="flex-1 grow cursor-pointer border-b-2 px-2 {selectedCategory === category ? ' border-primary-500 text-primary-500' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-white/20 dark:hover:text-gray-300'} px-1 py-4 text-center text-sm font-medium" onclick={() => (selectedCategory = category)}>
 		{label}
 	</button>
 {/snippet}

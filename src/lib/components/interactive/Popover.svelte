@@ -2,10 +2,10 @@
 	import type { TextProps } from '$lib/components/base/BaseText.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import OpenButton from '$lib/components/interactive/OpenButton.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		children: Snippet;
 		label: TextProps;
 	};

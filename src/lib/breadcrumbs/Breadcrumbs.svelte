@@ -4,10 +4,10 @@
 	import IconLink from '$lib/components/base/IconLink.svelte';
 	import TextLink from '$lib/components/base/TextLink.svelte';
 	import { Routes } from '$lib/data/routes';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import { ChevronRight, House } from '@lucide/svelte';
 
-	type Props = DefProps;
+	type Props = ClassProp;
 
 	const props: Props = $props();
 	const breadcrumbs = $derived(page.data.breadcrumbs || []);

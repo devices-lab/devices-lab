@@ -1,10 +1,10 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import type { Feature } from '$lib/data/data';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		children?: Snippet;
 		items?: Feature[];
 		bare?: boolean;

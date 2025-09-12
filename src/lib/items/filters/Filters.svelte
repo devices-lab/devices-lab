@@ -5,11 +5,11 @@
 	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import Popover from '$lib/components/interactive/Popover.svelte';
 	import type { FilterItem, Sorter, SorterItem } from '$lib/items/ItemGrid.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import { Check } from '@lucide/svelte';
 	import FiltersMobile from './FiltersMobile.svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		tags: FilterItem[];
 		types: FilterItem[];
 		sortByList: SorterItem[];
@@ -39,7 +39,7 @@
 		<Dropdown label={{ text: SortLabel, class: 'font-medium text-gray-900 text-sm', html: true }}>
 			<div class="flex flex-col space-y-0">
 				{#each sortByList as item}
-					<IconTextButton onclick={() => (sortBy = item.key)} class="px-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" iconText={{ text: { text: item.label, class: 'p-2 text-sm first-letter:uppercase' }, icon: { icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary-600' : ' text-transparent') }, position: "iconFirst" }} />
+					<IconTextButton onclick={() => (sortBy = item.key)} class="px-2 focus:bg-gray-100 focus:outline-hidden dark:focus:bg-gray-600" iconText={{ text: { text: item.label, class: 'p-2 text-sm first-letter:uppercase' }, icon: { icon: Check, class: 'size-5' + (sortBy === item.key ? ' text-primary-500' : ' text-transparent') }, position: "iconFirst" }} />
 				{/each}
 			</div>
 		</Dropdown>

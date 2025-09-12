@@ -64,7 +64,7 @@
 
 			<!-- Mobile menu (lg-) -->
 			<div class="flex flex-1 items-center lg:hidden">
-				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 dark:focus-visible:outline-primary-500">
+				<button type="button" command="show-modal" commandfor={menuID} class="rounded-m -ml-2 p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 ">
 					<span class="sr-only">Open menu</span>
 					<Menu class="size-6" />
 				</button>

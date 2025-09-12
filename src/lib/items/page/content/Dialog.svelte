@@ -1,17 +1,15 @@
 <script lang="ts">
-	import ClassBox from '$lib/components/ClassBox.svelte';
 	import CloseButton from '$lib/components/interactive/CloseButton.svelte';
 	import type { Publication } from '$lib/data/data';
 	import type { ResearchItem } from '$lib/data/research';
 	import ResearchCard from '$lib/research/ResearchCard.svelte';
-	import type { DefProps } from '$lib/utils/utils';
 
-	type Props = DefProps & {
+	type Props = {
 		publication: Publication | undefined;
 		dialogId: string;
 	};
 
-	let { publication = $bindable(), dialogId, ...props }: Props = $props();
+	let { publication = $bindable(), dialogId }: Props = $props();
 
 	function onDialogClose() {
 		publication = undefined;
@@ -45,12 +43,12 @@
 					data-closed:sm:scale-95
 					dark:bg-gray-800"
 			>
-				<ClassBox {props} class="relative">
+				<div class="relative">
 					<CloseButton props={{ command: "close", commandfor: dialogId }} class="absolute top-3 left-3 z-10" />
 					{#if publication}
 						<ResearchCard item={publication as ResearchItem} />
 					{/if}
-				</ClassBox>
+				</div>
 			</el-dialog-panel>
 		</div>
 	</dialog>

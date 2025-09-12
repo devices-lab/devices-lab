@@ -6,10 +6,10 @@
 	import type { ItemData } from '$lib/data/indexer';
 	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
 	import Dialog from '$lib/items/page/content/Dialog.svelte';
-	import type { DefProps } from '$lib/utils/utils';
+	import type { ClassProp } from '$lib/utils/utils';
 	import { ScrollText } from '@lucide/svelte';
 
-	type Props = DefProps & {
+	type Props = ClassProp & {
 		item: ItemData;
 	};
 
