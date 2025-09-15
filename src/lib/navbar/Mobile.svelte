@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MenuMain from '$lib/navbar/menu/MenuMain.svelte';
+	import Menu from '$lib/navbar/menu/Menu.svelte';
 
 	const { uid }: { uid: string } = $props();
 </script>
@@ -20,7 +20,7 @@
 				</div>
 
 				<div class="space-y-1 border-t border-gray-200 px-4 py-6">
-					<MenuMain class="-mx-2 block p-2 font-medium text-gray-900 dark:text-gray-200" />
+					<Menu class="-mx-2 block p-2 font-medium text-gray-900 dark:text-gray-200" />
 				</div>
 			</el-dialog-panel>
 		</div>

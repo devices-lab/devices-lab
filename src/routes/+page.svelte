@@ -1,5 +1,5 @@
 <script lang="ts">
-	import banner from '$lib/assets/img/InfoLab-min.jpg?enhanced';
+	import banner from '$lib/assets/InfoLab.jpg?enhanced';
 	import IconTextLink from '$lib/components/base/IconTextLink.svelte';
 	import BaseImg from '$lib/components/images/BaseImg.svelte';
 	import { Routes } from '$lib/data/routes';

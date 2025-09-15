@@ -55,6 +55,13 @@
 	@apply text-secondary/100;
 }
 
+@utility border-focus {
+	@apply border-primary/40;
+}
+@utility border-focus2 {
+	@apply border-secondary/40;
+}
+
 html,
 body {
 	height: 100%;
