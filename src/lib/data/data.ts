@@ -1,3 +1,5 @@
+
+
 export type Feature = {
 	text: string;
 };
@@ -30,7 +32,7 @@ export type Tag = {
 
 export type Publication = {
 	// core information
-	key: string; // -- unique id, e.g., DOI
+	key: string; // -- unique id, should be equal to the file name
 	doi: string;
 	type: string; // -- paper, extended abstract, ...
 	name: string; // -- a short name for the research item
@@ -46,4 +48,66 @@ export type Publication = {
 	links: Reference[];
 	awards: Award[];
 	tags: Tag[];
+};
+
+//============================================================================//
+//============================================================================//
+
+
+type CommonData = {
+	name: string;
+	pathName: string;
+	teaser: string;
+
+	tags: Tag[];
+	featured: boolean;
+
+	cardLayout: string;
+};
+
+
+
+
+
+
+
+
+
+export type ItemData = CommonData & {
+	modified: string;
+	description: string;
+
+	// identification
+	projectName: string | undefined;
+	projectID: string | undefined;
+	projectVersion: string | undefined;
+
+	// content
+	features: Feature[];
+	resources: Reference[];
+	publications: Publication[];
+
+	// layout
+	layout: string;
+};
+
+
+export type FamilyData = CommonData & {
+	// layout
+	layout: string;
+};
+
+//============================================================================//
+//============================================================================//
+
+export type Sorter = 'name' | 'newest' | 'type';
+
+export type SorterItem = {
+	label: string;
+	key: Sorter;
+};
+
+export type FilterItem = {
+	label: string;
+	checked: boolean;
 };

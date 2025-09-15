@@ -1,4 +1,4 @@
-import type { ItemData } from '$lib/data/indexer';
+import type { ItemData } from '$lib/data/data';
 
 import { research as makedevice } from '$research/makedevice--nwzdqd';
 
@@ -19,6 +19,11 @@ export const item: ItemData = {
 	resources: [],
 	publications: [makedevice],
 
+	// other
 	tags: [{ name: 'makedevice' }, { name: 'pcb' }],
-	featured: true
+	featured: true,
+
+	// layout
+	cardLayout: 'ItemCard',
+	layout: 'item_0'
 };

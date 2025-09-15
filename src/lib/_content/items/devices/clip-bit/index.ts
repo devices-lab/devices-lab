@@ -1,4 +1,4 @@
-import type { ItemData } from '$lib/data/indexer';
+import type { ItemData } from '$lib/data/data';
 
 import { research as clipbit1 } from '$research/clip-bit--6bn47b';
 import { research as clipbit2 } from '$research/clip-bit--cli8fm';
@@ -21,6 +21,11 @@ export const item: ItemData = {
 	publications: [clipbit1, clipbit2, clipbit3],
 	resources: [{ text: 'Poster', icon: 'Paperclip', href: 'https://www.devices-lab.org/wp-content/uploads/2024/07/digitaleconomies_cloudletposter.pdf' }],
 
+	// other
 	tags: [],
-	featured: true
+	featured: true,
+
+	// layout
+	cardLayout: 'ItemCard',
+	layout: 'item_0'
 };

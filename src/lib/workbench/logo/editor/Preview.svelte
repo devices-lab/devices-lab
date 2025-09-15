@@ -8,7 +8,7 @@
 	import { generateSvgForKiCad } from '$lib/workbench/logo/export/kicad';
 	import { generateSvgTextFlat } from '$lib/workbench/logo/export/svg';
 	import { GENERATOR_DELAY_MS } from '$lib/workbench/logo/utils';
-	import { Download, RefreshCcw, Save, X } from '@lucide/svelte';
+	import { Download, Icon, RefreshCcw, Save, X } from '@lucide/svelte';
 	import { onDestroy, onMount, type Snippet } from 'svelte';
 
 	interface Props {
@@ -85,7 +85,6 @@
 	}
 
 	export function reset() {
-		//localStorage.removeItem(`logo-user-${uid}`);
 		localStorage.removeItem(`logo-save-${uid}`);
 		onreset();
 		notification?.show('success', 'Successfully reset!');
@@ -128,23 +127,20 @@
 
 <Notification bind:this={notification} />
 
+{#snippet ControlPanelButton(onclick: () => void, text: string, tooltip: string, icon: typeof Icon, className: string)}
+	<IconTextButton {onclick} class={`rounded-lg border bg-white px-2 py-0.5 shadow-sm ${className}`} iconText={{ text: { text, class: '' }, icon: { icon: icon, class: 'size-5' } }} tooltip={{ content: tooltip }} />
+{/snippet}
+
 {#if devEnabled}
 	<div class="lg:flex">
-		<div class="flex flex-col gap-y-5 p-6 lg:w-1/2">
-			<div class="flex flex-col gap-y-2">
-				<div class="flex items-center justify-between text-lg font-medium">
-					Parameters
-					<IconTextButton onclick={download} class="rounded-lg bg-sky-600/30 px-3 py-1" iconText={{ text: { text: 'Download', class: 'text-sm' }, icon: { icon: Download, class: 'size-5' } }} />
-				</div>
+		<div class="flex flex-col gap-y-5 p-2 sm:p-6 lg:w-1/2">
+			<div class="flex items-center justify-between text-lg font-medium">Parameters:</div>
 
-				<div class="flex items-center justify-between">
-					<span class="text-sm">Local storage:</span>
-					<div class="flex gap-x-2">
-						<IconTextButton onclick={reset} class="px-2 py-1 text-red-600" iconText={{ text: { text: 'Reset', class: 'text-sm' }, icon: { icon: X, class: 'size-5' } }} />
-						<IconTextButton onclick={load} class="px-2 py-1 text-amber-600" iconText={{ text: { text: 'Reload', class: 'text-sm' }, icon: { icon: RefreshCcw, class: 'size-5' } }} />
-						<IconTextButton onclick={save} class="px-2 py-1 text-green-600" iconText={{ text: { text: 'Save', class: 'text-sm' }, icon: { icon: Save, class: 'size-5' } }} />
-					</div>
-				</div>
+			<div class="text-md mb-4 flex flex-wrap items-center justify-center gap-3">
+				{@render ControlPanelButton(reset, 'Reset', 'Reset the design to its initial state', X, 'border-red-600/40 text-red-600')}
+				{@render ControlPanelButton(load, 'Reload', 'Reload the last saved design', RefreshCcw, 'border-amber-600/40 text-amber-600')}
+				{@render ControlPanelButton(save, 'Save', 'Save the design to local storage', Save, 'border-green-600/40 text-green-600')}
+				{@render ControlPanelButton(download, 'Download', 'Download the configuration file for the design', Download, 'border-blue-600/40 text-blue-600')}
 			</div>
 
 			{@render config()}

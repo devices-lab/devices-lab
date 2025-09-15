@@ -7,7 +7,7 @@ import { Github, Globe, Drone } from '@lucide/svelte';
  * List of team members.
  *  - name: 		Full name of the team member
  *  - role: 		Role of the team member
- *  - image: 		URL of the team member's image, or image imported using `import '$lib/assets/img/abc.jpg?enhanced'`
+ *  - image: 		URL of the team member's image, or image imported using `import '$lib/assets/abc.jpg?enhanced'`
  *  - imageAdj: 	Positioning of the image (e.g., object-top), can be any css class
  *  - order: 		Only used to sort the team members according to their role, can be: '0_professor' | '1_senior' | '2_researcher' | '3_phd' | '4_master' | '5_bachelor' | '6_alumni'.
  *  - href: 		URL to the team member's profile

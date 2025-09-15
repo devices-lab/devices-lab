@@ -13,7 +13,7 @@ export const load = (async () => {
 		subtitle: item.subtitle,
 		breadcrumbs: [
 			{ title: Routes.workbench.key, href: Routes.workbench.id },
-			{ title: 'item', href: '/workbench/item' }
+			{ title: item.name, href: item.href }
 		]
 	};
 }) satisfies PageLoad;

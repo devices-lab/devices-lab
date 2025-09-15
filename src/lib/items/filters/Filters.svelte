@@ -4,7 +4,7 @@
 	import Dropdown from '$lib/components/interactive/Dropdown.svelte';
 	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
 	import Popover from '$lib/components/interactive/Popover.svelte';
-	import type { FilterItem, Sorter, SorterItem } from '$lib/items/ItemGrid.svelte';
+	import type { FilterItem, Sorter, SorterItem } from '$lib/data/data';
 	import type { ClassProp } from '$lib/utils/utils';
 	import { Check } from '@lucide/svelte';
 	import FiltersMobile from './FiltersMobile.svelte';

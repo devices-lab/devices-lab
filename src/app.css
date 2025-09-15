@@ -47,6 +47,21 @@
 	@apply bg-secondary/80 text-white hover:bg-secondary/60;
 }
 
+@utility text-focus {
+	@apply text-primary/100;
+}
+
+@utility text-focus2 {
+	@apply text-secondary/100;
+}
+
+@utility border-focus {
+	@apply border-primary/40;
+}
+@utility border-focus2 {
+	@apply border-secondary/40;
+}
+
 html,
 body {
 	height: 100%;

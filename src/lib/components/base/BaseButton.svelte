@@ -5,7 +5,7 @@
 	import type { DefProps2 } from '$lib/utils/utils';
 	import type { Snippet } from 'svelte';
 
-	export type ButtonType = () => void;
+	export type ButtonType = (() => void) | ((event: MouseEvent) => void);
 
 	export type ButtonProps = DefProps2 & {
 		onclick?: ButtonType;

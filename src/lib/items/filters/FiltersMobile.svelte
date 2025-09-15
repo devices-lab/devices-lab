@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import Disclosure from '$lib/components/interactive/Disclosure.svelte';
-	import type { FilterItem } from '$lib/items/ItemGrid.svelte';
+	import type { FilterItem } from '$lib/data/data';
 	import { X } from '@lucide/svelte';
 
 	export type Filter = {

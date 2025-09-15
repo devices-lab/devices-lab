@@ -1,16 +1,22 @@
-import { modules } from '$workbench/workbench';
-import { Routes } from '$lib/data/routes';
 import { workbenchItems as externalWorkbenchItems } from '$lib/_content/workbench';
 import type { Icon } from '@lucide/svelte';
+
+
+// Use vite to import all device files
+const modules = import.meta.glob('$workbench/*/**/about.ts', { eager: true, import: 'item' }) as Record<string, ExternalWorkbenchItem>;
+
 
 type BaseItem = {
 	title: string;
 	subtitle: string;
 	icon?: typeof Icon;
+	href: string;
 };
 
-export type ExternalWorkbenchItem = BaseItem & { href: string };
-export type InternalWorkbenchItem = BaseItem & {};
+export type ExternalWorkbenchItem = BaseItem & { };
+export type InternalWorkbenchItem = BaseItem & {
+	name: string // name to show in the breadcrumbs
+};
 
 export type WorkbenchItem = BaseItem & {
 	href: string;
@@ -31,7 +37,7 @@ function processWorkbenchList(items: (ExternalWorkbenchItem | InternalWorkbenchI
 }
 
 function parseHref(href: string): string {
-	return `${Routes.workbench.id}/${href.split('/').slice(1, -1).join('/')}`;
+	return `/${href.split('/').slice(3, -1).join('/')}`;
 }
 
 // Combine internal and external workbench items into a single list

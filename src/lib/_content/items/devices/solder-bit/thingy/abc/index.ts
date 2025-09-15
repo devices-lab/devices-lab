@@ -1,4 +1,4 @@
-import type { ItemData } from '$lib/data/indexer';
+import type { ItemData } from '$lib/data/data';
 
 export const item: ItemData = {
 	modified: '1757500476430',
@@ -17,6 +17,11 @@ export const item: ItemData = {
 	resources: [],
 	publications: [],
 
+	// other
 	tags: [{ name: 'abc' }],
-	featured: false
+	featured: false,
+
+	// layout
+	cardLayout: 'ItemCard',
+	layout: 'item_0'
 };
