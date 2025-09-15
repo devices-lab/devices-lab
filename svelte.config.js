@@ -8,7 +8,8 @@ const config = {
 	kit: {
 		alias: {
 			$workbench: 'src/routes/workbench',
-			$research: 'src/lib/_content/research'
+			$research: 'src/lib/_content/research',
+			$layouts: 'src/lib/_content/layouts'
 		},
 		adapter: adapter({
 			pages: 'build',

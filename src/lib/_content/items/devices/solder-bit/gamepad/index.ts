@@ -1,4 +1,4 @@
-import type { ItemData } from '$lib/data/indexer';
+import type { ItemData } from '$lib/data/data';
 
 export const item: ItemData = {
 	modified: '1757500606031',
@@ -20,6 +20,11 @@ export const item: ItemData = {
 		{ text: 'MakeCode Extension', icon: 'CodeXml', href: 'https://github.com/devices-lab/pxt-solderbit-gamepad' }
 	],
 
+	// other
 	tags: [{ name: 'soldering' }, { name: 'gamepad' }],
-	featured: true
+	featured: true,
+
+	// layout
+	cardLayout: 'ItemCard',
+	layout: 'item_0'
 };

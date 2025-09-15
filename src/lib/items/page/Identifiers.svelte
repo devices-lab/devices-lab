@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ItemData } from '$lib/data/indexer';
-	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
+	import type { ItemData } from '$lib/data/data';
+	import BaseCollapse from '$lib/items/page/BaseCollapse.svelte';
 	import type { ClassProp } from '$lib/utils/utils';
 	import SVG_Stack from '$lib/workbench/logo/SVG_Stack.svelte';
 	import SVG_StackPill from '$lib/workbench/logo/SVG_StackPill.svelte';

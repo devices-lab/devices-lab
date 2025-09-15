@@ -1,5 +1,5 @@
 import { resolve } from '$app/paths';
-import { createBreadcrumbs, findEntries, findPath, type CatalogEntry, type Entry } from '$lib/data/indexer';
+import { createBreadcrumbs, findEntries, findPath, type CatalogEntry, type EntryItem } from '$lib/data/indexer';
 import { findRoute, type BreadcrumbLink } from '$lib/data/routes';
 import { concat } from '$lib/utils/utils';
 import { error, redirect } from '@sveltejs/kit';
@@ -21,11 +21,11 @@ export const load = (async ({ params }) => {
 
 	switch (items.type) {
 		case 'item': {
-			const entry = items.data as Entry;
+			const entry = items.data as EntryItem;
 			return { breadcrumbs, entry, route: entry.route, family: items.family };
 		}
 		case 'family': {
-			const entries = items.data as Entry[];
+			const entries = items.data as EntryItem[];
 			return { breadcrumbs, entries, route: entries[0].route, family: items.family };
 		}
 		case 'none': {

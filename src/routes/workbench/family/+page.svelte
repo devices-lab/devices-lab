@@ -1,17 +1,19 @@
 <script lang="ts">
-	import BaseCard from '$lib/components/BaseCard.svelte';
-	import DynamicList from '$lib/components/DynamicList.svelte';
-	import Notification from '$lib/components/Notification.svelte';
-	import Spinner from '$lib/components/Spinner.svelte';
 	import BaseButton from '$lib/components/base/BaseButton.svelte';
 	import Checkbox from '$lib/components/base/Checkbox.svelte';
 	import IconTextButton from '$lib/components/base/IconTextButton.svelte';
+	import BaseCard from '$lib/components/BaseCard.svelte';
+	import DynamicList from '$lib/components/DynamicList.svelte';
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
-	import type { Tag } from '$lib/data/data';
-	import { DefaultFamily, generateAndDownloadFamily, type Entry } from '$lib/data/indexer';
+	import Notification from '$lib/components/Notification.svelte';
+	import Spinner from '$lib/components/Spinner.svelte';
+	import type { FamilyData, Tag } from '$lib/data/data';
+	import { DefaultFamily, DefaultItem, generateAndDownloadFamily, type Entry, type EntryFamily } from '$lib/data/indexer';
+	import { CardLayouts, FamilyLayouts } from '$lib/data/layouts';
 	import ItemCard from '$lib/items/ItemCard.svelte';
+	import ItemEntry from '$lib/items/ItemEntry.svelte';
 	import { Download, X } from '@lucide/svelte';
 	import type { PageProps } from './$types';
 
@@ -27,7 +29,26 @@
 
 	//======================================================================================//
 
-	let currentItem: Entry = $state({ ...DefaultFamily });
+	const cardLayoutSelect = $derived(Object.entries(CardLayouts).map(([key, layout]) => ({ value: key, label: layout.name })));
+	const familyLayoutSelect = $derived(Object.entries(FamilyLayouts).map(([key, layout]) => ({ value: key, label: layout.name })));
+
+	function generateDummyEntries() {
+		let entries: Entry[] = [];
+		for (let i = 1; i <= 6; i++) {
+			entries.push({
+				...DefaultItem,
+				item: { ...DefaultItem.item, name: 'Placeholder ' + i }
+			});
+		}
+		return entries;
+	}
+
+	const dummyEntries = $derived(generateDummyEntries());
+
+	//======================================================================================//
+
+	let currentItem: EntryFamily = $state({ ...DefaultFamily });
+	let item: FamilyData = $derived(currentItem.item as FamilyData);
 
 	const clearData = () => {
 		currentItem = { ...DefaultFamily };
@@ -36,7 +57,7 @@
 	};
 	const loadData = () => {
 		if (selected && data.itemLibrary[selected]) {
-			currentItem = { ...data.itemLibrary[selected] };
+			currentItem = { ...(data.itemLibrary[selected] as EntryFamily) };
 			notification?.show('success', 'Research data loaded');
 			showFeedback = true;
 		}
@@ -92,28 +113,43 @@
 
 <!-- Family input form --->
 <div class="divide-y divide-gray-900/10 text-gray-800 dark:divide-white/10 dark:text-gray-100">
+
 	<div class="py-10">
 		<div class="my-4 flex-1 font-semibold text-gray-600 dark:text-gray-300">Preview:</div>
 
-		<div class="mx-auto mt-6 max-w-80">
-			<ItemCard entry={currentItem} />
+		<div class="mt-6 flex flex-col justify-center gap-8 lg:flex-row">
+			<div class="mx-auto max-w-80">
+				<ItemCard entry={currentItem} />
+			</div>
+			<BaseCard class="flex-1 p-8 bg-transparent border-gray-500 border">
+				<ItemEntry entries={dummyEntries} family={currentItem} />
+			</BaseCard>
 		</div>
 	</div>
 
 	<div class="py-10">
 		<BaseCard class="flex flex-col gap-y-2 px-4 py-6 sm:p-8">
-			<TextInput bind:value={currentItem.item.name} label="Name" sublabel="Name of the item" class="flex-1" {validate} />
-			<TextInput bind:value={currentItem.item.pathName} label="Path Name" sublabel="Name for the device / tool / media item that will be shown in paths" class="flex-1" {validate} />
+			<div class="py-3 font-semibold">Layout:</div>
 
-			<TextField bind:value={currentItem.item.teaser} label="Teaser" sublabel="A very short teaser about the device / tool / media item" {validate} />
+			<div class="flex flex-col items-start gap-x-4 gap-y-2 md:flex-row">
+				<SelectInput bind:value={item.cardLayout} items={cardLayoutSelect} label="Card Layout" sublabel="Layout for the item card" {validate} />
+				<SelectInput bind:value={item.layout} items={familyLayoutSelect} label="Family Layout" sublabel="Layout for the family page" {validate} />
+			</div>
 
-			<DynamicList bind:items={currentItem.item.tags} newItem={(): Tag => ({ name: '' })} title="Tags" class="my-4">
+			<div class="mt-4 py-3 font-semibold">General Information:</div>
+
+			<TextInput bind:value={item.name} label="Name" sublabel="Name of the item" class="flex-1" {validate} />
+			<TextInput bind:value={item.pathName} label="Path Name" sublabel="Name for the device / tool / media item that will be shown in paths" class="flex-1" {validate} />
+
+			<TextField bind:value={item.teaser} label="Teaser" sublabel="A very short teaser about the device / tool / media item" {validate} />
+
+			<DynamicList bind:items={item.tags} newItem={(): Tag => ({ name: '' })} title="Tags" class="my-4">
 				{#snippet content(item: Tag)}
 					<TextInput bind:value={item.name} label="" class="" inputProps={{ placeholder: 'tag' }} {validate} />
 				{/snippet}
 			</DynamicList>
 
-			<Checkbox bind:checked={currentItem.item.featured} text={{ text: 'Featured', class: 'text-sm' }} class="mt-6 gap-3" />
+			<Checkbox bind:checked={item.featured} text={{ text: 'Featured', class: 'text-sm' }} class="mt-6 gap-3" />
 		</BaseCard>
 	</div>
 </div>

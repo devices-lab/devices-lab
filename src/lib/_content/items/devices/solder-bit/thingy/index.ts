@@ -1,4 +1,4 @@
-import type { FamilyData } from '$lib/data/indexer';
+import type { FamilyData } from '$lib/data/data';
 
 export const item: FamilyData = {
 	name: 'family 001',
@@ -6,5 +6,8 @@ export const item: FamilyData = {
 	teaser: 'teaser',
 
 	tags: [{ name: 'thingy' }],
-	featured: false
+	featured: false,
+
+	cardLayout: 'ItemCard',
+	layout: 'family_0'
 };

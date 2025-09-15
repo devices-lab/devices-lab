@@ -1,21 +1,20 @@
 <script lang="ts">
 	import NoItems from '$lib/components/NoItems.svelte';
-	import type { Entry, ItemData } from '$lib/data/indexer';
+	import type { FilterItem, ItemData, Sorter, SorterItem } from '$lib/data/data';
+	import type { Entry } from '$lib/data/indexer';
 	import Filters from '$lib/items/filters/Filters.svelte';
 	import ItemCard from '$lib/items/ItemCard.svelte';
 	import { onMount } from 'svelte';
-	import { SvelteMap, SvelteSet } from 'svelte/reactivity';
+	import { SvelteSet } from 'svelte/reactivity';
 
 	type Props = {
 		entries: Entry[];
-		family: string;
+		family: Entry | undefined;
 	};
 
 	const LOCAL_STORAGE_SORT_KEY = 'device-lab-sort-by';
 
 	//========================================================================//
-
-	export type Sorter = 'name' | 'newest' | 'type';
 
 	function saveSortByToLocalStorage(sortBy: Sorter) {
 		localStorage.setItem(LOCAL_STORAGE_SORT_KEY, sortBy);
@@ -29,16 +28,6 @@
 	//========================================================================//
 
 	const { entries, family }: Props = $props();
-
-	export type SorterItem = {
-		label: string;
-		key: Sorter;
-	};
-
-	export type FilterItem = {
-		label: string;
-		checked: boolean;
-	};
 
 	//========================================================================//
 
@@ -120,7 +109,7 @@
 
 <section aria-labelledby="items-heading" class="mt-6">
 	<div class="pt-3 pb-6 text-center text-2xl font-semibold tracking-tight sm:text-3xl">
-		{family}
+		{family?.item.name || 'All Items'}
 	</div>
 
 	<Filters {tags} {types} bind:sortBy {sortByList} class="col-span-full mb-10 w-full border-t border-gray-300 py-1" />

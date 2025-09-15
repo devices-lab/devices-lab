@@ -8,7 +8,7 @@
 		text?: string;
 	};
 
-	const { children, text = 'No items found', ...props }: Props = $props();
+	const { children, text = 'No items found yet', ...props }: Props = $props();
 </script>
 
 <ClassBox {props} tag="p" class="text-sm text-gray-500 italic dark:text-gray-400">

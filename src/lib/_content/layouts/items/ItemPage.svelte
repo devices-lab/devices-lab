@@ -2,13 +2,14 @@
 	import BaseCard from '$lib/components/BaseCard.svelte';
 	import ClassBox from '$lib/components/ClassBox.svelte';
 	import NoItems from '$lib/components/NoItems.svelte';
-	import type { Entry, ItemData } from '$lib/data/indexer';
-	import Description from '$lib/items/page/content/Description.svelte';
-	import Features from '$lib/items/page/content/Features.svelte';
-	import Identifiers from '$lib/items/page/content/Identifiers.svelte';
-	import Publications from '$lib/items/page/content/Publications.svelte';
-	import Resources from '$lib/items/page/content/Resources.svelte';
-	import Title from '$lib/items/page/content/Title.svelte';
+	import { type Entry } from '$lib/data/indexer';
+	import { type ItemData } from '$lib/data/data';
+	import Description from '$lib/items/page/Description.svelte';
+	import Features from '$lib/items/page/Features.svelte';
+	import Identifiers from '$lib/items/page/Identifiers.svelte';
+	import Publications from '$lib/items/page/Publications.svelte';
+	import Resources from '$lib/items/page/Resources.svelte';
+	import Title from '$lib/items/page/Title.svelte';
 	import ImageGrid from '$lib/items/page/ImageGrid.svelte';
 	import type { ClassProp } from '$lib/utils/utils';
 

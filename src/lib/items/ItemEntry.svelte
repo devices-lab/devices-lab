@@ -1,22 +1,23 @@
 <script lang="ts">
 	import NoItems from '$lib/components/NoItems.svelte';
-	import type { Entry } from '$lib/data/indexer';
-	import ItemGrid from '$lib/items/ItemGrid.svelte';
-	import ItemPage from '$lib/items/page/ItemPage.svelte';
+	import { resolveFamilyLayout, resolveItemLayout } from '$lib/data/layouts';
+	import type { Entry, EntryFamily, EntryItem } from '$lib/data/indexer';
 
 	type Props = {
 		entries?: Entry[];
-		entry?: Entry;
-		family: string;
+		entry?: EntryItem;
+		family?: EntryFamily;
 	};
 
 	const { entries, entry, family }: Props = $props();
 </script>
 
 {#if entries}
-	<ItemGrid {entries} {family} />
+	{@const Layout = resolveFamilyLayout(family)}
+	<Layout {entries} {family} />
 {:else if entry}
-	<ItemPage {entry} />
+	{@const Layout = resolveItemLayout(entry)}
+	<Layout {entry} />
 {:else}
 	<NoItems class="text-center" />
 {/if}

@@ -10,10 +10,12 @@
 	import SelectInput from '$lib/components/inputs/SelectInput.svelte';
 	import TextField from '$lib/components/inputs/TextField.svelte';
 	import TextInput from '$lib/components/inputs/TextInput.svelte';
+	import type { ItemData } from '$lib/data/data';
 	import type { Feature, Reference, Tag } from '$lib/data/data';
-	import { DefaultItem, generateAndDownloadItem, type Entry, type ItemData } from '$lib/data/indexer';
+	import { DefaultItem, generateAndDownloadItem, type Entry, type EntryItem } from '$lib/data/indexer';
+	import { CardLayouts, ItemLayouts } from '$lib/data/layouts';
 	import ItemCard from '$lib/items/ItemCard.svelte';
-	import ItemPage from '$lib/items/page/ItemPage.svelte';
+	import ItemEntry from '$lib/items/ItemEntry.svelte';
 	import { Download, X } from '@lucide/svelte';
 	import type { PageProps } from './$types';
 
@@ -29,7 +31,12 @@
 
 	//======================================================================================//
 
-	let currentItem: Entry = $state({ ...DefaultItem });
+	const cardLayoutSelect = $derived(Object.entries(CardLayouts).map(([key, layout]) => ({ value: key, label: layout.name })));
+	const itemLayoutSelect = $derived(Object.entries(ItemLayouts).map(([key, layout]) => ({ value: key, label: layout.name })));
+
+	//======================================================================================//
+
+	let currentItem: EntryItem = $state({ ...DefaultItem });
 	let item: ItemData = $derived(currentItem.item as ItemData);
 
 	let researchKeys: string[] = $state([]);
@@ -43,7 +50,7 @@
 
 	const loadData = () => {
 		if (selected && data.itemLibrary[selected] && data.itemLibrary[selected].kind === 'item') {
-			currentItem = { ...data.itemLibrary[selected] };
+			currentItem = { ...data.itemLibrary[selected] as EntryItem };
 			researchKeys = [...(currentItem.item as ItemData).publications.map((pub) => pub.key)];
 			notification?.show('success', 'Research data loaded');
 			showFeedback = true;
@@ -119,13 +126,22 @@
 				<ItemCard entry={currentItem} />
 			</div>
 			<div class="flex-1">
-				<ItemPage entry={currentItem} />
+				<ItemEntry entry={currentItem} />
 			</div>
 		</div>
 	</div>
 
 	<div class="py-10">
 		<BaseCard class="flex flex-col gap-y-2 px-4 py-6 sm:p-8">
+			<div class="py-3 font-semibold">Layout:</div>
+
+			<div class="flex flex-col items-start gap-x-4 gap-y-2 md:flex-row">
+				<SelectInput bind:value={item.cardLayout} items={cardLayoutSelect} label="Card Layout" sublabel="Layout for the item card" {validate} />
+				<SelectInput bind:value={item.layout} items={itemLayoutSelect} label="Item Layout" sublabel="Layout for the item page" {validate} />
+			</div>
+
+			<div class="mt-4 py-3 font-semibold">General Information:</div>
+
 			<TextInput bind:value={item.name} label="Name" sublabel="Name of the item" class="flex-1" {validate} />
 			<TextInput bind:value={item.pathName} label="Path Name" sublabel="Name for the device / tool / media item that will be shown in paths" class="flex-1" {validate} />
 
@@ -134,7 +150,7 @@
 
 			<div class="mt-4 py-3 font-semibold">Project Information:</div>
 
-			<div class="flex flex-col items-start gap-4 md:flex-row">
+			<div class="flex flex-col items-start gap-x-4 gap-y-2 md:flex-row">
 				<TextInput bind:value={() => item.projectName || '', (val) => (item.projectName = val || undefined)} label="Project name" sublabel="Public name for the device / tool" class="flex-1" {validate} />
 				<TextInput bind:value={() => item.projectID || '', (val) => (item.projectID = val || undefined)} label="Project Id" sublabel="The internal identification number" class="flex-1" {validate} />
 				<TextInput bind:value={() => item.projectVersion || '', (val) => (item.projectVersion = val || undefined)} label="Project version" sublabel="The version number of the device / tool" class="flex-1" {validate} />
@@ -148,7 +164,7 @@
 
 			<DynamicList bind:items={item.resources} newItem={(): Reference => ({ text: '', icon: 'ScrollText', href: '' })} title="Links" listProps={{ class: 'gap-8' }} class="my-4">
 				{#snippet content(item: Reference)}
-					<div class="flex w-full flex-row items-start gap-4 xl:flex-1">
+					<div class="flex w-full flex-row items-start gap-x-4 gap-y-2 xl:flex-1">
 						<TextInput bind:value={item.text} label="Title" sublabel="Name of the link" class="flex-1" inputProps={{ placeholder: 'title' }} {validate} />
 						<IconInput bind:value={item.icon} label="Icon" class="flex-1" input={{ placeholder: 'icon' }} {validate} />
 					</div>

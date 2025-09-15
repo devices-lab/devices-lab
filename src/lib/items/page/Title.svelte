@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ClassBox from '$lib/components/ClassBox.svelte';
-	import type { ItemData } from '$lib/data/indexer';
+	import type { ItemData } from '$lib/data/data';
 	import FeaturedLabel from '$lib/items/featured/FeaturedLabel.svelte';
 	import type { ClassProp } from '$lib/utils/utils';
 

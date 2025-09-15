@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BaseList from '$lib/components/BaseList.svelte';
-	import type { ItemData } from '$lib/data/indexer';
-	import BaseCollapse from '$lib/items/page/content/BaseCollapse.svelte';
+	import type { ItemData } from '$lib/data/data';
+	import BaseCollapse from '$lib/items/page/BaseCollapse.svelte';
 	import type { ClassProp } from '$lib/utils/utils';
 
 	type Props = ClassProp & {
