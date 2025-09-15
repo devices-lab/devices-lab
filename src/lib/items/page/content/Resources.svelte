@@ -19,7 +19,7 @@
 			{#snippet Content()}
 				<div class="flex flex-col">
 					<BaseText text={resource.text} class="font-semibold" />
-					<TextLink text={{ text: resource.href, class: 'underline break-all decoration-current/40' }} href={resource.href} class="text-start text-blue-500" />
+					<TextLink text={{ text: resource.href, class: 'underline break-all decoration-current/40' }} href={resource.href} class="text-start text-focus" />
 				</div>
 			{/snippet}
 			<IconText icon={{ icon: resource.icon, class: 'size-5 min-w-5' }} text={{ text: Content }} position="iconFirst" />
