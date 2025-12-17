@@ -50,6 +50,10 @@ export type Publication = {
 	tags: Tag[];
 };
 
+export type Annotations = {
+	[key: string]: string;
+};
+
 //============================================================================//
 //============================================================================//
 
@@ -86,6 +90,7 @@ export type ItemData = CommonData & {
 	features: Feature[];
 	resources: Reference[];
 	publications: Publication[];
+	annotations: Annotations;
 
 	// layout
 	layout: string;

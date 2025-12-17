@@ -16,6 +16,7 @@ export const item: ItemData = {
 	features: [],
 	resources: [],
 	publications: [],
+	annotations: {},
 
 	// other
 	tags: [{ name: 'microbit' }, { name: 'BBC' }, { name: 'available to buy' }],

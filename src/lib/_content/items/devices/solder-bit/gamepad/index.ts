@@ -14,11 +14,17 @@ export const item: ItemData = {
 
 	// content
 	features: [{ text: 'Edge connector for BBC micro:bit' }, { text: 'Four directional DPAD buttons' }, { text: 'Two shoulder buttons' }, { text: 'Two selector buttons' }, { text: 'Five addressable RGB LEDs' }, { text: 'Convenient AAA backpack' }],
-	publications: [],
 	resources: [
 		{ text: 'GitHub', icon: 'Github', href: 'https://github.com/devices-lab/solderbit-gamepad' },
 		{ text: 'MakeCode Extension', icon: 'CodeXml', href: 'https://github.com/devices-lab/pxt-solderbit-gamepad' }
 	],
+	publications: [],
+	annotations: {
+		'v0.4.png': 'Version 0.4',
+		'v0.5.png': 'Version 0.5',
+		'v0.6.png': 'Version 0.6',
+		'v0.7.png': 'Version 0.7'
+	},
 
 	// other
 	tags: [{ name: 'soldering' }, { name: 'gamepad' }],

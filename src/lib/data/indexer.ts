@@ -9,11 +9,13 @@ type Kind = 'family' | 'item';
 
 type EntryData = ItemData | FamilyData; //() => Promise<ItemData>;
 
+export type PictureWithAlt = Picture & { alt: string | undefined };
+
 export type Entry = {
 	kind: Kind;
 	item: EntryData;
 	thumb: Picture | undefined;
-	images: Picture[];
+	images: PictureWithAlt[];
 	path: string;
 	parent: string;
 	route: Route;
@@ -54,7 +56,7 @@ const build = () => {
 		const route = findRoute(path);
 
 		// Gather images directly under the same dir, excluding thumb.*
-		const images: Picture[] = [];
+		const images: PictureWithAlt[] = [];
 		let thumb: Picture | undefined = undefined;
 		for (const imgPath in imageMods) {
 			const imgDir = dirOf(imgPath);
@@ -65,7 +67,8 @@ const build = () => {
 					thumb = imageMods[imgPath];
 				} else {
 					// Normal image
-					images.push(imageMods[imgPath]);
+					const alt = (item as ItemData).annotations ? (item as ItemData).annotations[nameOf(imgPath)] : "undefined";
+					images.push({ ...imageMods[imgPath], alt });
 				}
 			}
 		}
@@ -195,6 +198,7 @@ export const DefaultItem: EntryItem = {
 		features: [],
 		resources: [],
 		publications: [],
+		annotations: {},
 		// other
 		tags: [],
 		featured: false,

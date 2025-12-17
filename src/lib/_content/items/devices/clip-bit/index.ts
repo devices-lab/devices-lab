@@ -29,6 +29,7 @@ export const item: ItemData = {
 	resources: [
 		{ text: 'Poster', icon: 'Paperclip', href: 'https://www.devices-lab.org/wp-content/uploads/2024/07/digitaleconomies_cloudletposter.pdf' }
 	],
+	annotations: {},
 
 	// other
 	tags: [],

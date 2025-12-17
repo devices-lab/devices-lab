@@ -18,6 +18,7 @@ export const item: ItemData = {
 	features: [{ text: 'Jacdac modules attached to the PC are automatically detected, arranged on a carrier PCB and electrically routed' }, { text: 'Intuitive drag and drop interface lets users (re)arrange modules' }, { text: 'Automatic generation of Gerber files from the final arrangement, suitable for online PCB fabrication services without modification.' }, { text: 'Various enclosure options are presented to the user, MakeDevice automatically generates STL files for 3D printing and SVGs for laser cut press fit boxes or stencils ' }],
 	resources: [],
 	publications: [makedevice],
+	annotations: {},
 
 	// other
 	tags: [{ name: 'makedevice' }, { name: 'pcb' }],
