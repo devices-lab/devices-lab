@@ -1,5 +1,5 @@
 import type { ExternalWorkbenchItem } from '$lib/data/workbench';
-import { SquareRoundCorner } from '@lucide/svelte';
+import { SquareRoundCorner, ClipboardList } from '@lucide/svelte';
 
 //────────────────────────────────────────────────────────────────//
 
@@ -17,6 +17,12 @@ export const workbenchItems: ExternalWorkbenchItem[] = [
 		subtitle: 'Round the corners of images',
 		href: `https://mac-aron.github.io/png-rounded-corners/`,
 		icon: SquareRoundCorner
+	},
+	{
+		title: 'Register Workbench',
+		subtitle: 'Collection of tools to facilitate working with registers and hexadecimal, decimal and binary numbers.',
+		href: `https://mannulambrichts.github.io/register-workbench/`,
+		icon: ClipboardList
 	}
 ];
 

@@ -49,7 +49,7 @@
 <div class="flex min-h-full flex-col" style={colorVar}>
 	<Navbar />
 
-	<div class="container mx-auto flex flex-1 flex-col px-4">
+	<div class="container mx-auto flex flex-1 flex-col px-2 sm:px-4">
 		<Breadcrumbs />
 
 		{#if page.data.noHeader !== true && page.status === 200 && page.data.title}

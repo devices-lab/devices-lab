@@ -18,7 +18,7 @@
 		</div>
 
 		<!-- Icon -->
-		<div class="mr-3 transition-transform group-hover:mr-2">
+		<div class="mx-3 transition-transform group-hover:mr-2">
 			{#if item.external}
 				<ExternalLink class="size-6 text-gray-400" />
 			{:else}

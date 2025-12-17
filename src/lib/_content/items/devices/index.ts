@@ -1,7 +1,7 @@
 import type { FamilyData } from '$lib/data/data';
 
 export const item: FamilyData = {
-	name: 'Devices',
+	name: 'Our Devices',
 	pathName: 'devices',
 	teaser: 'All our devices.',
 

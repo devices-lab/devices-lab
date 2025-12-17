@@ -47,7 +47,7 @@
 		</div>
 	{/if}
 
-	<nav aria-label="Top" class="mb-4 bg-primary text-white shadow-xs">
+	<nav aria-label="Top" class="bg-primary text-white shadow-xs">
 		<div class="relative mx-auto flex items-center justify-between px-4 py-0 sm:px-6 sm:py-2 lg:px-8">
 			<!-- Desktop menu (lg+) -->
 			<div class="absolute inset-y-0 left-1/2 hidden h-full -translate-x-1/2 lg:flex">
@@ -65,14 +65,14 @@
 			</div>
 
 			<!-- Mobile menu (lg-) -->
-			<IconButton props={{ command: "show-modal", commandfor: menuID}} icon={{icon: MenuIcon, class: 'size-6'}} class="flex rounded-m -ml-2 flex-1 items-center p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden" />
+			<IconButton props={{ command: 'show-modal', commandfor: menuID }} icon={{ icon: MenuIcon, class: 'size-6' }} class="rounded-m -ml-2 flex flex-1 items-center p-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden" />
 
 			<!-- Logo -->
-			<BaseLink href={Routes.home.id} class="absolute left-1/2 flex -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0">
-				<Logo class="m-auto h-5 sm:h-8" />
+			<BaseLink href={Routes.home.id} class="absolute left-1/2 -translate-x-1/2 lg:relative lg:left-0 lg:order-first lg:translate-x-0 ">
+				<Logo class="m-auto h-5 w-full sm:h-8" />
 			</BaseLink>
 
-			<div class="absolute top-15 right-5 flex gap-2 sm:top-20 sm:gap-4">
+			<div class="absolute top-13 right-3 flex gap-2 sm:top-16 sm:right-5 sm:gap-4">
 				{#each page.data.SideMenu as route}
 					<IconLink href={route.id} icon={{ icon: route.icon, class: 'size-4 sm:size-5' }} tooltip={{ content: route.title }} class="flex rounded-full border-1 border-gray-400 p-1.5 text-gray-400 shadow-md transition-transform duration-100 hover:scale-110 sm:border-1 sm:p-2" />
 				{/each}
@@ -80,7 +80,7 @@
 
 			<!-- Logo -->
 			<BaseLink href="https://www.lancaster.ac.uk/" class="lg:order-last">
-				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-6 sm:h-10" />
+				<BaseImg src={LancasterLogo} alt="Devices Lab" class="-mb-1 h-6 w-full sm:h-10" />
 			</BaseLink>
 		</div>
 	</nav>

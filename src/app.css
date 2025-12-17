@@ -1,3 +1,4 @@
+
 @import 'tailwindcss';
 /*@config "../tailwind.config.js";*/
 
@@ -38,6 +39,19 @@
 	--color-primary: var(--color-root);
 	--color-secondary: var(--color-root-secondary);
 }
+
+@font-face {
+    font-family: "OCR A Extended";
+    src: url("$lib/assets/OCR A Extended/OCR A Extended.eot");
+    src: url("$lib/assets/OCR A Extended/OCR A Extended.eot?#iefix")format("embedded-opentype"),
+    url("$lib/assets/OCR A Extended/OCR A Extended.woff2")format("woff2"),
+    url("$lib/assets/OCR A Extended/OCR A Extended.woff")format("woff"),
+    url("$lib/assets/OCR A Extended/OCR A Extended.ttf")format("truetype"),
+    url("$lib/assets/OCR A Extended/OCR A Extended.svg#OCR A Extended")format("svg");
+}
+
+
+
 
 @utility bg-focus {
 	@apply bg-primary/80 text-white hover:bg-primary/100;
