@@ -17,9 +17,18 @@ export const item: ItemData = {
 	projectVersion: undefined,
 
 	// content
-	features: [{ text: 'LED displays for daylight readability' }, { text: 'Up to 12 classification categories' }, { text: 'Persistent data logging' }, { text: 'Smart scanning of data collection sheets' }, { text: 'Intelligent data upload for classes' }, { text: 'Long life AA battery pack' }],
+	features: [
+		{ text: 'LED displays for daylight readability' }, 
+		{ text: 'Up to 12 classification categories' }, 
+		{ text: 'Persistent data logging' }, 
+		{ text: 'Smart scanning of data collection sheets' }, 
+		{ text: 'Intelligent data upload for classes' }, 
+		{ text: 'Long life AA battery pack' }
+	],
 	publications: [clipbit1, clipbit2, clipbit3],
-	resources: [{ text: 'Poster', icon: 'Paperclip', href: 'https://www.devices-lab.org/wp-content/uploads/2024/07/digitaleconomies_cloudletposter.pdf' }],
+	resources: [
+		{ text: 'Poster', icon: 'Paperclip', href: 'https://www.devices-lab.org/wp-content/uploads/2024/07/digitaleconomies_cloudletposter.pdf' }
+	],
 
 	// other
 	tags: [],
