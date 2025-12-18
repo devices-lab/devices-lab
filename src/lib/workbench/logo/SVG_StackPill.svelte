@@ -30,7 +30,7 @@
 	let loadedData: StackPillData | undefined = $state();
 
 	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
-	const dataStore: StackPillData = $state({ ...StackPillDefaults, uid });
+	const dataStore: StackPillData = $derived({ ...StackPillDefaults, uid });
 	const data: StackPillData = $derived(devEnabled && loadedData && loadedData.version >= StackPillDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 

@@ -29,7 +29,7 @@
 	let loadedData: StackData | undefined = $state();
 
 	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
-	const dataStore: StackData = $state({ ...StackDefaults, uid });
+	const dataStore: StackData = $derived({ ...StackDefaults, uid });
 	const data: StackData = $derived(devEnabled && loadedData && loadedData.version >= StackDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 

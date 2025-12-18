@@ -28,7 +28,7 @@
 	let loadedData: IconData | undefined = $state();
 
 	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
-	const defaultData: IconData = $state({ ...IconDefaults, uid });
+	const defaultData: IconData = $derived({ ...IconDefaults, uid });
 	const data: IconData = $derived(devEnabled && loadedData && loadedData.version >= IconDefaults.version ? loadedData : defaultData);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 

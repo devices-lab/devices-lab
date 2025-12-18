@@ -22,7 +22,7 @@
 			class="flex overflow-hidden rounded-xl bg-white text-center text-xs font-semibold text-wrap shadow transition duration-200 hover:scale-101 hover:opacity-100 sm:rounded-full sm:text-center sm:text-sm md:text-base"
 			iconText={{
 				icon: { icon: ArrowRight },
-				text: { text: 'Discover our projects' },
+				text: { text: 'Discover our devices' },
 				position: 'iconLast',
 				class: cn('flex-wrap gap-y-1 justify-center bg-focus px-2 py-1 sm:px-4 sm:py-2 ')
 			}}

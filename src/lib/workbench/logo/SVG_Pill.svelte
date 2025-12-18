@@ -29,7 +29,7 @@
 	let loadedData: PillData | undefined = $state();
 
 	const devEnabled = $derived(($devMode || $overrideDevMode) && $devModeLocal);
-	const dataStore: PillData = $state({ ...PillDefaults, uid });
+	const dataStore: PillData = $derived({ ...PillDefaults, uid });
 	const data: PillData = $derived(devEnabled && loadedData && loadedData.version >= PillDefaults.version ? loadedData : dataStore);
 	const dataString = $derived(JSON.stringify(data, null, 4));
 

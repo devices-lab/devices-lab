@@ -13,8 +13,8 @@
 	const { children, tag = 'div', props = {}, ...attrs }: Props = $props();
 
 	// Pull class out of attrs so we can merge it; spread the rest
-	const { class: attrsClass, ...attrsRest } = attrs; // own properties
-	const { class: propsClass, ...propsRest } = props; // passed properties
+	const { class: attrsClass, ...attrsRest } = $derived(attrs); // own properties
+	const { class: propsClass, ...propsRest } = $derived(props); // passed properties
 </script>
 
 <svelte:element this={tag} {...attrsRest} {...propsRest} class={cn(attrsClass, propsClass)}>

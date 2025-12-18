@@ -5,7 +5,7 @@
 	let { color = $bindable(), default: defaultColor }: { color: string; default: string } = $props();
 
 	let enabled = $derived(color !== 'none');
-	let tempColor = defaultColor;
+	let tempColor = $derived(defaultColor);
 
 	const getColor = () => {
 		return color === 'none' ? tempColor : color;

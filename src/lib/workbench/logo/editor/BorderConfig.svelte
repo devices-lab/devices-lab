@@ -41,7 +41,7 @@
 	const maxBorderWidth = $derived(border.color !== 'none' ? Math.min(heightTop + heightBottom, widthLeft + widthRight) : 0);
 
 	// Save and restore the border width when toggling wether the border is enabled
-	let prevBorderWidth = defaults.width;
+	let prevBorderWidth = $derived(defaults.width);
 	function updateBorderColor(color: string | 'none') {
 		untrack(() => {
 			if (color === 'none') {
