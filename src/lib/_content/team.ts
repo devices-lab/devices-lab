@@ -152,7 +152,7 @@ export const team: TeamMember[] = [
 		order: '3_phd',
 		href: 'https://www.lancaster.ac.uk/scc/about-us/people/william-dove',
 		sites: [
-			{ href: 'www.linkedin.com/in/william-dove', text: 'LinkedIn', icon : Globe},
+			{ href: 'https://www.linkedin.com/in/william-dove', text: 'LinkedIn', icon : Globe},
 			{ href: 'https://github.com/wDove1', text: 'GitHub', icon: Github }
 		]
 	}
